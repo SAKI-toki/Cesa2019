@@ -1,7 +1,8 @@
 //Application
 Player(Animation,Camera)
 Enemy(Animation,AI)
-Object(Static,Dynamic)
+Object(Static,Dynamic,Gimmick)
+Algorithm(Star)
 Physics(Collider,Rigidbody)
 Effect(Shuriken)
 Sound(3D,CRI)
@@ -11,12 +12,12 @@ UI(Image,Text,Gauge,Button)
 //System
 Input(Keyboard,GamePad)
 Scene(Load,Async,Fade)
-Optimisation(Profiler,Mesh,)
+Optimisation(Profiler,Mesh)
 
 //Graphic
-Shader(Material,Blur,PostEffect)
-Lighting(Directional,Point)
-PostProcessingStack(Bloom)
+Material(Shader,Emmision)
+Lighting(Directional,Point,Spot)
+PostProcessingStack(Bloom,MotionBlur)
 
 //Efficiency
 EditorExtension(SerializeField,Gizmo,Window,Inspector)
