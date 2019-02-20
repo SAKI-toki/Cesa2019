@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour
         RandomOn = Random.Range(MoveTimeLow,MoveTimeHigh);
         Latency = 1;
         NearObj = searchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
-        OnPlayerTracking = 1;
+        OnPlayerTracking = 10;
         Rigor_Cancellation = 1;
         
     }
