@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
     int Ran1;//RandomNumberの値を保存
     int Ran2;//Ran1の値を保存
     int DrectionNumber;//方向に応じて数値を保存
-
+    [SerializeField]
     float PlayerRangeDifference;//プレイヤーと敵の距離差
     float OnPlayerTracking;//プレイヤーとの差が数値以下になったら追従開始
     float EnemyTime;//敵の時間
@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour
         RandomOn = Random.Range(MoveTimeLow,MoveTimeHigh);
         Latency = 1;
         NearObj = searchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
-        OnPlayerTracking = 1;
+        OnPlayerTracking = 15;
         Rigor_Cancellation = 1;
         
     }

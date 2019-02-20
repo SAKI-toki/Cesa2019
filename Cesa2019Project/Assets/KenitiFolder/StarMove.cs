@@ -20,7 +20,7 @@ public class StarMove : MonoBehaviour
         LimitTime = 0.5f;
         YMove = 0.8f;
         XMove = 0.5f;
-        ZMove = 1;
+        ZMove = 3;
         ItemOn = 0.6f;
         NearObj = searchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得 
     }
@@ -59,7 +59,7 @@ public class StarMove : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.name=="Capsule")
+        if(other.gameObject.tag=="Player")
         {
             Destroy(gameObject);
         }
