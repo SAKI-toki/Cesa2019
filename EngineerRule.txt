@@ -1,18 +1,24 @@
 //NamingRule
-Class Pascal
-Interface "I"+Pascal
-namespace Pascal
-Method Pascal
-Member Variable Pascal
-ConstantVariable Pascal
-Enum Pascal
+クラス Pascal
+インターフェース "I"+Pascal
+名前空間 Pascal
+関数 Pascal
+定数 Pascal
+列挙型 Pascal
+メンバ変数 Pascal
 
-Local Variable Camel
+ローカル変数 Variable Camel
 
-Camel--ex: fooBar
-Pascal-ex: FooBar
+Camel--ex: fooBar,playerController,onPlayerTracking
+Pascal-ex: FooBar,PlayerController,OnPlayerTracking
 
-//Not Recommend
+//非推奨
 GetComponent<T>
 GameObject.Find(string)
 SendMessage(string)
+
+//DocumentComment
+
+/// <summary>
+/// 概要
+/// </summary>
