@@ -53,7 +53,6 @@ public class HpGauge : MonoBehaviour
             Hp += Damege;
             if (Hp > MaxHp)
                 Hp = MaxHp;
-            
         }
         //HPダメージ
         FrontHp.fillAmount = Hp / MaxHp;
@@ -64,7 +63,9 @@ public class HpGauge : MonoBehaviour
 
         //HP回復
         if (FrontHp.fillAmount >= BackHp.fillAmount)
+        {
             BackHp.fillAmount = FrontHp.fillAmount;
+        }
 
 
         Debug.Log(Hp);
