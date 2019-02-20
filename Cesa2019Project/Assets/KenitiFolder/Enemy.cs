@@ -24,6 +24,9 @@ public class Enemy : MonoBehaviour
     int DerectionLow;//ランダムの低値
     int DerectionHigh;//ランダムの高値
     int Latency;//待機時間
+    int Ran1;//RandomNumberの値を保存
+    int Ran2;//Ran1の値を保存
+    int DrectionNumber;//方向に応じて数値を保存
 
     float PlayerRangeDifference;//プレイヤーと敵の距離差
     float OnPlayerTracking;//プレイヤーとの差が数値以下になったら追従開始
@@ -31,43 +34,41 @@ public class Enemy : MonoBehaviour
     float RandomOn;//移動方向変更の時間
     float Rigor_Cancellation;//被弾時の硬直時間
     float SA;//スピードアタックの時間
+    float MoveTimeLow;
+    float MoveTimeHigh;
 
     bool ReceivedDamage;//ダメージをうけたときtrue
     bool PlayerTracking;//プレイヤーに追従してるときにtrue
-    bool MoveSwitchR;//右に移動する
-    bool MoveSwitchL;//左に移動する
-    bool MoveSwitchU;//上に移動する
-    bool MoveSwitchD;//下に移動する
+    bool MoveSwitch;//前に移動する
     bool wait;//待機状態が解けたか
+
+    Vector3 targetPos;
 
     // Start is called before the first frame update
 
-        /// <summary>
-        /// 数値初期化
-        /// </summary>
+    /// <summary>
+    /// 数値初期化
+    /// </summary>
     void Start()
     {
-        MoveSwitchD = false;
-        MoveSwitchU = false;
-        MoveSwitchL = false;
-        MoveSwitchR = false;
-
         wait = false;
-
-        DerectionLow = 1;
-        DerectionHigh = 8;
-        RandomOn = 2;
+        MoveTimeLow = 1.0f;
+        MoveTimeHigh = 3.0f;
+        DerectionLow = -180;
+        DerectionHigh = 180;
+        RandomOn = Random.Range(MoveTimeLow,MoveTimeHigh);
         Latency = 1;
         NearObj = searchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
         OnPlayerTracking = 1;
         Rigor_Cancellation = 1;
+        
     }
 
     // Update is called once per frame
 
         /// <summary>
-        /// 各MoveSwitchがtrueになった方向に進む
-        /// プレイヤーが索敵範囲の中に入ったらプレイヤーの方向に
+        /// 撃破判定
+        /// ダメージを受けた時に硬直時間を発生させる
         /// </summary>
     void Update()
     {
@@ -82,7 +83,6 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-
         if(ReceivedDamage==true)//硬直時間の解除
         {
             if(EnemyTime>=Rigor_Cancellation)
@@ -94,152 +94,112 @@ public class Enemy : MonoBehaviour
 
         if (ReceivedDamage == false)//ダメージを受けたら動かない
         {
-
-            if (PlayerTracking == false)
-            {
-                //移動方向
-                if (MoveSwitchR)//右に進む
-                    transform.position += new Vector3(XMove * Time.deltaTime, 0, 0);
-                if (MoveSwitchL)//左にすすむ
-                    transform.position += new Vector3(-XMove * Time.deltaTime, 0, 0);
-                if (MoveSwitchU)//上にすすむ
-                    transform.position += new Vector3(0, 0, ZMove * Time.deltaTime);
-                if (MoveSwitchD)//下に進む
-                    transform.position += new Vector3(0, 0, -ZMove * Time.deltaTime);
-            }
-
-
-            Vector3 targetPos = NearObj.transform.position;
-            targetPos.y = this.transform.position.y;
-
-
-            //敵の索敵範囲に入ったらプレイヤーに追従開始
-            if (PlayerRangeDifference <= OnPlayerTracking)
-            {
-                MoveSwitchD = false;
-                MoveSwitchU = false;
-                MoveSwitchL = false;
-                MoveSwitchR = false;
-                PlayerTracking = true;
-                transform.LookAt(targetPos);//対象の位置方向を向く 
-                transform.Translate(0, 0, ZMove * Time.deltaTime);
-
-                if (SpeedAtack)
-                {
-                    float taiki = 0.5f;
-                    if (PlayerRangeDifference <= taiki && wait == false)
-                    {
-                        ZMove = 0;
-                        int speedTime = 1;
-                        SA += Time.deltaTime;
-                        if (SA >= speedTime)
-                        {
-                            wait = true;
-                            SA = 0;
-                        }
-                    }
-
-                    if (wait == true)
-                    {
-                        ZMove = 0.7f;
-                        SA += Time.deltaTime;
-                        float speedTime2 = 5;
-                        int speedAtackMove = 2;
-                        transform.LookAt(targetPos);//対象の位置方向を向く 
-                        transform.Translate(0, 0, ZMove * speedAtackMove * Time.deltaTime);
-                        if (SA >= speedTime2)
-                        {
-                            wait = false;
-                            SpeedAtack = false;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                PlayerTracking = false;
-            }
-
-            //一定間隔で移動方向を変更
-            if (EnemyTime >= RandomOn && PlayerTracking == false)
-            {
-                MoveSwitchD = false;
-                MoveSwitchU = false;
-                MoveSwitchL = false;
-                MoveSwitchR = false;
-
-                if (EnemyTime >= RandomOn + Latency)
-                {
-                    RandomNumber = Random.Range(DerectionLow, DerectionHigh);
-
-
-                    CMove();
-                    EnemyTime = 0;
-                }
-            }
+            Move();
+            DrectionChange();
         }
     }
 
     /// <summary>
-    /// RandomNumberで決められた数値の方向に行くようにMoveSwichを変更し、
-    /// 向きを変更する
+    /// 移動の制御
     /// </summary>
-    void CMove()
+    void Move()
     {
-
-            if(RandomNumber==1)
-            {
-               MoveSwitchR = true;
-                this.transform.localRotation = Quaternion.Euler(0, 90, 0);
-            }
-               
-            if (RandomNumber == 2)
-            {
-               MoveSwitchL = true;
-                this.transform.localRotation = Quaternion.Euler(0, -90, 0);
-            }
-                
-            if (RandomNumber == 3)
-            {
-                MoveSwitchU = true;
-                this.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            }
-                
-            if (RandomNumber == 4)
-            {
-                MoveSwitchD = true;
-                this.transform.localRotation = Quaternion.Euler(0, 180, 0);
-            }
-               
-            if (RandomNumber == 5)
-            {
-                this.transform.localRotation = Quaternion.Euler(0, 45, 0);
-                MoveSwitchR = true;
-                MoveSwitchU = true;
-            }
-               
-            if (RandomNumber == 6)
-            {
-                this.transform.localRotation = Quaternion.Euler(0, -135, 0);
-                MoveSwitchL = true;
-                MoveSwitchD = true;
-            }
-               
-            if (RandomNumber == 7)
-            {
-                this.transform.localRotation = Quaternion.Euler(0, 45, 0);
-                MoveSwitchU = true;
-              MoveSwitchL = true;
-            }
-               
-            if (RandomNumber == 8)
-            {
-                this.transform.localRotation = Quaternion.Euler(0, 135, 0);
-                MoveSwitchD = true;
-                MoveSwitchR = true;
-            }
+        if (PlayerTracking == false)
+        {
+            //移動方向
+            if (MoveSwitch)//右に進む
+                transform.Translate(0, 0, ZMove * Time.deltaTime);
+        }
 
 
+        targetPos = NearObj.transform.position;
+        //プレイヤーのYの位置と敵のYの位置を同じにしてX軸が回転しないようにします。
+        targetPos.y = this.transform.position.y;
+
+
+        //敵の索敵範囲に入ったらプレイヤーに追従開始
+        if (PlayerRangeDifference <= OnPlayerTracking)
+        {
+            MoveSwitch = false;
+            PlayerTracking = true;
+            transform.LookAt(targetPos);//対象の位置方向を向く 
+            transform.Translate(0, 0, ZMove * Time.deltaTime);
+
+            Speedatack();
+        }
+        else
+        {
+            PlayerTracking = false;
+        }
+    }
+
+    /// <summary>
+    /// 一定間隔で方向を変えてます
+    /// </summary>
+    void DrectionChange()
+    {
+        RandomOn = Random.Range(MoveTimeLow,MoveTimeHigh);
+        //一定間隔で移動方向を変更
+        if (EnemyTime >= RandomOn && PlayerTracking == false)
+        {
+            MoveSwitch = false;
+            Ran2 = Ran1;
+            Ran1 = DrectionNumber;
+
+            if (EnemyTime >= RandomOn + Latency)
+            {
+
+                for (; DrectionNumber == Ran1 || DrectionNumber == Ran2;)
+                {
+                    RandomNumber = Random.Range(DerectionLow, DerectionHigh);
+                    if (RandomNumber >= 0 && RandomNumber <= 90) { DrectionNumber = 1; }
+                    if (RandomNumber >= 91 && RandomNumber <= 180) { DrectionNumber = 2; }
+                    if (RandomNumber >= -90 && RandomNumber <= 1) { DrectionNumber = 3; }
+                    if (RandomNumber >= -180 && RandomNumber <= -91) { DrectionNumber = 4; }
+                }
+
+                this.transform.localRotation = Quaternion.Euler(0, RandomNumber, 0);
+                MoveSwitch = true;
+                EnemyTime = 0;
+            }
+        }
+    }
+        
+    /// <summary>
+    /// 一旦止まって高速で突撃する攻撃をするときに使う
+    /// </summary>
+    void Speedatack()
+    {
+            if (SpeedAtack)
+            {
+                float taiki = 0.5f;
+                if (PlayerRangeDifference <= taiki && wait == false)
+                {
+                    ZMove = 0;
+                    int speedTime = 1;
+                    SA += Time.deltaTime;
+                    if (SA >= speedTime)
+                    {
+                        wait = true;
+                        SA = 0;
+                    }
+                }
+
+                if (wait == true)
+                {
+                    ZMove = 0.7f;
+                    SA += Time.deltaTime;
+                    float speedTime2 = 5;
+                    int speedAtackMove = 2;
+                    transform.LookAt(targetPos);//対象の位置方向を向く 
+                    transform.Translate(0, 0, ZMove * speedAtackMove * Time.deltaTime);
+                    if (SA >= speedTime2)
+                    {
+                        wait = false;
+                        SpeedAtack = false;
+                    }
+                }
+            }
     }
 
     /// <summary>
@@ -256,13 +216,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
+
+
     /// <summary>
     /// プレイヤーの位置取得
     /// </summary>
     /// <param name="nowObj"></param>
     /// <param name="tagName"></param>
     /// <returns></returns>
-
     GameObject searchTag(GameObject nowObj, string tagName)//指定されたtagの中で最も近いものを取得
     {
         float tmpDis = 0;//距離用一時変数

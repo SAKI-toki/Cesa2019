@@ -6,20 +6,20 @@ public class StarMove : MonoBehaviour
 {
     GameObject NearObj;//プレイヤーの位置取得
 
-    float ItemTime;
-    float LimitTime;
-    float YMove;
-    float XMove;
-    float ZMove;
-    float PlayerRange;
-    float ItemOn;
+    float ItemTime;//アイテムの時間
+    float LimitTime;//生成された時に
+    float YMove;//
+    float XMove;//
+    float ZMove;//
+    float PlayerRange;//
+    float ItemOn;//
 
     // Start is called before the first frame update
     void Start()
     {
         LimitTime = 0.5f;
-        YMove = 0.5f;
-        XMove = 0.2f;
+        YMove = 0.8f;
+        XMove = 0.5f;
         ZMove = 1;
         ItemOn = 0.6f;
         NearObj = searchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得 
@@ -41,7 +41,9 @@ public class StarMove : MonoBehaviour
         transform.position += new Vector3(XMove*Time.deltaTime, YMove*Time.deltaTime, 0);
 
         Vector3 targetPos = NearObj.transform.position;
+        //プレイヤーのYの位置とアイテムのYの位置を同じにしてX軸が回転しないようにします。
         targetPos.y = this.transform.position.y;
+
 
         if(PlayerRange<=ItemOn)
         {
@@ -51,6 +53,10 @@ public class StarMove : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 当たり判定
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.name=="Capsule")
