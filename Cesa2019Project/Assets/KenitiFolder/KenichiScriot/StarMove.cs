@@ -5,23 +5,27 @@ using UnityEngine;
 public class StarMove : MonoBehaviour
 {
     GameObject NearObj;//プレイヤーの位置取得
+    Rigidbody rigidbody=null;
+//
+    [SerializeField,Header("アイテムの追尾範囲")]
+    float ItemOn=10;
+    [SerializeField, Header("アイテム出現時のZ方向の移動")]
+    float Zforword=0;
+    [SerializeField, Header("アイテム出現時のY方向の移動")]
+    float Yforword=0;
+    [SerializeField,Header("出現したアイテムが移動する時間")]
+    float LimitTime=2;
 
-    float ItemTime;//アイテムの時間
-    float LimitTime;//生成された時に
-    float YMove;//
-    float XMove;//
+    float ItemTime;
     float ZMove;//
-    float PlayerRange;//
-    float ItemOn;//
+    float PlayerRange;
+    bool First=true;
 
     // Start is called before the first frame update
     void Start()
     {
-        LimitTime = 0.5f;
-        YMove = 0.8f;
-        XMove = 0.5f;
-        ZMove = 1;
-        ItemOn = 0.6f;
+        ZMove = 7;
+        
         NearObj = searchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得 
     }
 
@@ -29,24 +33,28 @@ public class StarMove : MonoBehaviour
     void Update()
     {
         ItemTime += Time.deltaTime;
-
         PlayerRange = Vector3.Distance(NearObj.transform.position, this.transform.position);
-
-        if (ItemTime>=LimitTime)
-        {
-            XMove = 0;
-            YMove = 0;
-        }
-
-        transform.position += new Vector3(XMove*Time.deltaTime, YMove*Time.deltaTime, 0);
 
         Vector3 targetPos = NearObj.transform.position;
         //プレイヤーのYの位置とアイテムのYの位置を同じにしてX軸が回転しないようにします。
         targetPos.y = this.transform.position.y;
 
+        if(First)
+        {
+            First = false;
+            rigidbody = this.GetComponent<Rigidbody>();
+            Vector3 force = this.transform.forward * Zforword;
+            Vector3 force2 = new Vector3(0, Yforword, 0);
+            rigidbody.AddForce(force, ForceMode.Impulse);
+            rigidbody.AddForce(force2, ForceMode.Impulse);
+
+        }
+
+        if (ItemTime >= LimitTime) { rigidbody.velocity = Vector3.zero;}
 
         if(PlayerRange<=ItemOn)
         {
+            
             transform.LookAt(targetPos);//対象の位置方向を向く 
             transform.Translate(0, 0, ZMove * Time.deltaTime);
         }
@@ -59,7 +67,7 @@ public class StarMove : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.name=="Capsule")
+        if(other.gameObject.tag=="Player")
         {
             Destroy(gameObject);
         }
