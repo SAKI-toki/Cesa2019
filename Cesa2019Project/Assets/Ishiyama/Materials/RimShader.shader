@@ -24,6 +24,7 @@
 			};
 
 			fixed4 _Color;
+			uniform float AddRim = 0;
 
 			void surf(Input IN, inout SurfaceOutput o)
 			{
@@ -39,7 +40,7 @@
 				//内積の絶対値
 				float val = 1 - (abs(dot(dir, normal)));
 				//リム
-				float rim = val * val *  _RimValue;
+				float rim = val * val *  (_RimValue + AddRim);
 				o.Alpha = c.a * rim;
 			}
 			ENDCG
