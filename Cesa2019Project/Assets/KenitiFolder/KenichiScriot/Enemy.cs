@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour
     bool AtackEnemy;//攻撃中か
     bool AtackOn;
 
-    Status EnemyStatus;
+    Status EnemyStatus = new Status();
 
     Vector3 TargetPos;
 
@@ -259,7 +259,7 @@ public class Enemy : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "PlayerAtack")
+        if (other.gameObject.tag == "PlayerAttack")
         {
             EnemyHp -= 10;//HPを減らす
             if (EnemyHp <= 0)

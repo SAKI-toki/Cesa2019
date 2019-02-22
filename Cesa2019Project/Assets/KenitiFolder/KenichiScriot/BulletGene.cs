@@ -44,8 +44,8 @@ public class BulletGene : MonoBehaviour
             if (BulletTime>=BulletGenelateTime)
             {
                  Drection = this.GetComponent<Transform>().localEulerAngles.y;
-     
-                 Way3();    
+                BulletDrection = this.GetComponent<Transform>().localEulerAngles.y;
+                Way3();    
             }
         }
     }
