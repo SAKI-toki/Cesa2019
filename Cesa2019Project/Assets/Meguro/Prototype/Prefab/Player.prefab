@@ -159,7 +159,6 @@ GameObject:
   - component: {fileID: 8760858706728644751}
   - component: {fileID: 8760858706728644748}
   - component: {fileID: 8760858706728644749}
-  - component: {fileID: 8760858706728644750}
   m_Layer: 0
   m_Name: PlayerForward
   m_TagString: Player
@@ -226,19 +225,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8760858706728644750
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8760858706728644744}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8760858706906213628
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,7 +236,6 @@ GameObject:
   - component: {fileID: 8760858706906213619}
   - component: {fileID: 8760858706906213616}
   - component: {fileID: 8760858706906213617}
-  - component: {fileID: 8760858706906213618}
   m_Layer: 0
   m_Name: CameraLookObj
   m_TagString: Untagged
@@ -317,19 +302,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8760858706906213618
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8760858706906213628}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8760858707979114620
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +314,7 @@ GameObject:
   - component: {fileID: 8760858707979114608}
   - component: {fileID: 8760858707979114609}
   - component: {fileID: 8760858707979114610}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttackCube
   m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
