@@ -34,6 +34,7 @@ public class Star : MonoBehaviour
 
     void Update()
     {
+        //↓ここから
         //小さい星加算
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -49,6 +50,7 @@ public class Star : MonoBehaviour
                 AddBigStar(Big);
             }
         }
+        //↑ここまで繋げるときに消して
 
         //UIテキストに表示
         LittleStarText.text = "Little:" + LittleStar.ToString("00");
