@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletGene : MonoBehaviour
+public class BulletGenerator : MonoBehaviour
 {
     [SerializeField, Header("発射間隔")]
     float BulletGenelateTime=0;
@@ -44,14 +44,16 @@ public class BulletGene : MonoBehaviour
             if (BulletTime>=BulletGenelateTime)
             {
                  Drection = this.GetComponent<Transform>().localEulerAngles.y;
-     
-                 Way3();    
+                BulletDrection= this.GetComponent<Transform>().localEulerAngles.y;
+
+                Way3();    
             }
         }
     }
 
     void Way3()
     {
+
         Shot();
 
         for (int i=0;WayBullet!=i;i++)

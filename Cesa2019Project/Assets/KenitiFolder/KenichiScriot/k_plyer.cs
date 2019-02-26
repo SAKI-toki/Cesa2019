@@ -8,8 +8,8 @@ using UnityEngine;
 public class k_plyer : MonoBehaviour
 {
 
-    [SerializeField] float xmove;//X方向の移動力
-    [SerializeField] float zmove;//Z方向の移動力
+    [SerializeField] float xmove=0;//X方向の移動力
+    [SerializeField] float zmove=0;//Z方向の移動力
     // Start is called before the first frame update
     /// <summary>
     /// 
