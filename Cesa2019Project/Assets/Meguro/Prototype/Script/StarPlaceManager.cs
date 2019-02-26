@@ -73,7 +73,11 @@ public class StarPlaceManager : MonoBehaviour
                         // 範囲内にいるとき
                         if (StarPlaceList[i].isActive)
                         {
+<<<<<<< HEAD
                             if (Input.GetKeyDown("joystick button 2"))
+=======
+                            if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
+>>>>>>> origin/meguro
                             {
                                 StarSelectPlaceNum = i;
                                 StarSelectActive();
@@ -83,15 +87,26 @@ public class StarPlaceManager : MonoBehaviour
                 }
             }
             // 星の色選択
+<<<<<<< HEAD
             else if(StarSelect)
             {
                 // 色決定
                 if(Input.GetKeyDown("joystick button 1"))
+=======
+            else if (StarSelect)
+            {
+                // 色決定
+                if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
+>>>>>>> origin/meguro
                 {
                     StarSet();
                 }
                 // キャンセル
+<<<<<<< HEAD
                 if(Input.GetKeyDown("joystick button 2"))
+=======
+                if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
+>>>>>>> origin/meguro
                 {
                     StarSelectCancel();
                 }
