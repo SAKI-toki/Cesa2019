@@ -3,6 +3,7 @@
 	Properties
 	{
 		_MainTex("MainTex", 2D) = ""{}
+		_Color("Color",Color) = (0,0,0,1)
 		_Smooth("Smooth",Range(0,1)) = 0.5
 	}
 	SubShader
@@ -17,7 +18,9 @@
 			#pragma fragment frag
 
 			sampler2D _MainTex;
+			//どれだけスムーズにするか
 			float _Smooth;
+			fixed4 _Color;
 			//真ん中からの距離
 			uniform float FadeDistance = 100.0f;
 
@@ -29,17 +32,20 @@
 				float aspect = _ScreenParams.x / _ScreenParams.y;
 				uv.x *= aspect;
 				float dist = distance(uv, float2(0.5f * aspect, 0.5f));
-				//真ん中からFadeDistanceより長かったら黒にする
+				//真ん中からFadeDistanceより長かったら_Colorにする
 				if (dist > FadeDistance)
 				{
-					return fixed4(0, 0, 0, 1);
+					return _Color;
 				}
-				//スムーズに黒にする
+				//スムーズに_Colorにする
 				if (dist > FadeDistance * (1.0f - _Smooth))
 				{
-					//黒の割合を出す
-					float temp = 1.0f - (dist - FadeDistance * (1.0f - _Smooth)) / (FadeDistance*_Smooth);
-					return c * fixed4(temp, temp, temp, 1);
+					float percent = (dist - FadeDistance * (1.0f - _Smooth)) / (FadeDistance * _Smooth);
+					return fixed4(
+						c.r + (_Color.r - c.r) * percent,
+						c.g + (_Color.g - c.g) * percent,
+						c.b + (_Color.b - c.b) * percent,
+						1);
 				}
 				return c;
 			}
