@@ -5,7 +5,7 @@ using UnityEngine;
 public class StarMove : MonoBehaviour
 {
     GameObject NearObj;//プレイヤーの位置取得
-    Rigidbody rigidbody=null;
+    new Rigidbody rigidbody=null;
 //
     [SerializeField,Header("アイテムの追尾範囲")]
     float ItemOn=10;

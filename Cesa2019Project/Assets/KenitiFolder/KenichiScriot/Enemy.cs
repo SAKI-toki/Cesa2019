@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// 敵の移動とHP
@@ -35,6 +36,15 @@ public class Enemy : MonoBehaviour
     bool SpeedAtack;
     [SerializeField, Header("直接攻撃しない敵の場合true")]
     bool NonDirectAttack = false;
+    [SerializeField, Header("星を出す数")]
+    int StarCount=1;
+    [SerializeField, Header("敵の回る速度")]
+    float RotationPlus=5f;
+    [SerializeField, Header("RotationPlusが足される時間")]
+    float RotateHours=0.1f;
+
+    [SerializeField, Header("trueになったら破壊")]
+    bool DestroyDebug = false;
 
     int RandomNumber;//ランダムな数値を入れる
     int DerectionLow;//ランダムの低値
@@ -42,6 +52,7 @@ public class Enemy : MonoBehaviour
     int Ran1;//RandomNumberの値を保存
     int Ran2;//Ran1の値を保存
     int DrectionNumber;//方向に応じて数値を保存
+    int RotationCount = 0;
 
     float PlayerRangeDifference;//プレイヤーと敵の距離差
     float EnemyTime;//敵の時間
@@ -50,18 +61,23 @@ public class Enemy : MonoBehaviour
     float MoveTimeLow;//移動している時間の低値
     float MoveTimeHigh;//移動している時間高値
     float AtackTime;//攻撃の時間
-
+    float YPlus;//rotationを動かす角度
+    float RotationTime = 0;//敵のrotation変更の時に使う時間
 
     bool ReceivedDamage;//ダメージをうけたときtrue
     bool PlayerTracking;//プレイヤーに追従してるときにtrue
     bool MoveSwitch;//前に移動する
     bool Wait;//待機状態が解けたか
     bool AtackEnemy;//攻撃中か
-    bool AtackOn;
+    bool AtackOn;//攻撃中か
+    bool First=false;//一度だけ実行させる
+    
+    Status EnemyStatus=new Status();
 
-    Status EnemyStatus = new Status();
+    Vector3 TargetPos;//
+    Quaternion From;
 
-    Vector3 TargetPos;
+    NavMeshAgent Agent=null;
 
     // Start is called before the first frame update
 
@@ -79,10 +95,12 @@ public class Enemy : MonoBehaviour
         AtackOn = false;
         MoveTimeLow = 1.0f;
         MoveTimeHigh = 3.0f;
-        DerectionLow = -180;
-        DerectionHigh = 180;
+        DerectionLow = -36;
+        DerectionHigh = 36;
+        YPlus = RotationPlus;
         RandomOn = Random.Range(MoveTimeLow, MoveTimeHigh);
         NearObj = searchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
+        Agent= GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -99,11 +117,15 @@ public class Enemy : MonoBehaviour
 
             PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
 
-            if (EnemyHp == 0)
+            if (EnemyStatus.Hp <= 0 || DestroyDebug == true || EnemyHp <= 0)
             {
-                GameObject item = Instantiate(Star) as GameObject;
-                item.transform.position = transform.position;
-                item.transform.Rotate(0, Random.Range(-180, 180), 0);
+                for(int i=0;StarCount!=i;i++)
+                {
+                  GameObject item = Instantiate(Star) as GameObject;
+                  item.transform.position = transform.position;
+                  item.transform.Rotate(0, Random.Range(-180, 180), 0);
+                }
+
                 Destroy(this.gameObject);
             }
 
@@ -115,7 +137,6 @@ public class Enemy : MonoBehaviour
                     EnemyTime = 0;
                 }
             }
-
 
             if (PlayerRangeDifference <= AtackDecision && AtackOn == false && NonDirectAttack == false)//攻撃中
             { AtackOn = true; }
@@ -139,16 +160,13 @@ public class Enemy : MonoBehaviour
     {
         if (PlayerTracking == false)
         {
-            //移動方向
-            if (MoveSwitch)//前に進む
-                transform.Translate(0, 0, ZMove * Time.deltaTime);
+            //前に進む
+            if (MoveSwitch) { transform.Translate(0, 0, ZMove * Time.deltaTime);}
         }
-
 
         TargetPos = NearObj.transform.position;
         //プレイヤーのYの位置と敵のYの位置を同じにしてX軸が回転しないようにします。
         TargetPos.y = this.transform.position.y;
-
 
         //敵の索敵範囲に入ったらプレイヤーに追従開始
         if (PlayerRangeDifference <= OnPlayerTracking)
@@ -171,6 +189,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void DrectionChange()
     {
+
         RandomOn = Random.Range(MoveTimeLow, MoveTimeHigh);
         //一定間隔で移動方向を変更
         if (EnemyTime >= RandomOn && PlayerTracking == false)
@@ -181,19 +200,41 @@ public class Enemy : MonoBehaviour
 
             if (EnemyTime >= RandomOn + Latency)
             {
-
-                for (; DrectionNumber == Ran1 || DrectionNumber == Ran2;)
+                RotationTime += Time.deltaTime;
+                if(First==false)
                 {
-                    RandomNumber = Random.Range(DerectionLow, DerectionHigh);
-                    if (RandomNumber >= 0 && RandomNumber <= 90) { DrectionNumber = 1; }
-                    if (RandomNumber >= 91 && RandomNumber <= 180) { DrectionNumber = 2; }
-                    if (RandomNumber >= -90 && RandomNumber <= 1) { DrectionNumber = 3; }
-                    if (RandomNumber >= -180 && RandomNumber <= -91) { DrectionNumber = 4; }
+                   for (; DrectionNumber == Ran1 || DrectionNumber == Ran2;)
+                   {
+                        RandomNumber = Random.Range(DerectionLow, DerectionHigh);
+                        if (RandomNumber >= 0 && RandomNumber <= 18) { DrectionNumber = 1; }
+                        if (RandomNumber >= 19 && RandomNumber <= 36) { DrectionNumber = 2; }
+                        if (RandomNumber >= -18 && RandomNumber <= 1) { DrectionNumber = 3; }
+                        if (RandomNumber >= -36 && RandomNumber <= -19) { DrectionNumber = 4; }
+                        if (RandomNumber >= 0)
+                        {
+                            if (YPlus <= 0) { YPlus = RotationPlus; }
+                        }
+                        if (RandomNumber <= 0)
+                        {
+                            RandomNumber = RandomNumber * -1;
+                            YPlus = YPlus * -1;
+                        }
+                   }
+                    First = true;
                 }
 
-                this.transform.localRotation = Quaternion.Euler(0, RandomNumber, 0);
-                MoveSwitch = true;
-                EnemyTime = 0;
+                if(RandomNumber!=RotationCount&RotationTime>=RotateHours)
+                {
+                    transform.Rotate(0, YPlus, 0);
+                    RotationCount++;
+                    if(RandomNumber == RotationCount)
+                    {
+                        First = false;
+                        EnemyTime = 0;
+                        MoveSwitch = true;
+                        RotationCount = 0;
+                    }
+                }
             }
         }
     }
@@ -261,17 +302,15 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "PlayerAttack")
         {
-            EnemyHp -= 10;//HPを減らす
-            if (EnemyHp <= 0)
+            EnemyStatus.Hp -= 10;//HPを減らす
+            if (EnemyStatus.Hp <= 0)
             {
-                EnemyHp = 0;
+                EnemyStatus.Hp = 0;
             }
             ReceivedDamage = true;//敵を硬直させる
             EnemyTime = 0;
         }
     }
-
-
 
     /// <summary>
     /// プレイヤーの位置取得
