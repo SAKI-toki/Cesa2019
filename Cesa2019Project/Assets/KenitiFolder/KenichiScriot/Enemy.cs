@@ -42,8 +42,6 @@ public class Enemy : MonoBehaviour
     float RotationPlus=5f;
     [SerializeField, Header("RotationPlusが足される時間")]
     float RotateHours=0.1f;
-    [SerializeField]
-    bool NavMeshOn=false;
 
     [SerializeField, Header("trueになったら破壊")]
     bool DestroyDebug = false;
@@ -76,7 +74,7 @@ public class Enemy : MonoBehaviour
 
     Status EnemyStatus=new Status();
 
-    Vector3 TargetPos;
+    Vector3 TargetPos;//
     Quaternion From;
 
     NavMeshAgent Agent=null;
@@ -163,13 +161,7 @@ public class Enemy : MonoBehaviour
         if (PlayerTracking == false)
         {
             //前に進む
-            if (MoveSwitch && NavMeshOn == false) { transform.Translate(0, 0, ZMove * Time.deltaTime);}
-                
-            if (MoveSwitch && NavMeshOn == true)
-            {
-                Vector3 move = Vector3.forward;
-                Agent.Move(move * Time.deltaTime * 5);
-            }
+            if (MoveSwitch) { transform.Translate(0, 0, ZMove * Time.deltaTime);}
         }
 
         TargetPos = NearObj.transform.position;
