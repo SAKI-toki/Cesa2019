@@ -44,7 +44,7 @@ public class Star : MonoBehaviour
             //小さい星が10個貯まったら大きい星加算
             if (LittleStar >= 10)
             {
-                little = -10;
+                little -= 10;
                 AddLittleStar(little);
                 Big++;
                 AddBigStar(Big);
