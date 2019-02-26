@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class DebugRecorder : MonoBehaviour
 {
     [SerializeField]
-    Text RimText;
+    Text RimText = null;
     [SerializeField]
-    Renderer[] RimRenderer;
+    Renderer[] RimRenderer = null;
     float RimValue = 0;
     void Start()
     {

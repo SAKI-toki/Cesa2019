@@ -5,7 +5,7 @@ using UnityEngine;
 public class DebugCameraController : MonoBehaviour
 {
     [SerializeField]
-    float MoveSpeed;
+    float MoveSpeed = 1.0f;
 
     float RotX = 0, RotY = 0;
     void Update()
