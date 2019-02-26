@@ -19,7 +19,10 @@ public class Star : MonoBehaviour
     //大きい星
     [SerializeField]
     public int BigStar;
-    [SerializeField]
+
+
+    int little;
+    int Big;
     //初期化
     void Start()
     {
@@ -31,21 +34,46 @@ public class Star : MonoBehaviour
 
     void Update()
     {
+        //↓ここから
         //小さい星加算
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            LittleStar++;
-            //Debug.Log(LittleStar);
+            little++;
+            AddLittleStar(little);
+
+            //小さい星が10個貯まったら大きい星加算
+            if (LittleStar >= 10)
+            {
+                little -= 10;
+                AddLittleStar(little);
+                Big++;
+                AddBigStar(Big);
+            }
         }
-        //小さい星が10個貯まったら大きい星加算
-        if (LittleStar == 10)
-        {
-            BigStar++;
-            LittleStar = 0;
-            //Debug.Log(BigStar);
-        }
+        //↑ここまで繋げるときに消して
+
         //UIテキストに表示
         LittleStarText.text = "Little:" + LittleStar.ToString("00");
         BigStarText.text = "Big:" + BigStar.ToString("00");
+    }
+
+    /// <summary>
+    /// 小さい星
+    /// </summary>
+    /// <param name="little"></param>
+    /// <returns>LittleStar</returns>
+    public int AddLittleStar(int little)
+    {
+        return LittleStar = little;
+    }
+    
+    /// <summary>
+    /// 大きい星
+    /// </summary>
+    /// <param name="Big"></param>
+    /// <returns></returns>
+    public int AddBigStar(int Big)
+    {
+        return BigStar = Big;
     }
 }
