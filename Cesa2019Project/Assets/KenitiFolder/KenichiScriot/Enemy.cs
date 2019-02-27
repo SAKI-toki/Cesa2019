@@ -340,6 +340,7 @@ public class Enemy : MonoBehaviour
         //return GameObject.Find(nearObjName);
         return targetObj;
     }
+    
 }
 
 

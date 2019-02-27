@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// フェードや雰囲気を作るカメラ
+/// </summary>
 public class FadeCamera : MonoBehaviour
 {
     [SerializeField, Header("フェードマテリアル")]

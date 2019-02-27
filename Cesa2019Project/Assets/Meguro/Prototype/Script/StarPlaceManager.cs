@@ -55,12 +55,12 @@ public class StarPlaceManager : MonoBehaviour
                         if (distance < ActiveDistance)
                         {
                             // 星を持っていたら
-                            if (PlayerController.StarHave > 0)
+                            if (PlayerController.StarPieceHave > 10)
                             {
                                 StarPlaceList[i].isActive = true;
                             }
                             // 星を持っていない
-                            else if (PlayerController.StarHave <= 0)
+                            else if (PlayerController.StarPieceHave <= 10)
                             {
                                 Debug.Log("====星が無いよ====");
                             }
@@ -124,7 +124,8 @@ public class StarPlaceManager : MonoBehaviour
         Time.timeScale = 1.0f;
         StarSelectUI.SetActive(false);
         StarPlaceList[StarSelectPlaceNum].isSet = true;
-        --PlayerController.StarHave;
+        //--PlayerController.StarHave;
+        PlayerController.StarPieceHave -= 10;
         GameObject star = Instantiate(Star, PlayerPos + new Vector3(0, 2, 0), Quaternion.identity);
 
         AllPlaceSet = AllPlaceSetCheck();

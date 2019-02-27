@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     float LeftStickV = 0;                   // コントローラー上下
     float Trigger = 0;                      // コントローラートリガー
     public static int StarPieceHave = 0;    // 星の欠片を持っている数
-    public static int StarHave = 0;         // 星を持っている数
+    //public static int StarHave = 0;         // 星を持っている数
     [SerializeField, Header("歩く速度")]
     float WalkVal = 0;                      // プレイヤーの歩く速度
     [SerializeField, Header("ジャンプ速度")]
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         PlayerRigid = GetComponent<Rigidbody>();
         PlayerAnimator = GetComponent<Animator>();
         StarPieceHave = 0;
-        StarHave = 0;
+        //StarHave = 0;
     }
 
     void Update()
@@ -96,11 +96,11 @@ public class PlayerController : MonoBehaviour
             }
         }
         // 星製造
-        if (StarPieceHave >= 5)
-        {
-            StarPieceHave -= 5;         // 星を作るのに必要な数だけ星の欠片減らす
-            ++StarHave;                 // 星を1つ作る
-        }
+        //if (StarPieceHave >= 5)
+        //{
+        //    StarPieceHave -= 5;         // 星を作るのに必要な数だけ星の欠片減らす
+        //    ++StarHave;                 // 星を1つ作る
+        //}
         if (Input.GetKeyDown(KeyCode.P))
         {
             PlayerStatusDebugSwitch();
@@ -146,8 +146,8 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        PlayerAnimator.SetBool("Jumpflg", false);
-        MoveJump = false;
+        //    PlayerAnimator.SetBool("Jumpflg", false);
+        //    MoveJump = false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -157,6 +157,10 @@ public class PlayerController : MonoBehaviour
         {
             ++StarPieceHave;
             Destroy(other.gameObject);
+        }
+        if (other.gameObject.tag == "Enemy")
+        {
+            PlayerStatus.CurrentHp -= 10;
         }
     }
 

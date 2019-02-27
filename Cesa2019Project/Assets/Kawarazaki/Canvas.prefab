@@ -100,7 +100,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_textAlignment: 257
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: 5
@@ -548,7 +548,7 @@ MonoBehaviour:
   FrontHp: {fileID: 850110136660802259}
   BackHp: {fileID: 850110137459885880}
   Hp: 100
-  Damege: 10
+  Damage: 10
 --- !u!1 &850110136660802221
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,7 +632,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 850110137136982733}
-  - component: {fileID: 850110137136982732}
   - component: {fileID: 511008765}
   m_Layer: 5
   m_Name: Star
@@ -662,22 +661,6 @@ RectTransform:
   m_AnchoredPosition: {x: -20, y: 15}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &850110137136982732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 850110137136982734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edfb1a08c79e1de4a987c27968fc4b51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LittleStarText: {fileID: 0}
-  BigStarText: {fileID: 0}
-  LittleStar: 0
-  BigStar: 0
 --- !u!114 &511008765
 MonoBehaviour:
   m_ObjectHideFlags: 0
