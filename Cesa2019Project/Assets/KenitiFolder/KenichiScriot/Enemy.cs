@@ -12,8 +12,14 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     GameObject NearObj;//プレイヤーの位置取得
-    [SerializeField]
     GameObject Star = null;
+    [SerializeField, Header("赤")]
+    GameObject RedStar = null;
+    [SerializeField, Header("青")]
+    GameObject BlueStar = null;
+    [SerializeField, Header("黄")]
+    GameObject YellowStar = null;
+
     [SerializeField, Header("移動力")]
     float ZMove = 5;//移動力
     [SerializeField, Header("敵のHP")]
@@ -57,6 +63,7 @@ public class Enemy : MonoBehaviour
     int Ran2;//Ran1の値を保存
     int DrectionNumber;//方向に応じて数値を保存
     int RotationCount = 0;
+    int StarRandom = 0;
 
     float PlayerRangeDifference;//プレイヤーと敵の距離差
     float EnemyTime;//敵の時間
@@ -125,6 +132,10 @@ public class Enemy : MonoBehaviour
             {
                 for (int i = 0; StarCount != i; i++)
                 {
+                    StarRandom = Random.Range(1, 4);
+                    if (StarRandom == 1) { Star = RedStar; }
+                    if (StarRandom == 2) { Star = BlueStar; }
+                    if (StarRandom == 3) { Star = YellowStar; }
                     GameObject item = Instantiate(Star) as GameObject;
                     item.transform.position = transform.position;
                     item.transform.Rotate(0, Random.Range(-180, 180), 0);
