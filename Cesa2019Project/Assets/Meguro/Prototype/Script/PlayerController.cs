@@ -148,6 +148,11 @@ public class PlayerController : MonoBehaviour
     {
         PlayerAnimator.SetBool("Jumpflg", false);
         MoveJump = false;
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Debug.Log("enemy");
+            PlayerStatus.CurrentHp -= 10;
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -157,10 +162,6 @@ public class PlayerController : MonoBehaviour
         {
             ++StarPieceHave;
             Destroy(other.gameObject);
-        }
-        if (other.gameObject.tag == "Enemy")
-        {
-            PlayerStatus.CurrentHp -= 10;
         }
     }
 

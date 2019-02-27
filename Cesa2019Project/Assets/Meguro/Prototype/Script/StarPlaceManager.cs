@@ -32,6 +32,11 @@ public class StarPlaceManager : MonoBehaviour
             if (null != child.GetComponent<StarPlace>())
             {
                 StarPlaceList.Add(child.GetComponent<StarPlace>());
+                //最初からセットしているかどうか
+                if(child.GetComponent<StarPlace>().IsAwakeSet)
+                {
+                    Instantiate(Star, child.transform.position + new Vector3(0, 2, 0), Quaternion.identity);
+                }
             }
         }
     }
@@ -126,8 +131,15 @@ public class StarPlaceManager : MonoBehaviour
         StarPlaceList[StarSelectPlaceNum].isSet = true;
         //--PlayerController.StarHave;
         PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
-        GameObject star = Instantiate(Star, PlayerPos + new Vector3(0, 2, 0), Quaternion.identity);
+        GenerateStar(StarSelectPlaceNum);
+        //GameObject star = Instantiate(Star, PlayerPos + new Vector3(0, 2, 0), Quaternion.identity);
 
+        //AllPlaceSet = AllPlaceSetCheck();
+    }
+
+    void GenerateStar(int n)
+    {
+        Instantiate(Star, StarPlaceList[n].gameObject.transform.position + new Vector3(0, 2, 0), Quaternion.identity);
         AllPlaceSet = AllPlaceSetCheck();
     }
 
