@@ -55,8 +55,8 @@ public class Star : MonoBehaviour
         //UIテキストに表示
         //LittleStarText.text = "Little:" + LittleStar.ToString("00");
         //BigStarText.text = "Big:" + BigStar.ToString("00");
-        LittleStarText.text = "Little:" + (PlayerController.StarPieceHave % 10).ToString("00");
-        BigStarText.text = "Big:" + (PlayerController.StarPieceHave / 10).ToString("00");
+        LittleStarText.text = "Little:" + (PlayerController.StarPieceHave % Constant.ConstNumber.StarConversion).ToString("00");
+        BigStarText.text = "Big:" + (PlayerController.StarPieceHave / Constant.ConstNumber.StarConversion).ToString("00");
     }
 
     ///// <summary>
