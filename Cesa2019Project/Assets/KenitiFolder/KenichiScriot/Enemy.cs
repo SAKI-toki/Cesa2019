@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     [SerializeField, Header("敵のHP")]
     float EnemyHp = 30;//HPを設定する
     [SerializeField, Header("敵の攻撃力")]
-    float EnemyAtackPoint = 0;
+    float EnemyAttackPoint = 0;
     [SerializeField, Header("敵の防御力")]
     float EnemyDefence = 0;
     [SerializeField, Header("索敵範囲")]
@@ -27,13 +27,13 @@ public class Enemy : MonoBehaviour
     [SerializeField, Header("移動後の待機時間")]
     float Latency = 1;//待機時間
     [SerializeField, Header("攻撃のために止まる範囲")]
-    float AtackDecision = 2f;
+    float AttackDecision = 2f;
     [SerializeField, Header("攻撃の硬直時間")]
-    float AtackWait = 3;//攻撃の硬直時間
+    float AttackWait = 3;//攻撃の硬直時間
     [SerializeField, Header("被弾時の硬直時間")]
     float Rigor_Cancellation = 1;//被弾時の硬直時間
     [SerializeField, Header("スピードアタックするかどうか")]
-    bool SpeedAtack;
+    bool SpeedAttackFlag;
     [SerializeField, Header("直接攻撃しない敵の場合true")]
     bool NonDirectAttack = false;
     [SerializeField, Header("星を出す数")]
@@ -42,6 +42,10 @@ public class Enemy : MonoBehaviour
     float RotationPlus=5f;
     [SerializeField, Header("RotationPlusが足される時間")]
     float RotateHours=0.1f;
+    [SerializeField,Header("攻撃判定を出す位置")]
+    Vector3 Offset = new Vector3();
+    [SerializeField]
+    GameObject AttackPrefab=null;
 
     [SerializeField, Header("trueになったら破壊")]
     bool DestroyDebug = false;
@@ -57,10 +61,10 @@ public class Enemy : MonoBehaviour
     float PlayerRangeDifference;//プレイヤーと敵の距離差
     float EnemyTime;//敵の時間
     float RandomOn;//移動方向変更の時間
-    float SpeedAtackTime;//スピードアタックの時間
+    float SpeedAttackTime;//スピードアタックの時間
     float MoveTimeLow;//移動している時間の低値
     float MoveTimeHigh;//移動している時間高値
-    float AtackTime;//攻撃の時間
+    float AttackTime;//攻撃の時間
     float YPlus;//rotationを動かす角度
     float RotationTime = 0;//敵のrotation変更の時に使う時間
 
@@ -68,9 +72,10 @@ public class Enemy : MonoBehaviour
     bool PlayerTracking;//プレイヤーに追従してるときにtrue
     bool MoveSwitch;//前に移動する
     bool Wait;//待機状態が解けたか
-    bool AtackEnemy;//攻撃中か
-    bool AtackOn;//攻撃中か
+    bool AttackEnemy;//攻撃中か
+    bool AttackOn;//攻撃中か
     bool First=false;//一度だけ実行させる
+    bool AttackFirst = false;
 
     Status EnemyStatus=new Status();
 
@@ -87,15 +92,15 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         EnemyStatus.Hp = EnemyHp;
-        EnemyStatus.Attack = EnemyAtackPoint;
+        EnemyStatus.Attack = EnemyAttackPoint;
         EnemyStatus.Defense = EnemyDefence;
         EnemyStatus.Speed = ZMove;
         EnemyStatus.ResetStatus();
         Wait = false;
-        AtackOn = false;
+        AttackOn = false;
         MoveTimeLow = 1.0f;
         MoveTimeHigh = 3.0f;
-        DerectionLow = -36;
+        DerectionLow = 1;
         DerectionHigh = 36;
         YPlus = RotationPlus;
         RandomOn = Random.Range(MoveTimeLow, MoveTimeHigh);
@@ -138,12 +143,12 @@ public class Enemy : MonoBehaviour
                 }
             }
 
-            if (PlayerRangeDifference <= AtackDecision && AtackOn == false && NonDirectAttack == false)//攻撃中
-            { AtackOn = true; }
+            if (PlayerRangeDifference <= AttackDecision && AttackOn == false && NonDirectAttack == false&&ReceivedDamage==false)//攻撃中
+            { AttackOn = true; }
 
-            if (AtackOn == true) { Atack(); }
+            if (AttackOn == true) { Attack(); }
 
-            if (ReceivedDamage == false && AtackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
+            if (ReceivedDamage == false && AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
             {
 
                 Move();
@@ -176,7 +181,7 @@ public class Enemy : MonoBehaviour
             transform.LookAt(TargetPos);//対象の位置方向を向く 
             transform.Translate(0, 0, ZMove * Time.deltaTime);
 
-            Speedatack();
+            SpeedAttack();
         }
         else
         {
@@ -203,22 +208,26 @@ public class Enemy : MonoBehaviour
                 RotationTime += Time.deltaTime;
                 if(First==false)
                 {
-                   for (; DrectionNumber == Ran1 || DrectionNumber == Ran2;)
+                   for (; DrectionNumber == Ran1 && DrectionNumber == Ran2;)
                    {
                         RandomNumber = Random.Range(DerectionLow, DerectionHigh);
-                        if (RandomNumber >= 0 && RandomNumber <= 18) { DrectionNumber = 1; }
+                        
+                        //int random = Random.Range(2, 2);
+                        RandomNumber = RandomNumber * -1;
+                        if (RandomNumber >= 1 && RandomNumber <= 18) { DrectionNumber = 1; }
                         if (RandomNumber >= 19 && RandomNumber <= 36) { DrectionNumber = 2; }
-                        if (RandomNumber >= -18 && RandomNumber <= 1) { DrectionNumber = 3; }
-                        if (RandomNumber >= -36 && RandomNumber <= -19) { DrectionNumber = 4; }
-                        if (RandomNumber >= 0)
-                        {
-                            if (YPlus <= 0) { YPlus = RotationPlus; }
-                        }
-                        if (RandomNumber <= 0)
-                        {
-                            RandomNumber = RandomNumber * -1;
-                            YPlus = YPlus * -1;
-                        }
+                        if (RandomNumber >= -18 && RandomNumber <= -1) { DrectionNumber = 1; }
+                        if (RandomNumber >= -36 && RandomNumber <= -19) { DrectionNumber = 3; }
+                       
+                   }
+                   if (RandomNumber >= 0)
+                   {
+                        if (YPlus <= 0) { YPlus = RotationPlus; }
+                   }
+                   if (RandomNumber <= 0)
+                   {
+                        RandomNumber = RandomNumber * -1;
+                        YPlus = YPlus * -1;
                    }
                     First = true;
                 }
@@ -242,35 +251,35 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// 一旦止まって高速で突撃する攻撃をするときに使う
     /// </summary>
-    void Speedatack()
+    void SpeedAttack()
     {
-        if (SpeedAtack)
+        if (SpeedAttackFlag)
         {
             float taiki = 0.5f;
             if (PlayerRangeDifference <= taiki && Wait == false)
             {
                 ZMove = 0;
                 int speedTime = 1;
-                SpeedAtackTime += Time.deltaTime;
-                if (SpeedAtackTime >= speedTime)
+                SpeedAttackTime += Time.deltaTime;
+                if (SpeedAttackTime >= speedTime)
                 {
                     Wait = true;
-                    SpeedAtackTime = 0;
+                    SpeedAttackTime = 0;
                 }
             }
 
             if (Wait == true)
             {
                 ZMove = 0.7f;
-                SpeedAtackTime += Time.deltaTime;
+                SpeedAttackTime += Time.deltaTime;
                 float speedTime2 = 5;
-                int speedAtackMove = 3;
+                int speedAttackMove = 3;
                 transform.LookAt(TargetPos);//対象の位置方向を向く 
-                transform.Translate(0, 0, ZMove * speedAtackMove * Time.deltaTime);
-                if (SpeedAtackTime >= speedTime2)
+                transform.Translate(0, 0, ZMove * speedAttackMove * Time.deltaTime);
+                if (SpeedAttackTime >= speedTime2)
                 {
                     Wait = false;
-                    SpeedAtack = false;
+                    SpeedAttackFlag = false;
                 }
             }
         }
@@ -279,18 +288,25 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// 攻撃判定をだす
     /// </summary>
-    void Atack()
+    void Attack()
     {
-        AtackTime += Time.deltaTime;
-        AtackEnemy = true;
-        this.GetComponent<BoxCollider>().enabled = false;
-        if (AtackTime >= AtackWait)
+        AttackTime += Time.deltaTime;
+        AttackEnemy = true;
+        if(AttackFirst==false)
         {
-            AtackEnemy = false;
-            AtackTime = 0;
+            Vector3 position = transform.position + transform.up * Offset.y +
+            transform.right * Offset.x +
+            transform.forward * Offset.z;
+            Instantiate(AttackPrefab, position, transform.rotation);
+            AttackFirst = true;
+        }
+        if (AttackTime >= AttackWait)
+        {
+            AttackEnemy = false;
+            AttackTime = 0;
             EnemyTime = 0;
-            AtackOn = false;
-            this.GetComponent<BoxCollider>().enabled = true;
+            AttackOn = false;
+            AttackFirst = false;
         }
     }
 
@@ -298,15 +314,16 @@ public class Enemy : MonoBehaviour
     /// 当たり判定とダメージ判定
     /// </summary>
     /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "PlayerAtack")
+        if (other.gameObject.tag == "PlayerAttack")
         {
             EnemyStatus.Hp -= 10;//HPを減らす
             if (EnemyStatus.Hp <= 0)
             {
                 EnemyStatus.Hp = 0;
             }
+
             ReceivedDamage = true;//敵を硬直させる
             EnemyTime = 0;
         }

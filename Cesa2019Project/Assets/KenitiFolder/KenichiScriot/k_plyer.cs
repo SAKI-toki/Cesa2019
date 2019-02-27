@@ -31,6 +31,9 @@ public class k_plyer : MonoBehaviour
         if (Input.GetKey(KeyCode.DownArrow))//下に進む
             transform.position += new Vector3(0, 0, -zmove*Time.deltaTime);
 
+        if (Input.GetKey(KeyCode.A)) { transform.Rotate(0, -5, 0); }
+        if (Input.GetKey(KeyCode.D)) { transform.Rotate(0, 5, 0); }
+
         if(Input.GetKeyDown(KeyCode.Space))
         {
             if (Time.timeScale != 0) { Time.timeScale = 0.3f;}
@@ -41,5 +44,7 @@ public class k_plyer : MonoBehaviour
         {
             if (Time.timeScale == 0.3f) { Time.timeScale = 1; }
         }
+
+
     }
 }

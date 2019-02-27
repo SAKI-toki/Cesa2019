@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2463675136997139781}
-  - component: {fileID: 1853673370239097435}
   - component: {fileID: 2463675136997139785}
   - component: {fileID: 2463675136997139786}
   - component: {fileID: 2463675136997139782}
@@ -38,19 +37,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1853673370239097435
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2463675136997139784}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.2384228, y: 1, z: 1.6462979}
-  m_Center: {x: -0.018303454, y: 0, z: 1.3367031}
 --- !u!114 &2463675136997139785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,19 +52,21 @@ MonoBehaviour:
   Star: {fileID: 3015167101791313104, guid: 449eb74bb9eedcb4ba0227e035af611f, type: 3}
   ZMove: 5
   EnemyHp: 30
-  EnemyAtackPoint: 0
+  EnemyAttackPoint: 0
   EnemyDefence: 0
   OnPlayerTracking: 10
   Latency: 1
-  AtackDecision: 2
-  AtackWait: 3
+  AttackDecision: 2
+  AttackWait: 3
   Rigor_Cancellation: 1
-  SpeedAtack: 0
+  SpeedAttackFlag: 0
   NonDirectAttack: 0
   StarCount: 1
   RotationPlus: 5
   RotateHours: 0.1
-  NavMeshOn: 0
+  Offset: {x: 0, y: 0, z: 1.5}
+  AttackPrefab: {fileID: 9027682551869182764, guid: 7115063cdc7c456419fba109e6139a06,
+    type: 3}
   DestroyDebug: 0
 --- !u!65 &2463675136997139786
 BoxCollider:
@@ -187,7 +175,6 @@ GameObject:
   - component: {fileID: 2463675137319394060}
   - component: {fileID: 2463675137319394063}
   - component: {fileID: 2463675137319394062}
-  - component: {fileID: 2463675137319394061}
   m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
@@ -254,16 +241,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &2463675137319394061
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2463675137319394067}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
