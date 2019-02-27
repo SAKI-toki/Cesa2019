@@ -150,7 +150,6 @@ public class PlayerController : MonoBehaviour
         MoveJump = false;
         if (collision.gameObject.tag == "Enemy")
         {
-            Debug.Log("enemy");
             PlayerStatus.CurrentHp -= 10;
         }
     }
