@@ -146,8 +146,8 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //    PlayerAnimator.SetBool("Jumpflg", false);
-        //    MoveJump = false;
+        PlayerAnimator.SetBool("Jumpflg", false);
+        MoveJump = false;
     }
 
     void OnTriggerEnter(Collider other)
