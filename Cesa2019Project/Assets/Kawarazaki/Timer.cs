@@ -7,13 +7,26 @@ public class Timer : MonoBehaviour
 {
     private TextMeshProUGUI TimerText;
     //制限時間(分)
-    [SerializeField]
+    [SerializeField, Header("分")]
     private int Minute;
     //制限時間(秒)
-    [SerializeField]
+    [SerializeField, Header("秒")]
     private float Seconds;
     //前回Update時の秒数
     private float OldSeconds;
+
+    //カウントダウンテキストポジション
+    [SerializeField,Header("カウントダウンポジションX")]
+    private float TextPosX;
+    [SerializeField, Header("カウントダウンポジションY")]
+    private float TextPosY;
+
+    //カウントダウンテキストスケール
+    [SerializeField, Header("カウントダウンスケールX")]
+    private float TextScaleX;
+    [SerializeField, Header("カウントダウンスケールY")]
+    private float TextScaleY;
+
 
     //トータル制限時間
     private float TotalTime;
@@ -28,7 +41,6 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
-
         //制限時間が0秒以下なら何もしない
         if (TotalTime <= 0.0f)
         {
@@ -64,8 +76,8 @@ public class Timer : MonoBehaviour
         //6秒切ったらテキストを画面中央に移動
         if (TotalTime <= 6.0f)
         {
-            GetComponent<RectTransform>().localPosition = new Vector3(0, 200, 0);
-            GetComponent<RectTransform>().localScale = new Vector3(2, 2, 0);
+            GetComponent<RectTransform>().localPosition = new Vector3(TextPosX, TextPosY, 0);
+            GetComponent<RectTransform>().localScale = new Vector3(TextScaleX, TextScaleY, 0);
             TimerText.color = new Color(1, 0, 0, 1);
             TimerText.text = ((int)Seconds).ToString("0");
         }
