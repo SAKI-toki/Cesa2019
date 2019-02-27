@@ -37,15 +37,15 @@ public class Enemy : MonoBehaviour
     [SerializeField, Header("直接攻撃しない敵の場合true")]
     bool NonDirectAttack = false;
     [SerializeField, Header("星を出す数")]
-    int StarCount=1;
+    int StarCount = 1;
     [SerializeField, Header("敵の回る速度")]
-    float RotationPlus=5f;
+    float RotationPlus = 5f;
     [SerializeField, Header("RotationPlusが足される時間")]
-    float RotateHours=0.1f;
-    [SerializeField,Header("攻撃判定を出す位置")]
+    float RotateHours = 0.1f;
+    [SerializeField, Header("攻撃判定を出す位置")]
     Vector3 Offset = new Vector3();
     [SerializeField]
-    GameObject AttackPrefab=null;
+    GameObject AttackPrefab = null;
 
     [SerializeField, Header("trueになったら破壊")]
     bool DestroyDebug = false;
@@ -74,15 +74,15 @@ public class Enemy : MonoBehaviour
     bool Wait;//待機状態が解けたか
     bool AttackEnemy;//攻撃中か
     bool AttackOn;//攻撃中か
-    bool First=false;//一度だけ実行させる
+    bool First = false;//一度だけ実行させる
     bool AttackFirst = false;
 
-    Status EnemyStatus=new Status();
+    Status EnemyStatus = new Status();
 
     Vector3 TargetPos;//
     Quaternion From;
 
-    NavMeshAgent Agent=null;
+    NavMeshAgent Agent = null;
 
     // Start is called before the first frame update
 
@@ -105,7 +105,7 @@ public class Enemy : MonoBehaviour
         YPlus = RotationPlus;
         RandomOn = Random.Range(MoveTimeLow, MoveTimeHigh);
         NearObj = searchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
-        Agent= GetComponent<NavMeshAgent>();
+        Agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -124,11 +124,11 @@ public class Enemy : MonoBehaviour
 
             if (EnemyStatus.Hp <= 0 || DestroyDebug == true || EnemyHp <= 0)
             {
-                for(int i=0;StarCount!=i;i++)
+                for (int i = 0; StarCount != i; i++)
                 {
-                  GameObject item = Instantiate(Star) as GameObject;
-                  item.transform.position = transform.position;
-                  item.transform.Rotate(0, Random.Range(-180, 180), 0);
+                    GameObject item = Instantiate(Star) as GameObject;
+                    item.transform.position = transform.position;
+                    item.transform.Rotate(0, Random.Range(-180, 180), 0);
                 }
 
                 Destroy(this.gameObject);
@@ -143,7 +143,7 @@ public class Enemy : MonoBehaviour
                 }
             }
 
-            if (PlayerRangeDifference <= AttackDecision && AttackOn == false && NonDirectAttack == false&&ReceivedDamage==false)//攻撃中
+            if (PlayerRangeDifference <= AttackDecision && AttackOn == false && NonDirectAttack == false && ReceivedDamage == false)//攻撃中
             { AttackOn = true; }
 
             if (AttackOn == true) { Attack(); }
@@ -166,7 +166,7 @@ public class Enemy : MonoBehaviour
         if (PlayerTracking == false)
         {
             //前に進む
-            if (MoveSwitch) { transform.Translate(0, 0, ZMove * Time.deltaTime);}
+            if (MoveSwitch) { transform.Translate(0, 0, ZMove * Time.deltaTime); }
         }
 
         TargetPos = NearObj.transform.position;
@@ -206,37 +206,37 @@ public class Enemy : MonoBehaviour
             if (EnemyTime >= RandomOn + Latency)
             {
                 RotationTime += Time.deltaTime;
-                if(First==false)
+                if (First == false)
                 {
-                   for (; DrectionNumber == Ran1 && DrectionNumber == Ran2;)
-                   {
+                    for (; DrectionNumber == Ran1 && DrectionNumber == Ran2;)
+                    {
                         RandomNumber = Random.Range(DerectionLow, DerectionHigh);
-                        
+
                         //int random = Random.Range(2, 2);
                         RandomNumber = RandomNumber * -1;
                         if (RandomNumber >= 1 && RandomNumber <= 18) { DrectionNumber = 1; }
                         if (RandomNumber >= 19 && RandomNumber <= 36) { DrectionNumber = 2; }
                         if (RandomNumber >= -18 && RandomNumber <= -1) { DrectionNumber = 1; }
                         if (RandomNumber >= -36 && RandomNumber <= -19) { DrectionNumber = 3; }
-                       
-                   }
-                   if (RandomNumber >= 0)
-                   {
+
+                    }
+                    if (RandomNumber >= 0)
+                    {
                         if (YPlus <= 0) { YPlus = RotationPlus; }
-                   }
-                   if (RandomNumber <= 0)
-                   {
+                    }
+                    if (RandomNumber <= 0)
+                    {
                         RandomNumber = RandomNumber * -1;
                         YPlus = YPlus * -1;
-                   }
+                    }
                     First = true;
                 }
 
-                if(RandomNumber!=RotationCount&RotationTime>=RotateHours)
+                if (RandomNumber != RotationCount & RotationTime >= RotateHours)
                 {
                     transform.Rotate(0, YPlus, 0);
                     RotationCount++;
-                    if(RandomNumber == RotationCount)
+                    if (RandomNumber == RotationCount)
                     {
                         First = false;
                         EnemyTime = 0;
@@ -292,7 +292,7 @@ public class Enemy : MonoBehaviour
     {
         AttackTime += Time.deltaTime;
         AttackEnemy = true;
-        if(AttackFirst==false)
+        if (AttackFirst == false)
         {
             Vector3 position = transform.position + transform.up * Offset.y +
             transform.right * Offset.x +

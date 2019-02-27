@@ -8,7 +8,7 @@ using UnityEngine;
 public class WaveController : MonoBehaviour
 {
     [SerializeField]
-    GameObject[] Waves=null;// Waveプレハブを格納する
+    GameObject[] Waves = null;// Waveプレハブを格納する
 
     // 現在のWave
     private int CurrentWave;

@@ -5,27 +5,27 @@ using UnityEngine;
 public class StarMove : MonoBehaviour
 {
     GameObject NearObj;//プレイヤーの位置取得
-    new Rigidbody rigidbody=null;
-//
-    [SerializeField,Header("アイテムの追尾範囲")]
-    float ItemOn=10;
+    new Rigidbody rigidbody = null;
+    //
+    [SerializeField, Header("アイテムの追尾範囲")]
+    float ItemOn = 10;
     [SerializeField, Header("アイテム出現時のZ方向の移動")]
-    float Zforword=0;
+    float Zforword = 0;
     [SerializeField, Header("アイテム出現時のY方向の移動")]
-    float Yforword=0;
-    [SerializeField,Header("出現したアイテムが移動する時間")]
-    float LimitTime=2;
+    float Yforword = 0;
+    [SerializeField, Header("出現したアイテムが移動する時間")]
+    float LimitTime = 2;
 
     float ItemTime;
     float ZMove;//
     float PlayerRange;
-    bool First=true;
+    bool First = true;
 
     // Start is called before the first frame update
     void Start()
     {
         ZMove = 7;
-        
+
         NearObj = searchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得 
     }
 
@@ -39,7 +39,7 @@ public class StarMove : MonoBehaviour
         //プレイヤーのYの位置とアイテムのYの位置を同じにしてX軸が回転しないようにします。
         targetPos.y = this.transform.position.y;
 
-        if(First)
+        if (First)
         {
             First = false;
             rigidbody = this.GetComponent<Rigidbody>();
@@ -50,11 +50,11 @@ public class StarMove : MonoBehaviour
 
         }
 
-        if (ItemTime >= LimitTime) { rigidbody.velocity = Vector3.zero;}
+        if (ItemTime >= LimitTime) { rigidbody.velocity = Vector3.zero; }
 
-        if(PlayerRange<=ItemOn)
+        if (PlayerRange <= ItemOn)
         {
-            
+
             transform.LookAt(targetPos);//対象の位置方向を向く 
             transform.Translate(0, 0, ZMove * Time.deltaTime);
         }
@@ -67,7 +67,7 @@ public class StarMove : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag=="Player")
+        if (other.gameObject.tag == "Player")
         {
             Destroy(gameObject);
         }

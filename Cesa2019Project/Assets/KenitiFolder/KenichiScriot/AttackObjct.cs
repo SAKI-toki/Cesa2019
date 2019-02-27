@@ -5,14 +5,14 @@ using UnityEngine;
 public class AttackObjct : MonoBehaviour
 {
     [SerializeField, Header("攻撃判定を出している時間")]
-    float DestoroyTime=1;
+    float DestoroyTime = 1;
 
     float AttackObjectTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -20,7 +20,7 @@ public class AttackObjct : MonoBehaviour
     {
         AttackObjectTime += Time.deltaTime;
 
-        if (AttackObjectTime >= DestoroyTime) { Destroy(gameObject);}
-        
+        if (AttackObjectTime >= DestoroyTime) { Destroy(gameObject); }
+
     }
 }

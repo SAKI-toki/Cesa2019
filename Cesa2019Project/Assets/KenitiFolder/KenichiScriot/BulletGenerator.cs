@@ -5,24 +5,24 @@ using UnityEngine;
 public class BulletGenerator : MonoBehaviour
 {
     [SerializeField, Header("発射間隔")]
-    float BulletGenelateTime=0;
+    float BulletGenelateTime = 0;
     [SerializeField, Header("攻撃範囲（敵の索敵範囲と同じに）")]
-    float AtackDcetion=10;
+    float AtackDcetion = 10;
     [SerializeField]
-    GameObject Bullet=null;
-    [SerializeField,Header("弾の高さ")]
-    Vector3 HighPlus=new Vector3();
-    [SerializeField,Header("弾をだす個数")]
-    int WayBullet=0;
+    GameObject Bullet = null;
+    [SerializeField, Header("弾の高さ")]
+    Vector3 HighPlus = new Vector3();
+    [SerializeField, Header("弾をだす個数")]
+    int WayBullet = 0;
     [SerializeField, Header("弾の間隔")]
-    float BulletInterval=0;
+    float BulletInterval = 0;
 
 
 
-    float BulletTime=0;
-    float PlayerRangeDifference=0;//プレイヤーと敵の距離差
-    float Drection=0;//プレイヤーの向き
-    float BulletDrection=0;//弾の向き
+    float BulletTime = 0;
+    float PlayerRangeDifference = 0;//プレイヤーと敵の距離差
+    float Drection = 0;//プレイヤーの向き
+    float BulletDrection = 0;//弾の向き
 
     GameObject NearObj;//プレイヤーの位置取得
     // Start is called before the first frame update
@@ -34,19 +34,19 @@ public class BulletGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.timeScale!=0)
+        if (Time.timeScale != 0)
         {
-            
+
             PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
 
-            if (PlayerRangeDifference <= AtackDcetion) { BulletTime += Time.deltaTime;}
+            if (PlayerRangeDifference <= AtackDcetion) { BulletTime += Time.deltaTime; }
 
-            if (BulletTime>=BulletGenelateTime)
+            if (BulletTime >= BulletGenelateTime)
             {
-                 Drection = this.GetComponent<Transform>().localEulerAngles.y;
-                BulletDrection= this.GetComponent<Transform>().localEulerAngles.y;
+                Drection = this.GetComponent<Transform>().localEulerAngles.y;
+                BulletDrection = this.GetComponent<Transform>().localEulerAngles.y;
 
-                Way3();    
+                Way3();
             }
         }
     }
@@ -56,11 +56,11 @@ public class BulletGenerator : MonoBehaviour
 
         Shot();
 
-        for (int i=0;WayBullet!=i;i++)
+        for (int i = 0; WayBullet != i; i++)
         {
-            BulletDrection =Drection-BulletInterval * i;
+            BulletDrection = Drection - BulletInterval * i;
             Shot();
-            BulletDrection = Drection+BulletInterval * i;
+            BulletDrection = Drection + BulletInterval * i;
             Shot();
         }
     }
@@ -70,11 +70,11 @@ public class BulletGenerator : MonoBehaviour
     /// </summary>
     void Shot()
     {
-               
-                GameObject item = Instantiate(Bullet) as GameObject;
-                item.transform.position = transform.position+HighPlus;
-                item.transform.Rotate(0, BulletDrection, 0);
-                BulletTime = 0;
+
+        GameObject item = Instantiate(Bullet) as GameObject;
+        item.transform.position = transform.position + HighPlus;
+        item.transform.Rotate(0, BulletDrection, 0);
+        BulletTime = 0;
     }
 
 
