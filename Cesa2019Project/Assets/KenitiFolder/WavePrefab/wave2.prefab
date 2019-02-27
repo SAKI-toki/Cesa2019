@@ -65,18 +65,21 @@ MonoBehaviour:
   Star: {fileID: 3015167101791313104, guid: 449eb74bb9eedcb4ba0227e035af611f, type: 3}
   ZMove: 5
   EnemyHp: 30
-  EnemyAtackPoint: 0
+  EnemyAttackPoint: 0
   EnemyDefence: 0
   OnPlayerTracking: 10
   Latency: 1
-  AtackDecision: 2
-  AtackWait: 3
+  AttackDecision: 2
+  AttackWait: 3
   Rigor_Cancellation: 1
-  SpeedAtack: 0
+  SpeedAttackFlag: 0
   NonDirectAttack: 0
   StarCount: 1
   RotationPlus: 5
   RotateHours: 0.1
+  Offset: {x: 0, y: 0, z: 1.5}
+  AttackPrefab: {fileID: 9027682551869182764, guid: 7115063cdc7c456419fba109e6139a06,
+    type: 3}
   DestroyDebug: 0
 --- !u!65 &3218872181148248307
 BoxCollider:
@@ -341,18 +344,21 @@ MonoBehaviour:
   Star: {fileID: 3015167101791313104, guid: 449eb74bb9eedcb4ba0227e035af611f, type: 3}
   ZMove: 5
   EnemyHp: 30
-  EnemyAtackPoint: 0
+  EnemyAttackPoint: 0
   EnemyDefence: 0
   OnPlayerTracking: 10
   Latency: 1
-  AtackDecision: 2
-  AtackWait: 3
+  AttackDecision: 2
+  AttackWait: 3
   Rigor_Cancellation: 1
-  SpeedAtack: 0
+  SpeedAttackFlag: 0
   NonDirectAttack: 0
   StarCount: 1
   RotationPlus: 5
   RotateHours: 0.1
+  Offset: {x: 0, y: 0, z: 1.5}
+  AttackPrefab: {fileID: 9027682551869182764, guid: 7115063cdc7c456419fba109e6139a06,
+    type: 3}
   DestroyDebug: 0
 --- !u!65 &5840853279351885442
 BoxCollider:
@@ -584,18 +590,21 @@ MonoBehaviour:
   Star: {fileID: 3015167101791313104, guid: 449eb74bb9eedcb4ba0227e035af611f, type: 3}
   ZMove: 5
   EnemyHp: 30
-  EnemyAtackPoint: 0
+  EnemyAttackPoint: 0
   EnemyDefence: 0
   OnPlayerTracking: 10
   Latency: 1
-  AtackDecision: 2
-  AtackWait: 3
+  AttackDecision: 2
+  AttackWait: 3
   Rigor_Cancellation: 1
-  SpeedAtack: 0
+  SpeedAttackFlag: 0
   NonDirectAttack: 0
   StarCount: 1
   RotationPlus: 5
   RotateHours: 0.1
+  Offset: {x: 0, y: 0, z: 1.5}
+  AttackPrefab: {fileID: 9027682551869182764, guid: 7115063cdc7c456419fba109e6139a06,
+    type: 3}
   DestroyDebug: 0
 --- !u!65 &7765325398798948830
 BoxCollider:
