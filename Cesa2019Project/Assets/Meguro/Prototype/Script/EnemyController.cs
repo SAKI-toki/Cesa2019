@@ -5,25 +5,26 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField]
-    GameObject Star = null;
+    GameObject StarPiece = null;        // 星の欠片
 
     [SerializeField]
-    int Hp = 0;
+    float Hp = 0;                         // 体力
+    [SerializeField]
+    int StarPieceNum = 0;               // 星の欠片所持数
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.collider.gameObject.tag == "PlayerAttack")
+        if (other.gameObject.tag == "PlayerAttack")
         {
-            Hp -= PlayerController.AttackVal;
+            Hp -= PlayerController.PlayerStatus.CurrentAttack;
             if (Hp <= 0)
             {
-                Instantiate(Star, transform.position, Quaternion.identity);
+                for (int i = 0; i < StarPieceNum; ++i)
+                {
+                    Instantiate(StarPiece, transform.position, Quaternion.identity);
+                }
                 Destroy(gameObject);
             }
         }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-
     }
 }

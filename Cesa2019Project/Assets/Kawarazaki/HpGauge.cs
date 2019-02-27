@@ -15,18 +15,18 @@ public class HpGauge : MonoBehaviour
     public Image BackHp;
 
     //プレイヤーHP
-    [SerializeField]
-    float Hp = 0;
-    float MaxHp;
+    //[SerializeField]
+    //float Hp = 0;
+    //float MaxHp;
 
     //プレイヤーが受けるダメージ
-    [SerializeField]
-    float Damage = 10;
+    //[SerializeField]
+    //float Damage = 10;
 
     //HPゲージ初期化
     void Start()
     {
-        MaxHp = Hp;
+        //MaxHp = Hp;
         FrontHp = GameObject.Find("FrontHp").GetComponent<Image>();
         FrontHp.fillAmount = 1.0f;
         BackHp = GameObject.Find("BackHp").GetComponent<Image>();
@@ -40,25 +40,25 @@ public class HpGauge : MonoBehaviour
         float reduceSpeed = 1.5f;
         float waitSpeed = 10.0f;
 
-        //ダメージ
-        if (Input.GetMouseButtonDown(0))
-        {
-            Hp -= Damage;
-            if (Hp < 0)
-                Hp = 0;
-            Debug.Log(0);
-        }
-        //回復
-        if (Input.GetMouseButtonDown(1))
-        {
-            Hp += Damage;
-            if (Hp > MaxHp)
-                Hp = MaxHp;
-            Debug.Log(1);
-        }
+        ////ダメージ
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Hp -= Damage;
+        //    if (Hp < 0)
+        //        Hp = 0;
+        //    Debug.Log(0);
+        //}
+        ////回復
+        //if (Input.GetMouseButtonDown(1))
+        //{
+        //    Hp += Damage;
+        //    if (Hp > MaxHp)
+        //        Hp = MaxHp;
+        //    Debug.Log(1);
+        //}
         //HPダメージ
-        FrontHp.fillAmount = Mathf.Clamp01(Hp / MaxHp);
-
+        //FrontHp.fillAmount = Mathf.Clamp01(Hp / MaxHp);
+        FrontHp.fillAmount = Mathf.Clamp01(PlayerController.PlayerStatus.CurrentHp / PlayerController.PlayerStatus.Hp);
         //FrontHpを追いかける
         if (FrontHp.fillAmount <= BackHp.fillAmount)
             BackHp.fillAmount -= Mathf.Clamp01(reduceSpeed / waitSpeed * Time.deltaTime);
