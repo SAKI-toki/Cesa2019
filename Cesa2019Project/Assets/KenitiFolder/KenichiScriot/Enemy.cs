@@ -76,7 +76,6 @@ public class Enemy : MonoBehaviour
     bool AttackOn;//攻撃中か
     bool First = false;//一度だけ実行させる
     bool AttackFirst = false;
-
     Status EnemyStatus = new Status();
 
     Vector3 TargetPos;//
@@ -357,6 +356,7 @@ public class Enemy : MonoBehaviour
         //return GameObject.Find(nearObjName);
         return targetObj;
     }
+
 }
 
 

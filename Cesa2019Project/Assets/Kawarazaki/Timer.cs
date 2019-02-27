@@ -1,37 +1,49 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 
-/// <summary>
-/// カウントダウン処理
-/// </summary>
 public class Timer : MonoBehaviour
 {
+    private TextMeshProUGUI TimerText;
     //制限時間(分)
-    [SerializeField]
+    [SerializeField, Header("分")]
     private int Minute;
     //制限時間(秒)
-    [SerializeField]
+    [SerializeField, Header("秒")]
     private float Seconds;
-    //トータル制限時間
-    private float TotalTime;
     //前回Update時の秒数
     private float OldSeconds;
-    private Text TimerText;
+
+    //カウントダウンテキストポジション
+    [SerializeField,Header("カウントダウンポジションX")]
+    private float TextPosX;
+    [SerializeField, Header("カウントダウンポジションY")]
+    private float TextPosY;
+
+    //カウントダウンテキストスケール
+    [SerializeField, Header("カウントダウンスケールX")]
+    private float TextScaleX;
+    [SerializeField, Header("カウントダウンスケールY")]
+    private float TextScaleY;
+
+
+    //トータル制限時間
+    private float TotalTime;
 
     //タイマー初期化
     void Start()
     {
         TotalTime = Minute * 60 + Seconds;
         OldSeconds = 0.0f;
-        TimerText = GetComponentInChildren<Text>();
+        TimerText = GetComponent<TextMeshProUGUI>();
     }
-    
+
     void Update()
     {
         //制限時間が0秒以下なら何もしない
-        if(TotalTime <= 0.0f)
+        if (TotalTime <= 0.0f)
         {
             return;
         }
@@ -44,15 +56,38 @@ public class Timer : MonoBehaviour
         Seconds = TotalTime - Minute * 60;
 
         //タイマー表示用UIテキストに時間を表示する
-        if((int)Seconds != (int)OldSeconds)
+        if ((int)Seconds != (int)OldSeconds)
         {
             TimerText.text = Minute.ToString("00") + ":" + ((int)Seconds).ToString("00");
         }
         OldSeconds = Seconds;
 
-        //制限時間以下になった時の処理
-        if(TotalTime <= 0.0f)
+        //60秒切ったら文字の色を黄色に変更
+        if (TotalTime <= 60.0f)
         {
+            TimerText.color = Color.yellow;
+        }
+
+        //10秒切ったら文字の色を赤色に変更
+        if (TotalTime <= 10.0f)
+        {
+            TimerText.color = Color.red;
+        }
+
+        //6秒切ったらテキストを画面中央に移動
+        if (TotalTime <= 6.0f)
+        {
+            GetComponent<RectTransform>().localPosition = new Vector3(TextPosX, TextPosY, 0);
+            GetComponent<RectTransform>().localScale = new Vector3(TextScaleX, TextScaleY, 0);
+            TimerText.color = new Color(1, 0, 0, 1);
+            TimerText.text = ((int)Seconds).ToString("0");
+        }
+
+        //制限時間になった時の処理
+        if (TotalTime <= 1.0f)
+        {
+            TimerText.color = new Color(1, 1, 1, 1);
+            TimerText.text = "END";
             Debug.Log("制限時間終了");
         }
     }
