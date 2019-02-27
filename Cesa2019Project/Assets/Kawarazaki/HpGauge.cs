@@ -32,9 +32,9 @@ public class HpGauge : MonoBehaviour
         BackHp = GameObject.Find("BackHp").GetComponent<Image>();
         BackHp.fillAmount = 1.0f;
     }
-    
 
-    void Update()
+
+    void FixedUpdate()
     {
         //HP減少スピード変数
         float reduceSpeed = 1.5f;

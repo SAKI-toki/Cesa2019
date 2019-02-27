@@ -28,7 +28,6 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
-
         //制限時間が0秒以下なら何もしない
         if (TotalTime <= 0.0f)
         {

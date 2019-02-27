@@ -20,7 +20,7 @@ public class Star : MonoBehaviour
     [SerializeField]
     public int BigStar;
 
-
+    Pause pause;
     int little;
     int Big;
     //初期化
@@ -32,7 +32,7 @@ public class Star : MonoBehaviour
         BigStarText = GameObject.Find("BigStar").GetComponent<TextMeshProUGUI>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //↓ここから
         //小さい星加算
