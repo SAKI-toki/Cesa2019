@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class Timer : MonoBehaviour
@@ -82,8 +83,8 @@ public class Timer : MonoBehaviour
             TimerText.text = ((int)Seconds).ToString("0");
         }
 
-        //制限時間以下になった時の処理
-        if (TotalTime <= 0.0f)
+        //制限時間になった時の処理
+        if (TotalTime <= 1.0f)
         {
             TimerText.color = new Color(1, 1, 1, 1);
             TimerText.text = "END";
