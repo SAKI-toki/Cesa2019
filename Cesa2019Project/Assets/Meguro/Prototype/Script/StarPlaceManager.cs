@@ -9,6 +9,16 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class StarPlaceManager : MonoBehaviour
 {
+    [System.Serializable]
+    class Line
+    {
+        [SerializeField]
+        public GameObject StarPlace1 = null;
+        [SerializeField]
+        public GameObject StarPlace2 = null;
+        [System.NonSerialized]
+        public bool DorwEnd = false;
+    }
     [SerializeField, Header("プレイヤー")]
     GameObject Player = null;               // プレイヤー
     [SerializeField, Header("星")]
@@ -18,6 +28,8 @@ public class StarPlaceManager : MonoBehaviour
     //[SerializeField, Header("最初に選択されるボタン")]
     //GameObject StartButton = null;
     Vector3 PlayerPos = Vector3.zero;       // プレイヤーの位置
+    [SerializeField]
+    List<Line> LineList = new List<Line>();
     List<StarPlace> StarPlaceList = new List<StarPlace>();      // 星を置く場所のリスト
     [SerializeField, Header("星が置けるようになる距離")]
     float ActiveDistance = 0;               // 星を置けるようになる距離
@@ -93,6 +105,7 @@ public class StarPlaceManager : MonoBehaviour
                 // 色決定
                 if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
+                    // 星を置く
                     StarSet();
                 }
                 // キャンセル
@@ -101,6 +114,7 @@ public class StarPlaceManager : MonoBehaviour
                     StarSelectCancel();
                 }
             }
+            LineCheck();
         }
         // 全ての星がセットされている
         else if (AllPlaceSet)
@@ -123,16 +137,17 @@ public class StarPlaceManager : MonoBehaviour
         StarSelectUI.SetActive(false);
     }
 
+    /// <summary>
+    /// 星の配置
+    /// </summary>
     void StarSet()
     {
         StarSelect = false;
         Time.timeScale = 1.0f;
         StarSelectUI.SetActive(false);
         StarPlaceList[StarSelectPlaceNum].isSet = true;
-        //--PlayerController.StarHave;
-        PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
-        GenerateStar(StarSelectPlaceNum);
-        //GameObject star = Instantiate(Star, PlayerPos + new Vector3(0, 2, 0), Quaternion.identity);
+        --PlayerController.StarHave;
+        StarPlaceList[StarSelectPlaceNum].Star = Instantiate(Star, StarPlaceList[StarSelectPlaceNum].Pos + new Vector3(0, 1, 0), Quaternion.identity);
 
         //AllPlaceSet = AllPlaceSetCheck();
     }
@@ -157,5 +172,26 @@ public class StarPlaceManager : MonoBehaviour
         }
         Debug.Log("====星のセット完了====");
         return true;
+    }
+
+    /// <summary>
+    /// 星が配置されて線を描く
+    /// </summary>
+    void LineCheck()
+    {
+        for (int i = 0; i < LineList.Count; ++i)
+        {
+            if (!LineList[i].DorwEnd)
+            {
+                if (LineList[i].StarPlace1.GetComponent<StarPlace>().isSet && LineList[i].StarPlace2.GetComponent<StarPlace>().isSet)
+                {
+                    LineRenderer lineRendererStarPlace1 = LineList[i].StarPlace1.GetComponent<LineRenderer>();
+                    lineRendererStarPlace1.positionCount = lineRendererStarPlace1.positionCount + 2;
+                    lineRendererStarPlace1.SetPosition(lineRendererStarPlace1.positionCount - 2, LineList[i].StarPlace1.GetComponent<StarPlace>().Star.transform.position);
+                    lineRendererStarPlace1.SetPosition(lineRendererStarPlace1.positionCount - 1, LineList[i].StarPlace2.GetComponent<StarPlace>().Star.transform.position);
+                    LineList[i].DorwEnd = true;
+                }
+            }
+        }
     }
 }

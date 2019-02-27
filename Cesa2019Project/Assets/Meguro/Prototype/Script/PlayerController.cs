@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         PlayerStatus.Hp = 100;
         PlayerStatus.Attack = 15;
         PlayerStatus.Defense = 5;
-        PlayerStatus.Speed = 20;
+        PlayerStatus.Speed = 30;
         PlayerStatus.ResetStatus();
         PlayerRigid = GetComponent<Rigidbody>();
         PlayerAnimator = GetComponent<Animator>();

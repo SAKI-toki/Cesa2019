@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class StarPlace : MonoBehaviour
 {
+    public GameObject Star = null;
     [System.NonSerialized]
     public Vector3 Pos = Vector3.zero;      // 位置
     [System.NonSerialized]

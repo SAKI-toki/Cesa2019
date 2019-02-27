@@ -15,7 +15,7 @@ public class PauseManager : MonoBehaviour
     void Update()
     {
         // ポーズ
-        if (Input.GetKeyDown("joystick button 7") && Time.timeScale != 0)
+        if (Input.GetKeyDown("joystick button 7") && !isPause)
         {
             Pause();
         }
