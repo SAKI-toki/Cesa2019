@@ -44,6 +44,11 @@ public class StarPlaceManager : MonoBehaviour
             if (null != child.GetComponent<StarPlace>())
             {
                 StarPlaceList.Add(child.GetComponent<StarPlace>());
+                //最初からセットしているかどうか
+                if(child.GetComponent<StarPlace>().IsAwakeSet)
+                {
+                    Instantiate(Star, child.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+                }
             }
         }
     }
@@ -67,12 +72,12 @@ public class StarPlaceManager : MonoBehaviour
                         if (distance < ActiveDistance)
                         {
                             // 星を持っていたら
-                            if (PlayerController.StarHave > 0)
+                            if (PlayerController.StarPieceHave >= Constant.ConstNumber.StarConversion)
                             {
                                 StarPlaceList[i].isActive = true;
                             }
                             // 星を持っていない
-                            else if (PlayerController.StarHave <= 0)
+                            else
                             {
                                 Debug.Log("====星が無いよ====");
                             }
@@ -141,9 +146,15 @@ public class StarPlaceManager : MonoBehaviour
         Time.timeScale = 1.0f;
         StarSelectUI.SetActive(false);
         StarPlaceList[StarSelectPlaceNum].isSet = true;
-        --PlayerController.StarHave;
-        StarPlaceList[StarSelectPlaceNum].Star = Instantiate(Star, StarPlaceList[StarSelectPlaceNum].Pos + new Vector3(0, 1, 0), Quaternion.identity);
+        PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
+        GenerateStar(StarSelectPlaceNum);
+        //StarPlaceList[StarSelectPlaceNum].Star = Instantiate(Star, StarPlaceList[StarSelectPlaceNum].Pos + new Vector3(0, 1, 0), Quaternion.identity);
+        //AllPlaceSet = AllPlaceSetCheck();
+    }
 
+    void GenerateStar(int n)
+    {
+        Instantiate(Star, StarPlaceList[n].gameObject.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
         AllPlaceSet = AllPlaceSetCheck();
     }
 

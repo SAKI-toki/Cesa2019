@@ -15,58 +15,58 @@ public class HpGauge : MonoBehaviour
     public Image BackHp;
 
     //プレイヤーHP
-    [SerializeField]
-    float Hp = 0;
-    float MaxHp;
+    //[SerializeField]
+    //float Hp = 0;
+    //float MaxHp;
 
     //プレイヤーが受けるダメージ
-    [SerializeField]
-    float Damege = 0;
+    //[SerializeField]
+    //float Damage = 10;
 
     //HPゲージ初期化
     void Start()
     {
-        MaxHp = Hp;
+        //MaxHp = Hp;
         FrontHp = GameObject.Find("FrontHp").GetComponent<Image>();
         FrontHp.fillAmount = 1.0f;
         BackHp = GameObject.Find("BackHp").GetComponent<Image>();
         BackHp.fillAmount = 1.0f;
     }
-    
 
-    void Update()
+
+    void FixedUpdate()
     {
         //HP減少スピード変数
-        float reducespeed = 1.5f;
-        float waitspeed = 10.0f;
+        float reduceSpeed = 1.5f;
+        float waitSpeed = 10.0f;
 
-        //ダメージ
-        if (Input.GetMouseButtonDown(0))
-        {
-            Hp -= Damege;
-            if (Hp < 0)
-                Hp = 0;
-        }
-        //回復
-        if (Input.GetMouseButtonDown(1))
-        {
-            Hp += Damege;
-            if (Hp > MaxHp)
-                Hp = MaxHp;
-            
-        }
+        ////ダメージ
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Hp -= Damage;
+        //    if (Hp < 0)
+        //        Hp = 0;
+        //    Debug.Log(0);
+        //}
+        ////回復
+        //if (Input.GetMouseButtonDown(1))
+        //{
+        //    Hp += Damage;
+        //    if (Hp > MaxHp)
+        //        Hp = MaxHp;
+        //    Debug.Log(1);
+        //}
         //HPダメージ
-        FrontHp.fillAmount = Hp / MaxHp;
-
+        //FrontHp.fillAmount = Mathf.Clamp01(Hp / MaxHp);
+        FrontHp.fillAmount = Mathf.Clamp01(PlayerController.PlayerStatus.CurrentHp / PlayerController.PlayerStatus.Hp);
         //FrontHpを追いかける
         if (FrontHp.fillAmount <= BackHp.fillAmount)
-            BackHp.fillAmount -= reducespeed / waitspeed * Time.deltaTime;
+            BackHp.fillAmount -= Mathf.Clamp01(reduceSpeed / waitSpeed * Time.deltaTime);
 
         //HP回復
         if (FrontHp.fillAmount >= BackHp.fillAmount)
+        {
             BackHp.fillAmount = FrontHp.fillAmount;
-
-
-        Debug.Log(Hp);
+        }
     }
 }
