@@ -617,12 +617,12 @@ PrefabInstance:
     - target: {fileID: 9207105016693748309, guid: 90d696d4a2153484db83a0271d7af1f9,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.003729193
+      value: -0.0037292968
       objectReference: {fileID: 0}
     - target: {fileID: 9207105016746754954, guid: 90d696d4a2153484db83a0271d7af1f9,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.032308634
+      value: -0.03230877
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90d696d4a2153484db83a0271d7af1f9, type: 3}
@@ -717,6 +717,85 @@ Transform:
   m_Father: {fileID: 1919590614}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &919103285
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2230540608668498021, guid: 15fec6a6803abd04e80eb8071224bc1d,
+        type: 3}
+      propertyPath: m_Name
+      value: StarPlaceManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230540608668498023, guid: 15fec6a6803abd04e80eb8071224bc1d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230540608668498023, guid: 15fec6a6803abd04e80eb8071224bc1d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230540608668498023, guid: 15fec6a6803abd04e80eb8071224bc1d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230540608668498023, guid: 15fec6a6803abd04e80eb8071224bc1d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230540608668498023, guid: 15fec6a6803abd04e80eb8071224bc1d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230540608668498023, guid: 15fec6a6803abd04e80eb8071224bc1d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230540608668498023, guid: 15fec6a6803abd04e80eb8071224bc1d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230540608668498023, guid: 15fec6a6803abd04e80eb8071224bc1d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230540608668498023, guid: 15fec6a6803abd04e80eb8071224bc1d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230540608668498023, guid: 15fec6a6803abd04e80eb8071224bc1d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230540608668498023, guid: 15fec6a6803abd04e80eb8071224bc1d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230540608668498022, guid: 15fec6a6803abd04e80eb8071224bc1d,
+        type: 3}
+      propertyPath: StarSelectUI
+      value: 
+      objectReference: {fileID: 1765779807}
+    - target: {fileID: 2230540608668498022, guid: 15fec6a6803abd04e80eb8071224bc1d,
+        type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1839110245}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 15fec6a6803abd04e80eb8071224bc1d, type: 3}
 --- !u!1001 &1007367881
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1259,7 +1338,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.69803923, g: 0.94509804, b: 1, a: 1}
   m_Intensity: 0.4
   m_Range: 10
   m_SpotAngle: 30
@@ -1287,6 +1366,18 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1765779807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2468858580492013990, guid: 3b041266853946242b541031758d05ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 1647480187}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1839110245 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8760858706637748230, guid: f2b759350e8f2b541bd00e10944f657d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1007367881}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1919590613
 GameObject:
   m_ObjectHideFlags: 0

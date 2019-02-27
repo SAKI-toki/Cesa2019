@@ -55,12 +55,12 @@ public class StarPlaceManager : MonoBehaviour
                         if (distance < ActiveDistance)
                         {
                             // 星を持っていたら
-                            if (PlayerController.StarPieceHave > 10)
+                            if (PlayerController.StarPieceHave >= 10)
                             {
                                 StarPlaceList[i].isActive = true;
                             }
                             // 星を持っていない
-                            else if (PlayerController.StarPieceHave <= 10)
+                            else if (PlayerController.StarPieceHave < 10)
                             {
                                 Debug.Log("====星が無いよ====");
                             }
