@@ -19,16 +19,16 @@ public class Timer : MonoBehaviour
     private int OldSeconds;
 
     //カウントダウンテキストポジション
-    [SerializeField,Header("カウントダウンポジションX")]
-    private float TextPosX;
+    [SerializeField, Header("カウントダウンポジションX")]
+    private float TextPosX = 0.0f;
     [SerializeField, Header("カウントダウンポジションY")]
-    private float TextPosY;
+    private float TextPosY = 0.0f;
 
     //カウントダウンテキストスケール
     [SerializeField, Header("カウントダウンスケールX")]
-    private float TextScaleX;
+    private float TextScaleX = 0.0f;
     [SerializeField, Header("カウントダウンスケールY")]
-    private float TextScaleY;
+    private float TextScaleY = 0.0f;
 
 
     //トータル制限時間

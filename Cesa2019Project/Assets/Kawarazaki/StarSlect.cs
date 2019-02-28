@@ -12,16 +12,11 @@ public class StarSlect : MonoBehaviour
     private Star StarScript = null;
     [SerializeField]
     GameObject SelectColor = null;
-    [SerializeField, Header("最初に選択されている色")]
-    GameObject StartColor = null;
-    [SerializeField, Header("赤")]
-    GameObject SelectRed = null;
-    [SerializeField, Header("緑")]
-    GameObject SelectGreen = null;
-    [SerializeField, Header("青")]
-    GameObject SelectBlue = null;
+    [SerializeField, Header("選択されている色")]
+    GameObject SelectColorButton = null;
 
-    private int Select;
+
+    private int Select = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -36,14 +31,13 @@ public class StarSlect : MonoBehaviour
         {
             Time.timeScale = 0;
             SelectColor.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(SelectColor);
+            EventSystem.current.SetSelectedGameObject(SelectColorButton);
         }
 
         //0:緑 1:赤 2:青
         switch (Select)
         {
             case 0:
-                EventSystem.current.SetSelectedGameObject(SelectGreen);
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
                     if (StarScript.BigStarGreen >= 1)
@@ -54,7 +48,6 @@ public class StarSlect : MonoBehaviour
                 }
                 break;
             case 1:
-                EventSystem.current.SetSelectedGameObject(SelectRed);
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
                     if (StarScript.BigStarRed >= 1)
@@ -66,7 +59,6 @@ public class StarSlect : MonoBehaviour
                 }
                 break;
             case 2:
-                EventSystem.current.SetSelectedGameObject(SelectBlue);
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
                     if (StarScript.BigStarBlue >= 1)
@@ -98,6 +90,7 @@ public class StarSlect : MonoBehaviour
     /// </summary>
     void DeleteSelect()
     {
+        EventSystem.current.SetSelectedGameObject(null);
         Time.timeScale = 1;
         SelectColor.SetActive(false);
         Select = 0;
