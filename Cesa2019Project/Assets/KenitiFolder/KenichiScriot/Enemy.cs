@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
     float RotateHours = 0.1f;
     [SerializeField, Header("攻撃判定を出す位置")]
     Vector3 Offset = new Vector3();
-    [SerializeField,Header("AttackPrefabを入れる")]
+    [SerializeField, Header("AttackPrefabを入れる")]
     GameObject AttackPrefab = null;
 
     [SerializeField, Header("trueになったら破壊")]
@@ -116,26 +116,29 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Time.timeScale != 0)
+        if (Time.timeScale == 0)
         {
-            EnemyTime += Time.deltaTime;
+            return;
+        }
 
+            EnemyTime += Time.deltaTime;
+            //敵とプレイヤーの距離差
             PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
 
             if (EnemyStatus.Hp <= 0 || DestroyDebug == true || EnemyHp <= 0)
             {
-                for (int i = 0; StarCount != i; i++)
+                for (int i = 0; StarCount != i; i++)//StarCountの分だけ星を生成
                 {
-                    StarRandom = Random.Range(1, 4);
-                    if (StarRandom == 1) { Star = RedStar; }
-                    if (StarRandom == 2) { Star = BlueStar; }
-                    if (StarRandom == 3) { Star = YellowStar; }
-                    GameObject item = Instantiate(Star) as GameObject;
+                    StarRandom = Random.Range(1, 4);//どの星を生成させるかきめる
+                    if (StarRandom == 1) { Star = RedStar; }//赤の星を生成させる
+                    if (StarRandom == 2) { Star = BlueStar; }//青の星を生成させる
+                    if (StarRandom == 3) { Star = YellowStar; }//黄の星を生成させる
+                    GameObject item = Instantiate(Star) as GameObject;//星の生成
                     item.transform.position = transform.position;
                     item.transform.Rotate(0, Random.Range(-180, 180), 0);
                 }
 
-                Destroy(this.gameObject);
+                Destroy(this.gameObject);//敵の消滅
             }
 
             if (ReceivedDamage == true)//硬直時間の解除
@@ -147,19 +150,20 @@ public class Enemy : MonoBehaviour
                 }
             }
 
-            if (PlayerRangeDifference <= AttackDecision && AttackOn == false && NonDirectAttack == false && ReceivedDamage == false)//攻撃中
-            { AttackOn = true; }
+            if (PlayerRangeDifference <= AttackDecision
+                && AttackOn == false && NonDirectAttack == false
+                && ReceivedDamage == false)
+            { AttackOn = true; }//攻撃中
 
             if (AttackOn == true) { Attack(); }
 
             if (ReceivedDamage == false && AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
             {
-
                 Move();
 
                 DrectionChange();
             }
-        }
+        
     }
 
     /// <summary>
@@ -206,28 +210,24 @@ public class Enemy : MonoBehaviour
             MoveSwitch = false;
             Ran2 = Ran1;
             Ran1 = DrectionNumber;
-
             if (EnemyTime >= RandomOn + Latency)
             {
                 RotationTime += Time.deltaTime;
                 if (First == false)
                 {
+                    //どの方向に行くかを決める
                     for (; DrectionNumber == Ran1 && DrectionNumber == Ran2;)
                     {
                         RandomNumber = Random.Range(DerectionLow, DerectionHigh);
-
-                        //int random = Random.Range(2, 2);
-                        RandomNumber = RandomNumber * -1;
+                        int random = Random.Range(1, 3);
+                        if (random == 2) { RandomNumber = RandomNumber * -1; }
                         if (RandomNumber >= 1 && RandomNumber <= 18) { DrectionNumber = 1; }
                         if (RandomNumber >= 19 && RandomNumber <= 36) { DrectionNumber = 2; }
                         if (RandomNumber >= -18 && RandomNumber <= -1) { DrectionNumber = 1; }
                         if (RandomNumber >= -36 && RandomNumber <= -19) { DrectionNumber = 3; }
+                    }
+                    if (RandomNumber >= 0) { if (YPlus <= 0) { YPlus = RotationPlus; } }
 
-                    }
-                    if (RandomNumber >= 0)
-                    {
-                        if (YPlus <= 0) { YPlus = RotationPlus; }
-                    }
                     if (RandomNumber <= 0)
                     {
                         RandomNumber = RandomNumber * -1;
@@ -235,7 +235,7 @@ public class Enemy : MonoBehaviour
                     }
                     First = true;
                 }
-
+                //決められた方向にむくまで移動しない
                 if (RandomNumber != RotationCount & RotationTime >= RotateHours)
                 {
                     transform.Rotate(0, YPlus, 0);
@@ -257,36 +257,39 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void SpeedAttack()
     {
-        if (SpeedAttackFlag)
+        if (SpeedAttackFlag == false)
         {
-            float taiki = 0.5f;
-            if (PlayerRangeDifference <= taiki && Wait == false)
-            {
-                ZMove = 0;
-                int speedTime = 1;
-                SpeedAttackTime += Time.deltaTime;
-                if (SpeedAttackTime >= speedTime)
-                {
-                    Wait = true;
-                    SpeedAttackTime = 0;
-                }
-            }
+            return;
+        }
 
-            if (Wait == true)
+        float taiki = 0.5f;
+        if (PlayerRangeDifference <= taiki && Wait == false)
+        {
+            ZMove = 0;
+            int speedTime = 1;
+            SpeedAttackTime += Time.deltaTime;
+            if (SpeedAttackTime >= speedTime)
             {
-                ZMove = 0.7f;
-                SpeedAttackTime += Time.deltaTime;
-                float speedTime2 = 5;
-                int speedAttackMove = 3;
-                transform.LookAt(TargetPos);//対象の位置方向を向く 
-                transform.Translate(0, 0, ZMove * speedAttackMove * Time.deltaTime);
-                if (SpeedAttackTime >= speedTime2)
-                {
-                    Wait = false;
-                    SpeedAttackFlag = false;
-                }
+                Wait = true;
+                SpeedAttackTime = 0;
             }
         }
+
+        if (Wait == true)
+        {
+            ZMove = ZMove * 2;
+            SpeedAttackTime += Time.deltaTime;
+            float speedTime2 = 5;
+            int speedAttackMove = 3;
+            transform.LookAt(TargetPos);//対象の位置方向を向く 
+            transform.Translate(0, 0, ZMove * speedAttackMove * Time.deltaTime);
+            if (SpeedAttackTime >= speedTime2)
+            {
+                Wait = false;
+                SpeedAttackFlag = false;
+            }
+        }
+
     }
 
     /// <summary>
@@ -297,7 +300,7 @@ public class Enemy : MonoBehaviour
         AttackTime += Time.deltaTime;
         AttackEnemy = true;
         if (AttackFirst == false)
-        {
+        {//敵の前にオブジェクト生成
             Vector3 position = transform.position + transform.up * Offset.y +
             transform.right * Offset.x +
             transform.forward * Offset.z;

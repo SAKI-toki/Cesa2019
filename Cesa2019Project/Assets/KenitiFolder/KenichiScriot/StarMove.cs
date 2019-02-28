@@ -25,7 +25,6 @@ public class StarMove : MonoBehaviour
     void Start()
     {
         ZMove = 7;
-
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得 
     }
 
@@ -58,7 +57,6 @@ public class StarMove : MonoBehaviour
             transform.LookAt(targetPos);//対象の位置方向を向く 
             transform.Translate(0, 0, ZMove * Time.deltaTime);
         }
-
     }
 
     /// <summary>
