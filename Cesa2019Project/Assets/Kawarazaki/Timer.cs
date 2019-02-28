@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-
+/// <summary>
+/// タイマー
+/// </summary>
 public class Timer : MonoBehaviour
 {
     private TextMeshProUGUI TimerText;
@@ -12,9 +14,9 @@ public class Timer : MonoBehaviour
     private int Minute;
     //制限時間(秒)
     [SerializeField, Header("秒")]
-    private float Seconds;
+    private int Seconds;
     //前回Update時の秒数
-    private float OldSeconds;
+    private int OldSeconds;
 
     //カウントダウンテキストポジション
     [SerializeField,Header("カウントダウンポジションX")]
@@ -36,7 +38,7 @@ public class Timer : MonoBehaviour
     void Start()
     {
         TotalTime = Minute * 60 + Seconds;
-        OldSeconds = 0.0f;
+        OldSeconds = 0;
         TimerText = GetComponent<TextMeshProUGUI>();
     }
 
@@ -45,6 +47,7 @@ public class Timer : MonoBehaviour
         //制限時間が0秒以下なら何もしない
         if (TotalTime <= 0.0f)
         {
+            TotalTime = 0.0f;
             return;
         }
         //トータルの制限時間を計測
@@ -53,12 +56,12 @@ public class Timer : MonoBehaviour
 
         //再設定
         Minute = (int)TotalTime / 60;
-        Seconds = TotalTime - Minute * 60;
+        Seconds = (int)TotalTime % 60;
 
         //タイマー表示用UIテキストに時間を表示する
-        if ((int)Seconds != (int)OldSeconds)
+        if (Seconds != OldSeconds)
         {
-            TimerText.text = Minute.ToString("00") + ":" + ((int)Seconds).ToString("00");
+            TimerText.text = Minute.ToString("00") + ":" + (Seconds).ToString("00");
         }
         OldSeconds = Seconds;
 
@@ -80,7 +83,7 @@ public class Timer : MonoBehaviour
             GetComponent<RectTransform>().localPosition = new Vector3(TextPosX, TextPosY, 0);
             GetComponent<RectTransform>().localScale = new Vector3(TextScaleX, TextScaleY, 0);
             TimerText.color = new Color(1, 0, 0, 1);
-            TimerText.text = ((int)Seconds).ToString("0");
+            TimerText.text = Seconds.ToString("0");
         }
 
         //制限時間になった時の処理

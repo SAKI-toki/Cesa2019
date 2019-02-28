@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+
 /// <summary>
 /// 星のUI
 /// </summary>
@@ -9,22 +10,24 @@ public class Star : MonoBehaviour
 {
     //小さい星のテキスト(緑)
     [SerializeField]
-    private TextMeshProUGUI LittleStarGreenText;
+    private TextMeshProUGUI LittleStarGreenText = null;
     //大きい星のテキスト(緑)
     [SerializeField]
-    private TextMeshProUGUI BigStarGreenText;
+    private TextMeshProUGUI BigStarGreenText = null;
+
     //小さい星のテキスト(赤)
     [SerializeField]
-    private TextMeshProUGUI LittleStarRedText;
+    private TextMeshProUGUI LittleStarRedText = null;
     //大きい星のテキスト(赤)
     [SerializeField]
-    private TextMeshProUGUI BigStarRedText;
+    private TextMeshProUGUI BigStarRedText = null;
+
     //小さい星のテキスト(青)
     [SerializeField]
-    private TextMeshProUGUI LittleStarBlueText;
+    private TextMeshProUGUI LittleStarBlueText = null;
     //大きい星のテキスト(青)
     [SerializeField]
-    private TextMeshProUGUI BigStarBlueText;
+    private TextMeshProUGUI BigStarBlueText = null;
 
     //小さい星
     [SerializeField]
@@ -33,85 +36,75 @@ public class Star : MonoBehaviour
     [SerializeField]
     public int BigStarGreen,BigStarRed,BigStarBlue;
 
-    //小さい星から大きい星に変換するときの数
-    [SerializeField, Header("大きい星に変換")]
-    private int Conversion;
+    const string LittleString = "Little:";
+    const string BigString = "Big:";
 
-    int LittleGreen,LittleRed,LittleBlue;
-    int BigGreen,BigRed,BigBlue;
+    public int LittleGreen,LittleRed,LittleBlue;
+    public int BigGreen,BigRed,BigBlue;
     //初期化
     void Start()
     {
         LittleStarGreen = 0; LittleStarRed = 0;LittleStarBlue = 0;
         BigStarGreen = 0; BigStarRed = 0; BigBlue = 0;
-        //緑の星
-        LittleStarGreenText = GameObject.Find("LittleStarGreen").GetComponent<TextMeshProUGUI>();
-        BigStarGreenText = GameObject.Find("BigStarGreen").GetComponent<TextMeshProUGUI>();
-        //赤の星
-        LittleStarRedText = GameObject.Find("LittleStarRed").GetComponent<TextMeshProUGUI>();
-        BigStarRedText = GameObject.Find("BigStarRed").GetComponent<TextMeshProUGUI>();
-        //青の星
-        LittleStarBlueText = GameObject.Find("LittleStarBlue").GetComponent<TextMeshProUGUI>();
-        BigStarBlueText = GameObject.Find("BigStarBlue").GetComponent<TextMeshProUGUI>();
     }
 
     void FixedUpdate()
     {
-        //↓ここから
+        /////////////↓ここから
         //小さい星加算
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             LittleGreen++;
             AddLittleStarGreen(LittleGreen);
 
             //小さい星が7個貯まったら大きい星加算
-            if (LittleStarGreen >= Conversion)
+            if (LittleStarGreen >= Constant.ConstNumber.StarConversion)
             {
-                LittleGreen -= Conversion;
+                LittleGreen -= Constant.ConstNumber.StarConversion;
                 AddLittleStarGreen(LittleGreen);
                 BigGreen++;
                 AddBigStarGreen(BigGreen);
             }
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             LittleRed++;
             AddLittleStarRed(LittleRed);
 
             //小さい星が7個貯まったら大きい星加算
-            if (LittleStarRed >= Conversion)
+            if (LittleStarRed >= Constant.ConstNumber.StarConversion)
             {
-                LittleRed -= Conversion;
+                LittleRed -= Constant.ConstNumber.StarConversion;
                 AddLittleStarRed(LittleRed);
                 BigRed++;
                 AddBigStarRed(BigRed);
             }
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             LittleBlue++;
             AddLittleStarBlue(LittleBlue);
 
             //小さい星が7個貯まったら大きい星加算
-            if (LittleStarBlue >= Conversion)
+            if (LittleStarBlue >= Constant.ConstNumber.StarConversion)
             {
-                LittleBlue -= Conversion;
+                LittleBlue -= Constant.ConstNumber.StarConversion;
                 AddLittleStarBlue(LittleBlue);
                 BigBlue++;
                 AddBigStarBlue(BigBlue);
             }
         }
-        //↑ここまで繋げるときに消して
+        /////////////↑ここまで繋げるときに消して
 
         //UIテキストに表示
-        LittleStarGreenText.text = "Little:" + LittleStarGreen.ToString("00");
-        BigStarGreenText.text = "Big:" + BigStarGreen.ToString("00");
+        LittleStarGreenText.text = LittleString + LittleStarGreen.ToString("00");
+        BigStarGreenText.text = BigString + BigStarGreen.ToString("00");
 
-        LittleStarRedText.text = "Little:" + LittleStarRed.ToString("00");
-        BigStarRedText.text = "Big:" + BigStarRed.ToString("00");
+        LittleStarRedText.text = LittleString + LittleStarRed.ToString("00");
+        BigStarRedText.text = BigString + BigStarRed.ToString("00");
 
-        LittleStarBlueText.text = "Little:" + LittleStarBlue.ToString("00");
-        BigStarBlueText.text = "Big:" + BigStarBlue.ToString("00");
+        LittleStarBlueText.text = LittleString + LittleStarBlue.ToString("00");
+        BigStarBlueText.text = BigString + BigStarBlue.ToString("00");
     }
 
     /// <summary>

@@ -9,10 +9,10 @@ public class HpGauge : MonoBehaviour
 {
     //緑ゲージのHPバー
     [SerializeField]
-    public Image FrontHp;
+    public Image FrontHp = null;
     //赤ゲージのHPバー
     [SerializeField]
-    public Image BackHp;
+    public Image BackHp = null;
 
     //プレイヤーHP
     //[SerializeField]

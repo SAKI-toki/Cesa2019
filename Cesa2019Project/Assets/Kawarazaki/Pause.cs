@@ -7,11 +7,11 @@ using UnityEngine;
 public class Pause : MonoBehaviour
 {
     [SerializeField]
-    private GameObject PauseUi;
+    private GameObject PauseUi = null;
 
     void Update()
     {
-        if (Input.GetKeyDown("q"))
+        if (Input.GetKeyDown(KeyCode.Q)) 
         {
             //ポーズUIのアクティブ、非アクティブを切り替え
             PauseUi.SetActive(!PauseUi.activeSelf);
