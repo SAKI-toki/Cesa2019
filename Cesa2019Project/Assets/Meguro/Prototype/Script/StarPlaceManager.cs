@@ -25,8 +25,8 @@ public class StarPlaceManager : MonoBehaviour
     GameObject Star = null;                 // 星
     [SerializeField, Header("星選択UI")]
     GameObject StarSelectUI = null;         // 星の色を選択するUI
-    //[SerializeField, Header("最初に選択されるボタン")]
-    //GameObject StartButton = null;
+    [SerializeField, Header("最初に選択されるボタン")]
+    GameObject StartButton = null;
     Vector3 PlayerPos = Vector3.zero;       // プレイヤーの位置
     [SerializeField]
     List<Line> LineList = new List<Line>();
@@ -39,6 +39,7 @@ public class StarPlaceManager : MonoBehaviour
 
     void Start()
     {
+        int num = 0;
         foreach (Transform child in transform)
         {
             if (null != child.GetComponent<StarPlace>())
@@ -47,9 +48,10 @@ public class StarPlaceManager : MonoBehaviour
                 //最初からセットしているかどうか
                 if(child.GetComponent<StarPlace>().IsAwakeSet)
                 {
-                    Instantiate(Star, child.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+                    StarPlaceList[num].Star = Instantiate(Star, child.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
                 }
             }
+            ++num;
         }
     }
 
@@ -128,6 +130,7 @@ public class StarPlaceManager : MonoBehaviour
         StarSelect = true;
         Time.timeScale = 0;
         StarSelectUI.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(StartButton);
     }
 
     void StarSelectCancel()
@@ -148,13 +151,11 @@ public class StarPlaceManager : MonoBehaviour
         StarPlaceList[StarSelectPlaceNum].isSet = true;
         PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
         GenerateStar(StarSelectPlaceNum);
-        //StarPlaceList[StarSelectPlaceNum].Star = Instantiate(Star, StarPlaceList[StarSelectPlaceNum].Pos + new Vector3(0, 1, 0), Quaternion.identity);
-        //AllPlaceSet = AllPlaceSetCheck();
     }
 
     void GenerateStar(int n)
     {
-        Instantiate(Star, StarPlaceList[n].gameObject.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+        StarPlaceList[n].Star = Instantiate(Star, StarPlaceList[n].gameObject.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
         AllPlaceSet = AllPlaceSetCheck();
     }
 
