@@ -24,7 +24,6 @@ public class WaveController : MonoBehaviour
 
         while (true)
         {
-
             // Waveを作成する
             GameObject wave = (GameObject)Instantiate(Waves[CurrentWave], transform.position, Quaternion.identity);
 
