@@ -25,8 +25,7 @@ public class StarMove : MonoBehaviour
     void Start()
     {
         ZMove = 7;
-
-        NearObj = searchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得 
+        NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得 
     }
 
     // Update is called once per frame
@@ -58,7 +57,6 @@ public class StarMove : MonoBehaviour
             transform.LookAt(targetPos);//対象の位置方向を向く 
             transform.Translate(0, 0, ZMove * Time.deltaTime);
         }
-
     }
 
     /// <summary>
@@ -80,7 +78,7 @@ public class StarMove : MonoBehaviour
     /// <param name="tagName"></param>
     /// <returns></returns>
 
-    GameObject searchTag(GameObject nowObj, string tagName)//指定されたtagの中で最も近いものを取得
+    GameObject SearchTag(GameObject nowObj, string tagName)//指定されたtagの中で最も近いものを取得
     {
         float tmpDis = 0;//距離用一時変数
         float nearDis = 0;//最も近いオブジェクトの距離

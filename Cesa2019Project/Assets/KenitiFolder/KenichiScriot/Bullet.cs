@@ -23,7 +23,6 @@ public class Bullet : MonoBehaviour
             transform.Translate(0, 0, BulletMove * Time.deltaTime);
             Destroy(gameObject, DestroyTime);
         }
-
     }
 
     private void OnTriggerEnter(Collider col)
