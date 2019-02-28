@@ -7,7 +7,7 @@ using UnityEngine;
 public class Pause : MonoBehaviour
 {
     [SerializeField]
-    private GameObject PauseUi;
+    private GameObject PauseUi = null;
 
     void Update()
     {

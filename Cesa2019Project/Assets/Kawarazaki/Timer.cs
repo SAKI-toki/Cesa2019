@@ -6,31 +6,31 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    private TextMeshProUGUI TimerText;
+    private TextMeshProUGUI TimerText = null;
     //制限時間(分)
     [SerializeField, Header("分")]
-    private int Minute;
+    private int Minute = 0;
     //制限時間(秒)
     [SerializeField, Header("秒")]
-    private float Seconds;
+    private float Seconds = 0.0f;
     //前回Update時の秒数
-    private float OldSeconds;
+    private float OldSeconds = 0.0f;
 
     //カウントダウンテキストポジション
-    [SerializeField,Header("カウントダウンポジションX")]
-    private float TextPosX;
+    [SerializeField, Header("カウントダウンポジションX")]
+    private float TextPosX = 0.0f;
     [SerializeField, Header("カウントダウンポジションY")]
-    private float TextPosY;
+    private float TextPosY = 0.0f;
 
     //カウントダウンテキストスケール
     [SerializeField, Header("カウントダウンスケールX")]
-    private float TextScaleX;
+    private float TextScaleX = 0.0f;
     [SerializeField, Header("カウントダウンスケールY")]
-    private float TextScaleY;
+    private float TextScaleY = 0.0f;
 
 
     //トータル制限時間
-    private float TotalTime;
+    private float TotalTime = 0.0f;
 
     //タイマー初期化
     void Start()
