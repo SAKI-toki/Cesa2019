@@ -13,11 +13,11 @@ public class Enemy : MonoBehaviour
 {
     GameObject NearObj;//プレイヤーの位置取得
     GameObject Star = null;
-    [SerializeField, Header("赤")]
+    [SerializeField, Header("赤の星")]
     GameObject RedStar = null;
-    [SerializeField, Header("青")]
+    [SerializeField, Header("青の星")]
     GameObject BlueStar = null;
-    [SerializeField, Header("黄")]
+    [SerializeField, Header("黄の星")]
     GameObject YellowStar = null;
 
     [SerializeField, Header("移動力")]
@@ -50,37 +50,37 @@ public class Enemy : MonoBehaviour
     float RotateHours = 0.1f;
     [SerializeField, Header("攻撃判定を出す位置")]
     Vector3 Offset = new Vector3();
-    [SerializeField]
+    [SerializeField,Header("AttackPrefabを入れる")]
     GameObject AttackPrefab = null;
 
     [SerializeField, Header("trueになったら破壊")]
     bool DestroyDebug = false;
 
-    int RandomNumber;//ランダムな数値を入れる
-    int DerectionLow;//ランダムの低値
-    int DerectionHigh;//ランダムの高値
-    int Ran1;//RandomNumberの値を保存
-    int Ran2;//Ran1の値を保存
-    int DrectionNumber;//方向に応じて数値を保存
+    int RandomNumber = 0;//ランダムな数値を入れる
+    int DerectionLow = 1;//ランダムの低値
+    int DerectionHigh = 36;//ランダムの高値
+    int Ran1 = 0;//RandomNumberの値を保存
+    int Ran2 = 0;//Ran1の値を保存
+    int DrectionNumber = 0;//方向に応じて数値を保存
     int RotationCount = 0;
     int StarRandom = 0;
 
-    float PlayerRangeDifference;//プレイヤーと敵の距離差
-    float EnemyTime;//敵の時間
-    float RandomOn;//移動方向変更の時間
-    float SpeedAttackTime;//スピードアタックの時間
-    float MoveTimeLow;//移動している時間の低値
-    float MoveTimeHigh;//移動している時間高値
-    float AttackTime;//攻撃の時間
-    float YPlus;//rotationを動かす角度
+    float PlayerRangeDifference = 0;//プレイヤーと敵の距離差
+    float EnemyTime = 0;//敵の時間
+    float RandomOn = 0;//移動方向変更の時間
+    float SpeedAttackTime = 0;//スピードアタックの時間
+    float MoveTimeLow = 1.0f;//移動している時間の低値
+    float MoveTimeHigh = 3.0f;//移動している時間高値
+    float AttackTime = 0;//攻撃の時間
+    float YPlus = 0;//rotationを動かす角度
     float RotationTime = 0;//敵のrotation変更の時に使う時間
 
-    bool ReceivedDamage;//ダメージをうけたときtrue
-    bool PlayerTracking;//プレイヤーに追従してるときにtrue
+    bool ReceivedDamage = false;//ダメージをうけたときtrue
+    bool PlayerTracking = false;//プレイヤーに追従してるときにtrue
     bool MoveSwitch;//前に移動する
-    bool Wait;//待機状態が解けたか
-    bool AttackEnemy;//攻撃中か
-    bool AttackOn;//攻撃中か
+    bool Wait = false;//待機状態が解けたか
+    bool AttackEnemy = false;//攻撃中か
+    bool AttackOn = false;//攻撃中か
     bool First = false;//一度だけ実行させる
     bool AttackFirst = false;
     Status EnemyStatus = new Status();
@@ -102,15 +102,9 @@ public class Enemy : MonoBehaviour
         EnemyStatus.Defense = EnemyDefence;
         EnemyStatus.Speed = ZMove;
         EnemyStatus.ResetStatus();
-        Wait = false;
-        AttackOn = false;
-        MoveTimeLow = 1.0f;
-        MoveTimeHigh = 3.0f;
-        DerectionLow = 1;
-        DerectionHigh = 36;
         YPlus = RotationPlus;
         RandomOn = Random.Range(MoveTimeLow, MoveTimeHigh);
-        NearObj = searchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
+        NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
         Agent = GetComponent<NavMeshAgent>();
     }
 
@@ -345,7 +339,7 @@ public class Enemy : MonoBehaviour
     /// <param name="nowObj"></param>
     /// <param name="tagName"></param>
     /// <returns></returns>
-    GameObject searchTag(GameObject nowObj, string tagName)//指定されたtagの中で最も近いものを取得
+    GameObject SearchTag(GameObject nowObj, string tagName)//指定されたtagの中で最も近いものを取得
     {
         float tmpDis = 0;//距離用一時変数
         float nearDis = 0;//最も近いオブジェクトの距離
