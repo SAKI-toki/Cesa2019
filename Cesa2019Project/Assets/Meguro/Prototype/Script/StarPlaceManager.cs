@@ -37,8 +37,13 @@ public class StarPlaceManager : MonoBehaviour
     public static bool StarSelect = false;  // 星の色を選択中か
     bool AllPlaceSet = false;               // 星が全てセットされているかのフラグ
     [SerializeField]
-    StarSlect StarSelectController;
-
+    StarSlect StarSelectController = null;
+    [SerializeField]
+    GameObject RedStar = null;
+    [SerializeField]
+    GameObject GreenStar = null;
+    [SerializeField]
+    GameObject BlueStar = null;
     void Start()
     {
         int num = 0;
@@ -48,9 +53,11 @@ public class StarPlaceManager : MonoBehaviour
             {
                 StarPlaceList.Add(child.GetComponent<StarPlace>());
                 //最初からセットしているかどうか
-                if(child.GetComponent<StarPlace>().IsAwakeSet)
+                if (child.GetComponent<StarPlace>().IsAwakeSet)
                 {
-                    StarPlaceList[num].Star = Instantiate(Star, child.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+                    StarPlaceList[num].Star = Instantiate(Star,
+                        child.transform.position + new Vector3(0, 1, 0),
+                        Quaternion.identity);
                 }
             }
             ++num;
@@ -79,7 +86,7 @@ public class StarPlaceManager : MonoBehaviour
                             //if (PlayerController.StarPieceHave >= Constant.ConstNumber.StarConversion)
                             if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue) >= 1 ||
                                HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Green) >= 1 ||
-                               HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) >= 1) 
+                               HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) >= 1)
                             {
                                 StarPlaceList[i].isActive = true;
                             }
@@ -149,19 +156,28 @@ public class StarPlaceManager : MonoBehaviour
     /// <summary>
     /// 星の配置
     /// </summary>
-    public void StarSet()
+    public void StarSet(HaveStarManager.StarColorEnum starColor)
     {
         //StarSelect = false;
         //Time.timeScale = 1.0f;
         //StarSelectUI.SetActive(false);
         StarPlaceList[StarSelectPlaceNum].isSet = true;
         //PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
-        GenerateStar(StarSelectPlaceNum);
+        GenerateStar(StarSelectPlaceNum, starColor);
     }
 
-    void GenerateStar(int n)
+    void GenerateStar(int n, HaveStarManager.StarColorEnum starColor)
     {
-        StarPlaceList[n].Star = Instantiate(Star, StarPlaceList[n].gameObject.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+        StarPlaceList[n].Star =
+            Instantiate((starColor == HaveStarManager.StarColorEnum.Red ? RedStar :
+            starColor == HaveStarManager.StarColorEnum.Green ? GreenStar : BlueStar),
+            StarPlaceList[n].gameObject.transform.position + new Vector3(0, 1, 0),
+            Quaternion.identity);
+        var colliderList = StarPlaceList[n].GetComponents<SphereCollider>();
+        foreach(var collider in colliderList)
+        {
+            collider.enabled = false;
+        }
         AllPlaceSet = AllPlaceSetCheck();
     }
 
@@ -190,12 +206,19 @@ public class StarPlaceManager : MonoBehaviour
         {
             if (!LineList[i].DorwEnd)
             {
-                if (LineList[i].StarPlace1.GetComponent<StarPlace>().isSet && LineList[i].StarPlace2.GetComponent<StarPlace>().isSet)
+                if (LineList[i].StarPlace1.GetComponent<StarPlace>().isSet &&
+                    LineList[i].StarPlace2.GetComponent<StarPlace>().isSet)
                 {
                     LineRenderer lineRendererStarPlace1 = LineList[i].StarPlace1.GetComponent<LineRenderer>();
                     lineRendererStarPlace1.positionCount = lineRendererStarPlace1.positionCount + 2;
-                    lineRendererStarPlace1.SetPosition(lineRendererStarPlace1.positionCount - 2, LineList[i].StarPlace1.GetComponent<StarPlace>().Star.transform.position);
-                    lineRendererStarPlace1.SetPosition(lineRendererStarPlace1.positionCount - 1, LineList[i].StarPlace2.GetComponent<StarPlace>().Star.transform.position);
+
+                    lineRendererStarPlace1.SetPosition(
+                        lineRendererStarPlace1.positionCount - 2,
+                        LineList[i].StarPlace1.GetComponent<StarPlace>().Star.transform.position);
+
+                    lineRendererStarPlace1.SetPosition(
+                        lineRendererStarPlace1.positionCount - 1,
+                        LineList[i].StarPlace2.GetComponent<StarPlace>().Star.transform.position);
                     LineList[i].DorwEnd = true;
                 }
             }

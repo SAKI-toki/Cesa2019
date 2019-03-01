@@ -11,6 +11,7 @@ static public class HaveStarManager
         public int Little;
         public int Big;
     }
+    //それぞれの色がいくつ星をもっているか保持している
     static LittleAndBigStar[] StarNum = new LittleAndBigStar[(int)(StarColorEnum.None)];
 
     /// <summary>

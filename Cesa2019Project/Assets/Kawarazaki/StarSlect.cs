@@ -21,8 +21,9 @@ public class StarSlect : MonoBehaviour
     [SerializeField, Header("青")]
     GameObject SelectBlue = null;
     [SerializeField]
-    StarPlaceManager StarPlaceController;
+    StarPlaceManager StarPlaceController = null;
     private int Select;
+    bool SelectFlg = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +34,7 @@ public class StarSlect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!SelectFlg) return;
         //if (Input.GetKeyDown(KeyCode.F))
         //{
         //    Time.timeScale = 0;
@@ -54,7 +56,7 @@ public class StarSlect : MonoBehaviour
                     if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Green) >= 1)
                     {
                         HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Green);
-                        StarPlaceController.StarSet();
+                        StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Green);
                     }
                     DeleteSelect();
                 }
@@ -66,12 +68,11 @@ public class StarSlect : MonoBehaviour
                     //if (StarScript.BigStarRed >= 1)
                     //{
                     //    StarScript.AddBigStarRed(--StarScript.BigRed);
-
                     //}
                     if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) >= 1)
                     {
                         HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Red);
-                        StarPlaceController.StarSet();
+                        StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Red);
                     }
                     DeleteSelect();
                 }
@@ -87,7 +88,7 @@ public class StarSlect : MonoBehaviour
                     if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue) >= 1)
                     {
                         HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Blue);
-                        StarPlaceController.StarSet();
+                        StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Blue);
                     }
                     DeleteSelect();
                 }
@@ -118,6 +119,7 @@ public class StarSlect : MonoBehaviour
         SelectColor.SetActive(false);
         Select = 0;
         StarPlaceController.StarSelectCancel();
+        SelectFlg = false;
     }
 
     public void StartSelect()
@@ -125,5 +127,6 @@ public class StarSlect : MonoBehaviour
         Time.timeScale = 0;
         SelectColor.SetActive(true);
         EventSystem.current.SetSelectedGameObject(SelectColor);
+        SelectFlg = true;
     }
 }
