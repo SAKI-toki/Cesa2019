@@ -69,6 +69,7 @@ public class StarSlect : MonoBehaviour
                 }
                 break;
         }
+        
 
         //色の選択
         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -90,9 +91,9 @@ public class StarSlect : MonoBehaviour
     /// </summary>
     void DeleteSelect()
     {
-        EventSystem.current.SetSelectedGameObject(null);
         Time.timeScale = 1;
         SelectColor.SetActive(false);
         Select = 0;
+        EventSystem.current.SetSelectedGameObject(null);
     }
 }

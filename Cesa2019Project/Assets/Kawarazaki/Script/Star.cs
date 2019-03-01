@@ -45,7 +45,7 @@ public class Star : MonoBehaviour
     void Start()
     {
         LittleStarGreen = 0; LittleStarRed = 0;LittleStarBlue = 0;
-        BigStarGreen = 0; BigStarRed = 0; BigBlue = 0;
+        BigStarGreen = 0; BigStarRed = 0; BigStarBlue = 0;
     }
 
     void FixedUpdate()
@@ -111,7 +111,7 @@ public class Star : MonoBehaviour
     /// 小さい星(緑)
     /// </summary>
     /// <param name="little"></param>
-    /// <returns>LittleStar</returns>
+    /// <returns></returns>
     public int AddLittleStarGreen(int little)
     {
         return LittleStarGreen = little;
@@ -131,7 +131,7 @@ public class Star : MonoBehaviour
     /// 小さい星(赤)
     /// </summary>
     /// <param name="little"></param>
-    /// <returns>LittleStar</returns>
+    /// <returns></returns>
     public int AddLittleStarRed(int little)
     {
         return LittleStarRed = little;
