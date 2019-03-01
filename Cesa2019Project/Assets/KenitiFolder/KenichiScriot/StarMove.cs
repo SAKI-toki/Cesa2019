@@ -21,11 +21,13 @@ public class StarMove : MonoBehaviour
     float PlayerRange;
     bool First = true;
 
+    Collider Collider = null;
     // Start is called before the first frame update
     void Start()
     {
         ZMove = 7;
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得 
+        Collider = GetComponent<SphereCollider>();
     }
 
     // Update is called once per frame
@@ -36,12 +38,11 @@ public class StarMove : MonoBehaviour
 
         Vector3 targetPos = NearObj.transform.position;
         //プレイヤーのYの位置とアイテムのYの位置を同じにしてX軸が回転しないようにします。
-        targetPos.y = this.transform.position.y;
+        //targetPos.y = this.transform.position.y;
 
         if (First)//前に飛び出させる
         {
             First = false;
-
             rigidbody = this.GetComponent<Rigidbody>();
             Vector3 force = this.transform.forward * Zforword;
             Vector3 force2 = new Vector3(0, Yforword, 0);
@@ -52,7 +53,7 @@ public class StarMove : MonoBehaviour
         if (ItemTime >= LimitTime)
         {
             rigidbody.velocity = Vector3.zero;
-            GetComponent<SphereCollider>().enabled = true;
+            Collider.isTrigger = true;
             if (PlayerRange <= ItemOn)
             {
                 transform.LookAt(targetPos);//対象の位置方向を向く 
