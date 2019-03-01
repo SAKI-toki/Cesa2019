@@ -15,9 +15,10 @@ public class StarMove : MonoBehaviour
     float Yforword = 0;
     [SerializeField, Header("出現したアイテムが移動する時間")]
     float LimitTime = 2;
+    [SerializeField,Header("プレイヤーに向かう時の速さ")]
+    float ZMove=10;
 
     float ItemTime;
-    float ZMove;//
     float PlayerRange;
     bool First = true;
 
@@ -25,20 +26,21 @@ public class StarMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ZMove = 7;
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得 
         Collider = GetComponent<SphereCollider>();
     }
 
+    /// <summary>
+    /// 星の移動
+    /// </summary>
     // Update is called once per frame
     void Update()
     {
         ItemTime += Time.deltaTime;
+        //プレイヤーと星の距離差
         PlayerRange = Vector3.Distance(NearObj.transform.position, this.transform.position);
 
         Vector3 targetPos = NearObj.transform.position;
-        //プレイヤーのYの位置とアイテムのYの位置を同じにしてX軸が回転しないようにします。
-        //targetPos.y = this.transform.position.y;
 
         if (First)//前に飛び出させる
         {
@@ -50,18 +52,16 @@ public class StarMove : MonoBehaviour
             rigidbody.AddForce(force2, ForceMode.Impulse);
         }
 
-        if (ItemTime >= LimitTime)
+        if (ItemTime >= LimitTime)//時間が来たらプレイヤーに向かうようにする
         {
             rigidbody.velocity = Vector3.zero;
             Collider.isTrigger = true;
-            if (PlayerRange <= ItemOn)
+            if (PlayerRange <= ItemOn)//範囲に入ったら
             {
                 transform.LookAt(targetPos);//対象の位置方向を向く 
                 transform.Translate(0, 0, ZMove * Time.deltaTime);
             }
         }
-
-
     }
 
     /// <summary>

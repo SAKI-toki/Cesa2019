@@ -15,6 +15,9 @@ public class AttackObjct : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 時間が来たら削除
+    /// </summary>
     // Update is called once per frame
     void Update()
     {

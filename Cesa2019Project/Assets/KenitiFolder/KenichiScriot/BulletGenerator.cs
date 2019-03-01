@@ -29,6 +29,9 @@ public class BulletGenerator : MonoBehaviour
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得
     }
 
+    /// <summary>
+    /// 弾の発射管理
+    /// </summary>
     // Update is called once per frame
     void Update()
     {
@@ -48,6 +51,9 @@ public class BulletGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// NWay弾を出す
+    /// </summary>
     void Way3()
     {
         Shot();
@@ -66,10 +72,9 @@ public class BulletGenerator : MonoBehaviour
     /// </summary>
     void Shot()
     {
-
-        GameObject item = Instantiate(Bullet) as GameObject;
-        item.transform.position = transform.position + HighPlus;
-        item.transform.Rotate(0, BulletDrection, 0);
+        GameObject item = Instantiate(Bullet) as GameObject;//弾を生成
+        item.transform.position = transform.position + HighPlus;//指定した位置に移動
+        item.transform.Rotate(0, BulletDrection, 0);//弾の向きを発射方向に
         BulletTime = 0;
     }
 
