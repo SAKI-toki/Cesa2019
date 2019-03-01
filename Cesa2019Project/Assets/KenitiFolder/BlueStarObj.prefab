@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5123010432699816154}
   - component: {fileID: 7120729380669401856}
   - component: {fileID: 7120729380669401868}
-  - component: {fileID: 4877491615533105675}
   m_Layer: 0
   m_Name: BlueStarObj
   m_TagString: StarPiece
@@ -97,7 +96,7 @@ MonoBehaviour:
   Zforword: 3
   Yforword: 3
   LimitTime: 1.5
-  StarColor: 1
+  ZMove: 10
 --- !u!135 &7120729380669401856
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -127,16 +126,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &4877491615533105675
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7120729380669401857}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.796434
-  m_Center: {x: 0, y: 0, z: 0.056008548}

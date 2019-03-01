@@ -17,8 +17,6 @@ public class BulletGenerator : MonoBehaviour
     [SerializeField, Header("弾の間隔")]
     float BulletInterval = 0;
 
-
-
     float BulletTime = 0;
     float PlayerRangeDifference = 0;//プレイヤーと敵の距離差
     float Drection = 0;//プレイヤーの向き
@@ -31,12 +29,14 @@ public class BulletGenerator : MonoBehaviour
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得
     }
 
+    /// <summary>
+    /// 弾の発射管理
+    /// </summary>
     // Update is called once per frame
     void Update()
     {
         if (Time.timeScale != 0)
         {
-
             PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
 
             if (PlayerRangeDifference <= AtackDcetion) { BulletTime += Time.deltaTime; }
@@ -51,9 +51,11 @@ public class BulletGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// NWay弾を出す
+    /// </summary>
     void Way3()
     {
-
         Shot();
 
         for (int i = 0; WayBullet != i; i++)
@@ -70,16 +72,15 @@ public class BulletGenerator : MonoBehaviour
     /// </summary>
     void Shot()
     {
-
-        GameObject item = Instantiate(Bullet) as GameObject;
-        item.transform.position = transform.position + HighPlus;
-        item.transform.Rotate(0, BulletDrection, 0);
+        GameObject item = Instantiate(Bullet) as GameObject;//弾を生成
+        item.transform.position = transform.position + HighPlus;//指定した位置に移動
+        item.transform.Rotate(0, BulletDrection, 0);//弾の向きを発射方向に
         BulletTime = 0;
     }
 
 
     /// <summary>
-    /// プレイヤーの位置取得
+    ///指定したtagのオブジェクトを拾得
     /// </summary>
     /// <param name="nowObj"></param>
     /// <param name="tagName"></param>

@@ -100,6 +100,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         EnemyStatus.Hp = EnemyHp;
+        EnemyStatus.CurrentHp = EnemyHp;
         EnemyStatus.Attack = EnemyAttackPoint;
         EnemyStatus.Defense = EnemyDefence;
         EnemyStatus.Speed = ZMove;
@@ -108,6 +109,7 @@ public class Enemy : MonoBehaviour
         RandomOn = Random.Range(MoveTimeLow, MoveTimeHigh);
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
         Agent = GetComponent<NavMeshAgent>();
+        WaveController.EnemyCount += 1;
     }
 
     // Update is called once per frame
@@ -126,8 +128,8 @@ public class Enemy : MonoBehaviour
         EnemyTime += Time.deltaTime;
         //敵とプレイヤーの距離差
         PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
-
-        if (EnemyStatus.Hp <= 0 || DestroyDebug == true || EnemyHp <= 0)
+        
+        if (EnemyStatus.CurrentHp <= 0 || DestroyDebug == true || EnemyHp <= 0)
         {
             var randomStarNum = Random.Range(MinStarCount, MaxStarCount);
             for (int i = 0; i < randomStarNum; i++)//StarCountの分だけ星を生成
@@ -140,10 +142,9 @@ public class Enemy : MonoBehaviour
                 item.transform.position = transform.position;
                 item.transform.Rotate(0, Random.Range(-180, 180), 0);
             }
-
+            WaveController.EnemyCount -= 1;
             Destroy(this.gameObject);//敵の消滅
         }
-
         if (ReceivedDamage == true)//硬直時間の解除
         {
             if (EnemyTime >= Rigor_Cancellation)
@@ -328,10 +329,10 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "PlayerAttack")
         {
-            EnemyStatus.Hp -= 10;//HPを減らす
-            if (EnemyStatus.Hp <= 0)
+            EnemyStatus.CurrentHp -= 10;//HPを減らす
+            if (EnemyStatus.CurrentHp <= 0)
             {
-                EnemyStatus.Hp = 0;
+                EnemyStatus.CurrentHp= 0;
             }
 
             ReceivedDamage = true;//敵を硬直させる
@@ -340,7 +341,7 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーの位置取得
+    /// 指定したtagのオブジェクトを拾得
     /// </summary>
     /// <param name="nowObj"></param>
     /// <param name="tagName"></param>
