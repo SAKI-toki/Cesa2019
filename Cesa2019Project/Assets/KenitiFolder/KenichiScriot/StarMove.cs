@@ -21,6 +21,10 @@ public class StarMove : MonoBehaviour
     float PlayerRange;
     bool First = true;
 
+
+    [SerializeField, Header("色")]
+    HaveStarManager.StarColorEnum StarColor = HaveStarManager.StarColorEnum.Red;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -99,5 +103,10 @@ public class StarMove : MonoBehaviour
         //最も近かったオブジェクトを返す
         //return GameObject.Find(nearObjName);
         return targetObj;
+    }
+
+    public HaveStarManager.StarColorEnum GetColor()
+    {
+        return StarColor;
     }
 }

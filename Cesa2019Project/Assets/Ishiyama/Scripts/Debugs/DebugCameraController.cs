@@ -41,11 +41,11 @@ public class DebugCameraController : MonoBehaviour
         }
         //回転
         {
-            float moveX, moveY;
-            moveX = Input.GetAxis("Mouse X");
-            moveY = Input.GetAxis("Mouse Y");
-            RotX -= moveY * Time.deltaTime * 10;
-            RotY += moveX * Time.deltaTime * 10;
+            float rotX, rotY;
+            rotX = Input.GetAxis("Mouse X");
+            rotY = Input.GetAxis("Mouse Y");
+            RotX -= rotY * Time.deltaTime * 10;
+            RotY += rotX * Time.deltaTime * 10;
             transform.eulerAngles = new Vector3(RotX, RotY, 0);
         }
     }

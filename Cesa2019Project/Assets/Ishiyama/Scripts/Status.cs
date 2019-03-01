@@ -21,6 +21,22 @@ public class Status
     public float CurrentSpeed { get; set; }
 
     /// <summary>
+    /// ステータスの初期化
+    /// </summary>
+    /// <param name="hp">体力</param>
+    /// <param name="attack">攻撃力</param>
+    /// <param name="defense">防御力</param>
+    /// <param name="speed">速さ</param>
+    public void InitStatus(float hp,float attack,float defense,float speed)
+    {
+        Hp = hp;
+        Attack = attack;
+        Defense = defense;
+        Speed = speed;
+        ResetStatus();
+    }
+
+    /// <summary>
     /// ステータスをリセットする
     /// </summary>
     public void ResetStatus()

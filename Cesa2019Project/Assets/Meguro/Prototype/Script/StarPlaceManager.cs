@@ -36,6 +36,8 @@ public class StarPlaceManager : MonoBehaviour
     int StarSelectPlaceNum = 0;
     public static bool StarSelect = false;  // 星の色を選択中か
     bool AllPlaceSet = false;               // 星が全てセットされているかのフラグ
+    [SerializeField]
+    StarSlect StarSelectController;
 
     void Start()
     {
@@ -74,7 +76,10 @@ public class StarPlaceManager : MonoBehaviour
                         if (distance < ActiveDistance)
                         {
                             // 星を持っていたら
-                            if (PlayerController.StarPieceHave >= Constant.ConstNumber.StarConversion)
+                            //if (PlayerController.StarPieceHave >= Constant.ConstNumber.StarConversion)
+                            if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue) >= 1 ||
+                               HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Green) >= 1 ||
+                               HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) >= 1) 
                             {
                                 StarPlaceList[i].isActive = true;
                             }
@@ -108,15 +113,15 @@ public class StarPlaceManager : MonoBehaviour
                 if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
                     // 星を置く
-                    StarSet();
+                    //StarSet();
                 }
                 // キャンセル
                 if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                 {
-                    StarSelectCancel();
+                    //StarSelectCancel();
                 }
             }
-            LineCheck();
+            //LineCheck();
         }
         // 全ての星がセットされている
         else if (AllPlaceSet)
@@ -128,28 +133,29 @@ public class StarPlaceManager : MonoBehaviour
     void StarSelectActive()
     {
         StarSelect = true;
-        Time.timeScale = 0;
-        StarSelectUI.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(StartButton);
+        StarSelectController.StartSelect();
+        //Time.timeScale = 0;
+        //StarSelectUI.SetActive(true);
+        //EventSystem.current.SetSelectedGameObject(StartButton);
     }
 
-    void StarSelectCancel()
+    public void StarSelectCancel()
     {
         StarSelect = false;
-        Time.timeScale = 1.0f;
-        StarSelectUI.SetActive(false);
+        //Time.timeScale = 1.0f;
+        //StarSelectUI.SetActive(false);
     }
 
     /// <summary>
     /// 星の配置
     /// </summary>
-    void StarSet()
+    public void StarSet()
     {
-        StarSelect = false;
-        Time.timeScale = 1.0f;
-        StarSelectUI.SetActive(false);
+        //StarSelect = false;
+        //Time.timeScale = 1.0f;
+        //StarSelectUI.SetActive(false);
         StarPlaceList[StarSelectPlaceNum].isSet = true;
-        PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
+        //PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
         GenerateStar(StarSelectPlaceNum);
     }
 
