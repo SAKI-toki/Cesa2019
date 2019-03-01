@@ -15,8 +15,8 @@ public class StarMove : MonoBehaviour
     float Yforword = 0;
     [SerializeField, Header("出現したアイテムが移動する時間")]
     float LimitTime = 2;
-    [SerializeField,Header("プレイヤーに向かう時の速さ")]
-    float ZMove=10;
+    [SerializeField, Header("プレイヤーに向かう時の速さ")]
+    float ZMove = 10;
 
     float ItemTime;
     float PlayerRange;
@@ -55,9 +55,10 @@ public class StarMove : MonoBehaviour
         if (ItemTime >= LimitTime)//時間が来たらプレイヤーに向かうようにする
         {
             rigidbody.velocity = Vector3.zero;
-            Collider.isTrigger = true;
+
             if (PlayerRange <= ItemOn)//範囲に入ったら
             {
+                Collider.isTrigger = true;
                 transform.LookAt(targetPos);//対象の位置方向を向く 
                 transform.Translate(0, 0, ZMove * Time.deltaTime);
             }
