@@ -98,6 +98,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         EnemyStatus.Hp = EnemyHp;
+        EnemyStatus.CurrentHp = EnemyHp;
         EnemyStatus.Attack = EnemyAttackPoint;
         EnemyStatus.Defense = EnemyDefence;
         EnemyStatus.Speed = ZMove;
@@ -126,7 +127,7 @@ public class Enemy : MonoBehaviour
         //敵とプレイヤーの距離差
         PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
 
-        if (EnemyStatus.Hp <= 0 || DestroyDebug == true || EnemyHp <= 0)
+        if (EnemyStatus.CurrentHp <= 0 || DestroyDebug == true || EnemyHp <= 0)
         {
             for (int i = 0; StarCount != i; i++)//StarCountの分だけ星を生成
             {
@@ -326,10 +327,10 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "PlayerAttack")
         {
-            EnemyStatus.Hp -= 10;//HPを減らす
-            if (EnemyStatus.Hp <= 0)
+            EnemyStatus.CurrentHp -= 10;//HPを減らす
+            if (EnemyStatus.CurrentHp <= 0)
             {
-                EnemyStatus.Hp = 0;
+                EnemyStatus.CurrentHp= 0;
             }
 
             ReceivedDamage = true;//敵を硬直させる
