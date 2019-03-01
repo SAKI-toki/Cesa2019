@@ -9,41 +9,60 @@ public class WaveController : MonoBehaviour
 {
     [SerializeField]
     GameObject[] Waves = null;// Waveプレハブを格納する
+    [SerializeField, Header("Waveの敵")]
+    int RemainingCount = 0;
+    [SerializeField, Header("フィールドに出る敵の最大数")]
+    int MaxEnemy = 0;
+    [SerializeField, Header("Debug用")]
+    GameObject wave = null;
+    [SerializeField, Header("Debug用")]
+    bool EnemyStop = false;
+    [SerializeField, Header("Debug用")]
+    bool WaveStop = false;
 
     // 現在のWave
-    private int CurrentWave;
+    private int CurrentWave = 0;
+    int Child = 0;
+    int RemainingEnemy = 1;
+    static public int EnemyCount = 0;
+    GameObject ChildCount = null;
 
-    IEnumerator Start()
+    private void Update()
     {
+        if (EnemyCount >= MaxEnemy) { EnemyStop = true; }
+        else { EnemyStop = false; }
 
-        // Waveが存在しなければコルーチンを終了する
-        if (Waves.Length == 0)
-        {
-            yield break;
-        }
-
-        while (true)
+        if (EnemyStop == false && WaveStop == false)
         {
             // Waveを作成する
-            GameObject wave = (GameObject)Instantiate(Waves[CurrentWave], transform.position, Quaternion.identity);
+            wave = (GameObject)Instantiate(Waves[CurrentWave], transform.position, Quaternion.identity);
 
-            // WaveをEmitterの子要素にする
+            // WaveをWaveController の子要素にする
             wave.transform.parent = transform;
 
-            // Waveの子要素のEnemyが全て削除されるまで待機する
-            while (wave.transform.childCount != 0)
-            {
-                yield return new WaitForEndOfFrame();
-            }
+            //次のWaveに進ませるための条件を決める
+            if (wave.transform.childCount <= RemainingCount) { RemainingEnemy = 1; }
+            else { RemainingEnemy = 2; }
 
-            // Waveの削除
-            Destroy(wave);
-
-            //格納されているWaveを全て実行したらCurrentWaveを0にする
-            if (Waves.Length <= ++CurrentWave)
-            {
-                CurrentWave = 0;
-            }
+            Child += 1;
+            WaveStop = true;
         }
+
+
+
+        //敵がRemainingEnemy分残ったら次のWaveを生成
+        if (wave.transform.childCount == RemainingEnemy) { WaveStop = false; CurrentWave += 1; }
+
+        //Waveの中の敵が全て削除されたらWaveそのWaveを消す
+        for (int i = 0; i != Child; i++)
+        {
+            ChildCount = transform.GetChild(i).gameObject;
+            if (ChildCount.transform.childCount == 0) { Child -= 1; Destroy(ChildCount); }
+        }
+
+        //格納されているWaveを全て実行したらCurrentWaveを0にする
+        if (Waves.Length == CurrentWave) { CurrentWave = 0; }
     }
 }
+
+

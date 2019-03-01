@@ -38,25 +38,29 @@ public class StarMove : MonoBehaviour
         //プレイヤーのYの位置とアイテムのYの位置を同じにしてX軸が回転しないようにします。
         targetPos.y = this.transform.position.y;
 
-        if (First)
+        if (First)//前に飛び出させる
         {
             First = false;
+
             rigidbody = this.GetComponent<Rigidbody>();
             Vector3 force = this.transform.forward * Zforword;
             Vector3 force2 = new Vector3(0, Yforword, 0);
             rigidbody.AddForce(force, ForceMode.Impulse);
             rigidbody.AddForce(force2, ForceMode.Impulse);
-
         }
 
-        if (ItemTime >= LimitTime) { rigidbody.velocity = Vector3.zero; }
-
-        if (PlayerRange <= ItemOn)
+        if (ItemTime >= LimitTime)
         {
-
-            transform.LookAt(targetPos);//対象の位置方向を向く 
-            transform.Translate(0, 0, ZMove * Time.deltaTime);
+            rigidbody.velocity = Vector3.zero;
+            GetComponent<SphereCollider>().enabled = true;
+            if (PlayerRange <= ItemOn)
+            {
+                transform.LookAt(targetPos);//対象の位置方向を向く 
+                transform.Translate(0, 0, ZMove * Time.deltaTime);
+            }
         }
+
+
     }
 
     /// <summary>
@@ -72,7 +76,7 @@ public class StarMove : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーの位置取得
+    /// 指定したtagのオブジェクトを拾得
     /// </summary>
     /// <param name="nowObj"></param>
     /// <param name="tagName"></param>

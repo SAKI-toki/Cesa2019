@@ -17,8 +17,6 @@ public class BulletGenerator : MonoBehaviour
     [SerializeField, Header("弾の間隔")]
     float BulletInterval = 0;
 
-
-
     float BulletTime = 0;
     float PlayerRangeDifference = 0;//プレイヤーと敵の距離差
     float Drection = 0;//プレイヤーの向き
@@ -36,7 +34,6 @@ public class BulletGenerator : MonoBehaviour
     {
         if (Time.timeScale != 0)
         {
-
             PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
 
             if (PlayerRangeDifference <= AtackDcetion) { BulletTime += Time.deltaTime; }
@@ -53,7 +50,6 @@ public class BulletGenerator : MonoBehaviour
 
     void Way3()
     {
-
         Shot();
 
         for (int i = 0; WayBullet != i; i++)
@@ -79,7 +75,7 @@ public class BulletGenerator : MonoBehaviour
 
 
     /// <summary>
-    /// プレイヤーの位置取得
+    ///指定したtagのオブジェクトを拾得
     /// </summary>
     /// <param name="nowObj"></param>
     /// <param name="tagName"></param>

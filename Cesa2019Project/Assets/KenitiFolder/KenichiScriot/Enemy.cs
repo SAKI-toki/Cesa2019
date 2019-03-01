@@ -106,6 +106,7 @@ public class Enemy : MonoBehaviour
         RandomOn = Random.Range(MoveTimeLow, MoveTimeHigh);
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
         Agent = GetComponent<NavMeshAgent>();
+        WaveController.EnemyCount += 1;
     }
 
     // Update is called once per frame
@@ -121,49 +122,49 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-            EnemyTime += Time.deltaTime;
-            //敵とプレイヤーの距離差
-            PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
+        EnemyTime += Time.deltaTime;
+        //敵とプレイヤーの距離差
+        PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
 
-            if (EnemyStatus.Hp <= 0 || DestroyDebug == true || EnemyHp <= 0)
+        if (EnemyStatus.Hp <= 0 || DestroyDebug == true || EnemyHp <= 0)
+        {
+            for (int i = 0; StarCount != i; i++)//StarCountの分だけ星を生成
             {
-                for (int i = 0; StarCount != i; i++)//StarCountの分だけ星を生成
-                {
-                    StarRandom = Random.Range(1, 4);//どの星を生成させるかきめる
-                    if (StarRandom == 1) { Star = RedStar; }//赤の星を生成させる
-                    if (StarRandom == 2) { Star = BlueStar; }//青の星を生成させる
-                    if (StarRandom == 3) { Star = YellowStar; }//黄の星を生成させる
-                    GameObject item = Instantiate(Star) as GameObject;//星の生成
-                    item.transform.position = transform.position;
-                    item.transform.Rotate(0, Random.Range(-180, 180), 0);
-                }
-
-                Destroy(this.gameObject);//敵の消滅
+                StarRandom = Random.Range(1, 4);//どの星を生成させるかきめる
+                if (StarRandom == 1) { Star = RedStar; }//赤の星を生成させる
+                if (StarRandom == 2) { Star = BlueStar; }//青の星を生成させる
+                if (StarRandom == 3) { Star = YellowStar; }//黄の星を生成させる
+                GameObject item = Instantiate(Star) as GameObject;//星の生成
+                item.transform.position = transform.position;
+                item.transform.Rotate(0, Random.Range(-180, 180), 0);
             }
+            WaveController.EnemyCount -= 1;
+            Destroy(this.gameObject);//敵の消滅
+        }
 
-            if (ReceivedDamage == true)//硬直時間の解除
+        if (ReceivedDamage == true)//硬直時間の解除
+        {
+            if (EnemyTime >= Rigor_Cancellation)
             {
-                if (EnemyTime >= Rigor_Cancellation)
-                {
-                    ReceivedDamage = false;
-                    EnemyTime = 0;
-                }
+                ReceivedDamage = false;
+                EnemyTime = 0;
             }
+        }
 
-            if (PlayerRangeDifference <= AttackDecision
-                && AttackOn == false && NonDirectAttack == false
-                && ReceivedDamage == false)
-            { AttackOn = true; }//攻撃中
+        if (PlayerRangeDifference <= AttackDecision
+            && AttackOn == false && NonDirectAttack == false
+            && ReceivedDamage == false)
+        { AttackOn = true; }//攻撃中
 
-            if (AttackOn == true) { Attack(); }
+        if (AttackOn == true) { Attack(); }
 
-            if (ReceivedDamage == false && AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
-            {
-                Move();
+        if (ReceivedDamage == false && AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
+        {
+            Move();
 
-                DrectionChange();
-            }
-        
+            DrectionChange();
+        }
+
     }
 
     /// <summary>
@@ -337,7 +338,7 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーの位置取得
+    /// 指定したtagのオブジェクトを拾得
     /// </summary>
     /// <param name="nowObj"></param>
     /// <param name="tagName"></param>
