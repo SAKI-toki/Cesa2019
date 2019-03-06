@@ -105,6 +105,11 @@ PrefabInstance:
       propertyPath: HpEnemy
       value: 
       objectReference: {fileID: 3218872181148248304}
+    - target: {fileID: 1592928828263793742, guid: 5d697653a9deb794baa17f4bf9ace1d4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d697653a9deb794baa17f4bf9ace1d4, type: 3}
 --- !u!4 &3218872181148248316 stripped
@@ -195,7 +200,7 @@ PrefabInstance:
     - target: {fileID: 1592928828263793742, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d697653a9deb794baa17f4bf9ace1d4, type: 3}
@@ -205,18 +210,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5328674480771824788}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7765325398798948829 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2463675136997139785, guid: 5d697653a9deb794baa17f4bf9ace1d4,
-    type: 3}
-  m_PrefabInstance: {fileID: 5328674480771824788}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42f766a04b988d44eb7ac2eb3976abb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8304174162996161480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -284,16 +277,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2463675136997139785, guid: 5d697653a9deb794baa17f4bf9ace1d4,
-        type: 3}
-      propertyPath: StarCount
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5549464764547760011, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
       propertyPath: HpEnemy
       value: 
       objectReference: {fileID: 5840853279351885441}
+    - target: {fileID: 2463675136997139785, guid: 5d697653a9deb794baa17f4bf9ace1d4,
+        type: 3}
+      propertyPath: StarCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592928828263793742, guid: 5d697653a9deb794baa17f4bf9ace1d4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d697653a9deb794baa17f4bf9ace1d4, type: 3}
 --- !u!4 &5840853279351885453 stripped

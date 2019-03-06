@@ -254,16 +254,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2463675136997139781}
     m_Modifications:
-    - target: {fileID: 7367838290631514693, guid: 4d115fd54cf301c40b6eab61c5bb607b,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyHpGauge
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367838290631514693, guid: 4d115fd54cf301c40b6eab61c5bb607b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6494990068306519513, guid: 4d115fd54cf301c40b6eab61c5bb607b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -369,6 +359,21 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7367838290631514693, guid: 4d115fd54cf301c40b6eab61c5bb607b,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyHpGauge
+      objectReference: {fileID: 0}
+    - target: {fileID: 7367838290631514693, guid: 4d115fd54cf301c40b6eab61c5bb607b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4406562756855210368, guid: 4d115fd54cf301c40b6eab61c5bb607b,
+        type: 3}
+      propertyPath: HpEnemy
+      value: 
+      objectReference: {fileID: 2463675136997139785}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d115fd54cf301c40b6eab61c5bb607b, type: 3}
 --- !u!224 &3028176767159499730 stripped
