@@ -11,12 +11,11 @@ GameObject:
   - component: {fileID: 3015167101791313116}
   - component: {fileID: 3015167101791313119}
   - component: {fileID: 3015167101791313118}
-  - component: {fileID: 869610332899438347}
   - component: {fileID: 3015167101791313105}
+  - component: {fileID: 869610332899438347}
   - component: {fileID: 3015167101791313117}
-  - component: {fileID: 628740252630496730}
   m_Layer: 0
-  m_Name: StarObj
+  m_Name: GreenStarObj
   m_TagString: StarPiece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 275eed5ad482d284a8dc0bbf4fc3e24f, type: 2}
+  - {fileID: 2100000, guid: e7916b7c9f26fef4aaea1bc6316fe1a3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -81,6 +80,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!135 &3015167101791313105
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3015167101791313104}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &869610332899438347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,19 +109,7 @@ MonoBehaviour:
   Zforword: 3
   Yforword: 3
   LimitTime: 1.5
---- !u!135 &3015167101791313105
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3015167101791313104}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  ZMove: 10
 --- !u!54 &3015167101791313117
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -126,16 +126,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &628740252630496730
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3015167101791313104}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.796434
-  m_Center: {x: 0, y: 0, z: 0.056008548}

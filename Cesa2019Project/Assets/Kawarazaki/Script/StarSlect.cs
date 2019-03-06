@@ -12,11 +12,18 @@ public class StarSlect : MonoBehaviour
     private Star StarScript = null;
     [SerializeField]
     GameObject SelectColor = null;
-    [SerializeField, Header("選択されている色")]
-    GameObject SelectColorButton = null;
-
-
-    private int Select = 0;
+    [SerializeField, Header("最初に選択されている色")]
+    GameObject StartColor = null;
+    [SerializeField, Header("赤")]
+    GameObject SelectRed = null;
+    [SerializeField, Header("緑")]
+    GameObject SelectGreen = null;
+    [SerializeField, Header("青")]
+    GameObject SelectBlue = null;
+    [SerializeField]
+    StarPlaceManager StarPlaceController = null;
+    private int Select;
+    bool SelectFlg = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,43 +34,61 @@ public class StarSlect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Time.timeScale = 0;
-            SelectColor.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(SelectColorButton);
-        }
+        if (!SelectFlg) return;
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    Time.timeScale = 0;
+        //    SelectColor.SetActive(true);
+        //    EventSystem.current.SetSelectedGameObject(SelectColor);
+        //}
 
         //0:緑 1:赤 2:青
         switch (Select)
         {
             case 0:
-                if (Input.GetKeyDown(KeyCode.Return))
+                EventSystem.current.SetSelectedGameObject(SelectGreen);
+                if (Input.GetKeyDown(/*KeyCode.Return*/"joystick button 1"))
                 {
-                    if (StarScript.BigStarGreen >= 1)
+                    //if (StarScript.BigStarGreen >= 1)
+                    //{
+                    //    StarScript.AddBigStarGreen(--StarScript.BigGreen);
+                    //}
+                    if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Green) >= 1)
                     {
-                        StarScript.AddBigStarGreen(--StarScript.BigGreen);
+                        HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Green);
+                        StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Green);
                     }
                     DeleteSelect();
                 }
                 break;
             case 1:
-                if (Input.GetKeyDown(KeyCode.Return))
+                EventSystem.current.SetSelectedGameObject(SelectRed);
+                if (Input.GetKeyDown(/*KeyCode.Return*/"joystick button 1"))
                 {
-                    if (StarScript.BigStarRed >= 1)
+                    //if (StarScript.BigStarRed >= 1)
+                    //{
+                    //    StarScript.AddBigStarRed(--StarScript.BigRed);
+                    //}
+                    if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) >= 1)
                     {
-                        StarScript.AddBigStarRed(--StarScript.BigRed);
-
+                        HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Red);
+                        StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Red);
                     }
                     DeleteSelect();
                 }
                 break;
             case 2:
-                if (Input.GetKeyDown(KeyCode.Return))
+                EventSystem.current.SetSelectedGameObject(SelectBlue);
+                if (Input.GetKeyDown(/*KeyCode.Return*/"joystick button 1"))
                 {
-                    if (StarScript.BigStarBlue >= 1)
+                    //if (StarScript.BigStarBlue >= 1)
+                    //{
+                    //    StarScript.AddBigStarBlue(--StarScript.BigBlue);
+                    //}
+                    if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue) >= 1)
                     {
-                        StarScript.AddBigStarBlue(--StarScript.BigBlue);
+                        HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Blue);
+                        StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Blue);
                     }
                     DeleteSelect();
                 }
@@ -72,13 +97,13 @@ public class StarSlect : MonoBehaviour
         
 
         //色の選択
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(/*KeyCode.RightArrow*/"joystick button 5"))
         {
             Select++;
             if (Select > 2)
                 Select = 0;
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(/*KeyCode.LeftArrow */ "joystick button 4"))
         {
             Select--;
             if (Select < 0)
@@ -94,6 +119,15 @@ public class StarSlect : MonoBehaviour
         Time.timeScale = 1;
         SelectColor.SetActive(false);
         Select = 0;
-        EventSystem.current.SetSelectedGameObject(null);
+        StarPlaceController.StarSelectCancel();
+        SelectFlg = false;
+    }
+
+    public void StartSelect()
+    {
+        Time.timeScale = 0;
+        SelectColor.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(SelectColor);
+        SelectFlg = true;
     }
 }

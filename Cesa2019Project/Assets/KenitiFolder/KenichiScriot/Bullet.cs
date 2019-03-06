@@ -15,6 +15,9 @@ public class Bullet : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 弾の移動
+    /// </summary>
     // Update is called once per frame
     void Update()
     {
@@ -23,9 +26,12 @@ public class Bullet : MonoBehaviour
             transform.Translate(0, 0, BulletMove * Time.deltaTime);
             Destroy(gameObject, DestroyTime);
         }
-
     }
 
+    /// <summary>
+    /// プレイヤーに当たったら弾を削除する
+    /// </summary>
+    /// <param name="col"></param>
     private void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Player")

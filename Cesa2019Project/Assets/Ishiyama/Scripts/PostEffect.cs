@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// フェードや雰囲気を作るカメラ
+/// ポストエフェクト
 /// </summary>
-public class FadeCamera : MonoBehaviour
+public class PostEffect : MonoBehaviour
 {
     [SerializeField, Header("フェードマテリアル")]
     Material FadeMaterial = null;

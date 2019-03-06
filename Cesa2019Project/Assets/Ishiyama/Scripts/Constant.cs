@@ -9,6 +9,6 @@ namespace Constant
     public class ConstNumber
     {
         //星の換算
-        public const int StarConversion = 7;
+        public const int StarConversion = 5;
     }
 }

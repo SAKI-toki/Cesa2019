@@ -9,6 +9,8 @@ public class DebugCameraController : MonoBehaviour
 {
     [SerializeField,Header("移動速度")]
     float MoveSpeed = 1.0f;
+    [SerializeField, Header("回転速度")]
+    float RotationSpeed = 1.0f;
 
     //回転
     float RotX = 0, RotY = 0;
@@ -41,11 +43,11 @@ public class DebugCameraController : MonoBehaviour
         }
         //回転
         {
-            float moveX, moveY;
-            moveX = Input.GetAxis("Mouse X");
-            moveY = Input.GetAxis("Mouse Y");
-            RotX -= moveY * Time.deltaTime * 10;
-            RotY += moveX * Time.deltaTime * 10;
+            float rotX, rotY;
+            rotX = Input.GetAxis("Mouse X");
+            rotY = Input.GetAxis("Mouse Y");
+            RotX -= rotY * Time.deltaTime * RotationSpeed;
+            RotY += rotX * Time.deltaTime * RotationSpeed;
             transform.eulerAngles = new Vector3(RotX, RotY, 0);
         }
     }

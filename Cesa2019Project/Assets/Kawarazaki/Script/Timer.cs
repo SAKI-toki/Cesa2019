@@ -8,10 +8,10 @@ using TMPro;
 /// </summary>
 public class Timer : MonoBehaviour
 {
-    private TextMeshProUGUI TimerText;
+    private TextMeshProUGUI TimerText = null;
     //制限時間(分)
     [SerializeField, Header("分")]
-    private int Minute;
+    private int Minute = 0;
     //制限時間(秒)
     [SerializeField, Header("秒")]
     private int Seconds;
@@ -32,7 +32,7 @@ public class Timer : MonoBehaviour
 
 
     //トータル制限時間
-    private float TotalTime;
+    private float TotalTime = 0.0f;
 
     //タイマー初期化
     void Start()

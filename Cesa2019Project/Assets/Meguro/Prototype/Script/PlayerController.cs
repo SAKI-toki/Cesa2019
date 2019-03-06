@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     float LeftStickH = 0;                   // コントローラー左右
     float LeftStickV = 0;                   // コントローラー上下
     float Trigger = 0;                      // コントローラートリガー
-    public static int StarPieceHave = 0;    // 星の欠片を持っている数
+    //public static int StarPieceHave = 0;    // 星の欠片を持っている数
     //public static int StarHave = 0;         // 星を持っている数
     [SerializeField, Header("歩く速度")]
     float WalkVal = 0;                      // プレイヤーの歩く速度
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         PlayerStatus.ResetStatus();
         PlayerRigid = GetComponent<Rigidbody>();
         PlayerAnimator = GetComponent<Animator>();
-        StarPieceHave = 0;
+        //StarPieceHave = 0;
         //StarHave = 0;
     }
 
@@ -159,7 +159,8 @@ public class PlayerController : MonoBehaviour
         // 星の欠片取得
         if (other.gameObject.tag == "StarPiece")
         {
-            ++StarPieceHave;
+            //++StarPieceHave;
+            HaveStarManager.AddLittleStar(other.gameObject.GetComponent<StarMove>().GetColor());
             Destroy(other.gameObject);
         }
     }

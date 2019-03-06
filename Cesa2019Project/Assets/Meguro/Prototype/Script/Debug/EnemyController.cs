@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//======================
+// 目黒
+// とりあえずの敵
+//======================
 public class EnemyController : MonoBehaviour
 {
     [SerializeField]

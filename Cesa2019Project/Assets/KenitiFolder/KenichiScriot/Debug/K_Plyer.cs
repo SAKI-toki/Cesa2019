@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-public class k_plyer : MonoBehaviour
+public class K_Plyer : MonoBehaviour
 {
 
     [SerializeField] float xmove = 0;//X方向の移動力

@@ -23,10 +23,10 @@ public class StarPlaceManager : MonoBehaviour
     GameObject Player = null;               // プレイヤー
     [SerializeField, Header("星")]
     GameObject Star = null;                 // 星
-    //[SerializeField, Header("星選択UI")]
-    //GameObject StarSelectUI = null;         // 星の色を選択するUI
-    //[SerializeField, Header("最初に選択されるボタン")]
-    //GameObject StartButton = null;
+    [SerializeField, Header("星選択UI")]
+    GameObject StarSelectUI = null;         // 星の色を選択するUI
+    [SerializeField, Header("最初に選択されるボタン")]
+    GameObject StartButton = null;
     Vector3 PlayerPos = Vector3.zero;       // プレイヤーの位置
     [SerializeField]
     List<Line> LineList = new List<Line>();
@@ -36,20 +36,31 @@ public class StarPlaceManager : MonoBehaviour
     int StarSelectPlaceNum = 0;
     public static bool StarSelect = false;  // 星の色を選択中か
     bool AllPlaceSet = false;               // 星が全てセットされているかのフラグ
-
+    [SerializeField]
+    StarSlect StarSelectController = null;
+    [SerializeField]
+    GameObject RedStar = null;
+    [SerializeField]
+    GameObject GreenStar = null;
+    [SerializeField]
+    GameObject BlueStar = null;
     void Start()
     {
+        int num = 0;
         foreach (Transform child in transform)
         {
             if (null != child.GetComponent<StarPlace>())
             {
                 StarPlaceList.Add(child.GetComponent<StarPlace>());
                 //最初からセットしているかどうか
-                if(child.GetComponent<StarPlace>().IsAwakeSet)
+                if (child.GetComponent<StarPlace>().IsAwakeSet)
                 {
-                    Instantiate(Star, child.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+                    StarPlaceList[num].Star = Instantiate(Star,
+                        child.transform.position + new Vector3(0, 1, 0),
+                        Quaternion.identity);
                 }
             }
+            ++num;
         }
     }
 
@@ -72,7 +83,10 @@ public class StarPlaceManager : MonoBehaviour
                         if (distance < ActiveDistance)
                         {
                             // 星を持っていたら
-                            if (PlayerController.StarPieceHave >= Constant.ConstNumber.StarConversion)
+                            //if (PlayerController.StarPieceHave >= Constant.ConstNumber.StarConversion)
+                            if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue) >= 1 ||
+                               HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Green) >= 1 ||
+                               HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) >= 1)
                             {
                                 StarPlaceList[i].isActive = true;
                             }
@@ -106,7 +120,7 @@ public class StarPlaceManager : MonoBehaviour
                 if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
                     // 星を置く
-                    StarSet();
+                    //StarSet();
                 }
                 // キャンセル
                 if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
@@ -114,7 +128,7 @@ public class StarPlaceManager : MonoBehaviour
                     //StarSelectCancel();
                 }
             }
-            LineCheck();
+            //LineCheck();
         }
         // 全ての星がセットされている
         else if (AllPlaceSet)
@@ -122,39 +136,48 @@ public class StarPlaceManager : MonoBehaviour
 
         }
     }
+    
+    void StarSelectActive()
+    {
+        StarSelect = true;
+        StarSelectController.StartSelect();
+        //Time.timeScale = 0;
+        //StarSelectUI.SetActive(true);
+        //EventSystem.current.SetSelectedGameObject(StartButton);
+    }
 
-    //void StarSelectActive()
-    //{
-    //    StarSelect = true;
-    //    Time.timeScale = 0;
-    //    StarSelectUI.SetActive(true);
-    //}
-
-    //void StarSelectCancel()
-    //{
-    //    StarSelect = false;
-    //    Time.timeScale = 1.0f;
-    //    StarSelectUI.SetActive(false);
-    //}
+    public void StarSelectCancel()
+    {
+        StarSelect = false;
+        //Time.timeScale = 1.0f;
+        //StarSelectUI.SetActive(false);
+    }
 
     /// <summary>
     /// 星の配置
     /// </summary>
-    void StarSet()
+    public void StarSet(HaveStarManager.StarColorEnum starColor)
     {
-        StarSelect = false;
-        Time.timeScale = 1.0f;
+        //StarSelect = false;
+        //Time.timeScale = 1.0f;
         //StarSelectUI.SetActive(false);
         StarPlaceList[StarSelectPlaceNum].isSet = true;
-        PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
-        GenerateStar(StarSelectPlaceNum);
-        //StarPlaceList[StarSelectPlaceNum].Star = Instantiate(Star, StarPlaceList[StarSelectPlaceNum].Pos + new Vector3(0, 1, 0), Quaternion.identity);
-        //AllPlaceSet = AllPlaceSetCheck();
+        //PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
+        GenerateStar(StarSelectPlaceNum, starColor);
     }
 
-    void GenerateStar(int n)
+    void GenerateStar(int n, HaveStarManager.StarColorEnum starColor)
     {
-        Instantiate(Star, StarPlaceList[n].gameObject.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+        StarPlaceList[n].Star =
+            Instantiate((starColor == HaveStarManager.StarColorEnum.Red ? RedStar :
+            starColor == HaveStarManager.StarColorEnum.Green ? GreenStar : BlueStar),
+            StarPlaceList[n].gameObject.transform.position + new Vector3(0, 1, 0),
+            Quaternion.identity);
+        var colliderList = StarPlaceList[n].GetComponents<SphereCollider>();
+        foreach(var collider in colliderList)
+        {
+            collider.enabled = false;
+        }
         AllPlaceSet = AllPlaceSetCheck();
     }
 
@@ -183,12 +206,19 @@ public class StarPlaceManager : MonoBehaviour
         {
             if (!LineList[i].DorwEnd)
             {
-                if (LineList[i].StarPlace1.GetComponent<StarPlace>().isSet && LineList[i].StarPlace2.GetComponent<StarPlace>().isSet)
+                if (LineList[i].StarPlace1.GetComponent<StarPlace>().isSet &&
+                    LineList[i].StarPlace2.GetComponent<StarPlace>().isSet)
                 {
                     LineRenderer lineRendererStarPlace1 = LineList[i].StarPlace1.GetComponent<LineRenderer>();
                     lineRendererStarPlace1.positionCount = lineRendererStarPlace1.positionCount + 2;
-                    lineRendererStarPlace1.SetPosition(lineRendererStarPlace1.positionCount - 2, LineList[i].StarPlace1.GetComponent<StarPlace>().Star.transform.position);
-                    lineRendererStarPlace1.SetPosition(lineRendererStarPlace1.positionCount - 1, LineList[i].StarPlace2.GetComponent<StarPlace>().Star.transform.position);
+
+                    lineRendererStarPlace1.SetPosition(
+                        lineRendererStarPlace1.positionCount - 2,
+                        LineList[i].StarPlace1.GetComponent<StarPlace>().Star.transform.position);
+
+                    lineRendererStarPlace1.SetPosition(
+                        lineRendererStarPlace1.positionCount - 1,
+                        LineList[i].StarPlace2.GetComponent<StarPlace>().Star.transform.position);
                     LineList[i].DorwEnd = true;
                 }
             }

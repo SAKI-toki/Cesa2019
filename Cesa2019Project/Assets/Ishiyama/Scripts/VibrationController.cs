@@ -1,12 +1,13 @@
 ﻿using System.Runtime.InteropServices;
 
-public class VibrationController
+/// <summary>
+/// バイブレーション
+/// </summary>
+static public class XinputVibration
 {
-    [DllImport("VibrationDll")]
-    static extern void Vibration(int n, float l_power, float r_power);
-    
-    static public void XVibration(int n, float l_power, float r_power)
-    {
-        Vibration(n, l_power, r_power);
-    }
+    //DLLのインポート
+    [DllImport("XInputDLL")]
+    static extern public void Vibration(int n, float l_power, float r_power);
+    [DllImport("XInputDLL")]
+    static extern public float GetTrigger(int n, bool is_right);
 }
