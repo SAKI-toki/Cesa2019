@@ -1,24 +1,25 @@
 ﻿/// <summary>
 /// ステータス
 /// </summary>
+[System.Serializable]
 public class Status
 {
     //体力
-    public float Hp { get; set; }
+    public float Hp;
     //攻撃力
-    public float Attack { get; set; }
+    public float Attack;
     //防御力
-    public float Defense { get; set; }
+    public float Defense;
     //速さ
-    public float Speed { get; set; }
+    public float Speed;
     //現在の体力
-    public float CurrentHp { get; set; }
+    public float CurrentHp;
     //現在の攻撃力
-    public float CurrentAttack { get; set; }
+    public float CurrentAttack;
     //現在の防御力
-    public float CurrentDefense { get; set; }
+    public float CurrentDefense;
     //現在の速さ
-    public float CurrentSpeed { get; set; }
+    public float CurrentSpeed;
 
     /// <summary>
     /// ステータスの初期化
