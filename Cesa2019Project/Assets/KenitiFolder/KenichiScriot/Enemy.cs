@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour
     bool AttackOn = false;//攻撃中か
     bool First = false;//一度だけ実行させる
     bool AttackFirst = false;
-    public static Status EnemyStatus = new Status();
+    public Status EnemyStatus = new Status();
 
     Vector3 TargetPos;//
     Quaternion From;
