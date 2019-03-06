@@ -105,7 +105,7 @@ public class Star : MonoBehaviour
 
         //LittleStarBlueText.text = LittleString + LittleStarBlue.ToString("00");
         //BigStarBlueText.text = BigString + BigStarBlue.ToString("00");
-
+        
         LittleStarGreenText.text = LittleString + 
             HaveStarManager.GetLittleStar(HaveStarManager.StarColorEnum.Green).ToString("00");
         BigStarGreenText.text = BigString +
@@ -115,6 +115,7 @@ public class Star : MonoBehaviour
             HaveStarManager.GetLittleStar(HaveStarManager.StarColorEnum.Red).ToString("00");
         BigStarRedText.text = BigString +
             HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red).ToString("00");
+
 
         LittleStarBlueText.text = LittleString +
             HaveStarManager.GetLittleStar(HaveStarManager.StarColorEnum.Blue).ToString("00");

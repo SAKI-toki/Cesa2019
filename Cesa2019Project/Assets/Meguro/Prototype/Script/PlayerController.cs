@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
     {
         PlayerAnimator.SetBool("Jumpflg", false);
         MoveJump = false;
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "EnemyAttack")
         {
             PlayerStatus.CurrentHp -= 10;
         }

@@ -57,10 +57,14 @@ public class WaveController : MonoBehaviour
         if (wave.transform.childCount == RemainingEnemy) { WaveStop = false; CurrentWave += 1; }
 
         //Waveの中の敵が全て削除されたらWaveそのWaveを消す
-        for (int i = 0; i != Child; i++)
+        for (int i = 0; i < Child; i++)
         {
             ChildCount = transform.GetChild(i).gameObject;
-            if (ChildCount.transform.childCount == 0) { Child -= 1; Destroy(ChildCount); }
+            if (ChildCount.transform.childCount == 0)
+            {
+                Child -= 1;
+                Destroy(ChildCount);
+            }
         }
 
         //格納されているWaveを全て実行したらCurrentWaveを0にする
