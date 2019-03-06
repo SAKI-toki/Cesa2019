@@ -10,7 +10,9 @@ public class EnemyHpGauge : MonoBehaviour
     //敵のHPバー
     [SerializeField]
     public Image EnemyHp = null;
-    
+    [SerializeField]
+    Enemy HpEnemy = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,6 @@ public class EnemyHpGauge : MonoBehaviour
         //カメラと同じ向きに設定
         transform.rotation = Camera.main.transform.rotation;
         //HPバー減少
-        EnemyHp.fillAmount = Mathf.Clamp01(Enemy.EnemyStatus.CurrentHp/ Enemy.EnemyStatus.Hp);
+        EnemyHp.fillAmount = Mathf.Clamp01(HpEnemy.EnemyStatus.CurrentHp / HpEnemy.EnemyStatus.Hp);
     }
 }
