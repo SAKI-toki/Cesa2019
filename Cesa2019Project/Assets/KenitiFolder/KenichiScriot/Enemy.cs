@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour
     bool AttackOn = false;//攻撃中か
     bool First = false;//一度だけ実行させる
     bool AttackFirst = false;
-    Status EnemyStatus = new Status();
+    public Status EnemyStatus = new Status();
 
     Vector3 TargetPos;//
     Quaternion From;
@@ -124,7 +124,7 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
-
+        
         EnemyTime += Time.deltaTime;
         //敵とプレイヤーの距離差
         PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
@@ -332,7 +332,7 @@ public class Enemy : MonoBehaviour
             EnemyStatus.CurrentHp -= 10;//HPを減らす
             if (EnemyStatus.CurrentHp <= 0)
             {
-                EnemyStatus.CurrentHp= 0;
+                EnemyStatus.CurrentHp = 0;
             }
 
             ReceivedDamage = true;//敵を硬直させる
