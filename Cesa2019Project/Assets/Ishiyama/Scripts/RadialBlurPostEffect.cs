@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// ポストエフェクト
-/// </summary>
-public class PostEffect : MonoBehaviour
+public class RadialBlurPostEffect : MonoBehaviour
 {
-    [SerializeField, Header("フェードマテリアル")]
-    Material FadeMaterial = null;
-    [SerializeField, Range(0, 2)]
-    float Distance = 0;
+    [SerializeField, Header("マテリアル")]
+    Material RadialBlurMaterial = null;
 
     /// <summary>
     /// 全てのレンダリングが完了した時に呼ばれる関数
@@ -20,7 +15,6 @@ public class PostEffect : MonoBehaviour
     /// <param name="dest">コピー先のRenderTextureオブジェクト</param>
     void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
-        FadeMaterial.SetFloat("FadeDistance", Distance);
-        Graphics.Blit(src, dest, FadeMaterial);
+        Graphics.Blit(src, dest, RadialBlurMaterial);
     }
 }

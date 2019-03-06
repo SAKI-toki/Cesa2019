@@ -5,6 +5,7 @@
 		_MainTex("MainTex", 2D) = ""{}
 		_Color("Color",Color) = (0,0,0,1)
 		_Smooth("Smooth",Range(0,1)) = 0.5
+		_Distance("Distance",Range(0,2)) = 1
 	}
 	SubShader
 	{
@@ -22,7 +23,7 @@
 			float _Smooth;
 			fixed4 _Color;
 			//真ん中からの距離
-			uniform float FadeDistance = 100.0f;
+			float _Distance;
 
 			//色を決める関数
 			fixed4 frag(v2f_img i) : COLOR
@@ -33,14 +34,14 @@
 				uv.x *= aspect;
 				float dist = distance(uv, float2(0.5f * aspect, 0.5f));
 				//真ん中からFadeDistanceより長かったら_Colorにする
-				if (dist > FadeDistance)
+				if (dist > _Distance)
 				{
 					return _Color;
 				}
 				//スムーズに_Colorにする
-				if (dist > FadeDistance * (1.0f - _Smooth))
+				if (dist > _Distance * (1.0f - _Smooth))
 				{
-					float percent = (dist - FadeDistance * (1.0f - _Smooth)) / (FadeDistance * _Smooth);
+					float percent = (dist - _Distance * (1.0f - _Smooth)) / (_Distance * _Smooth);
 					return fixed4(
 						c.r + (_Color.r - c.r) * percent,
 						c.g + (_Color.g - c.g) * percent,

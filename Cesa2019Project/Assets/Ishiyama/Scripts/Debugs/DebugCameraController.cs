@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class DebugCameraController : MonoBehaviour
 {
-    [SerializeField,Header("移動速度")]
+    [SerializeField, Header("移動速度")]
     float MoveSpeed = 1.0f;
     [SerializeField, Header("回転速度")]
     float RotationSpeed = 1.0f;
@@ -42,6 +42,7 @@ public class DebugCameraController : MonoBehaviour
             transform.position = pos;
         }
         //回転
+        if (Input.GetKey(KeyCode.Space))
         {
             float rotX, rotY;
             rotX = Input.GetAxis("Mouse X");
