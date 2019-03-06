@@ -94,6 +94,7 @@ public class StarSlect : MonoBehaviour
                 }
                 break;
         }
+        
 
         //色の選択
         if (Input.GetKeyDown(/*KeyCode.RightArrow*/"joystick button 5"))

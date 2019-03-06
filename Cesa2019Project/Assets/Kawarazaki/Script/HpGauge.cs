@@ -27,9 +27,7 @@ public class HpGauge : MonoBehaviour
     void Start()
     {
         //MaxHp = Hp;
-        FrontHp = GameObject.Find("FrontHp").GetComponent<Image>();
         FrontHp.fillAmount = 1.0f;
-        BackHp = GameObject.Find("BackHp").GetComponent<Image>();
         BackHp.fillAmount = 1.0f;
     }
 
