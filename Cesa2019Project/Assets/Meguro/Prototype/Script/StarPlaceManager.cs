@@ -23,10 +23,10 @@ public class StarPlaceManager : MonoBehaviour
     GameObject Player = null;               // プレイヤー
     [SerializeField, Header("星")]
     GameObject Star = null;                 // 星
-    [SerializeField, Header("星選択UI")]
-    GameObject StarSelectUI = null;         // 星の色を選択するUI
-    [SerializeField, Header("最初に選択されるボタン")]
-    GameObject StartButton = null;
+    //[SerializeField, Header("星選択UI")]
+    //GameObject StarSelectUI = null;         // 星の色を選択するUI
+    //[SerializeField, Header("最初に選択されるボタン")]
+    //GameObject StartButton = null;
     Vector3 PlayerPos = Vector3.zero;       // プレイヤーの位置
     [SerializeField]
     List<Line> LineList = new List<Line>();
