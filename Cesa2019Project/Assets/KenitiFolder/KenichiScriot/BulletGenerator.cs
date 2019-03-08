@@ -35,7 +35,7 @@ public class BulletGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.timeScale != 0)
+        if (Time.timeScale >= 0)
         {
             PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
 

@@ -11,15 +11,17 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    GameObject NearObj;//プレイヤーの位置取得
+    GameObject NearObj = null;//プレイヤーの位置取得
     GameObject Star = null;
+    GameObject AttackObject = null;
     [SerializeField, Header("赤の星")]
     GameObject RedStar = null;
     [SerializeField, Header("青の星")]
     GameObject BlueStar = null;
-    [SerializeField, Header("黄の星")]
+    [SerializeField, Header("緑の星")]
     GameObject YellowStar = null;
-
+    [SerializeField, Header("Bossエネミーの時にtrue")]
+    bool BossEnemy = false;
     [SerializeField, Header("移動力")]
     float ZMove = 5;//移動力
     [SerializeField, Header("敵のHP")]
@@ -37,7 +39,7 @@ public class Enemy : MonoBehaviour
     [SerializeField, Header("攻撃の硬直時間")]
     float AttackWait = 3;//攻撃の硬直時間
     [SerializeField, Header("被弾時の硬直時間")]
-    float Rigor_Cancellation = 1;//被弾時の硬直時間
+    float Rigor_Cancellation = 3;//被弾時の硬直時間
     [SerializeField, Header("スピードアタックするかどうか")]
     bool SpeedAttackFlag;
     [SerializeField, Header("直接攻撃しない敵の場合true")]
@@ -66,8 +68,10 @@ public class Enemy : MonoBehaviour
     int DrectionNumber = 0;//方向に応じて数値を保存
     int RotationCount = 0;
     int StarRandom = 0;
+    int StarCount = 5;
 
     float PlayerRangeDifference = 0;//プレイヤーと敵の距離差
+    [SerializeField]
     float EnemyTime = 0;//敵の時間
     float RandomOn = 0;//移動方向変更の時間
     float SpeedAttackTime = 0;//スピードアタックの時間
@@ -124,27 +128,19 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
-        
+
         EnemyTime += Time.deltaTime;
         //敵とプレイヤーの距離差
         PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
-        
+
         if (EnemyStatus.CurrentHp <= 0 || DestroyDebug == true || EnemyHp <= 0)
         {
-            var randomStarNum = Random.Range(MinStarCount, MaxStarCount);
-            for (int i = 0; i < randomStarNum; i++)//StarCountの分だけ星を生成
-            {
-                StarRandom = Random.Range(1, 4);//どの星を生成させるかきめる
-                if (StarRandom == 1) { Star = RedStar; }//赤の星を生成させる
-                if (StarRandom == 2) { Star = BlueStar; }//青の星を生成させる
-                if (StarRandom == 3) { Star = YellowStar; }//黄の星を生成させる
-                GameObject item = Instantiate(Star) as GameObject;//星の生成
-                item.transform.position = transform.position;
-                item.transform.Rotate(0, Random.Range(-180, 180), 0);
-            }
+            if (BossEnemy == false) { EnemyStar(); }
+            if (BossEnemy) { BossEnemyStar(); }
             WaveController.EnemyCount -= 1;
             Destroy(this.gameObject);//敵の消滅
         }
+
         if (ReceivedDamage == true)//硬直時間の解除
         {
             if (EnemyTime >= Rigor_Cancellation)
@@ -308,7 +304,8 @@ public class Enemy : MonoBehaviour
             Vector3 position = transform.position + transform.up * Offset.y +
             transform.right * Offset.x +
             transform.forward * Offset.z;
-            Instantiate(AttackPrefab, position, transform.rotation);
+            AttackObject = (GameObject)Instantiate(AttackPrefab, position, transform.rotation);
+            AttackObject.transform.parent = this.transform;
             AttackFirst = true;
         }
         if (AttackTime >= AttackWait)
@@ -334,9 +331,50 @@ public class Enemy : MonoBehaviour
             {
                 EnemyStatus.CurrentHp = 0;
             }
-
-            ReceivedDamage = true;//敵を硬直させる
             EnemyTime = 0;
+            ReceivedDamage = true;//敵を硬直させる
+        }
+    }
+
+    void EnemyStar()
+    {
+        var randomStarNum = Random.Range(MinStarCount, MaxStarCount);
+        for (int i = 0; i < randomStarNum; i++)//randomStarNumの分だけ星を生成
+        {
+            StarRandom = Random.Range(1, 4);//どの星を生成させるかきめる
+            if (StarRandom == 1) { Star = RedStar; }//赤の星を生成させる
+            if (StarRandom == 2) { Star = BlueStar; }//青の星を生成させる
+            if (StarRandom == 3) { Star = YellowStar; }//黄の星を生成させる
+            GameObject item = Instantiate(Star) as GameObject;//星の生成
+            item.transform.position = transform.position;
+            item.transform.Rotate(0, Random.Range(-180, 180), 0);
+        }
+    }
+
+    void BossEnemyStar()
+    {
+        for (int i = 0; i < StarCount; i++)//大きい星を生成できる分だけ星を生成
+        {
+            Star = RedStar;//赤の星を生成させる 
+            GameObject item = Instantiate(Star) as GameObject;//星の生成
+            item.transform.position = transform.position;
+            item.transform.Rotate(0, Random.Range(-180, 180), 0);
+        }
+
+        for (int i = 0; i < StarCount; i++)//大きい星を生成できる分だけ星を生成
+        {
+            Star = BlueStar;//青の星を生成させる
+            GameObject item = Instantiate(Star) as GameObject;//星の生成
+            item.transform.position = transform.position;
+            item.transform.Rotate(0, Random.Range(-180, 180), 0);
+        }
+
+        for (int i = 0; i < StarCount; i++)//大きい星を生成できる分だけ星を生成
+        {
+            Star = YellowStar;//黄の星を生成させる
+            GameObject item = Instantiate(Star) as GameObject;//星の生成
+            item.transform.position = transform.position;
+            item.transform.Rotate(0, Random.Range(-180, 180), 0);
         }
     }
 

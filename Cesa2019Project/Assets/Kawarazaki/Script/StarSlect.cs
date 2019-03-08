@@ -9,11 +9,7 @@ using UnityEngine.EventSystems;
 public class StarSlect : MonoBehaviour
 {
     [SerializeField]
-    private Star StarScript = null;
-    [SerializeField]
     GameObject SelectColor = null;
-    [SerializeField, Header("最初に選択されている色")]
-    GameObject StartColor = null;
     [SerializeField, Header("赤")]
     GameObject SelectRed = null;
     [SerializeField, Header("緑")]
@@ -34,13 +30,12 @@ public class StarSlect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!SelectFlg) return;
-        //if (Input.GetKeyDown(KeyCode.F))
+        //if (Input.GetKeyDown(KeyCode.F)|| Input.GetKeyDown("joystick button 2"))
         //{
-        //    Time.timeScale = 0;
-        //    SelectColor.SetActive(true);
-        //    EventSystem.current.SetSelectedGameObject(SelectColor);
+        //    StartSelect();
         //}
+        if (!SelectFlg) return;
+
 
         //0:緑 1:赤 2:青
         switch (Select)

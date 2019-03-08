@@ -62,8 +62,8 @@ MonoBehaviour:
   OnPlayerTracking: 10
   Latency: 1
   AttackDecision: 2
-  AttackWait: 3
-  Rigor_Cancellation: 1
+  AttackWait: 4
+  Rigor_Cancellation: 3
   SpeedAttackFlag: 0
   NonDirectAttack: 0
   MinStarCount: 2
@@ -74,6 +74,7 @@ MonoBehaviour:
   AttackPrefab: {fileID: 9027682551869182764, guid: 7115063cdc7c456419fba109e6139a06,
     type: 3}
   DestroyDebug: 0
+  EnemyTime: 0
 --- !u!65 &2463675136997139786
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -262,7 +263,7 @@ PrefabInstance:
     - target: {fileID: 7367838290631514693, guid: 4d115fd54cf301c40b6eab61c5bb607b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6494990068306519513, guid: 4d115fd54cf301c40b6eab61c5bb607b,
         type: 3}
@@ -369,6 +370,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4406562756855210368, guid: 4d115fd54cf301c40b6eab61c5bb607b,
+        type: 3}
+      propertyPath: HpEnemy
+      value: 
+      objectReference: {fileID: 2463675136997139785}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d115fd54cf301c40b6eab61c5bb607b, type: 3}
 --- !u!224 &3028176767159499730 stripped
