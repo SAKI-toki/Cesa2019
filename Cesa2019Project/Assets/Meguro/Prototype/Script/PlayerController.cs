@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
                 PlayerStatusDebugText.Add(child.GetComponent<Text>());
             }
         }
-        PlayerStatus.Hp = 100;
+        PlayerStatus.Hp = 200;
         PlayerStatus.Attack = 15;
         PlayerStatus.Defense = 5;
         PlayerStatus.Speed = 30;

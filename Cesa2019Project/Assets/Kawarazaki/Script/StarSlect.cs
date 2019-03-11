@@ -32,10 +32,10 @@ public class StarSlect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown("joystick button 2"))
-        {
-            StartSelect();
-        }
+        //if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown("joystick button 2"))
+        //{
+        //    StartSelect();
+        //}
 
         if (!SelectFlg) return;
         
@@ -45,7 +45,7 @@ public class StarSlect : MonoBehaviour
         {
             case 0:
                 EventSystem.current.SetSelectedGameObject(SelectGreen);
-                if (Input.GetKeyDown(/*KeyCode.Return*/"joystick button 1"))
+                if (Input.GetKeyDown("joystick button 1")||Input.GetKeyDown(KeyCode.Return))
                 {
                     //if (StarScript.BigStarGreen >= 1)
                     //{
@@ -95,13 +95,13 @@ public class StarSlect : MonoBehaviour
         
 
         //色の選択
-        if (Input.GetKeyDown(/*KeyCode.RightArrow*/"joystick button 5"))
+        if (Input.GetKeyDown("joystick button 5") || Input.GetKeyDown(KeyCode.RightArrow))
         {
             Select++;
             if (Select > 2)
                 Select = 0;
         }
-        if (Input.GetKeyDown(/*KeyCode.LeftArrow */ "joystick button 4"))
+        if (Input.GetKeyDown("joystick button 4") || Input.GetKeyDown(KeyCode.RightArrow))
         {
             Select--;
             if (Select < 0)

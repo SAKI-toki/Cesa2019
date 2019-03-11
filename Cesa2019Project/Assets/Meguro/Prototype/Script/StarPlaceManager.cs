@@ -107,7 +107,7 @@ public class StarPlaceManager : MonoBehaviour
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {
                                 StarSelectPlaceNum = i;
-                                //StarSelectActive();
+                                StarSelectActive();
                             }
                         }
                     }
