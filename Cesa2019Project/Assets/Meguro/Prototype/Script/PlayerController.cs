@@ -148,50 +148,53 @@ public class PlayerController : MonoBehaviour
     {
         PlayerAnimator.SetBool("Jumpflg", false);
         MoveJump = false;
-        if (collision.gameObject.tag == "EnemyAttack")
-        {
-            PlayerStatus.CurrentHp -= 10;
-        }
     }
 
-    void OnTriggerEnter(Collider other)
+
+void OnTriggerEnter(Collider other)
+{
+    // 星の欠片取得
+    if (other.gameObject.tag == "StarPiece")
     {
-        // 星の欠片取得
-        if (other.gameObject.tag == "StarPiece")
-        {
-            //++StarPieceHave;
-            HaveStarManager.AddLittleStar(other.gameObject.GetComponent<StarMove>().GetColor());
-            Destroy(other.gameObject);
-        }
+        //++StarPieceHave;
+        HaveStarManager.AddLittleStar(other.gameObject.GetComponent<StarMove>().GetColor());
+        Destroy(other.gameObject);
     }
 
-    /// <summary>
-    /// 攻撃時のカメラ・プレイヤーの向き補正
-    /// </summary>
-    void AttackCorrection()
+
+    if (other.gameObject.tag == "EnemyAttack")
     {
-
+        PlayerStatus.CurrentHp -= 10;
     }
+}
 
-    /// <summary>
-    /// デバッグUIの表示・非表示
-    /// </summary>
-    void PlayerStatusDebugSwitch()
-    {
-        // 表示
-        if (PlayerStatusDebugUI.activeInHierarchy == false) { PlayerStatusDebugUI.SetActive(true); }
-        // 非表示
-        else if (PlayerStatusDebugUI.activeInHierarchy == true) { PlayerStatusDebugUI.SetActive(false); }
-    }
+/// <summary>
+/// 攻撃時のカメラ・プレイヤーの向き補正
+/// </summary>
+void AttackCorrection()
+{
 
-    /// <summary>
-    /// デバッグ用Textの更新
-    /// </summary>
-    void DebugPlayerStatus()
-    {
-        PlayerStatusDebugText[0].text = "Hp:      " + PlayerStatus.CurrentHp.ToString();
-        PlayerStatusDebugText[1].text = "Attack:  " + PlayerStatus.CurrentAttack.ToString();
-        PlayerStatusDebugText[2].text = "Defence: " + PlayerStatus.CurrentDefense.ToString();
-        PlayerStatusDebugText[3].text = "Speed:   " + PlayerStatus.CurrentSpeed.ToString();
-    }
+}
+
+/// <summary>
+/// デバッグUIの表示・非表示
+/// </summary>
+void PlayerStatusDebugSwitch()
+{
+    // 表示
+    if (PlayerStatusDebugUI.activeInHierarchy == false) { PlayerStatusDebugUI.SetActive(true); }
+    // 非表示
+    else if (PlayerStatusDebugUI.activeInHierarchy == true) { PlayerStatusDebugUI.SetActive(false); }
+}
+
+/// <summary>
+/// デバッグ用Textの更新
+/// </summary>
+void DebugPlayerStatus()
+{
+    PlayerStatusDebugText[0].text = "Hp:      " + PlayerStatus.CurrentHp.ToString();
+    PlayerStatusDebugText[1].text = "Attack:  " + PlayerStatus.CurrentAttack.ToString();
+    PlayerStatusDebugText[2].text = "Defence: " + PlayerStatus.CurrentDefense.ToString();
+    PlayerStatusDebugText[3].text = "Speed:   " + PlayerStatus.CurrentSpeed.ToString();
+}
 }
