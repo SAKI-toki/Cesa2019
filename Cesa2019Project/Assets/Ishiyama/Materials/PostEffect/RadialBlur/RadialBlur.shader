@@ -1,9 +1,10 @@
-﻿Shader "Custom/RadialBlur"
+﻿//円形ブラー
+Shader "Custom/RadialBlur"
 {
     Properties
     {
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
-		_SampleCount("SampleCount",Range(4,16)) = 8
+		_SampleCount("SampleCount",Range(4,40)) = 8
 		_Strength("Strength",Range(0.0,1.0)) = 0.5
     }
     SubShader
@@ -31,7 +32,7 @@
 				half2 symmetryUv = i.uv - 0.5;
 				half distance = length(symmetryUv);
 				half factor = _Strength / _SampleCount * distance;
-				for (int j = 0; j < _SampleCount; j++)
+				for (int j = 0; j < _SampleCount; ++j)
 				{
 					half uvOffset = 1 - factor * j;
 					col += tex2D(_MainTex, symmetryUv * uvOffset + 0.5);

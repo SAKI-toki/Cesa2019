@@ -1,21 +1,20 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// 円形にブラーをかけるPostEffect
+/// ポストエフェクト
 /// </summary>
-public class RadialBlurPostEffect : MonoBehaviour
+public class AnyPostEffect : MonoBehaviour
 {
     [SerializeField, Header("マテリアル")]
-    Material RadialBlurMaterial = null;
+    Material InvertMaterial = null;
 
     /// <summary>
     /// 全てのレンダリングが完了した時に呼ばれる関数
-    /// 円形にブラーをかけるポストエフェクト
     /// </summary>
     /// <param name="src">コピー元の画像</param>
     /// <param name="dest">コピー先のRenderTextureオブジェクト</param>
     void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
-        Graphics.Blit(src, dest, RadialBlurMaterial);
+        Graphics.Blit(src, dest, InvertMaterial);
     }
 }

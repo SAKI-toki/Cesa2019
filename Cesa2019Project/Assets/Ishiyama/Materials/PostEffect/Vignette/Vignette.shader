@@ -1,4 +1,5 @@
-﻿Shader "Custom/FadeShader1"
+﻿//ビネット
+Shader "Custom/Vignette"
 {
 	Properties
 	{
@@ -9,6 +10,9 @@
 	}
 	SubShader
 	{
+		Cull Off
+		ZWrite Off
+		ZTest Always
 		Pass 
 		{
 			CGPROGRAM
@@ -28,11 +32,11 @@
 			//色を決める関数
 			fixed4 frag(v2f_img i) : COLOR
 			{
-				fixed4 c = tex2D(_MainTex, i.uv);
-				float2 uv = i.uv;
-				float aspect = _ScreenParams.x / _ScreenParams.y;
+				half4 c = tex2D(_MainTex, i.uv);
+				half2 uv = i.uv;
+				half aspect = _ScreenParams.x / _ScreenParams.y;
 				uv.x *= aspect;
-				float dist = distance(uv, float2(0.5f * aspect, 0.5f));
+				half dist = distance(uv, half2(0.5f * aspect, 0.5f));
 				//真ん中からFadeDistanceより長かったら_Colorにする
 				if (dist > _Distance)
 				{
@@ -41,8 +45,8 @@
 				//スムーズに_Colorにする
 				if (dist > _Distance * (1.0f - _Smooth))
 				{
-					float percent = (dist - _Distance * (1.0f - _Smooth)) / (_Distance * _Smooth);
-					return fixed4(
+					half percent = (dist - _Distance * (1.0f - _Smooth)) / (_Distance * _Smooth);
+					return half4(
 						c.r + (_Color.r - c.r) * percent,
 						c.g + (_Color.g - c.g) * percent,
 						c.b + (_Color.b - c.b) * percent,
