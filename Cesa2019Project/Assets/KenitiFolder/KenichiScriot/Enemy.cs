@@ -31,16 +31,23 @@ public class Enemy : MonoBehaviour
     float EnemyAttackPoint = 0;
     [SerializeField, Header("敵の防御力")]
     float EnemyDefence = 0;
+    [SerializeField, Header("敵のHPの上昇幅")]
+    float HpPlus = 2;
     [SerializeField, Header("敵の攻撃力の上昇幅")]
     float AttackPlus = 2;
     [SerializeField, Header("敵の防御力の上昇幅")]
     float DefencePlus = 2;
+    [SerializeField, Header("敵の移動の上昇幅")]
+    float MovePlus = 1;
+    [SerializeField, Header("敵の移動速度の上限")]
+    float MoveLimit = 12;
     [SerializeField, Header("敵の攻撃力の下降幅（％）")]
     float AttackDown = 20;
     [SerializeField, Header("敵の防御力の下降幅（％）")]
     float DefenceDown = 20;
     [SerializeField, Header("敵の移動力の下降幅（％）")]
     float MoveDown = 20;
+
     [SerializeField, Header("索敵範囲")]
     float OnPlayerTracking = 10;//プレイヤーとの差が数値以下になったら追従開始
     [SerializeField, Header("移動後の待機時間")]
@@ -106,6 +113,7 @@ public class Enemy : MonoBehaviour
     bool First = false;//一度だけ実行させる
     bool AttackFirst = false;//攻撃を一度だけ実行
     bool AttackMotionFirst = false;//攻撃モーションを一度だけ実行
+    bool DamageFlag = false;
     public Status EnemyStatus = new Status();
 
     Vector3 TargetPos;//
@@ -168,6 +176,7 @@ public class Enemy : MonoBehaviour
             if (EnemyTime >= Rigor_Cancellation)
             {
                 ReceivedDamage = false;
+                DamageFlag = false;
                 EnemyTime = 0;
             }
         }
@@ -335,7 +344,7 @@ public class Enemy : MonoBehaviour
             AttackMotionFirst = true;
         }
 
-        if (AttackFirst == false && AttackTime >= OutPutAttackDecision)
+        if (AttackFirst == false && AttackTime >= OutPutAttackDecision&&DamageFlag==false)
         {//敵の前にオブジェクト生成
             Vector3 position = transform.position + transform.up * Offset.y +
             transform.right * Offset.x +
@@ -356,8 +365,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
-
     /// <summary>
     /// 当たり判定とダメージ判定
     /// </summary>
@@ -366,9 +373,9 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "PlayerAttack")
         {
-            
             EnemyStatus.CurrentHp -= 10;//HPを減らす
             AttackCount++;
+            
             if (EnemyStatus.CurrentHp <= 0)
             {
                 EnemyStatus.CurrentHp = 0;
@@ -379,12 +386,15 @@ public class Enemy : MonoBehaviour
             {
                 ReceivedDamage = true;/*敵を硬直させる*/
                 Animator.SetTrigger("EnemyDamage");
+                DamageFlag = true;
             }
+
             if (BossEnemy && AttackCount >= DamageCount)
             {
                 Animator.SetTrigger("EnemyDamage");
                 ReceivedDamage = true;/*敵を硬直させる*/
                 AttackCount = 0;
+                DamageFlag = true;
             }
         }
     }
@@ -477,6 +487,22 @@ public class Enemy : MonoBehaviour
         EnemyStatus.Defense += DefencePlus;
     }
 
+    /// <summary>
+    /// 敵の移動速度を上昇
+    /// </summary>
+    void BuffMove()
+    {
+        ZMove += MovePlus;
+        if (ZMove >= MoveLimit) { ZMove = MoveLimit; }
+    }
+
+    /// <summary>
+    /// 敵のHPを上昇
+    /// </summary>
+    void BuffHp()
+    {
+        EnemyStatus.Hp += HpPlus;
+    }
 
     /// <summary>
     /// 指定したtagのオブジェクトを拾得
