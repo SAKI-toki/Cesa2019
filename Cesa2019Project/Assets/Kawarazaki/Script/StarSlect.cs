@@ -61,7 +61,7 @@ public class StarSlect : MonoBehaviour
                 break;
             case 1:
                 EventSystem.current.SetSelectedGameObject(SelectRed);
-                if (Input.GetKeyDown(/*KeyCode.Return*/"joystick button 1"))
+                if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
                     //if (StarScript.BigStarRed >= 1)
                     //{
@@ -77,7 +77,7 @@ public class StarSlect : MonoBehaviour
                 break;
             case 2:
                 EventSystem.current.SetSelectedGameObject(SelectBlue);
-                if (Input.GetKeyDown(/*KeyCode.Return*/"joystick button 1"))
+                if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
                     //if (StarScript.BigStarBlue >= 1)
                     //{
@@ -101,7 +101,7 @@ public class StarSlect : MonoBehaviour
             if (Select > 2)
                 Select = 0;
         }
-        if (Input.GetKeyDown("joystick button 4") || Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown("joystick button 4") || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             Select--;
             if (Select < 0)

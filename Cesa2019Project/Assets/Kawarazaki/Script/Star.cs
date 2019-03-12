@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
@@ -29,83 +30,29 @@ public class Star : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI BigStarBlueText = null;
 
-    ////小さい星
-    //[SerializeField]
-    //public int LittleStarGreen,LittleStarRed,LittleStarBlue;
-    ////大きい星
-    //[SerializeField]
-    //public int BigStarGreen,BigStarRed,BigStarBlue;
+    static float RedPosY = 60.0f;
+    static float BluePosY = 60.0f;
+    static float GreenPosY = 60.0f;
 
     const string LittleString = "Little:";
     const string BigString = "Big:";
 
-    //public int LittleGreen,LittleRed,LittleBlue;
-    //public int BigGreen,BigRed,BigBlue;
+    [SerializeField]
+    static public List<GameObject> RedStar = new List<GameObject>();
+    [SerializeField]
+    static public List<GameObject> BlueStar = new List<GameObject>();
+    [SerializeField]
+    static public List<GameObject> GreenStar = new List<GameObject>();
+
     //初期化
     void Start()
     {
-        //LittleStarGreen = 0; LittleStarRed = 0;LittleStarBlue = 0;
-        //BigStarGreen = 0; BigStarRed = 0; BigBlue = 0;
+
     }
 
     void FixedUpdate()
     {
-        /////////////↓ここから
-        ////小さい星加算
-        //if (Input.GetKeyDown(KeyCode.Alpha1))
-        //{
-        //    LittleGreen++;
-        //    AddLittleStarGreen(LittleGreen);
-
-        //    //小さい星が7個貯まったら大きい星加算
-        //    if (LittleStarGreen >= Constant.ConstNumber.StarConversion)
-        //    {
-        //        LittleGreen -= Constant.ConstNumber.StarConversion;
-        //        AddLittleStarGreen(LittleGreen);
-        //        BigGreen++;
-        //        AddBigStarGreen(BigGreen);
-        //    }
-        //}
-        //if (Input.GetKeyDown(KeyCode.Alpha2))
-        //{
-        //    LittleRed++;
-        //    AddLittleStarRed(LittleRed);
-
-        //    //小さい星が7個貯まったら大きい星加算
-        //    if (LittleStarRed >= Constant.ConstNumber.StarConversion)
-        //    {
-        //        LittleRed -= Constant.ConstNumber.StarConversion;
-        //        AddLittleStarRed(LittleRed);
-        //        BigRed++;
-        //        AddBigStarRed(BigRed);
-        //    }
-        //}
-        //if (Input.GetKeyDown(KeyCode.Alpha3))
-        //{
-        //    LittleBlue++;
-        //    AddLittleStarBlue(LittleBlue);
-
-        //    //小さい星が7個貯まったら大きい星加算
-        //    if (LittleStarBlue >= Constant.ConstNumber.StarConversion)
-        //    {
-        //        LittleBlue -= Constant.ConstNumber.StarConversion;
-        //        AddLittleStarBlue(LittleBlue);
-        //        BigBlue++;
-        //        AddBigStarBlue(BigBlue);
-        //    }
-        //}
-        /////////////↑ここまで繋げるときに消して
-
-        //UIテキストに表示
-        //LittleStarGreenText.text = LittleString + LittleStarGreen.ToString("00");
-        //BigStarGreenText.text = BigString + BigStarGreen.ToString("00");
-
-        //LittleStarRedText.text = LittleString + LittleStarRed.ToString("00");
-        //BigStarRedText.text = BigString + BigStarRed.ToString("00");
-
-        //LittleStarBlueText.text = LittleString + LittleStarBlue.ToString("00");
-        //BigStarBlueText.text = BigString + BigStarBlue.ToString("00");
-        LittleStarGreenText.text = LittleString + 
+        LittleStarGreenText.text = LittleString +
             HaveStarManager.GetLittleStar(HaveStarManager.StarColorEnum.Green).ToString("00");
         BigStarGreenText.text = BigString +
             HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Green).ToString("00");
@@ -121,63 +68,57 @@ public class Star : MonoBehaviour
             HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue).ToString("00");
     }
 
-    ///// <summary>
-    ///// 小さい星(緑)
-    ///// </summary>
-    ///// <param name="little"></param>
-    ///// <returns>LittleStar</returns>
-    //public int AddLittleStarGreen(int little)
-    //{
-    //    return LittleStarGreen = little;
-    //}
-    
-    ///// <summary>
-    ///// 大きい星(緑)
-    ///// </summary>
-    ///// <param name="Big"></param>
-    ///// <returns></returns>
-    //public int AddBigStarGreen(int Big)
-    //{
-    //    return BigStarGreen = Big;
-    //}
+    static public void AddBigStarUI(HaveStarManager.StarColorEnum starColor)
+    {
+        switch (starColor)
+        {
+            case HaveStarManager.StarColorEnum.Red:
 
-    ///// <summary>
-    ///// 小さい星(赤)
-    ///// </summary>
-    ///// <param name="little"></param>
-    ///// <returns>LittleStar</returns>
-    //public int AddLittleStarRed(int little)
-    //{
-    //    return LittleStarRed = little;
-    //}
+                GameObject redBigStar = new GameObject("RedBigStar");
+                redBigStar.transform.parent = GameObject.Find("Canvas/Star").transform;
+                redBigStar.AddComponent<RectTransform>().localPosition = new Vector3(-90.0f, RedPosY, 1.0f);
+                redBigStar.GetComponent<RectTransform>().localScale = new Vector3(0.25f, 0.25f, 1.0f);
+                redBigStar.AddComponent<Image>().sprite = Resources.Load<Sprite>("RedStar");
+                RedStar.Add(redBigStar);
+                RedPosY += 10.0f;
+                break;
+            case HaveStarManager.StarColorEnum.Blue:
+                GameObject blueBigStar = new GameObject("BlueBigStar");
+                blueBigStar.transform.parent = GameObject.Find("Canvas/Star").transform;
+                blueBigStar.AddComponent<RectTransform>().localPosition = new Vector3(-65.0f, BluePosY, 1.0f);
+                blueBigStar.GetComponent<RectTransform>().localScale = new Vector3(0.25f, 0.25f, 1.0f);
+                blueBigStar.AddComponent<Image>().sprite = Resources.Load<Sprite>("BlueStar");
+                BlueStar.Add(blueBigStar);
+                BluePosY += 10.0f;
+                break;
+            case HaveStarManager.StarColorEnum.Green:
+                GameObject greenBigStar = new GameObject("GreenBigStar");
+                greenBigStar.transform.parent = GameObject.Find("Canvas/Star").transform;
+                greenBigStar.AddComponent<RectTransform>().localPosition = new Vector3(-40.0f, GreenPosY, 1.0f);
+                greenBigStar.GetComponent<RectTransform>().localScale = new Vector3(0.25f, 0.25f, 1.0f);
+                greenBigStar.AddComponent<Image>().sprite = Resources.Load<Sprite>("GreenStar");
+                GreenStar.Add(greenBigStar);
+                GreenPosY += 10.0f;
+                break;
+        }
+    }
 
-    ///// <summary>
-    ///// 大きい星(赤)
-    ///// </summary>
-    ///// <param name="Big"></param>
-    ///// <returns></returns>
-    //public int AddBigStarRed(int Big)
-    //{
-    //    return BigStarRed = Big;
-    //}
-
-    ///// <summary>
-    ///// 小さい星(青)
-    ///// </summary>
-    ///// <param name="little"></param>
-    ///// <returns>LittleStar</returns>
-    //public int AddLittleStarBlue(int little)
-    //{
-    //    return LittleStarBlue = little;
-    //}
-
-    ///// <summary>
-    ///// 大きい星(緑)
-    ///// </summary>
-    ///// <param name="Big"></param>
-    ///// <returns></returns>
-    //public int AddBigStarBlue(int Big)
-    //{
-    //    return BigStarBlue = Big;
-    //}
+    static public void SubBigStarUI(HaveStarManager.StarColorEnum starColor, int StarNum)
+    {
+        switch (starColor)
+        {
+            case HaveStarManager.StarColorEnum.Red:
+                Destroy(RedStar[StarNum]);
+                RedPosY -= 10.0f;
+                break;
+            case HaveStarManager.StarColorEnum.Blue:
+                Destroy(BlueStar[StarNum]);
+                BluePosY -= 10.0f;
+                break;
+            case HaveStarManager.StarColorEnum.Green:
+                Destroy(GreenStar[StarNum]);
+                GreenPosY -= 10.0f;
+                break;
+        }
+    }
 }

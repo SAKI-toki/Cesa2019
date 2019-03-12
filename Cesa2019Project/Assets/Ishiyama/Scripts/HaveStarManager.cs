@@ -45,6 +45,7 @@ static public class HaveStarManager
     static public void AddBigStar(StarColorEnum starColor)
     {
         ++StarNum[(int)(starColor)].Big;
+        Star.AddBigStarUI(starColor);
     }
 
     /// <summary>
@@ -67,6 +68,7 @@ static public class HaveStarManager
         if (StarNum[(int)(starColor)].Big >= 1)
         {
             --StarNum[(int)(starColor)].Big;
+            Star.SubBigStarUI(starColor, StarNum[(int)(starColor)].Big);
         }
     }
 

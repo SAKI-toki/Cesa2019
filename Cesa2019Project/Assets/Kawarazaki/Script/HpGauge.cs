@@ -85,7 +85,7 @@ public class HpGauge : MonoBehaviour
                     horizonflg = true;
                     circleflg = false;
                 }
-                FrontCircleHp.fillAmount = (PlayerController.PlayerStatus.CurrentHp + (PlayerController.PlayerStatus.Hp*1/7))/(PlayerController.PlayerStatus.Hp-(PlayerController.PlayerStatus.Hp*3/7));
+                FrontCircleHp.fillAmount = (PlayerController.PlayerStatus.CurrentHp + (PlayerController.PlayerStatus.Hp * 1 / 7)) / (PlayerController.PlayerStatus.Hp * 4 / 7);
                 if(PlayerController.PlayerStatus.CurrentHp <= 0)
                 {
                     horizonflg = false;
