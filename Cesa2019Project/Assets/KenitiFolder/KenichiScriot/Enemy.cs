@@ -11,7 +11,7 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    Animation Animation = null;
+    Animator Animator = null;
     GameObject NearObj = null;//プレイヤーの位置取得
     GameObject Star = null;
     GameObject AttackObject = null;
@@ -47,10 +47,14 @@ public class Enemy : MonoBehaviour
     float Latency = 1;//待機時間
     [SerializeField, Header("攻撃のために止まる範囲")]
     float AttackDecision = 2f;
+    [SerializeField, Header("攻撃判定を出す時間")]
+    float OutPutAttackDecision = 1;
     [SerializeField, Header("攻撃の硬直時間")]
     float AttackWait = 3;//攻撃の硬直時間
     [SerializeField, Header("被弾時の硬直時間")]
     float Rigor_Cancellation = 3;//被弾時の硬直時間
+    [SerializeField, Header("何回攻撃が当たったら怯むか")]
+    int DamageCount = 3;
     [SerializeField, Header("スピードアタックするかどうか")]
     bool SpeedAttackFlag;
     [SerializeField, Header("直接攻撃しない敵の場合true")]
@@ -80,6 +84,7 @@ public class Enemy : MonoBehaviour
     int RotationCount = 0;
     int StarRandom = 0;
     int StarCount = 5;
+    int AttackCount = 0;
 
     float PlayerRangeDifference = 0;//プレイヤーと敵の距離差
     [SerializeField]
@@ -99,7 +104,8 @@ public class Enemy : MonoBehaviour
     bool AttackEnemy = false;//攻撃中か
     bool AttackOn = false;//攻撃中か
     bool First = false;//一度だけ実行させる
-    bool AttackFirst = false;
+    bool AttackFirst = false;//攻撃を一度だけ実行
+    bool AttackMotionFirst = false;//攻撃モーションを一度だけ実行
     public Status EnemyStatus = new Status();
 
     Vector3 TargetPos;//
@@ -124,7 +130,7 @@ public class Enemy : MonoBehaviour
         DefenceDown = 1 - (DefenceDown * 0.01f);
         MoveDown = 1 - (MoveDown * 0.01f);
         YPlus = RotationPlus;
-        Animation = this.GetComponent<Animation>();
+        Animator = this.GetComponent<Animator>();
         RandomOn = Random.Range(MoveTimeLow, MoveTimeHigh);
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
         Agent = GetComponent<NavMeshAgent>();
@@ -158,7 +164,7 @@ public class Enemy : MonoBehaviour
 
         if (ReceivedDamage == true)//硬直時間の解除
         {
-            if (EnemyTime >= 0.6f) { Animation.Play("Org_Slime_Idle"); }
+            Animator.SetBool("EnemyWalk", false);
             if (EnemyTime >= Rigor_Cancellation)
             {
                 ReceivedDamage = false;
@@ -192,12 +198,12 @@ public class Enemy : MonoBehaviour
             //前に進む
             if (MoveSwitch)
             {
-                Animation.Play("Org_Slime_Walk");
+                Animator.SetBool("EnemyWalk", true);
                 transform.Translate(0, 0, ZMove * Time.deltaTime);
             }
             else
             {
-                Animation.Play("Org_Slime_Idle");
+                Animator.SetBool("EnemyWalk", false);
             }
         }
 
@@ -208,7 +214,7 @@ public class Enemy : MonoBehaviour
         //敵の索敵範囲に入ったらプレイヤーに追従開始
         if (PlayerRangeDifference <= OnPlayerTracking)
         {
-            Animation.Play("Org_Slime_Walk");
+            Animator.SetBool("EnemyWalk", true);
             MoveSwitch = false;
             PlayerTracking = true;
             transform.LookAt(TargetPos);//対象の位置方向を向く 
@@ -323,17 +329,21 @@ public class Enemy : MonoBehaviour
     {
         AttackTime += Time.deltaTime;
         AttackEnemy = true;
-        if (AttackFirst == false)
+        if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
+        {
+            Animator.SetTrigger("EnemyAttack");
+            AttackMotionFirst = true;
+        }
+
+        if (AttackFirst == false && AttackTime >= OutPutAttackDecision)
         {//敵の前にオブジェクト生成
             Vector3 position = transform.position + transform.up * Offset.y +
             transform.right * Offset.x +
             transform.forward * Offset.z;
             AttackObject = (GameObject)Instantiate(AttackPrefab, position, transform.rotation);
             AttackObject.transform.parent = this.transform;
-            Animation.Play("Org_Slime_Attack01");
             AttackFirst = true;
         }
-        if (AttackTime >= 0.8f) { Animation.Play("Org_Slime_Idle"); }
 
         if (AttackTime >= AttackWait)
         {
@@ -342,6 +352,7 @@ public class Enemy : MonoBehaviour
             EnemyTime = 0;
             AttackOn = false;
             AttackFirst = false;
+            AttackMotionFirst = false;
         }
     }
 
@@ -355,14 +366,26 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "PlayerAttack")
         {
-            Animation.Play("Org_Slime_Damage");
+            
             EnemyStatus.CurrentHp -= 10;//HPを減らす
+            AttackCount++;
             if (EnemyStatus.CurrentHp <= 0)
             {
                 EnemyStatus.CurrentHp = 0;
             }
             EnemyTime = 0;
-            ReceivedDamage = true;//敵を硬直させる
+
+            if (BossEnemy == false)
+            {
+                ReceivedDamage = true;/*敵を硬直させる*/
+                Animator.SetTrigger("EnemyDamage");
+            }
+            if (BossEnemy && AttackCount >= DamageCount)
+            {
+                Animator.SetTrigger("EnemyDamage");
+                ReceivedDamage = true;/*敵を硬直させる*/
+                AttackCount = 0;
+            }
         }
     }
 
