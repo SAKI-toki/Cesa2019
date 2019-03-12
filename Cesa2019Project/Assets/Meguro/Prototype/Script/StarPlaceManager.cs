@@ -162,6 +162,7 @@ public class StarPlaceManager : MonoBehaviour
         //Time.timeScale = 1.0f;
         //StarSelectUI.SetActive(false);
         StarPlaceList[StarSelectPlaceNum].isSet = true;
+        StarPlaceList[StarSelectPlaceNum].StarColor = starColor;
         //PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
         GenerateStar(StarSelectPlaceNum, starColor);
     }

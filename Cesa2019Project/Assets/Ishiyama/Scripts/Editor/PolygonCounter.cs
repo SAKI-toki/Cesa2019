@@ -15,7 +15,7 @@ public class PolygonCounter : Editor
         base.OnInspectorGUI();
 
         MeshFilter filter = target as MeshFilter;
-        string polygons = "Triangles: " + filter.sharedMesh.triangles.Length / 3;
+        string polygons = "Triangles: "+ filter.sharedMesh.triangles.Length / 3;
         EditorGUILayout.LabelField(polygons);
     }
 }

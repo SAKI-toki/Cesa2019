@@ -3,6 +3,7 @@
 /// <summary>
 /// ポストエフェクト
 /// </summary>
+[ExecuteInEditMode]//実行していなくても適応される
 public class AnyPostEffect : MonoBehaviour
 {
     [SerializeField, Header("マテリアル")]
