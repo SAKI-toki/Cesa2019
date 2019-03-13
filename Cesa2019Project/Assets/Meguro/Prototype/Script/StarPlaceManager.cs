@@ -44,6 +44,8 @@ public class StarPlaceManager : MonoBehaviour
     GameObject GreenStar = null;
     [SerializeField]
     GameObject BlueStar = null;
+    [SerializeField]
+    Pause Pause = null;
     void Start()
     {
         int num = 0;
@@ -102,7 +104,7 @@ public class StarPlaceManager : MonoBehaviour
                         }
 
                         // 範囲内にいるとき
-                        if (StarPlaceList[i].isActive)
+                        if (StarPlaceList[i].isActive && !Pause.GetPauseFlg())
                         {
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {

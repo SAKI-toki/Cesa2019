@@ -21,6 +21,7 @@ public class StarSlect : MonoBehaviour
     [SerializeField]
     StarPlaceManager StarPlaceController = null;
     private int Select;
+
     bool SelectFlg = false;
 
     // Start is called before the first frame update
@@ -37,15 +38,15 @@ public class StarSlect : MonoBehaviour
         //    StartSelect();
         //}
 
-        if (!SelectFlg) return;
-        
+        //if (!SelectFlg) return;
+
 
         //0:緑 1:赤 2:青
         switch (Select)
         {
             case 0:
                 EventSystem.current.SetSelectedGameObject(SelectGreen);
-                if (Input.GetKeyDown("joystick button 1")||Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
                     //if (StarScript.BigStarGreen >= 1)
                     //{
@@ -92,7 +93,7 @@ public class StarSlect : MonoBehaviour
                 }
                 break;
         }
-        
+
 
         //色の選択
         if (Input.GetKeyDown("joystick button 5") || Input.GetKeyDown(KeyCode.RightArrow))
@@ -127,5 +128,10 @@ public class StarSlect : MonoBehaviour
         SelectColor.SetActive(true);
         EventSystem.current.SetSelectedGameObject(SelectColor);
         SelectFlg = true;
+    }
+
+    public bool GetSelectFlg()
+    {
+         return SelectFlg; 
     }
 }

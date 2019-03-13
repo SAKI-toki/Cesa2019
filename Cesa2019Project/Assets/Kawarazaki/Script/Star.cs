@@ -40,14 +40,15 @@ public class Star : MonoBehaviour
     [SerializeField]
     GameObject GreenBigStar = null;
     
-    //X座標
+    //星の座標
+    //X
     [SerializeField]
     float RedPosX = -90.0f;
     [SerializeField]
     float BluePosX = -65.0f;
     [SerializeField]
     float GreenPosX = -40.0f;
-    //Y座標
+    //Y
     [SerializeField]
     float RedPosY = 60.0f;
     [SerializeField]
@@ -56,7 +57,7 @@ public class Star : MonoBehaviour
     float GreenPosY = 60.0f;
 
 
-    //Scale
+    //星のサイズ
     [SerializeField]
     float Scale = 0.25f;
 
@@ -67,9 +68,6 @@ public class Star : MonoBehaviour
     //1フレーム前の星の数を格納(BIG)
     int[] PrevStarNum = new int[(int)(HaveStarManager.StarColorEnum.None)];
 
-    //static public GameObject[] RedStar = new GameObject[11];
-    //static public GameObject[] BlueStar = new GameObject[11];
-    //static public GameObject[] GreenStar = new GameObject[11];
     //初期化
     void Start()
     {
@@ -98,7 +96,10 @@ public class Star : MonoBehaviour
         BigStarBlueText.text = BigString +
             HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue).ToString("00");
     }
-
+    /// <summary>
+    /// 大きい星の増加
+    /// </summary>
+    /// <param name="starColor"></param>
     public void AddBigStarUI(HaveStarManager.StarColorEnum starColor)
     {
 
@@ -130,6 +131,11 @@ public class Star : MonoBehaviour
                 break;
         }
     }
+
+    /// <summary>
+    /// 大きい星の減少
+    /// </summary>
+    /// <param name="starColor"></param>
     public void SubBigStarUI(HaveStarManager.StarColorEnum starColor)
     {
         switch (starColor)
@@ -152,6 +158,9 @@ public class Star : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     void UpdatePrevStar()
     {
         for (int i = 0; i < PrevStarNum.Length; ++i)
