@@ -29,25 +29,56 @@ public class Star : MonoBehaviour
     //大きい星のテキスト(青)
     [SerializeField]
     private TextMeshProUGUI BigStarBlueText = null;
-
-    static float RedPosY = 60.0f;
-    static float BluePosY = 60.0f;
-    static float GreenPosY = 60.0f;
-
     const string LittleString = "Little:";
     const string BigString = "Big:";
+    
 
     [SerializeField]
-    static public List<GameObject> RedStar = new List<GameObject>();
+    GameObject RedBigStar = null;
     [SerializeField]
-    static public List<GameObject> BlueStar = new List<GameObject>();
+    GameObject BlueBigStar = null;
     [SerializeField]
-    static public List<GameObject> GreenStar = new List<GameObject>();
+    GameObject GreenBigStar = null;
+    
+    //X座標
+    [SerializeField]
+    float RedPosX = -90.0f;
+    [SerializeField]
+    float BluePosX = -65.0f;
+    [SerializeField]
+    float GreenPosX = -40.0f;
+    //Y座標
+    [SerializeField]
+    float RedPosY = 60.0f;
+    [SerializeField]
+    float BluePosY = 60.0f;
+    [SerializeField]
+    float GreenPosY = 60.0f;
 
+
+    //Scale
+    [SerializeField]
+    float Scale = 0.25f;
+
+    List<GameObject> RedStarList = new List<GameObject>();
+    List<GameObject> BlueStarList = new List<GameObject>();
+    List<GameObject> GreenStarList = new List<GameObject>();
+
+    //1フレーム前の星の数を格納(BIG)
+    int[] PrevStarNum = new int[(int)(HaveStarManager.StarColorEnum.None)];
+
+    //static public GameObject[] RedStar = new GameObject[11];
+    //static public GameObject[] BlueStar = new GameObject[11];
+    //static public GameObject[] GreenStar = new GameObject[11];
     //初期化
     void Start()
     {
 
+    }
+
+    void Update()
+    {
+        UpdatePrevStar();
     }
 
     void FixedUpdate()
@@ -68,57 +99,78 @@ public class Star : MonoBehaviour
             HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue).ToString("00");
     }
 
-    static public void AddBigStarUI(HaveStarManager.StarColorEnum starColor)
+    public void AddBigStarUI(HaveStarManager.StarColorEnum starColor)
     {
+
         switch (starColor)
         {
             case HaveStarManager.StarColorEnum.Red:
-
-                GameObject redBigStar = new GameObject("RedBigStar");
-                redBigStar.transform.parent = GameObject.Find("Canvas/Star").transform;
-                redBigStar.AddComponent<RectTransform>().localPosition = new Vector3(-90.0f, RedPosY, 1.0f);
-                redBigStar.GetComponent<RectTransform>().localScale = new Vector3(0.25f, 0.25f, 1.0f);
-                redBigStar.AddComponent<Image>().sprite = Resources.Load<Sprite>("RedStar");
-                RedStar.Add(redBigStar);
+                GameObject redStarPrefab = Instantiate(RedBigStar);
+                redStarPrefab.transform.SetParent(gameObject.transform, false);
+                redStarPrefab.GetComponent<RectTransform>().localPosition = new Vector3(RedPosX, RedPosY, 1.0f);
+                redStarPrefab.GetComponent<RectTransform>().localScale = new Vector3(Scale, Scale, 1.0f);
+                RedStarList.Add(redStarPrefab);
                 RedPosY += 10.0f;
                 break;
             case HaveStarManager.StarColorEnum.Blue:
-                GameObject blueBigStar = new GameObject("BlueBigStar");
-                blueBigStar.transform.parent = GameObject.Find("Canvas/Star").transform;
-                blueBigStar.AddComponent<RectTransform>().localPosition = new Vector3(-65.0f, BluePosY, 1.0f);
-                blueBigStar.GetComponent<RectTransform>().localScale = new Vector3(0.25f, 0.25f, 1.0f);
-                blueBigStar.AddComponent<Image>().sprite = Resources.Load<Sprite>("BlueStar");
-                BlueStar.Add(blueBigStar);
+                GameObject blueStarPrefab = Instantiate(BlueBigStar);
+                blueStarPrefab.transform.SetParent(gameObject.transform, false);
+                blueStarPrefab.GetComponent<RectTransform>().localPosition = new Vector3(BluePosX, BluePosY, 1.0f);
+                blueStarPrefab.GetComponent<RectTransform>().localScale = new Vector3(Scale, Scale, 1.0f);
+                BlueStarList.Add(blueStarPrefab);
                 BluePosY += 10.0f;
                 break;
             case HaveStarManager.StarColorEnum.Green:
-                GameObject greenBigStar = new GameObject("GreenBigStar");
-                greenBigStar.transform.parent = GameObject.Find("Canvas/Star").transform;
-                greenBigStar.AddComponent<RectTransform>().localPosition = new Vector3(-40.0f, GreenPosY, 1.0f);
-                greenBigStar.GetComponent<RectTransform>().localScale = new Vector3(0.25f, 0.25f, 1.0f);
-                greenBigStar.AddComponent<Image>().sprite = Resources.Load<Sprite>("GreenStar");
-                GreenStar.Add(greenBigStar);
+                GameObject greenStarPrefab = Instantiate(GreenBigStar);
+                greenStarPrefab.transform.SetParent(gameObject.transform, false);
+                greenStarPrefab.GetComponent<RectTransform>().localPosition = new Vector3(GreenPosX, GreenPosY, 1.0f);
+                greenStarPrefab.GetComponent<RectTransform>().localScale = new Vector3(Scale, Scale, 1.0f);
+                GreenStarList.Add(greenStarPrefab);
                 GreenPosY += 10.0f;
                 break;
         }
     }
-
-    static public void SubBigStarUI(HaveStarManager.StarColorEnum starColor, int StarNum)
+    public void SubBigStarUI(HaveStarManager.StarColorEnum starColor)
     {
         switch (starColor)
         {
             case HaveStarManager.StarColorEnum.Red:
-                Destroy(RedStar[StarNum]);
+                Destroy(RedStarList[RedStarList.Count - 1]);
+                RedStarList.RemoveAt(RedStarList.Count - 1);
                 RedPosY -= 10.0f;
                 break;
             case HaveStarManager.StarColorEnum.Blue:
-                Destroy(BlueStar[StarNum]);
+                Destroy(BlueStarList[BlueStarList.Count - 1]);
+                BlueStarList.RemoveAt(BlueStarList.Count - 1);
                 BluePosY -= 10.0f;
                 break;
             case HaveStarManager.StarColorEnum.Green:
-                Destroy(GreenStar[StarNum]);
+                Destroy(GreenStarList[GreenStarList.Count - 1]);
+                GreenStarList.RemoveAt(GreenStarList.Count - 1);
                 GreenPosY -= 10.0f;
                 break;
+        }
+    }
+
+    void UpdatePrevStar()
+    {
+        for (int i = 0; i < PrevStarNum.Length; ++i)
+        {
+            //現在の星の数(BIG)
+            int currentStarNum = HaveStarManager.GetBigStar((HaveStarManager.StarColorEnum)i);
+            //数が違う場合
+            if (PrevStarNum[i] != currentStarNum)
+            {
+                if (PrevStarNum[i] < currentStarNum)
+                {
+                    AddBigStarUI((HaveStarManager.StarColorEnum)i);
+                }
+                else
+                {
+                    SubBigStarUI((HaveStarManager.StarColorEnum)i);
+                }
+                PrevStarNum[i] = currentStarNum;
+            }
         }
     }
 }
