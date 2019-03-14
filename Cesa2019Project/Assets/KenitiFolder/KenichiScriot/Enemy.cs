@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
 {
     GameObject NearObj;//プレイヤーの位置取得
     GameObject Star = null;
+    GameObject AttackObject = null;
     [SerializeField, Header("赤の星")]
     GameObject RedStar = null;
     [SerializeField, Header("青の星")]
@@ -308,7 +309,8 @@ public class Enemy : MonoBehaviour
             Vector3 position = transform.position + transform.up * Offset.y +
             transform.right * Offset.x +
             transform.forward * Offset.z;
-            Instantiate(AttackPrefab, position, transform.rotation);
+            AttackObject = (GameObject)Instantiate(AttackPrefab, position, transform.rotation);
+            AttackObject.transform.parent = this.transform;
             AttackFirst = true;
         }
         if (AttackTime >= AttackWait)

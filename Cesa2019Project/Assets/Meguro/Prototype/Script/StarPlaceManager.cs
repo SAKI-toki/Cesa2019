@@ -44,6 +44,7 @@ public class StarPlaceManager : MonoBehaviour
     GameObject GreenStar = null;
     [SerializeField]
     GameObject BlueStar = null;
+
     void Start()
     {
         int num = 0;
@@ -107,7 +108,7 @@ public class StarPlaceManager : MonoBehaviour
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {
                                 StarSelectPlaceNum = i;
-                                //StarSelectActive();
+                                StarSelectActive();
                             }
                         }
                     }
@@ -128,7 +129,7 @@ public class StarPlaceManager : MonoBehaviour
                     //StarSelectCancel();
                 }
             }
-            //LineCheck();
+            LineCheck();
         }
         // 全ての星がセットされている
         else if (AllPlaceSet)
