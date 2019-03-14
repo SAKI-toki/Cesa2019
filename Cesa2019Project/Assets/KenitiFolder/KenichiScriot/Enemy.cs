@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
     float MoveDown = 20;
 
     [SerializeField, Header("索敵範囲")]
-    float OnPlayerTracking = 10;//プレイヤーとの差が数値以下になったら追従開始
+    public float OnPlayerTracking = 10;//プレイヤーとの差が数値以下になったら追従開始
     [SerializeField, Header("移動後の待機時間")]
     float Latency = 1;//待機時間
     [SerializeField, Header("攻撃のために止まる範囲")]
@@ -94,7 +94,6 @@ public class Enemy : MonoBehaviour
     int AttackCount = 0;
 
     float PlayerRangeDifference = 0;//プレイヤーと敵の距離差
-    [SerializeField]
     float EnemyTime = 0;//敵の時間
     float RandomOn = 0;//移動方向変更の時間
     float SpeedAttackTime = 0;//スピードアタックの時間
@@ -104,7 +103,8 @@ public class Enemy : MonoBehaviour
     float YPlus = 0;//rotationを動かす角度
     float RotationTime = 0;//敵のrotation変更の時に使う時間
 
-    bool ReceivedDamage = false;//ダメージをうけたときtrue
+    [HideInInspector]
+    public bool ReceivedDamage = false;//ダメージをうけたときtrue
     bool PlayerTracking = false;//プレイヤーに追従してるときにtrue
     bool MoveSwitch;//前に移動する
     bool Wait = false;//待機状態が解けたか
@@ -116,8 +116,7 @@ public class Enemy : MonoBehaviour
     bool DamageFlag = false;
     public Status EnemyStatus = new Status();
 
-    Vector3 TargetPos;//
-    Quaternion From;
+    Vector3 TargetPos;
 
     NavMeshAgent Agent = null;
 
@@ -202,18 +201,15 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void Move()
     {
-        if (PlayerTracking == false)
+        //前に進む
+        if (MoveSwitch && NonDirectAttack == false)
         {
-            //前に進む
-            if (MoveSwitch)
-            {
-                Animator.SetBool("EnemyWalk", true);
-                transform.Translate(0, 0, ZMove * Time.deltaTime);
-            }
-            else
-            {
-                Animator.SetBool("EnemyWalk", false);
-            }
+            Animator.SetBool("EnemyWalk", true);
+            transform.Translate(0, 0, ZMove * Time.deltaTime);
+        }
+        else
+        {
+            Animator.SetBool("EnemyWalk", false);
         }
 
         TargetPos = NearObj.transform.position;
@@ -223,12 +219,9 @@ public class Enemy : MonoBehaviour
         //敵の索敵範囲に入ったらプレイヤーに追従開始
         if (PlayerRangeDifference <= OnPlayerTracking)
         {
-            Animator.SetBool("EnemyWalk", true);
-            MoveSwitch = false;
+            MoveSwitch = true;
             PlayerTracking = true;
             transform.LookAt(TargetPos);//対象の位置方向を向く 
-            transform.Translate(0, 0, ZMove * Time.deltaTime);
-
             SpeedAttack();
         }
         else
@@ -338,13 +331,14 @@ public class Enemy : MonoBehaviour
     {
         AttackTime += Time.deltaTime;
         AttackEnemy = true;
+        Animator.SetBool("EnemyWalk", false);
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
             Animator.SetTrigger("EnemyAttack");
             AttackMotionFirst = true;
         }
 
-        if (AttackFirst == false && AttackTime >= OutPutAttackDecision&&DamageFlag==false)
+        if (AttackFirst == false && AttackTime >= OutPutAttackDecision && DamageFlag == false)
         {//敵の前にオブジェクト生成
             Vector3 position = transform.position + transform.up * Offset.y +
             transform.right * Offset.x +
@@ -354,7 +348,7 @@ public class Enemy : MonoBehaviour
             AttackFirst = true;
         }
 
-        if (AttackTime >= AttackWait)
+        if (AttackTime >= AttackWait || DamageFlag == true)
         {
             AttackEnemy = false;
             AttackTime = 0;
@@ -375,26 +369,28 @@ public class Enemy : MonoBehaviour
         {
             EnemyStatus.CurrentHp -= 10;//HPを減らす
             AttackCount++;
-            
+
             if (EnemyStatus.CurrentHp <= 0)
             {
                 EnemyStatus.CurrentHp = 0;
             }
-            EnemyTime = 0;
 
-            if (BossEnemy == false)
+
+            if (BossEnemy == false && ReceivedDamage == false)
             {
                 ReceivedDamage = true;/*敵を硬直させる*/
                 Animator.SetTrigger("EnemyDamage");
                 DamageFlag = true;
+                EnemyTime = 0;
             }
 
-            if (BossEnemy && AttackCount >= DamageCount)
+            if (BossEnemy && AttackCount >= DamageCount && ReceivedDamage == false)
             {
                 Animator.SetTrigger("EnemyDamage");
                 ReceivedDamage = true;/*敵を硬直させる*/
                 AttackCount = 0;
                 DamageFlag = true;
+                EnemyTime = 0;
             }
         }
     }
