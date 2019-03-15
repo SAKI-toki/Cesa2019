@@ -79,6 +79,7 @@ static public class HaveStarManager
     {
         return StarNum[(int)(starColor)].Little;
     }
+
     /// <summary>
     /// 大きい星のゲッタ
     /// </summary>

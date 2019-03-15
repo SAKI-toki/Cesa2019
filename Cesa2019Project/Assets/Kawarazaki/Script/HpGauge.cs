@@ -7,28 +7,40 @@ using UnityEngine.UI;
 /// </summary>
 public class HpGauge : MonoBehaviour
 {
-    //緑ゲージのHPバー
+    //緑ゲージのHPバー(円)
     [SerializeField]
-    public Image FrontHp = null;
-    //赤ゲージのHPバー
+    public Image FrontCircleHp = null;
+    //赤ゲージのHPバー（円）
     [SerializeField]
-    public Image BackHp = null;
+    public Image BackCircleHp = null;
+
+    //緑ゲージのHPバー(横)
+    [SerializeField]
+    public Image FrontHorizontalHp = null;
+    //赤ゲージのHPバー（横）
+    [SerializeField]
+    public Image BackHorizontalHp = null;
 
     //プレイヤーHP
     //[SerializeField]
-    //float Hp = 0;
-    //float MaxHp;
+    //float Hp = 200;
+    //float MaxHp = 250;
 
     //プレイヤーが受けるダメージ
     //[SerializeField]
     //float Damage = 10;
 
+    bool circleflg = false;
+    bool horizonflg = true;
+
     //HPゲージ初期化
     void Start()
     {
         //MaxHp = Hp;
-        FrontHp.fillAmount = 1.0f;
-        BackHp.fillAmount = 1.0f;
+        FrontCircleHp.fillAmount = 1.0f;
+        BackCircleHp.fillAmount = 1.0f;
+        FrontHorizontalHp.fillAmount= 1.0f;
+        BackHorizontalHp.fillAmount = 1.0f;
     }
 
 
@@ -55,16 +67,44 @@ public class HpGauge : MonoBehaviour
         //    Debug.Log(1);
         //}
         //HPダメージ
-        //FrontHp.fillAmount = Mathf.Clamp01(Hp / MaxHp);
-        FrontHp.fillAmount = Mathf.Clamp01(PlayerController.PlayerStatus.CurrentHp / PlayerController.PlayerStatus.Hp);
-        //FrontHpを追いかける
-        if (FrontHp.fillAmount <= BackHp.fillAmount)
-            BackHp.fillAmount -= Mathf.Clamp01(reduceSpeed / waitSpeed * Time.deltaTime);
-
-        //HP回復
-        if (FrontHp.fillAmount >= BackHp.fillAmount)
+        if(PlayerController.PlayerStatus.Hp > 0 ) 
         {
-            BackHp.fillAmount = FrontHp.fillAmount;
+            if(horizonflg)
+            {
+                FrontHorizontalHp.fillAmount = (PlayerController.PlayerStatus.CurrentHp - (PlayerController.PlayerStatus.Hp * 3 / 7)) / (PlayerController.PlayerStatus.Hp * 4 / 7);
+                if(PlayerController.PlayerStatus.CurrentHp <= PlayerController.PlayerStatus.Hp * 3 / 7 )
+                {
+                    horizonflg = false;
+                    circleflg = true;
+                }
+            }
+            else if(circleflg)
+            {
+                if(PlayerController.PlayerStatus.CurrentHp <= PlayerController.PlayerStatus.Hp * 3 / 7)
+                {
+                    horizonflg = true;
+                    circleflg = false;
+                }
+                FrontCircleHp.fillAmount = (PlayerController.PlayerStatus.CurrentHp + (PlayerController.PlayerStatus.Hp * 1 / 7)) / (PlayerController.PlayerStatus.Hp * 4 / 7);
+                if(PlayerController.PlayerStatus.CurrentHp <= 0)
+                {
+                    horizonflg = false;
+                    circleflg = false;
+                }
+            }
         }
+
+        //FrontHpを追いかける
+        if (FrontCircleHp.fillAmount <= BackCircleHp.fillAmount)
+            BackCircleHp.fillAmount -= Mathf.Clamp01(reduceSpeed / waitSpeed * Time.deltaTime);
+
+        if (FrontHorizontalHp.fillAmount <= BackHorizontalHp.fillAmount)
+            BackHorizontalHp.fillAmount -= Mathf.Clamp01(reduceSpeed / waitSpeed * Time.deltaTime);
+
+        ////HP回復
+        //if (FrontCircleHp.fillAmount >= BackCircleHp.fillAmount)
+        //{
+        //    BackCircleHp.fillAmount = FrontCircleHp.fillAmount;
+        //}
     }
 }
