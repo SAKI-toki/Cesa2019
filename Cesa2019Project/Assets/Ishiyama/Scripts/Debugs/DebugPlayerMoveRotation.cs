@@ -4,8 +4,6 @@ public class DebugPlayerMoveRotation : MonoBehaviour
 {
     [SerializeField, Header("移動速度")]
     float MoveSpeed = 10.0f;
-    [SerializeField, Header("回転速度")]
-    float RotationSpeed = 10.0f;
     [SerializeField, Header("カメラTransform")]
     Transform CameraTransform = null;
     [SerializeField, Header("プレイヤーTransform")]

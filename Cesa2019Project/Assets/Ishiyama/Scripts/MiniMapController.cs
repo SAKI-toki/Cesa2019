@@ -11,8 +11,6 @@ public class MiniMapController : MonoBehaviour
     float PositionRatio = 2.0f;
     [SerializeField, Header("UIの位置")]
     Vector3 UiPosition = new Vector3();
-    [SerializeField, Header("UIの基盤のRectTransform")]
-    RectTransform UiBaseRectTransform = null;
     [SerializeField, Header("プレイヤーTransform")]
     Transform PlayerTransform = null;
     [SerializeField, Header("星リスト")]
@@ -31,6 +29,8 @@ public class MiniMapController : MonoBehaviour
     List<GameObject> StarImages = new List<GameObject>();
     [SerializeField, Header("ImageObjectの親オブジェクト")]
     GameObject ImageParentObject = null;
+    [SerializeField, Header("StarImageの親オブジェクト")]
+    GameObject StarImageParent = null;
     void Start()
     {
         ImageParentObject.transform.localPosition = UiPosition;
@@ -62,7 +62,7 @@ public class MiniMapController : MonoBehaviour
                     }
             }
             //一つのオブジェクトにまとめる
-            starObj.transform.parent = ImageParentObject.transform;
+            starObj.transform.SetParent(StarImageParent.transform);
             //位置をセット
             SetPositionImage(starObj.GetComponent<RectTransform>(), star.transform.position);
             //リストに追加

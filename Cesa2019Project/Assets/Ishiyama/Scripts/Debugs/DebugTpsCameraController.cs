@@ -32,6 +32,7 @@ public class DebugTpsCameraController : MonoBehaviour
         {
             RotX += RotationSpeed * Time.deltaTime;
         }
+        RotX = Mathf.Clamp(RotX, -85, 85);
         transform.localEulerAngles = new Vector3(RotX, RotY, 0);
     }
 }
