@@ -12,12 +12,10 @@ public class PlayerController : MonoBehaviour
     Rigidbody PlayerRigid;                  // プレイヤーリジッドボディ
     Animator PlayerAnimator;                // プレイヤーアニメータ
     AnimatorStateInfo AniStateInfo;         // プレイヤーアニメータの情報取得
-    public static Status PlayerStatus = new Status();
+    public static Status PlayerStatus = new Status();// プレイヤーステータス
     float LeftStickH = 0;                   // コントローラー左右
     float LeftStickV = 0;                   // コントローラー上下
     float Trigger = 0;                      // コントローラートリガー
-    //public static int StarPieceHave = 0;    // 星の欠片を持っている数
-    //public static int StarHave = 0;         // 星を持っている数
     [SerializeField, Header("歩く速度")]
     float WalkVal = 0;                      // プレイヤーの歩く速度
     [SerializeField, Header("ジャンプ速度")]
@@ -26,10 +24,21 @@ public class PlayerController : MonoBehaviour
     float RoteVal = 0.1f;                   // プレイヤーの回転する速度
     [SerializeField, Header("攻撃時の回転速度")]
     float AttackRoteVal = 0.07f;            // 攻撃時の回転する速度
-
+    public Combo ComboController = new Combo();// コンボスクリプト
+    [SerializeField]
+    Text ComboText = null;                  // コンボテキスト
+    PlayerAddAttack PlayerAddAttackController = new PlayerAddAttack();
+    [SerializeField, Header("タイミングUIのキャンバス")]
+    GameObject TimingCanvas = null;
+    [SerializeField, Header("タイミングのサークル")]
+    Image TimingCircle = null;
+    [SerializeField, Header("タイミングの中心")]
+    Image TimingIcon = null;
+    [SerializeField, Header("追加攻撃のエフェクト")]
+    ParticleSystem AddAttackEffect = null;
     bool MoveDash = false;                  // ダッシュのフラグ
     bool MoveJump = false;                  // ジャンプのフラグ
-
+    bool MoveStop = false;
     // debug用
     [SerializeField, Header("プレイヤーステータスデバッグUI")]
     GameObject PlayerStatusDebugUI = null;
@@ -44,15 +53,11 @@ public class PlayerController : MonoBehaviour
                 PlayerStatusDebugText.Add(child.GetComponent<Text>());
             }
         }
-        PlayerStatus.Hp = 200;
-        PlayerStatus.Attack = 15;
-        PlayerStatus.Defense = 5;
-        PlayerStatus.Speed = 30;
-        PlayerStatus.ResetStatus();
+        PlayerStatus.InitStatus(100, 5, 5, 30);// HP Attack Defense Speed
+        ComboController.InitCombo(4);           // コンボの時間
+        PlayerAddAttackController.InitPlayerAddAttack(TimingCanvas, TimingCircle, TimingIcon, this.transform);
         PlayerRigid = GetComponent<Rigidbody>();
         PlayerAnimator = GetComponent<Animator>();
-        //StarPieceHave = 0;
-        //StarHave = 0;
     }
 
     void Update()
@@ -78,13 +83,17 @@ public class PlayerController : MonoBehaviour
             }
         }
         // 攻撃のアニメーション中
-        if (AniStateInfo.IsTag("PlayerAttack") && AniStateInfo.normalizedTime < 0.7f)
+        if ((AniStateInfo.IsTag("PlayerAttack1") || AniStateInfo.IsTag("PlayerAttack2") || AniStateInfo.IsTag("PlayerAttack3")) && AniStateInfo.normalizedTime < 0.7f)
         {
             LeftStickH = 0;
             LeftStickV = 0;
             PlayerAnimator.SetBool("Jumpflg", false);
             // 攻撃時の補正
             AttackCorrection();
+        }
+        if (AniStateInfo.IsTag("PlayerAttack3") && !PlayerAddAttackController.TimingFlg)
+        {
+            PlayerAddAttackController.TimingUIAwake();
         }
         // 攻撃
         if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
@@ -95,16 +104,24 @@ public class PlayerController : MonoBehaviour
                 PlayerAnimator.SetTrigger("Attack");
             }
         }
-        // 星製造
-        //if (StarPieceHave >= 5)
-        //{
-        //    StarPieceHave -= 5;         // 星を作るのに必要な数だけ星の欠片減らす
-        //    ++StarHave;                 // 星を1つ作る
-        //}
-        if (Input.GetKeyDown(KeyCode.P))
+
+        // コンボ処理
+        ComboController.CheckCombo();
+        if (ComboController.ComboFlg)
         {
-            PlayerStatusDebugSwitch();
+            ComboController.InCombo();
+            ComboController.ComboUI(ComboText, 0, 0, 0);
         }
+
+        // 追加攻撃
+        PlayerAddAttackController.TargetTracking();
+        if (PlayerAddAttackController.TimingAttack())
+        {
+            Instantiate(AddAttackEffect, transform.position, transform.rotation);
+        }
+
+        // プレイヤーデバッグ
+        if (Input.GetKeyDown(KeyCode.P)) { PlayerStatusDebugSwitch(); }
         DebugPlayerStatus();
     }
 
@@ -116,18 +133,21 @@ public class PlayerController : MonoBehaviour
             Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
             Vector3 moveForward = cameraForward * LeftStickV + Camera.main.transform.right * LeftStickH;
             Quaternion playerRotation = Quaternion.LookRotation(moveForward);
-            // 歩き
-            if (!MoveDash)
+            if (!MoveStop)
             {
-                PlayerRigid.AddForce(WalkVal * moveForward);
-            }
-            // ダッシュ
-            else if (MoveDash)
-            {
-                PlayerRigid.AddForce(PlayerStatus.CurrentSpeed * moveForward);
+                // 歩き
+                if (!MoveDash)
+                {
+                    PlayerRigid.AddForce(WalkVal * moveForward);
+                }
+                // ダッシュ
+                else if (MoveDash)
+                {
+                    PlayerRigid.AddForce(PlayerStatus.CurrentSpeed * moveForward);
+                }
             }
             // 攻撃のアニメーション中
-            if (AniStateInfo.IsTag("PlayerAttack"))
+            if (AniStateInfo.IsTag("PlayerAttack1") || AniStateInfo.IsTag("PlayerAttack2") || AniStateInfo.IsTag("PlayerAttack3"))
             {
                 // 攻撃時の回転
                 transform.rotation = Quaternion.Slerp(transform.rotation, playerRotation, AttackRoteVal);
@@ -147,54 +167,97 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         PlayerAnimator.SetBool("Jumpflg", false);
-        MoveJump = false;
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            if (contact.normal.y <= 1 && contact.normal.y > 0.1f)
+            {
+                MoveJump = false;
+                MoveStop = false;
+            }
+        }
     }
 
-
-void OnTriggerEnter(Collider other)
-{
-    // 星の欠片取得
-    if (other.gameObject.tag == "StarPiece")
+    void OnCollisionStay(Collision collision)
     {
-        //++StarPieceHave;
-        HaveStarManager.AddLittleStar(other.gameObject.GetComponent<StarMove>().GetColor());
-        Destroy(other.gameObject);
+        // ジャンプ中に壁に当たったら動きを止める
+        if (MoveJump)
+        {
+            foreach (ContactPoint contact in collision.contacts)
+            {
+                if (contact.normal != Vector3.up)
+                {
+                    MoveStop = true;
+                }
+                else
+                {
+                    MoveStop = false;
+                }
+            }
+        }
     }
 
-
-    if (other.gameObject.tag == "EnemyAttack")
+    void OnTriggerEnter(Collider other)
     {
-        PlayerStatus.CurrentHp -= 10;
+        // 星の欠片取得
+        if (other.gameObject.tag == "StarPiece")
+        {
+            HaveStarManager.AddLittleStar(other.gameObject.GetComponent<StarMove>().GetColor());
+            Destroy(other.gameObject);
+        }
+
+        // プレイヤーのHPを減らす
+        if (other.gameObject.tag == "EnemyAttack")
+        {
+            float damege = Status.Damage(other.gameObject.transform.parent.gameObject.GetComponent<Enemy>().EnemyStatus.CurrentAttack, PlayerStatus.CurrentDefense);
+            Debug.Log("player,Hp: -" + damege);
+            PlayerStatus.CurrentHp -= damege;
+        }
     }
-}
 
-/// <summary>
-/// 攻撃時のカメラ・プレイヤーの向き補正
-/// </summary>
-void AttackCorrection()
-{
+    void OnTriggerEnter(Collider other)
+    {
+        // 星の欠片取得
+        if (other.gameObject.tag == "StarPiece")
+        {
+            //++StarPieceHave;
+            HaveStarManager.AddLittleStar(other.gameObject.GetComponent<StarMove>().GetColor());
+            Destroy(other.gameObject);
+        }
 
-}
 
-/// <summary>
-/// デバッグUIの表示・非表示
-/// </summary>
-void PlayerStatusDebugSwitch()
-{
-    // 表示
-    if (PlayerStatusDebugUI.activeInHierarchy == false) { PlayerStatusDebugUI.SetActive(true); }
-    // 非表示
-    else if (PlayerStatusDebugUI.activeInHierarchy == true) { PlayerStatusDebugUI.SetActive(false); }
-}
+        if (other.gameObject.tag == "EnemyAttack")
+        {
+            PlayerStatus.CurrentHp -= 10;
+        }
+    }
 
-/// <summary>
-/// デバッグ用Textの更新
-/// </summary>
-void DebugPlayerStatus()
-{
-    PlayerStatusDebugText[0].text = "Hp:      " + PlayerStatus.CurrentHp.ToString();
-    PlayerStatusDebugText[1].text = "Attack:  " + PlayerStatus.CurrentAttack.ToString();
-    PlayerStatusDebugText[2].text = "Defence: " + PlayerStatus.CurrentDefense.ToString();
-    PlayerStatusDebugText[3].text = "Speed:   " + PlayerStatus.CurrentSpeed.ToString();
-}
+    /// <summary>
+    /// 攻撃時のカメラ・プレイヤーの向き補正
+    /// </summary>
+    void AttackCorrection()
+    {
+
+    }
+
+    /// <summary>
+    /// デバッグUIの表示・非表示
+    /// </summary>
+    void PlayerStatusDebugSwitch()
+    {
+        // 表示
+        if (PlayerStatusDebugUI.activeInHierarchy == false) { PlayerStatusDebugUI.SetActive(true); }
+        // 非表示
+        else if (PlayerStatusDebugUI.activeInHierarchy == true) { PlayerStatusDebugUI.SetActive(false); }
+    }
+
+    /// <summary>
+    /// デバッグ用Textの更新
+    /// </summary>
+    void DebugPlayerStatus()
+    {
+        PlayerStatusDebugText[0].text = "Hp:      " + PlayerStatus.CurrentHp.ToString();
+        PlayerStatusDebugText[1].text = "Attack:  " + PlayerStatus.CurrentAttack.ToString();
+        PlayerStatusDebugText[2].text = "Defence: " + PlayerStatus.CurrentDefense.ToString();
+        PlayerStatusDebugText[3].text = "Speed:   " + PlayerStatus.CurrentSpeed.ToString();
+    }
 }

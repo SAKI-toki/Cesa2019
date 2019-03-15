@@ -31,14 +31,7 @@ public class StarSlect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //{
-        //    StartSelect();
-        //}
         if (!SelectFlg) return;
-
-
-        //if (!SelectFlg) return;
-
 
         //0:緑 1:赤 2:青
         switch (Select)

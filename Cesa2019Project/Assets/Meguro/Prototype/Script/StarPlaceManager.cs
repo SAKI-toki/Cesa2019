@@ -127,7 +127,7 @@ public class StarPlaceManager : MonoBehaviour
                     //StarSelectCancel();
                 }
             }
-            //LineCheck();
+            LineCheck();
         }
         // 全ての星がセットされている
         else if (AllPlaceSet)
