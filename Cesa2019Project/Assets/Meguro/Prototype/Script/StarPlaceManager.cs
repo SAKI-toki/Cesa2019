@@ -23,10 +23,6 @@ public class StarPlaceManager : MonoBehaviour
     GameObject Player = null;               // プレイヤー
     [SerializeField, Header("星")]
     GameObject Star = null;                 // 星
-    [SerializeField, Header("星選択UI")]
-    GameObject StarSelectUI = null;         // 星の色を選択するUI
-    [SerializeField, Header("最初に選択されるボタン")]
-    GameObject StartButton = null;
     Vector3 PlayerPos = Vector3.zero;       // プレイヤーの位置
     [SerializeField]
     List<Line> LineList = new List<Line>();
@@ -36,6 +32,7 @@ public class StarPlaceManager : MonoBehaviour
     int StarSelectPlaceNum = 0;
     public static bool StarSelect = false;  // 星の色を選択中か
     bool AllPlaceSet = false;               // 星が全てセットされているかのフラグ
+    public bool StarPut = true;            //星をセットした
     [SerializeField]
     StarSlect StarSelectController = null;
     [SerializeField]
@@ -44,6 +41,7 @@ public class StarPlaceManager : MonoBehaviour
     GameObject GreenStar = null;
     [SerializeField]
     GameObject BlueStar = null;
+
     void Start()
     {
         int num = 0;
@@ -107,7 +105,7 @@ public class StarPlaceManager : MonoBehaviour
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {
                                 StarSelectPlaceNum = i;
-                                //StarSelectActive();
+                                StarSelectActive();
                             }
                         }
                     }
@@ -165,6 +163,7 @@ public class StarPlaceManager : MonoBehaviour
         StarPlaceList[StarSelectPlaceNum].StarColor = starColor;
         //PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
         GenerateStar(StarSelectPlaceNum, starColor);
+        StarPut = true;
     }
 
     void GenerateStar(int n, HaveStarManager.StarColorEnum starColor)

@@ -13,20 +13,16 @@ public class WaveController : MonoBehaviour
     int RemainingCount = 0;
     [SerializeField, Header("フィールドに出る敵の最大数")]
     int MaxEnemy = 0;
-    [SerializeField]
+    [SerializeField,Header("現在のwave確認用")]
     GameObject wave = null;
 
     bool EnemyStop = false;
-
     bool WaveStop = false;
-
-    // 現在のWave
-    private int CurrentWave = 0;
+    private int CurrentWave = 0;// 現在のWave
     int Child = 0;
     int RemainingEnemy = 1;
     static public int EnemyCount = 0;
     GameObject ChildCount = null;
-
 
     /// <summary>
     /// Waveの生成の管理
@@ -52,7 +48,6 @@ public class WaveController : MonoBehaviour
             Child += 1;
             WaveStop = true;
         }
-
         //敵がRemainingEnemy分残ったら次のWaveを生成
         if (wave.transform.childCount == RemainingEnemy) { WaveStop = false; CurrentWave += 1; }
 
@@ -66,7 +61,6 @@ public class WaveController : MonoBehaviour
                 Destroy(ChildCount);
             }
         }
-
         //格納されているWaveを全て実行したらCurrentWaveを0にする
         if (Waves.Length == CurrentWave) { CurrentWave = 0; }
     }

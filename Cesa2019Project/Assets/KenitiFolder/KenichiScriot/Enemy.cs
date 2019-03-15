@@ -11,15 +11,18 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    GameObject NearObj;//プレイヤーの位置取得
+    Animator Animator = null;
+    GameObject NearObj = null;//プレイヤーの位置取得
     GameObject Star = null;
+    GameObject AttackObject = null;
     [SerializeField, Header("赤の星")]
     GameObject RedStar = null;
     [SerializeField, Header("青の星")]
     GameObject BlueStar = null;
-    [SerializeField, Header("黄の星")]
+    [SerializeField, Header("緑の星")]
     GameObject YellowStar = null;
-
+    [SerializeField, Header("Bossエネミーの時にtrue")]
+    bool BossEnemy = false;
     [SerializeField, Header("移動力")]
     float ZMove = 5;//移動力
     [SerializeField, Header("敵のHP")]
@@ -28,16 +31,37 @@ public class Enemy : MonoBehaviour
     float EnemyAttackPoint = 0;
     [SerializeField, Header("敵の防御力")]
     float EnemyDefence = 0;
+    [SerializeField, Header("敵のHPの上昇幅")]
+    float HpPlus = 2;
+    [SerializeField, Header("敵の攻撃力の上昇幅")]
+    float AttackPlus = 2;
+    [SerializeField, Header("敵の防御力の上昇幅")]
+    float DefencePlus = 2;
+    [SerializeField, Header("敵の移動の上昇幅")]
+    float MovePlus = 1;
+    [SerializeField, Header("敵の移動速度の上限")]
+    float MoveLimit = 12;
+    [SerializeField, Header("敵の攻撃力の下降幅（％）")]
+    float AttackDown = 20;
+    [SerializeField, Header("敵の防御力の下降幅（％）")]
+    float DefenceDown = 20;
+    [SerializeField, Header("敵の移動力の下降幅（％）")]
+    float MoveDown = 20;
+
     [SerializeField, Header("索敵範囲")]
-    float OnPlayerTracking = 10;//プレイヤーとの差が数値以下になったら追従開始
+    public float OnPlayerTracking = 10;//プレイヤーとの差が数値以下になったら追従開始
     [SerializeField, Header("移動後の待機時間")]
     float Latency = 1;//待機時間
     [SerializeField, Header("攻撃のために止まる範囲")]
     float AttackDecision = 2f;
+    [SerializeField, Header("攻撃判定を出す時間")]
+    float OutPutAttackDecision = 1;
     [SerializeField, Header("攻撃の硬直時間")]
     float AttackWait = 3;//攻撃の硬直時間
     [SerializeField, Header("被弾時の硬直時間")]
-    float Rigor_Cancellation = 1;//被弾時の硬直時間
+    float Rigor_Cancellation = 3;//被弾時の硬直時間
+    [SerializeField, Header("何回攻撃が当たったら怯むか")]
+    int DamageCount = 3;
     [SerializeField, Header("スピードアタックするかどうか")]
     bool SpeedAttackFlag;
     [SerializeField, Header("直接攻撃しない敵の場合true")]
@@ -48,7 +72,7 @@ public class Enemy : MonoBehaviour
     int MaxStarCount = 3;
     [SerializeField, Header("敵の回る速度")]
     float RotationPlus = 5f;
-    [SerializeField, Header("RotationPlusが足される時間")]
+    [SerializeField, Header("回転が足される時間")]
     float RotateHours = 0.1f;
     [SerializeField, Header("攻撃判定を出す位置")]
     Vector3 Offset = new Vector3();
@@ -66,6 +90,8 @@ public class Enemy : MonoBehaviour
     int DrectionNumber = 0;//方向に応じて数値を保存
     int RotationCount = 0;
     int StarRandom = 0;
+    int StarCount = 5;
+    int AttackCount = 0;
 
     float PlayerRangeDifference = 0;//プレイヤーと敵の距離差
     float EnemyTime = 0;//敵の時間
@@ -77,18 +103,20 @@ public class Enemy : MonoBehaviour
     float YPlus = 0;//rotationを動かす角度
     float RotationTime = 0;//敵のrotation変更の時に使う時間
 
-    bool ReceivedDamage = false;//ダメージをうけたときtrue
+    [HideInInspector]
+    public bool ReceivedDamage = false;//ダメージをうけたときtrue
     bool PlayerTracking = false;//プレイヤーに追従してるときにtrue
     bool MoveSwitch;//前に移動する
     bool Wait = false;//待機状態が解けたか
     bool AttackEnemy = false;//攻撃中か
     bool AttackOn = false;//攻撃中か
     bool First = false;//一度だけ実行させる
-    bool AttackFirst = false;
+    bool AttackFirst = false;//攻撃を一度だけ実行
+    bool AttackMotionFirst = false;//攻撃モーションを一度だけ実行
+    bool DamageFlag = false;
     public Status EnemyStatus = new Status();
 
-    Vector3 TargetPos;//
-    Quaternion From;
+    Vector3 TargetPos;
 
     NavMeshAgent Agent = null;
 
@@ -105,7 +133,11 @@ public class Enemy : MonoBehaviour
         EnemyStatus.Defense = EnemyDefence;
         EnemyStatus.Speed = ZMove;
         EnemyStatus.ResetStatus();
+        AttackDown = 1 - (AttackDown * 0.01f);
+        DefenceDown = 1 - (DefenceDown * 0.01f);
+        MoveDown = 1 - (MoveDown * 0.01f);
         YPlus = RotationPlus;
+        Animator = this.GetComponent<Animator>();
         RandomOn = Random.Range(MoveTimeLow, MoveTimeHigh);
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
         Agent = GetComponent<NavMeshAgent>();
@@ -124,32 +156,26 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
-        
+
         EnemyTime += Time.deltaTime;
         //敵とプレイヤーの距離差
         PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
-        
+
         if (EnemyStatus.CurrentHp <= 0 || DestroyDebug == true || EnemyHp <= 0)
         {
-            var randomStarNum = Random.Range(MinStarCount, MaxStarCount);
-            for (int i = 0; i < randomStarNum; i++)//StarCountの分だけ星を生成
-            {
-                StarRandom = Random.Range(1, 4);//どの星を生成させるかきめる
-                if (StarRandom == 1) { Star = RedStar; }//赤の星を生成させる
-                if (StarRandom == 2) { Star = BlueStar; }//青の星を生成させる
-                if (StarRandom == 3) { Star = YellowStar; }//黄の星を生成させる
-                GameObject item = Instantiate(Star) as GameObject;//星の生成
-                item.transform.position = transform.position;
-                item.transform.Rotate(0, Random.Range(-180, 180), 0);
-            }
+            if (BossEnemy == false) { EnemyStar(); }
+            if (BossEnemy) { BossEnemyStar(); }
             WaveController.EnemyCount -= 1;
             Destroy(this.gameObject);//敵の消滅
         }
+
         if (ReceivedDamage == true)//硬直時間の解除
         {
+            Animator.SetBool("EnemyWalk", false);
             if (EnemyTime >= Rigor_Cancellation)
             {
                 ReceivedDamage = false;
+                DamageFlag = false;
                 EnemyTime = 0;
             }
         }
@@ -175,10 +201,15 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void Move()
     {
-        if (PlayerTracking == false)
+        //前に進む
+        if (MoveSwitch && NonDirectAttack == false)
         {
-            //前に進む
-            if (MoveSwitch) { transform.Translate(0, 0, ZMove * Time.deltaTime); }
+            Animator.SetBool("EnemyWalk", true);
+            transform.Translate(0, 0, ZMove * Time.deltaTime);
+        }
+        else
+        {
+            Animator.SetBool("EnemyWalk", false);
         }
 
         TargetPos = NearObj.transform.position;
@@ -188,11 +219,9 @@ public class Enemy : MonoBehaviour
         //敵の索敵範囲に入ったらプレイヤーに追従開始
         if (PlayerRangeDifference <= OnPlayerTracking)
         {
-            MoveSwitch = false;
+            MoveSwitch = true;
             PlayerTracking = true;
             transform.LookAt(TargetPos);//対象の位置方向を向く 
-            transform.Translate(0, 0, ZMove * Time.deltaTime);
-
             SpeedAttack();
         }
         else
@@ -206,7 +235,6 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void DrectionChange()
     {
-
         RandomOn = Random.Range(MoveTimeLow, MoveTimeHigh);
         //一定間隔で移動方向を変更
         if (EnemyTime >= RandomOn && PlayerTracking == false)
@@ -303,21 +331,32 @@ public class Enemy : MonoBehaviour
     {
         AttackTime += Time.deltaTime;
         AttackEnemy = true;
-        if (AttackFirst == false)
+        Animator.SetBool("EnemyWalk", false);
+        if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
+        {
+            Animator.SetTrigger("EnemyAttack");
+            AttackMotionFirst = true;
+        }
+
+        if (AttackFirst == false && AttackTime >= OutPutAttackDecision && DamageFlag == false)
         {//敵の前にオブジェクト生成
             Vector3 position = transform.position + transform.up * Offset.y +
             transform.right * Offset.x +
             transform.forward * Offset.z;
-            Instantiate(AttackPrefab, position, transform.rotation);
+            AttackObject = (GameObject)Instantiate(AttackPrefab, position, transform.rotation);
+            AttackObject.transform.parent = this.transform;
+            Destroy(AttackObject,0.1f );
             AttackFirst = true;
         }
-        if (AttackTime >= AttackWait)
+
+        if (AttackTime >= AttackWait || DamageFlag == true)
         {
             AttackEnemy = false;
             AttackTime = 0;
             EnemyTime = 0;
             AttackOn = false;
             AttackFirst = false;
+            AttackMotionFirst = false;
         }
     }
 
@@ -330,14 +369,136 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.tag == "PlayerAttack")
         {
             EnemyStatus.CurrentHp -= 10;//HPを減らす
+            AttackCount++;
+
             if (EnemyStatus.CurrentHp <= 0)
             {
                 EnemyStatus.CurrentHp = 0;
             }
 
-            ReceivedDamage = true;//敵を硬直させる
-            EnemyTime = 0;
+
+            if (BossEnemy == false && ReceivedDamage == false)
+            {
+                ReceivedDamage = true;/*敵を硬直させる*/
+                Animator.SetTrigger("EnemyDamage");
+                DamageFlag = true;
+                EnemyTime = 0;
+            }
+
+            if (BossEnemy && AttackCount >= DamageCount && ReceivedDamage == false)
+            {
+                Animator.SetTrigger("EnemyDamage");
+                ReceivedDamage = true;/*敵を硬直させる*/
+                AttackCount = 0;
+                DamageFlag = true;
+                EnemyTime = 0;
+            }
         }
+    }
+
+    /// <summary>
+    /// 星をランダムに生成
+    /// </summary>
+    void EnemyStar()
+    {
+        var randomStarNum = Random.Range(MinStarCount, MaxStarCount);
+        for (int i = 0; i < randomStarNum; i++)//randomStarNumの分だけ星を生成
+        {
+            StarRandom = Random.Range(1, 4);//どの星を生成させるかきめる
+            if (StarRandom == 1) { Star = RedStar; }//赤の星を生成させる
+            if (StarRandom == 2) { Star = BlueStar; }//青の星を生成させる
+            if (StarRandom == 3) { Star = YellowStar; }//黄の星を生成させる
+            GameObject item = Instantiate(Star) as GameObject;//星の生成
+            item.transform.position = transform.position;
+            item.transform.Rotate(0, Random.Range(-180, 180), 0);
+        }
+    }
+
+    /// <summary>
+    /// 各星を５個づつ生成
+    /// </summary>
+    void BossEnemyStar()
+    {
+        for (int i = 0; i < StarCount; i++)//大きい星を生成できる分だけ星を生成
+        {
+            Star = RedStar;//赤の星を生成させる 
+            GameObject item = Instantiate(Star) as GameObject;//星の生成
+            item.transform.position = transform.position;
+            item.transform.Rotate(0, Random.Range(-180, 180), 0);
+        }
+
+        for (int i = 0; i < StarCount; i++)//大きい星を生成できる分だけ星を生成
+        {
+            Star = BlueStar;//青の星を生成させる
+            GameObject item = Instantiate(Star) as GameObject;//星の生成
+            item.transform.position = transform.position;
+            item.transform.Rotate(0, Random.Range(-180, 180), 0);
+        }
+
+        for (int i = 0; i < StarCount; i++)//大きい星を生成できる分だけ星を生成
+        {
+            Star = YellowStar;//黄の星を生成させる
+            GameObject item = Instantiate(Star) as GameObject;//星の生成
+            item.transform.position = transform.position;
+            item.transform.Rotate(0, Random.Range(-180, 180), 0);
+        }
+    }
+
+    /// <summary>
+    /// 敵の攻撃力をAttackDownの%分ダウン
+    /// </summary>
+    void DebuffAttack()
+    {
+        EnemyStatus.Attack *= AttackDown;
+    }
+
+    /// <summary>
+    /// 敵の防御力をDefenceDownの%分ダウン
+    /// </summary>
+    void DebuffDefence()
+    {
+        EnemyStatus.Defense *= DefenceDown;
+    }
+
+    /// <summary>
+    /// 敵の移動力MoveDownの%分ダウン
+    /// </summary>
+    void DebuffMove()
+    {
+        ZMove *= MoveDown;
+    }
+
+    /// <summary>
+    /// 敵の攻撃力を上昇
+    /// </summary>
+    void BuffAttack()
+    {
+        EnemyStatus.Attack += AttackPlus;
+    }
+
+    /// <summary>
+    /// 敵の防御力を上昇
+    /// </summary>
+    void BuffDefence()
+    {
+        EnemyStatus.Defense += DefencePlus;
+    }
+
+    /// <summary>
+    /// 敵の移動速度を上昇
+    /// </summary>
+    void BuffMove()
+    {
+        ZMove += MovePlus;
+        if (ZMove >= MoveLimit) { ZMove = MoveLimit; }
+    }
+
+    /// <summary>
+    /// 敵のHPを上昇
+    /// </summary>
+    void BuffHp()
+    {
+        EnemyStatus.Hp += HpPlus;
     }
 
     /// <summary>
