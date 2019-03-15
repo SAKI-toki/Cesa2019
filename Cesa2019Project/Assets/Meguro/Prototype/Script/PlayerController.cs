@@ -32,10 +32,13 @@ public class PlayerController : MonoBehaviour
     GameObject TimingCanvas = null;
     [SerializeField, Header("タイミングのサークル")]
     Image TimingCircle = null;
+    [SerializeField, Header("タイミングの中心")]
+    Image TimingIcon = null;
     [SerializeField, Header("追加攻撃のエフェクト")]
     ParticleSystem AddAttackEffect = null;
     bool MoveDash = false;                  // ダッシュのフラグ
     bool MoveJump = false;                  // ジャンプのフラグ
+    bool MoveStop = false;
     // debug用
     [SerializeField, Header("プレイヤーステータスデバッグUI")]
     GameObject PlayerStatusDebugUI = null;
@@ -52,7 +55,7 @@ public class PlayerController : MonoBehaviour
         }
         PlayerStatus.InitStatus(100, 5, 5, 30);// HP Attack Defense Speed
         ComboController.InitCombo(4);           // コンボの時間
-        PlayerAddAttackController.InitPlayerAddAttack(TimingCanvas, TimingCircle, this.transform);
+        PlayerAddAttackController.InitPlayerAddAttack(TimingCanvas, TimingCircle, TimingIcon, this.transform);
         PlayerRigid = GetComponent<Rigidbody>();
         PlayerAnimator = GetComponent<Animator>();
     }
@@ -130,15 +133,18 @@ public class PlayerController : MonoBehaviour
             Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
             Vector3 moveForward = cameraForward * LeftStickV + Camera.main.transform.right * LeftStickH;
             Quaternion playerRotation = Quaternion.LookRotation(moveForward);
-            // 歩き
-            if (!MoveDash)
+            if (!MoveStop)
             {
-                PlayerRigid.AddForce(WalkVal * moveForward);
-            }
-            // ダッシュ
-            else if (MoveDash)
-            {
-                PlayerRigid.AddForce(PlayerStatus.CurrentSpeed * moveForward);
+                // 歩き
+                if (!MoveDash)
+                {
+                    PlayerRigid.AddForce(WalkVal * moveForward);
+                }
+                // ダッシュ
+                else if (MoveDash)
+                {
+                    PlayerRigid.AddForce(PlayerStatus.CurrentSpeed * moveForward);
+                }
             }
             // 攻撃のアニメーション中
             if (AniStateInfo.IsTag("PlayerAttack1") || AniStateInfo.IsTag("PlayerAttack2") || AniStateInfo.IsTag("PlayerAttack3"))
@@ -161,7 +167,33 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         PlayerAnimator.SetBool("Jumpflg", false);
-        MoveJump = false;
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            if (contact.normal.y <= 1 && contact.normal.y > 0.1f)
+            {
+                MoveJump = false;
+                MoveStop = false;
+            }
+        }
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
+        // ジャンプ中に壁に当たったら動きを止める
+        if (MoveJump)
+        {
+            foreach (ContactPoint contact in collision.contacts)
+            {
+                if (contact.normal != Vector3.up)
+                {
+                    MoveStop = true;
+                }
+                else
+                {
+                    MoveStop = false;
+                }
+            }
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -177,7 +209,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "EnemyAttack")
         {
             float damege = Status.Damage(other.gameObject.transform.parent.gameObject.GetComponent<Enemy>().EnemyStatus.CurrentAttack, PlayerStatus.CurrentDefense);
-            Debug.Log("player,Hp: -" + damege); 
+            Debug.Log("player,Hp: -" + damege);
             PlayerStatus.CurrentHp -= damege;
         }
     }

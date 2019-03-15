@@ -41,6 +41,7 @@ public class EnemyController : MonoBehaviour
     {
         if (other.gameObject.tag == "PlayerAttack")
         {
+            ++playerController.ComboController.CurrentComboNum;
             Hp -= 2;
             if (Hp <= 0)
             {

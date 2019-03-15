@@ -7,6 +7,8 @@ public class PlayerAddAttack
 {
     GameObject TimingCanvas { get; set; }
     Image TimingCircle = null;
+    Image TimingIcon = null;
+    Color TimingIconStartColor = new Color();
     Transform Target = null;
     Vector3 TargetPos = Vector3.zero;
     float StartSize = 0.0f;
@@ -20,10 +22,12 @@ public class PlayerAddAttack
     /// <param name="canvas"></param>
     /// <param name="circle"></param>
     /// <param name="target"></param>
-    public void InitPlayerAddAttack(GameObject canvas, Image circle, Transform target)
+    public void InitPlayerAddAttack(GameObject canvas, Image circle, Image icon, Transform target)
     {
         TimingCanvas = canvas;
         TimingCircle = circle;
+        TimingIcon = icon;
+        TimingIconStartColor = TimingIcon.color;
         Target = target;
         TargetPos = Target.position;
         StartSize = TimingCircle.transform.localScale.x;
@@ -45,6 +49,7 @@ public class PlayerAddAttack
     /// </summary>
     public void TimingUIAwake()
     {
+        TimingIcon.color = TimingIconStartColor;
         TimingFlg = true;
         TimingCanvas.SetActive(true);
         CurrentTime = 0;
@@ -63,11 +68,12 @@ public class PlayerAddAttack
             {
                 if (CurrentTime > 0.35f && CurrentTime < 0.50f)
                 {
+                    TimingIcon.color = new Color(0, 100, 100, 1);
                     return true;
                 }
                 else
                 {
-                    Debug.Log(CurrentTime);
+                    TimingIcon.color = new Color(100, 0, 0, 1);
                     return false;
                 }
             }
