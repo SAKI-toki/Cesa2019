@@ -345,6 +345,7 @@ public class Enemy : MonoBehaviour
             transform.forward * Offset.z;
             AttackObject = (GameObject)Instantiate(AttackPrefab, position, transform.rotation);
             AttackObject.transform.parent = this.transform;
+            Destroy(AttackObject,0.1f );
             AttackFirst = true;
         }
 
