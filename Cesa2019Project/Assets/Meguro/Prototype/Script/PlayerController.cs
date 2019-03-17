@@ -214,23 +214,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        // 星の欠片取得
-        if (other.gameObject.tag == "StarPiece")
-        {
-            //++StarPieceHave;
-            HaveStarManager.AddLittleStar(other.gameObject.GetComponent<StarMove>().GetColor());
-            Destroy(other.gameObject);
-        }
-
-
-        if (other.gameObject.tag == "EnemyAttack")
-        {
-            PlayerStatus.CurrentHp -= 10;
-        }
-    }
-
     /// <summary>
     /// 攻撃時のカメラ・プレイヤーの向き補正
     /// </summary>
