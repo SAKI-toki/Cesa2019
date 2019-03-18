@@ -12,10 +12,6 @@
         Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
         LOD 200
 		Cull off
-			Pass{
-		  ZWrite ON
-		  ColorMask 0
-		}
         CGPROGRAM
         #pragma surface surf Standard fullforwardshadows alpha:fade
         #pragma target 3.0

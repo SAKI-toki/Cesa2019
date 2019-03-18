@@ -1699,7 +1699,16 @@ MonoBehaviour:
   AttackPrefab: {fileID: 2581146734678819022, guid: 7cea68b2a0403ea45aee778ca5361c20,
     type: 3}
   DestroyDebug: 0
-  EnemyTime: 0
+  ReceivedDamage: 0
+  EnemyStatus:
+    Hp: 0
+    Attack: 0
+    Defense: 0
+    Speed: 0
+    CurrentHp: 0
+    CurrentAttack: 0
+    CurrentDefense: 0
+    CurrentSpeed: 0
 --- !u!64 &2583190414113612500
 MeshCollider:
   m_ObjectHideFlags: 0

@@ -24,9 +24,6 @@ public class BladeAfterImageMesh : MonoBehaviour
     List<Vector2> UvList = new List<Vector2>();
     //インデックスリスト
     List<int> IndexList = new List<int>();
-    //時間の計測
-    float MeasureTime = 0.0f;
-    bool IsDeleteMesh = false;
 
     void Start()
     {
@@ -39,6 +36,8 @@ public class BladeAfterImageMesh : MonoBehaviour
     {
         CreateMesh();
         transform.position = new Vector3();
+        AfterImageMesh.RecalculateBounds();
+        AfterImageMesh.RecalculateNormals();
     }
 
     /// <summary>

@@ -120,6 +120,8 @@ public class Enemy : MonoBehaviour
 
     NavMeshAgent Agent = null;
 
+    PlayerController playerController;
+
     // Start is called before the first frame update
 
     /// <summary>
@@ -127,6 +129,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void Start()
     {
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         EnemyStatus.Hp = EnemyHp;
         EnemyStatus.CurrentHp = EnemyHp;
         EnemyStatus.Attack = EnemyAttackPoint;
@@ -368,6 +371,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "PlayerAttack")
         {
+            ++playerController.ComboController.CurrentComboNum;
             EnemyStatus.CurrentHp -= 10;//HPを減らす
             AttackCount++;
 
@@ -396,6 +400,19 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void OnParticleCollision(GameObject other)
+    {
+        if (other.gameObject.tag == "PlayerAttack")
+        {
+            AttackCount++;
+            ++playerController.ComboController.CurrentComboNum;
+            EnemyStatus.CurrentHp -= 2;//HPを減らす
+            if (EnemyStatus.CurrentHp <= 0)
+            {
+                EnemyStatus.CurrentHp = 0;
+            }
+        }
+    }
     /// <summary>
     /// 星をランダムに生成
     /// </summary>
