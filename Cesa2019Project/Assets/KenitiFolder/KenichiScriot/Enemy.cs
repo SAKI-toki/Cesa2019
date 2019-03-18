@@ -15,12 +15,20 @@ public class Enemy : MonoBehaviour
     GameObject NearObj = null;//プレイヤーの位置取得
     GameObject Star = null;
     GameObject AttackObject = null;
+    [SerializeField, Header("直接攻撃しない敵の場合true")]
+    bool NonDirectAttack = false;
+    [SerializeField, Header("Bulletに付ける場合true")]
+    bool Bullet = false;
     [SerializeField, Header("赤の星")]
     GameObject RedStar = null;
     [SerializeField, Header("青の星")]
     GameObject BlueStar = null;
     [SerializeField, Header("緑の星")]
     GameObject YellowStar = null;
+    [SerializeField, Header("蟹")]
+    bool CrabFlag = false;
+    [SerializeField, Header("蟹が方向を変える時間")]
+    float CrabMoveChange = 5;
     [SerializeField, Header("Bossエネミーの時にtrue")]
     bool BossEnemy = false;
     [SerializeField, Header("移動力")]
@@ -47,7 +55,6 @@ public class Enemy : MonoBehaviour
     float DefenceDown = 20;
     [SerializeField, Header("敵の移動力の下降幅（％）")]
     float MoveDown = 20;
-
     [SerializeField, Header("索敵範囲")]
     public float OnPlayerTracking = 10;//プレイヤーとの差が数値以下になったら追従開始
     [SerializeField, Header("移動後の待機時間")]
@@ -64,8 +71,6 @@ public class Enemy : MonoBehaviour
     int DamageCount = 3;
     [SerializeField, Header("スピードアタックするかどうか")]
     bool SpeedAttackFlag;
-    [SerializeField, Header("直接攻撃しない敵の場合true")]
-    bool NonDirectAttack = false;
     [SerializeField, Header("星を出す最小数")]
     int MinStarCount = 1;
     [SerializeField, Header("星を出す最大数")]
@@ -92,6 +97,8 @@ public class Enemy : MonoBehaviour
     int StarRandom = 0;
     int StarCount = 5;
     int AttackCount = 0;
+    int MoveDouble = 3;
+    int StatusUpCount = 0;
 
     float PlayerRangeDifference = 0;//プレイヤーと敵の距離差
     float EnemyTime = 0;//敵の時間
@@ -102,6 +109,8 @@ public class Enemy : MonoBehaviour
     float AttackTime = 0;//攻撃の時間
     float YPlus = 0;//rotationを動かす角度
     float RotationTime = 0;//敵のrotation変更の時に使う時間
+    float MoveChange = 1;
+    float BossTime = 0;//Bossの時間
 
     [HideInInspector]
     public bool ReceivedDamage = false;//ダメージをうけたときtrue
@@ -113,7 +122,9 @@ public class Enemy : MonoBehaviour
     bool First = false;//一度だけ実行させる
     bool AttackFirst = false;//攻撃を一度だけ実行
     bool AttackMotionFirst = false;//攻撃モーションを一度だけ実行
-    bool DamageFlag = false;
+    bool DamageFlag = false;//ダメージを受けたか
+    bool CrabFirst = true;//移動速度を一度だけ上げる
+
     public Status EnemyStatus = new Status();
 
     Vector3 TargetPos;
@@ -142,6 +153,7 @@ public class Enemy : MonoBehaviour
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
         Agent = GetComponent<NavMeshAgent>();
         WaveController.EnemyCount += 1;
+
     }
 
     // Update is called once per frame
@@ -152,7 +164,12 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Time.timeScale == 0)
+        if(this.transform.childCount==0)
+        {
+            Destroy(this.gameObject);
+        }
+
+        if (Time.timeScale == 0||Bullet==true)
         {
             return;
         }
@@ -167,6 +184,13 @@ public class Enemy : MonoBehaviour
             if (BossEnemy) { BossEnemyStar(); }
             WaveController.EnemyCount -= 1;
             Destroy(this.gameObject);//敵の消滅
+        }
+
+        //蟹座のボスの時HPが１/３になったら移動速度三倍
+        if (EnemyStatus.Hp / 3 >= EnemyStatus.CurrentHp && CrabFirst && CrabFlag)
+        {
+            ZMove = MoveDouble * ZMove;
+            CrabFirst = false;
         }
 
         if (ReceivedDamage == true)//硬直時間の解除
@@ -189,11 +213,13 @@ public class Enemy : MonoBehaviour
 
         if (ReceivedDamage == false && AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
         {
-            Move();
-
+            if (CrabFlag) { CrabWalk(); }
+            else { Move(); }
+            Following();
             DrectionChange();
         }
 
+        StatusUp();//ステータスアップ
     }
 
     /// <summary>
@@ -211,7 +237,31 @@ public class Enemy : MonoBehaviour
         {
             Animator.SetBool("EnemyWalk", false);
         }
+    }
 
+
+    /// <summary>
+    /// 蟹座の敵の動き
+    /// </summary>
+    void CrabWalk()
+    {
+        if (BossTime >= CrabMoveChange)
+        {
+            MoveChange = Random.Range(1, 3);
+            BossTime = 0;
+        }
+
+        if (MoveChange == 1) { transform.position += transform.right * ZMove * Time.deltaTime; }
+        else { transform.position -= transform.right * ZMove * Time.deltaTime; }
+
+        transform.Translate(0, 0, ZMove * Time.deltaTime / 10);
+    }
+
+    /// <summary>
+    /// 敵の索敵範囲に入ったらプレイヤーに向く
+    /// </summary>
+    void Following()
+    {
         TargetPos = NearObj.transform.position;
         //プレイヤーのYの位置と敵のYの位置を同じにしてX軸が回転しないようにします。
         TargetPos.y = this.transform.position.y;
@@ -345,7 +395,7 @@ public class Enemy : MonoBehaviour
             transform.forward * Offset.z;
             AttackObject = (GameObject)Instantiate(AttackPrefab, position, transform.rotation);
             AttackObject.transform.parent = this.transform;
-            Destroy(AttackObject,0.1f );
+            Destroy(AttackObject, 0.1f);
             AttackFirst = true;
         }
 
@@ -445,6 +495,48 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>
+    /// 星の数に応じてステータスアップ
+    /// </summary>
+    void StatusUp()
+    {
+        if (WaveController.EnemyCount == 0) { return; }
+
+        if (NonDirectAttack)
+        {
+            while( StatusUpCount <= WaveController.WaveCount)
+            {
+                BuffAttack();
+                BuffHp();
+                if (StatusUpCount % 2 == 0)
+                {
+                    BuffDefence();
+                    BuffMove();
+                }
+                StatusUpCount++;
+            }
+        }
+        else
+        {
+            while(StatusUpCount<= WaveController.WaveCount)
+            {
+                BuffDefence();
+                BuffMove();
+                if (StatusUpCount % 2 == 0)
+                {
+                    BuffAttack();
+                    BuffHp();
+                }
+                StatusUpCount++;
+            }
+        }
+    }
+
+    void StatusDown()
+    {
+        
+    }
+
+    /// <summary>
     /// 敵の攻撃力をAttackDownの%分ダウン
     /// </summary>
     void DebuffAttack()
@@ -474,6 +566,7 @@ public class Enemy : MonoBehaviour
     void BuffAttack()
     {
         EnemyStatus.Attack += AttackPlus;
+        EnemyAttackPoint += AttackPlus;
     }
 
     /// <summary>
@@ -482,6 +575,7 @@ public class Enemy : MonoBehaviour
     void BuffDefence()
     {
         EnemyStatus.Defense += DefencePlus;
+        EnemyDefence += DefencePlus;
     }
 
     /// <summary>
