@@ -8,14 +8,10 @@ public class Bullet : MonoBehaviour
     float BulletMove = 2;
     [SerializeField, Header("弾の破壊時間")]
     float DestroyTime = 0;
-    [SerializeField, Header("弾の攻撃力")]
-    float BulletPowor = 5;
 
-    Status EnemyStatus = new Status();
     // Start is called before the first frame update
     void Start()
     {
-        EnemyStatus.Attack = BulletPowor;
     }
 
     /// <summary>

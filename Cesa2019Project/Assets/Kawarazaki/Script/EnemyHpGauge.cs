@@ -7,15 +7,11 @@ using UnityEngine;
 /// </summary>
 public class EnemyHpGauge : MonoBehaviour
 {
-    [SerializeField, Header("BOSSならtrue")]
-    bool Boss = false;
     //敵のHPバー
     [SerializeField]
     public Image EnemyHp = null;
     [SerializeField]
     Enemy HpEnemy = null;
-    [SerializeField]
-    BossEnemy BossHpEnemy = null;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +25,7 @@ public class EnemyHpGauge : MonoBehaviour
         //カメラと同じ向きに設定
         transform.rotation = Camera.main.transform.rotation;
         //HPバー減少
-        if (Boss) { EnemyHp.fillAmount = Mathf.Clamp01(BossHpEnemy.EnemyStatus.CurrentHp / BossHpEnemy.EnemyStatus.Hp); }
-        else { EnemyHp.fillAmount = Mathf.Clamp01(HpEnemy.EnemyStatus.CurrentHp / HpEnemy.EnemyStatus.Hp); }
+       
+        EnemyHp.fillAmount = Mathf.Clamp01(HpEnemy.EnemyStatus.CurrentHp / HpEnemy.EnemyStatus.Hp);
     }
 }

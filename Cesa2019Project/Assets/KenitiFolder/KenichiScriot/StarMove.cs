@@ -23,7 +23,7 @@ public class StarMove : MonoBehaviour
     bool First = true;
     [SerializeField, Header("色")]
     HaveStarManager.StarColorEnum StarColor = HaveStarManager.StarColorEnum.Red;
-    
+
     Collider Collider = null;
     // Start is called before the first frame update
     void Start()
@@ -73,9 +73,12 @@ public class StarMove : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (ItemTime >= LimitTime)
         {
-            Destroy(gameObject);
+            if (other.gameObject.tag == "Player")
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
