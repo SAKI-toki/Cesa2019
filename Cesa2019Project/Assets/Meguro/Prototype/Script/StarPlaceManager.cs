@@ -61,6 +61,7 @@ public class StarPlaceManager : MonoBehaviour
             }
             ++num;
         }
+        LineCheck();
     }
 
     void Update()
@@ -127,7 +128,7 @@ public class StarPlaceManager : MonoBehaviour
                     //StarSelectCancel();
                 }
             }
-            LineCheck();
+            //LineCheck();
         }
         // 全ての星がセットされている
         else if (AllPlaceSet)
@@ -165,6 +166,7 @@ public class StarPlaceManager : MonoBehaviour
         //PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
         GenerateStar(StarSelectPlaceNum, starColor);
         StarPut = true;
+        LineCheck();
     }
 
     void GenerateStar(int n, HaveStarManager.StarColorEnum starColor)
