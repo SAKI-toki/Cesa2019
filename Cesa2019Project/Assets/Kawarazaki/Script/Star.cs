@@ -79,7 +79,7 @@ public class Star : MonoBehaviour
 
     //1フレーム前の星の数を格納(LITTLE)
     int[] PrevStarLittleNum = new int[(int)(HaveStarManager.StarColorEnum.None)];
-
+    
     //初期化
     void Start()
     {
@@ -120,16 +120,19 @@ public class Star : MonoBehaviour
         switch (starColor)
         {
             case HaveStarManager.StarColorEnum.Red:
-                for(int i=0; i < HaveStarManager.GetLittleStar(starColor); i++)
-                    RedLittleStar[i].SetActive(true);
-                    break;
+                for (int i = 0; i < HaveStarManager.GetLittleStar(starColor); ++i)
+                    if (RedLittleStar[i].activeSelf == false)
+                        RedLittleStar[i].SetActive(true);
+                break;
             case HaveStarManager.StarColorEnum.Blue:
-                for (int i = 0; i < HaveStarManager.GetLittleStar(starColor); i++)
-                    BlueLittleStar[i].SetActive(true);
+                for (int i = 0; i < HaveStarManager.GetLittleStar(starColor); ++i)
+                    if (BlueLittleStar[i].activeSelf == false)
+                        BlueLittleStar[i].SetActive(true);
                 break;
             case HaveStarManager.StarColorEnum.Green:
-                for (int i = 0; i < HaveStarManager.GetLittleStar(starColor); i++)
-                    GreenLittleStar[i].SetActive(true);
+                for (int i = 0; i < HaveStarManager.GetLittleStar(starColor); ++i)
+                    if (GreenLittleStar[i].activeSelf == false)
+                        GreenLittleStar[i].SetActive(true);
                 break;
         }
     }
@@ -161,7 +164,7 @@ public class Star : MonoBehaviour
         switch (starColor)
         {
             case HaveStarManager.StarColorEnum.Red:
-                    for (int i = 0; i < RedLittleStar.Length; i++)
+                for (int i = 0; i < RedLittleStar.Length; i++)
                     RedLittleStar[i].SetActive(false);
                 break;
             case HaveStarManager.StarColorEnum.Blue:
@@ -169,7 +172,7 @@ public class Star : MonoBehaviour
                     BlueLittleStar[i].SetActive(false);
                 break;
             case HaveStarManager.StarColorEnum.Green:
-                for (int i = 0; i < GreenLittleStar.Length; i++)
+                for (int i = 0; i <GreenLittleStar.Length; i++)
                     GreenLittleStar[i].SetActive(false);
                 break;
         }
