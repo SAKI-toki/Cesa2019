@@ -38,7 +38,7 @@ public class StarSlect : MonoBehaviour
         //    StartSelect();
         //}
 
-        //if (!SelectFlg) return;
+        if (!SelectFlg) return;
 
 
         //0:緑 1:赤 2:青
