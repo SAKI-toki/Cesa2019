@@ -42,6 +42,11 @@ public class StarPlaceManager : MonoBehaviour
     [SerializeField]
     GameObject BlueStar = null;
 
+    public int RedStarNum = 0;
+    public int BlueStarNum = 0;
+    public int GreenStarNum = 0;
+    public int StarNum = 0;
+
     void Start()
     {
         int num = 0;
@@ -80,8 +85,6 @@ public class StarPlaceManager : MonoBehaviour
                         // 距離が範囲内か
                         if (distance < ActiveDistance)
                         {
-                            // 星を持っていたら
-                            //if (PlayerController.StarPieceHave >= Constant.ConstNumber.StarConversion)
                             if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue) >= 1 ||
                                HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Green) >= 1 ||
                                HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) >= 1)
@@ -111,44 +114,18 @@ public class StarPlaceManager : MonoBehaviour
                     }
                 }
             }
-            // 星の色選択
-            else if (StarSelect)
-            {
-                // 色決定
-                if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
-                {
-                    // 星を置く
-                    //StarSet();
-                }
-                // キャンセル
-                if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
-                {
-                    //StarSelectCancel();
-                }
-            }
-            //LineCheck();
-        }
-        // 全ての星がセットされている
-        else if (AllPlaceSet)
-        {
-
         }
     }
-    
+
     void StarSelectActive()
     {
         StarSelect = true;
         StarSelectController.StartSelect();
-        //Time.timeScale = 0;
-        //StarSelectUI.SetActive(true);
-        //EventSystem.current.SetSelectedGameObject(StartButton);
     }
 
     public void StarSelectCancel()
     {
         StarSelect = false;
-        //Time.timeScale = 1.0f;
-        //StarSelectUI.SetActive(false);
     }
 
     /// <summary>
@@ -156,15 +133,17 @@ public class StarPlaceManager : MonoBehaviour
     /// </summary>
     public void StarSet(HaveStarManager.StarColorEnum starColor)
     {
-        //StarSelect = false;
-        //Time.timeScale = 1.0f;
-        //StarSelectUI.SetActive(false);
         StarPlaceList[StarSelectPlaceNum].isSet = true;
-        //PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
         GenerateStar(StarSelectPlaceNum, starColor);
         StarPut = true;
+        StarNum += 1;
     }
 
+    /// <summary>
+    /// 星の生成
+    /// </summary>
+    /// <param name="n"></param>
+    /// <param name="starColor"></param>
     void GenerateStar(int n, HaveStarManager.StarColorEnum starColor)
     {
         StarPlaceList[n].Star =
@@ -172,8 +151,21 @@ public class StarPlaceManager : MonoBehaviour
             starColor == HaveStarManager.StarColorEnum.Green ? GreenStar : BlueStar),
             StarPlaceList[n].gameObject.transform.position + new Vector3(0, 1, 0),
             Quaternion.identity);
+        switch (starColor)
+        {
+            case HaveStarManager.StarColorEnum.Red:
+                RedStarNum += 1;
+                break;
+            case HaveStarManager.StarColorEnum.Blue:
+                BlueStarNum += 1;
+                break;
+            case HaveStarManager.StarColorEnum.Green:
+                GreenStarNum += 1;
+                break;
+        }
+
         var colliderList = StarPlaceList[n].GetComponents<SphereCollider>();
-        foreach(var collider in colliderList)
+        foreach (var collider in colliderList)
         {
             collider.enabled = false;
         }

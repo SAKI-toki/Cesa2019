@@ -93,12 +93,16 @@ public class Enemy : MonoBehaviour
     int Ran1 = 0;//RandomNumberの値を保存
     int Ran2 = 0;//Ran1の値を保存
     int DrectionNumber = 0;//方向に応じて数値を保存
-    int RotationCount = 0;
+    int RotationCount = 0;//回転の回数
     int StarRandom = 0;
     int StarCount = 5;
     int AttackCount = 0;
     int MoveDouble = 3;
-    int StatusUpCount = 0;
+    int StatusUpCount = 1;
+    int RedStarCount = 0;
+    int BlueStarCount = 0;
+    int GreenStarCount = 0;
+    int StatusUpNum = 1;
 
     float PlayerRangeDifference = 0;//プレイヤーと敵の距離差
     float EnemyTime = 0;//敵の時間
@@ -128,6 +132,8 @@ public class Enemy : MonoBehaviour
     public Status EnemyStatus = new Status();
 
     Vector3 TargetPos;
+    GameObject StarPlace = null;
+    StarPlaceManager StarPlaceManager = null;
 
     NavMeshAgent Agent = null;
 
@@ -153,7 +159,8 @@ public class Enemy : MonoBehaviour
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
         Agent = GetComponent<NavMeshAgent>();
         WaveController.EnemyCount += 1;
-
+        StarPlace = GameObject.Find("StarPlaceManager");
+        StarPlaceManager = StarPlace.GetComponent<StarPlaceManager>();
     }
 
     // Update is called once per frame
@@ -164,12 +171,12 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if(this.transform.childCount==0)
+        if (this.transform.childCount == 0)
         {
             Destroy(this.gameObject);
         }
 
-        if (Time.timeScale == 0||Bullet==true)
+        if (Time.timeScale == 0 || Bullet == true)
         {
             return;
         }
@@ -220,6 +227,7 @@ public class Enemy : MonoBehaviour
         }
 
         StatusUp();//ステータスアップ
+        StatusDown();//ステータスダウン
     }
 
     /// <summary>
@@ -452,6 +460,7 @@ public class Enemy : MonoBehaviour
     void EnemyStar()
     {
         var randomStarNum = Random.Range(MinStarCount, MaxStarCount);
+
         for (int i = 0; i < randomStarNum; i++)//randomStarNumの分だけ星を生成
         {
             StarRandom = Random.Range(1, 4);//どの星を生成させるかきめる
@@ -503,7 +512,28 @@ public class Enemy : MonoBehaviour
 
         if (NonDirectAttack)
         {
-            while( StatusUpCount <= WaveController.WaveCount)
+            while (StatusUpCount <= StarPlaceManager.StarNum)
+            {
+                BuffHp();
+                BuffDefence();
+                if (StatusUpCount % 2 == 0)
+                {
+                    BuffAttack();
+                    BuffMove();
+                }
+                StatusUpCount++;
+            }
+
+            while (StatusUpNum <= StarPlaceManager.StarNum)
+            {
+                BuffHp();
+                BuffDefence();
+                StatusUpNum++;
+            }
+        }
+        else
+        {
+            while (StatusUpCount <= StarPlaceManager.StarNum)
             {
                 BuffAttack();
                 BuffHp();
@@ -514,26 +544,43 @@ public class Enemy : MonoBehaviour
                 }
                 StatusUpCount++;
             }
-        }
-        else
-        {
-            while(StatusUpCount<= WaveController.WaveCount)
+
+            while (StatusUpNum <= StarPlaceManager.StarNum)
             {
-                BuffDefence();
-                BuffMove();
-                if (StatusUpCount % 2 == 0)
-                {
-                    BuffAttack();
-                    BuffHp();
-                }
-                StatusUpCount++;
+                BuffHp();
+                BuffAttack();
+                StatusUpNum++;
             }
         }
     }
 
+    /// <summary>
+    /// ステータスダウン
+    /// </summary>
     void StatusDown()
     {
-        
+        if (StarPlaceManager.RedStarNum == 0
+            && StarPlaceManager.BlueStarNum == 0
+            && StarPlaceManager.GreenStarNum == 0) { return; }
+
+        while (RedStarCount < StarPlaceManager.RedStarNum)
+        {
+            DebuffAttack();
+            Debug.Log(StarPlaceManager.RedStarNum);
+            RedStarCount++;
+        }
+
+        while (BlueStarCount < StarPlaceManager.BlueStarNum)
+        {
+            DebuffDefence();
+            BlueStarCount++;
+        }
+
+        while (GreenStarCount < StarPlaceManager.GreenStarNum)
+        {
+            DebuffMove();
+            GreenStarCount++;
+        }
     }
 
     /// <summary>
@@ -566,7 +613,6 @@ public class Enemy : MonoBehaviour
     void BuffAttack()
     {
         EnemyStatus.Attack += AttackPlus;
-        EnemyAttackPoint += AttackPlus;
     }
 
     /// <summary>
@@ -575,7 +621,6 @@ public class Enemy : MonoBehaviour
     void BuffDefence()
     {
         EnemyStatus.Defense += DefencePlus;
-        EnemyDefence += DefencePlus;
     }
 
     /// <summary>
