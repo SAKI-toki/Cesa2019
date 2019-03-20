@@ -129,7 +129,7 @@ public class StarPlaceManager : MonoBehaviour
                     //StarSelectCancel();
                 }
             }
-            LineCheck();
+            //LineCheck();
         }
         // 全ての星がセットされている
         else if (AllPlaceSet)
@@ -137,7 +137,7 @@ public class StarPlaceManager : MonoBehaviour
 
         }
     }
-    
+
     void StarSelectActive()
     {
         StarSelect = true;
@@ -175,7 +175,7 @@ public class StarPlaceManager : MonoBehaviour
             StarPlaceList[n].gameObject.transform.position + new Vector3(0, 1, 0),
             Quaternion.identity);
         var colliderList = StarPlaceList[n].GetComponents<SphereCollider>();
-        foreach(var collider in colliderList)
+        foreach (var collider in colliderList)
         {
             collider.enabled = false;
         }
@@ -201,15 +201,17 @@ public class StarPlaceManager : MonoBehaviour
     /// <summary>
     /// 星が配置されて線を描く
     /// </summary>
-    void LineCheck()
+    public void LineCheck()
     {
         for (int i = 0; i < LineList.Count; ++i)
         {
             if (!LineList[i].DorwEnd)
             {
+                Debug.Log(i+":DorwEnd"+LineList[i].DorwEnd);
                 if (LineList[i].StarPlace1.GetComponent<StarPlace>().isSet &&
                     LineList[i].StarPlace2.GetComponent<StarPlace>().isSet)
                 {
+                    Debug.Log("線を引く");
                     LineRenderer lineRendererStarPlace1 = LineList[i].StarPlace1.GetComponent<LineRenderer>();
                     lineRendererStarPlace1.positionCount = lineRendererStarPlace1.positionCount + 2;
 

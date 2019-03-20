@@ -9,25 +9,25 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    Rigidbody PlayerRigid;                  // プレイヤーリジッドボディ
-    Animator PlayerAnimator;                // プレイヤーアニメータ
-    AnimatorStateInfo AniStateInfo;         // プレイヤーアニメータの情報取得
+    Rigidbody PlayerRigid;                      // プレイヤーリジッドボディ
+    Animator PlayerAnimator;                    // プレイヤーアニメータ
+    AnimatorStateInfo AttackAniStateInfo;       // プレイヤー攻撃アニメータの情報取得
     public static Status PlayerStatus = new Status();// プレイヤーステータス
-    float LeftStickH = 0;                   // コントローラー左右
-    float LeftStickV = 0;                   // コントローラー上下
-    float Trigger = 0;                      // コントローラートリガー
-    [SerializeField, Header("歩く速度")]
-    float WalkVal = 0;                      // プレイヤーの歩く速度
+    float LeftStickH = 0;                       // コントローラー左右
+    float LeftStickV = 0;                       // コントローラー上下
+    float Trigger = 0;                          // コントローラートリガー
     [SerializeField, Header("ジャンプ速度")]
-    float JumpVal = 0;                      // プレイヤーのジャンプ速度
+    float JumpVal = 0;                          // プレイヤーのジャンプ速度
+    [SerializeField, Header("空中時のふわふわ感を無くす")]
+    float ForceGravity = 0;                     // 空中時のふわふわ感を無くす
     [SerializeField, Header("通常時の回転速度")]
-    float RoteVal = 0.1f;                   // プレイヤーの回転する速度
+    float RoteVal = 0.1f;                       // プレイヤーの回転する速度
     [SerializeField, Header("攻撃時の回転速度")]
-    float AttackRoteVal = 0.07f;            // 攻撃時の回転する速度
-    public Combo ComboController = new Combo();// コンボスクリプト
-    [SerializeField]
-    Text ComboText = null;                  // コンボテキスト
-    PlayerAddAttack PlayerAddAttackController = new PlayerAddAttack();
+    float AttackRoteVal = 0.07f;                // 攻撃時の回転する速度
+    public Combo ComboController = new Combo(); // コンボスクリプト
+    [SerializeField, Header("コンボテキスト")]
+    Text ComboText = null;                      // コンボテキスト
+    PlayerAddAttack PlayerAddAttackController = new PlayerAddAttack();// 追加攻撃スクリプト
     [SerializeField, Header("タイミングUIのキャンバス")]
     GameObject TimingCanvas = null;
     [SerializeField, Header("タイミングのサークル")]
@@ -35,9 +35,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Header("タイミングの中心")]
     Image TimingIcon = null;
     [SerializeField, Header("追加攻撃のエフェクト")]
-    ParticleSystem AddAttackEffect = null;
-    bool MoveDash = false;                  // ダッシュのフラグ
-    bool MoveJump = false;                  // ジャンプのフラグ
+    ParticleSystem AddAttackEffect = null;      // 追加攻撃エフェクト
+    [SerializeField, Header("攻撃判定のオブジェクト")]
+    GameObject AttackRange = null;              // 攻撃判定のオブジェクト
+    //bool MoveDash = false;                    // ダッシュのフラグ
+    bool MoveJump = false;                      // ジャンプのフラグ
     bool MoveStop = false;
     // debug用
     [SerializeField, Header("プレイヤーステータスデバッグUI")]
@@ -53,7 +55,7 @@ public class PlayerController : MonoBehaviour
                 PlayerStatusDebugText.Add(child.GetComponent<Text>());
             }
         }
-        PlayerStatus.InitStatus(100, 5, 5, 30);// HP Attack Defense Speed
+        PlayerStatus.InitStatus(100, 5, 5, 50);// HP Attack Defense Speed
         ComboController.InitCombo(4);           // コンボの時間
         PlayerAddAttackController.InitPlayerAddAttack(TimingCanvas, TimingCircle, TimingIcon, this.transform);
         PlayerRigid = GetComponent<Rigidbody>();
@@ -62,15 +64,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // プレイヤーアニメーションの情報
-        AniStateInfo = PlayerAnimator.GetCurrentAnimatorStateInfo(0);
+        // プレイヤー攻撃アニメーションの情報更新
+        AttackAniStateInfo = PlayerAnimator.GetCurrentAnimatorStateInfo(1);
         // 移動
         LeftStickH = Input.GetAxis("L_Stick_H");
         LeftStickV = Input.GetAxis("L_Stick_V");
-        // ダッシュ
-        Trigger = Input.GetAxis("L_R_Trigger");
-        if (Trigger > 0.8f) { MoveDash = true; }
-        if (Trigger < 0.8f) { MoveDash = false; }
+        if (LeftStickH != 0 || LeftStickV != 0)
+        {
+            PlayerAnimator.SetBool("Dashflg", true);
+        }
         // ジャンプ
         if ((Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Space)) && !MoveJump)
         {
@@ -83,15 +85,15 @@ public class PlayerController : MonoBehaviour
             }
         }
         // 攻撃のアニメーション中
-        if ((AniStateInfo.IsTag("PlayerAttack1") || AniStateInfo.IsTag("PlayerAttack2") || AniStateInfo.IsTag("PlayerAttack3")) && AniStateInfo.normalizedTime < 0.7f)
+        if (AttackAniStateInfo.IsTag("Attack1") || AttackAniStateInfo.IsTag("Attack2") || AttackAniStateInfo.IsTag("Attack3"))
         {
-            LeftStickH = 0;
-            LeftStickV = 0;
-            PlayerAnimator.SetBool("Jumpflg", false);
-            // 攻撃時の補正
-            AttackCorrection();
+            if (AttackAniStateInfo.normalizedTime < 0.7f)
+            {
+                LeftStickH = 0;
+                LeftStickV = 0;
+            }
         }
-        if (AniStateInfo.IsTag("PlayerAttack3") && !PlayerAddAttackController.TimingFlg)
+        if (AttackAniStateInfo.IsTag("Attack3") && !PlayerAddAttackController.TimingFlg)
         {
             PlayerAddAttackController.TimingUIAwake();
         }
@@ -127,27 +129,19 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        PlayerRigid.AddForce(Vector3.down * ForceGravity, ForceMode.Acceleration);
         if (LeftStickH != 0 || LeftStickV != 0)
         {
-            PlayerAnimator.SetBool("Walkflg", true);
             Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
             Vector3 moveForward = cameraForward * LeftStickV + Camera.main.transform.right * LeftStickH;
             Quaternion playerRotation = Quaternion.LookRotation(moveForward);
+            // ダッシュ
             if (!MoveStop)
             {
-                // 歩き
-                if (!MoveDash)
-                {
-                    PlayerRigid.AddForce(WalkVal * moveForward);
-                }
-                // ダッシュ
-                else if (MoveDash)
-                {
-                    PlayerRigid.AddForce(PlayerStatus.CurrentSpeed * moveForward);
-                }
+                PlayerRigid.AddForce(PlayerStatus.CurrentSpeed * 10 * moveForward);
             }
             // 攻撃のアニメーション中
-            if (AniStateInfo.IsTag("PlayerAttack1") || AniStateInfo.IsTag("PlayerAttack2") || AniStateInfo.IsTag("PlayerAttack3"))
+            if (AttackAniStateInfo.IsTag("Attack1") || AttackAniStateInfo.IsTag("Attack2") || AttackAniStateInfo.IsTag("Attack3"))
             {
                 // 攻撃時の回転
                 transform.rotation = Quaternion.Slerp(transform.rotation, playerRotation, AttackRoteVal);
@@ -160,17 +154,17 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            PlayerAnimator.SetBool("Walkflg", false);
+            PlayerAnimator.SetBool("Dashflg", false);
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        PlayerAnimator.SetBool("Jumpflg", false);
         foreach (ContactPoint contact in collision.contacts)
         {
             if (contact.normal.y <= 1 && contact.normal.y > 0.1f)
             {
+                PlayerAnimator.SetBool("Jumpflg", false);
                 MoveJump = false;
                 MoveStop = false;
             }
@@ -212,14 +206,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("player,Hp: -" + damege);
             PlayerStatus.CurrentHp -= damege;
         }
-    }
-
-    /// <summary>
-    /// 攻撃時のカメラ・プレイヤーの向き補正
-    /// </summary>
-    void AttackCorrection()
-    {
-
     }
 
     /// <summary>
