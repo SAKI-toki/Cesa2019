@@ -139,7 +139,6 @@ public class Enemy : MonoBehaviour
 
     PlayerController playerController;
 
-    // Start is called before the first frame update
 
     /// <summary>
     /// 数値初期化
@@ -229,8 +228,12 @@ public class Enemy : MonoBehaviour
             DrectionChange();
         }
 
-        StatusUp();//ステータスアップ
-        StatusDown();//ステータスダウン
+        /*
+         * 毎フレーム実行しているためコメントアウト
+         * by 石山
+         */
+        //StatusUp();//ステータスアップ
+        //StatusDown();//ステータスダウン
     }
 
     /// <summary>
