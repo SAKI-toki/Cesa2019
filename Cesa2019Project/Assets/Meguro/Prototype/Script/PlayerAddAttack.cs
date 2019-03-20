@@ -21,6 +21,7 @@ public class PlayerAddAttack
     /// </summary>
     /// <param name="canvas"></param>
     /// <param name="circle"></param>
+    /// <param name="icon"></param>
     /// <param name="target"></param>
     public void InitPlayerAddAttack(GameObject canvas, Image circle, Image icon, Transform target)
     {

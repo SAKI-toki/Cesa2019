@@ -217,15 +217,17 @@ public class StarPlaceManager : MonoBehaviour
     /// <summary>
     /// 星が配置されて線を描く
     /// </summary>
-    void LineCheck()
+    public void LineCheck()
     {
         for (int i = 0; i < LineList.Count; ++i)
         {
             if (!LineList[i].DorwEnd)
             {
+                Debug.Log(i+":DorwEnd"+LineList[i].DorwEnd);
                 if (LineList[i].StarPlace1.GetComponent<StarPlace>().isSet &&
                     LineList[i].StarPlace2.GetComponent<StarPlace>().isSet)
                 {
+                    Debug.Log("線を引く");
                     LineRenderer lineRendererStarPlace1 = LineList[i].StarPlace1.GetComponent<LineRenderer>();
                     lineRendererStarPlace1.positionCount = lineRendererStarPlace1.positionCount + 2;
 
