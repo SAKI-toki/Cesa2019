@@ -1010,6 +1010,7 @@ GameObject:
   - component: {fileID: 4055310884918131002}
   - component: {fileID: 4081583563110409490}
   - component: {fileID: 4081583563110409489}
+  - component: {fileID: 84609560274896326}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -1066,11 +1067,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f766a04b988d44eb7ac2eb3976abb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NonDirectAttack: 0
+  Bullet: 0
   RedStar: {fileID: 2136917350764799977, guid: aa1e1885d190ff748bb86279fc46b498, type: 3}
   BlueStar: {fileID: 3015167101791313104, guid: 449eb74bb9eedcb4ba0227e035af611f,
     type: 3}
   YellowStar: {fileID: 7120729380669401857, guid: 6d1dc3b5ce428234d875e19316bd2b58,
     type: 3}
+  CrabFlag: 0
+  CrabMoveChange: 5
   BossEnemy: 0
   ZMove: 5
   EnemyHp: 30
@@ -1092,7 +1097,6 @@ MonoBehaviour:
   Rigor_Cancellation: 1.5
   DamageCount: 3
   SpeedAttackFlag: 0
-  NonDirectAttack: 0
   MinStarCount: 1
   MaxStarCount: 3
   RotationPlus: 5
@@ -1154,6 +1158,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &84609560274896326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4081583563110409488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4782f6154531d4e9f3131c6b943ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackSE: {fileID: 8300000, guid: 5ab719a2cef7a70478ec258a35febe7e, type: 3}
+  DamageSE: {fileID: 8300000, guid: b83a6e37d04778c4292596edf4a3425f, type: 3}
+  WalkSE: {fileID: 8300000, guid: d1d58e50e91eb024c9c1a62d0e270429, type: 3}
 --- !u!1 &4081583631081439310
 GameObject:
   m_ObjectHideFlags: 0
@@ -2919,11 +2938,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4084249368702385986}
     m_Modifications:
-    - target: {fileID: 7367838290631514693, guid: 4d115fd54cf301c40b6eab61c5bb607b,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyHpGauge
-      objectReference: {fileID: 0}
     - target: {fileID: 6494990068306519513, guid: 4d115fd54cf301c40b6eab61c5bb607b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3028,6 +3042,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7367838290631514693, guid: 4d115fd54cf301c40b6eab61c5bb607b,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyHpGauge
       objectReference: {fileID: 0}
     - target: {fileID: 4406562756855210368, guid: 4d115fd54cf301c40b6eab61c5bb607b,
         type: 3}

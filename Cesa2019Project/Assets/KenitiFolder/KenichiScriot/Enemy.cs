@@ -138,7 +138,7 @@ public class Enemy : MonoBehaviour
     NavMeshAgent Agent = null;
 
     PlayerController playerController;
-
+    EnemySe EnemySe;
 
     /// <summary>
     /// 数値初期化
@@ -161,6 +161,7 @@ public class Enemy : MonoBehaviour
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
         Agent = GetComponent<NavMeshAgent>();
         WaveController.EnemyCount += 1;
+        EnemySe = this.GetComponent<EnemySe>();
         StarPlace = GameObject.Find("StarPlaceManager");
         StarPlaceManager = StarPlace.GetComponent<StarPlaceManager>();
     }
@@ -245,6 +246,7 @@ public class Enemy : MonoBehaviour
         if (MoveSwitch && NonDirectAttack == false)
         {
             Animator.SetBool("EnemyWalk", true);
+            EnemySe.WalkSES();
             transform.Translate(0, 0, ZMove * Time.deltaTime);
         }
         else
@@ -399,6 +401,7 @@ public class Enemy : MonoBehaviour
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
             Animator.SetTrigger("EnemyAttack");
+            EnemySe.AttackSES();
             AttackMotionFirst = true;
         }
 
