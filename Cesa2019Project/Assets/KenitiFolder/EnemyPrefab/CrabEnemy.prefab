@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 2654604567536841819}
   - component: {fileID: 2654604567536841816}
   - component: {fileID: 5653200251919734658}
+  - component: {fileID: 7853086108626903496}
   m_Layer: 0
   m_Name: CrabEnemy
   m_TagString: Untagged
@@ -402,6 +403,21 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &7853086108626903496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2654604567536841822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4782f6154531d4e9f3131c6b943ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackSE: {fileID: 8300000, guid: 5ab719a2cef7a70478ec258a35febe7e, type: 3}
+  DamageSE: {fileID: 8300000, guid: b83a6e37d04778c4292596edf4a3425f, type: 3}
+  WalkSE: {fileID: 8300000, guid: d1d58e50e91eb024c9c1a62d0e270429, type: 3}
 --- !u!1 &2654604567536842502
 GameObject:
   m_ObjectHideFlags: 0
