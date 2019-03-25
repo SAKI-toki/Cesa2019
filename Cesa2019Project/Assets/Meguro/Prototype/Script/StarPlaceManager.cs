@@ -23,10 +23,6 @@ public class StarPlaceManager : MonoBehaviour
     GameObject Player = null;               // プレイヤー
     [SerializeField, Header("星")]
     GameObject Star = null;                 // 星
-    [SerializeField, Header("星選択UI")]
-    GameObject StarSelectUI = null;         // 星の色を選択するUI
-    [SerializeField, Header("最初に選択されるボタン")]
-    GameObject StartButton = null;
     Vector3 PlayerPos = Vector3.zero;       // プレイヤーの位置
     [SerializeField]
     List<Line> LineList = new List<Line>();
@@ -36,6 +32,7 @@ public class StarPlaceManager : MonoBehaviour
     int StarSelectPlaceNum = 0;
     public static bool StarSelect = false;  // 星の色を選択中か
     bool AllPlaceSet = false;               // 星が全てセットされているかのフラグ
+    public bool StarPut = true;            //星をセットした
     [SerializeField]
     StarSlect StarSelectController = null;
     [SerializeField]
@@ -44,6 +41,17 @@ public class StarPlaceManager : MonoBehaviour
     GameObject GreenStar = null;
     [SerializeField]
     GameObject BlueStar = null;
+    [SerializeField]
+    Pause Pause = null;
+
+    [System.NonSerialized]
+    public int RedStarNum = 0;
+    [System.NonSerialized]
+    public int GreenStarNum = 0;
+    [System.NonSerialized]
+    public int BlueStarNum = 0;
+    [System.NonSerialized]
+    public int StarNum = 0;
 
     void Start()
     {
@@ -63,6 +71,7 @@ public class StarPlaceManager : MonoBehaviour
             }
             ++num;
         }
+        LineCheck();
     }
 
     void Update()
@@ -103,7 +112,7 @@ public class StarPlaceManager : MonoBehaviour
                         }
 
                         // 範囲内にいるとき
-                        if (StarPlaceList[i].isActive)
+                        if (StarPlaceList[i].isActive && !Pause.GetPauseFlg())
                         {
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {
@@ -163,8 +172,15 @@ public class StarPlaceManager : MonoBehaviour
         //Time.timeScale = 1.0f;
         //StarSelectUI.SetActive(false);
         StarPlaceList[StarSelectPlaceNum].isSet = true;
+        StarPlaceList[StarSelectPlaceNum].StarColor = starColor;
+        if (starColor == HaveStarManager.StarColorEnum.Red) ++RedStarNum;
+        if (starColor == HaveStarManager.StarColorEnum.Green) ++GreenStarNum;
+        if (starColor == HaveStarManager.StarColorEnum.Blue) ++BlueStarNum;
+        ++StarNum;
         //PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
         GenerateStar(StarSelectPlaceNum, starColor);
+        StarPut = true;
+        LineCheck();
     }
 
     void GenerateStar(int n, HaveStarManager.StarColorEnum starColor)

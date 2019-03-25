@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class BulletGenerator : MonoBehaviour
 {
-    [SerializeField, Header("発射間隔")]
-    float BulletGenelateTime = 0;
-    [SerializeField, Header("攻撃範囲（敵の索敵範囲と同じに）")]
-    float AtackDcetion = 10;
+    Animator Animator = null;
+    [SerializeField]
+    Enemy Enemy=null;
     [SerializeField]
     GameObject Bullet = null;
+    [SerializeField, Header("発射間隔")]
+    float BulletGenelateTime = 0;
     [SerializeField, Header("弾の高さ")]
     Vector3 HighPlus = new Vector3();
     [SerializeField, Header("弾をだす個数")]
@@ -27,6 +28,7 @@ public class BulletGenerator : MonoBehaviour
     void Start()
     {
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得
+        Animator = this.GetComponent<Animator>();
     }
 
     /// <summary>
@@ -35,17 +37,19 @@ public class BulletGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.timeScale != 0)
+        if (Enemy.ReceivedDamage) { BulletTime = 0; }
+
+        if (Time.timeScale >= 0 && Enemy.ReceivedDamage==false)
         {
             PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
 
-            if (PlayerRangeDifference <= AtackDcetion) { BulletTime += Time.deltaTime; }
+            if (PlayerRangeDifference <= Enemy.OnPlayerTracking) { BulletTime += Time.deltaTime; }
 
             if (BulletTime >= BulletGenelateTime)
             {
                 Drection = this.GetComponent<Transform>().localEulerAngles.y;
                 BulletDrection = this.GetComponent<Transform>().localEulerAngles.y;
-
+                Animator.SetTrigger("EnemyAttack");
                 Way3();
             }
         }
@@ -58,7 +62,7 @@ public class BulletGenerator : MonoBehaviour
     {
         Shot();
 
-        for (int i = 0; WayBullet != i; i++)
+        for (int i = 1; WayBullet >= i; i++)
         {
             BulletDrection = Drection - BulletInterval * i;
             Shot();
@@ -72,9 +76,9 @@ public class BulletGenerator : MonoBehaviour
     /// </summary>
     void Shot()
     {
-        GameObject item = Instantiate(Bullet) as GameObject;//弾を生成
-        item.transform.position = transform.position + HighPlus;//指定した位置に移動
-        item.transform.Rotate(0, BulletDrection, 0);//弾の向きを発射方向に
+        GameObject bullet = Instantiate(Bullet) as GameObject;//弾を生成
+        bullet.transform.position = transform.position + HighPlus;//指定した位置に移動
+        bullet.transform.Rotate(0, BulletDrection, 0);//弾の向きを発射方向に
         BulletTime = 0;
     }
 

@@ -9,11 +9,7 @@ using UnityEngine.EventSystems;
 public class StarSlect : MonoBehaviour
 {
     [SerializeField]
-    private Star StarScript = null;
-    [SerializeField]
     GameObject SelectColor = null;
-    [SerializeField, Header("最初に選択されている色")]
-    GameObject StartColor = null;
     [SerializeField, Header("赤")]
     GameObject SelectRed = null;
     [SerializeField, Header("緑")]
@@ -23,6 +19,7 @@ public class StarSlect : MonoBehaviour
     [SerializeField]
     StarPlaceManager StarPlaceController = null;
     private int Select;
+
     bool SelectFlg = false;
 
     // Start is called before the first frame update
@@ -34,14 +31,6 @@ public class StarSlect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(/*KeyCode.Return*/"joystick button 2"))
-        //{
-        //    StartSelect();
-        //}
-        //else if(SelectFlg && Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(/*KeyCode.Return*/"joystick button 2"))
-        //{
-        //    DeleteSelect();
-        //}
         if (!SelectFlg) return;
 
         //0:緑 1:赤 2:青
@@ -49,7 +38,7 @@ public class StarSlect : MonoBehaviour
         {
             case 0:
                 EventSystem.current.SetSelectedGameObject(SelectGreen);
-                if (Input.GetKeyDown(/*KeyCode.Return*/"joystick button 1") || Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
                     //if (StarScript.BigStarGreen >= 1)
                     //{
@@ -66,7 +55,7 @@ public class StarSlect : MonoBehaviour
                 break;
             case 1:
                 EventSystem.current.SetSelectedGameObject(SelectRed);
-                if (Input.GetKeyDown(/*KeyCode.Return*/"joystick button 1") || Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
                     //if (StarScript.BigStarRed >= 1)
                     //{
@@ -83,7 +72,7 @@ public class StarSlect : MonoBehaviour
                 break;
             case 2:
                 EventSystem.current.SetSelectedGameObject(SelectBlue);
-                if (Input.GetKeyDown(/*KeyCode.Return*/"joystick button 1")||Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
                     //if (StarScript.BigStarBlue >= 1)
                     //{
@@ -134,5 +123,10 @@ public class StarSlect : MonoBehaviour
         SelectColor.SetActive(true);
         EventSystem.current.SetSelectedGameObject(SelectColor);
         SelectFlg = true;
+    }
+
+    public bool GetSelectFlg()
+    {
+         return SelectFlg; 
     }
 }

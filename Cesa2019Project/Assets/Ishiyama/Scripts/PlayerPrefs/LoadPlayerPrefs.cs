@@ -1,18 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class LoadPlayerPrefs : MonoBehaviour
+/// <summary>
+/// PlayerPrefsからロードするクラス
+/// </summary>
+static public class LoadPlayerPref
 {
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// int型の読み込み
+    /// </summary>
+    /// <param name="key">キー</param>
+    /// <returns>読み込んだ値</returns>
+    static public int LoadInt(string key)
     {
-        
+        return PlayerPrefs.GetInt(key);
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// float型の読み込み
+    /// </summary>
+    /// <param name="key">キー</param>
+    /// <returns>読み込んだ値</returns>
+    static public float LoadFloat(string key)
     {
-        
+        return PlayerPrefs.GetFloat(key);
+    }
+
+    /// <summary>
+    /// string型の読み込み
+    /// </summary>
+    /// <param name="key">キー</param>
+    /// <returns>読み込んだ値</returns>
+    static public string LoadString(string key)
+    {
+        return PlayerPrefs.GetString(key);
     }
 }
