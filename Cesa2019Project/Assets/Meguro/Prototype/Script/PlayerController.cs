@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     float LeftStickH = 0;                       // コントローラー左右
     float LeftStickV = 0;                       // コントローラー上下
     float Trigger = 0;                          // コントローラートリガー
+    bool RTriggerActive = false;
     [SerializeField, Header("ジャンプ速度")]
     float JumpVal = 0;                          // プレイヤーのジャンプ速度
     [SerializeField, Header("空中時のふわふわ感を無くす")]
@@ -36,10 +37,17 @@ public class PlayerController : MonoBehaviour
     Image TimingIcon = null;
     [SerializeField, Header("追加攻撃のエフェクト")]
     ParticleSystem AddAttackEffect = null;      // 追加攻撃エフェクト
-    [SerializeField, Header("攻撃判定のオブジェクト")]
-    GameObject AttackRange = null;              // 攻撃判定のオブジェクト
-    //bool MoveDash = false;                    // ダッシュのフラグ
+    Vector3 AvoidForce = Vector3.zero;
+    [SerializeField, Header("回避時間")]
+    float AvoidTime = 0;
+    [SerializeField, Header("回避スピード")]
+    float AvoidSpeed = 0;
+    float AvoidCurrentTime = 0;
+    [SerializeField, Header("回避の回復スピード")]
+    float AvoidHealingTime = 0;
+    float AvoidHealingCurrentTime = 0;
     bool MoveJump = false;                      // ジャンプのフラグ
+    bool MoveAvoid = false;                     // 回避のフラグ
     bool MoveStop = false;
     // debug用
     [SerializeField, Header("プレイヤーステータスデバッグUI")]
@@ -55,7 +63,7 @@ public class PlayerController : MonoBehaviour
                 PlayerStatusDebugText.Add(child.GetComponent<Text>());
             }
         }
-        PlayerStatus.InitStatus(100, 5, 5, 50);// HP Attack Defense Speed
+        PlayerStatus.InitStatus(100, 5, 5, 50, 3);// HP Attack Defense Speed Stamina
         ComboController.InitCombo(4);           // コンボの時間
         PlayerAddAttackController.InitPlayerAddAttack(TimingCanvas, TimingCircle, TimingIcon, this.transform);
         PlayerRigid = GetComponent<Rigidbody>();
@@ -69,12 +77,10 @@ public class PlayerController : MonoBehaviour
         // 移動
         LeftStickH = Input.GetAxis("L_Stick_H");
         LeftStickV = Input.GetAxis("L_Stick_V");
-        if (LeftStickH != 0 || LeftStickV != 0)
-        {
-            PlayerAnimator.SetBool("Dashflg", true);
-        }
+        // 回避
+        Trigger = Input.GetAxis("L_R_Trigger");
         // ジャンプ
-        if ((Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Space)) && !MoveJump)
+        if ((Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Space)) && !MoveJump && !MoveAvoid)
         {
             // 星選択中で操作させないため
             if (!StarPlaceManager.StarSelect)
@@ -98,7 +104,7 @@ public class PlayerController : MonoBehaviour
             PlayerAddAttackController.TimingUIAwake();
         }
         // 攻撃
-        if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
+        if ((Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return)) && !MoveAvoid)
         {
             // 星選択中で操作させないため
             if (!StarPlaceManager.StarSelect)
@@ -106,7 +112,18 @@ public class PlayerController : MonoBehaviour
                 PlayerAnimator.SetTrigger("Attack");
             }
         }
-
+        if (!MoveAvoid)
+        {
+            if (PlayerStatus.CurrentStamina < PlayerStatus.Stamina)
+            {
+                AvoidHealingCurrentTime += Time.deltaTime;
+                if (AvoidHealingTime < AvoidHealingCurrentTime)
+                {
+                    ++PlayerStatus.CurrentStamina;
+                    AvoidHealingCurrentTime = 0;
+                }
+            }
+        }
         // コンボ処理
         ComboController.CheckCombo();
         if (ComboController.ComboFlg)
@@ -130,8 +147,9 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         PlayerRigid.AddForce(Vector3.down * ForceGravity, ForceMode.Acceleration);
-        if (LeftStickH != 0 || LeftStickV != 0)
+        if ((LeftStickH != 0 || LeftStickV != 0) && !MoveAvoid)
         {
+            PlayerAnimator.SetBool("Dashflg", true);
             Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
             Vector3 moveForward = cameraForward * LeftStickV + Camera.main.transform.right * LeftStickH;
             Quaternion playerRotation = Quaternion.LookRotation(moveForward);
@@ -151,10 +169,27 @@ public class PlayerController : MonoBehaviour
                 // 通常時の回転
                 transform.rotation = Quaternion.Slerp(transform.rotation, playerRotation, RoteVal);
             }
+            if (TriggerButtonDown(Trigger) && PlayerStatus.CurrentStamina > 0)    // 右トリガー
+            {
+                MoveAvoid = true;
+                --PlayerStatus.CurrentStamina;
+                AvoidForce = moveForward.normalized;
+            }
         }
         else
         {
             PlayerAnimator.SetBool("Dashflg", false);
+        }
+        // 回避
+        if (MoveAvoid)
+        {
+            PlayerRigid.AddForce(AvoidForce * AvoidSpeed);
+            AvoidCurrentTime += Time.deltaTime;
+            if (AvoidTime < AvoidCurrentTime)
+            {
+                MoveAvoid = false;
+                AvoidCurrentTime = 0;
+            }
         }
     }
 
@@ -208,6 +243,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    bool TriggerButtonDown(float triggerNum)
+    {
+        // 右トリガー
+        if (!RTriggerActive && triggerNum > 0)
+        {
+            RTriggerActive = true;
+            return true;
+        }
+        else if (RTriggerActive && triggerNum == 0)
+        {
+            RTriggerActive = false;
+            return false;
+        }
+        else
+            return false;
+    }
+
     /// <summary>
     /// デバッグUIの表示・非表示
     /// </summary>
@@ -228,5 +280,6 @@ public class PlayerController : MonoBehaviour
         PlayerStatusDebugText[1].text = "Attack:  " + PlayerStatus.CurrentAttack.ToString();
         PlayerStatusDebugText[2].text = "Defence: " + PlayerStatus.CurrentDefense.ToString();
         PlayerStatusDebugText[3].text = "Speed:   " + PlayerStatus.CurrentSpeed.ToString();
+        PlayerStatusDebugText[4].text = "Stamina: " + PlayerStatus.CurrentStamina.ToString();
     }
 }
