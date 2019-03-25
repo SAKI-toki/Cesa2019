@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EnemySe : MonoBehaviour
 {
-    public AudioClip AttackSE;
-    public AudioClip DamageSE;
-    public AudioClip WalkSE;
+    public AudioClip AttackSE = null;
+    public AudioClip DamageSE = null;
+    public AudioClip DestroySE = null;
 
     AudioSource AudioSource;
 
@@ -19,7 +19,7 @@ public class EnemySe : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void AttackSES()
@@ -32,8 +32,8 @@ public class EnemySe : MonoBehaviour
         AudioSource.PlayOneShot(DamageSE);
     }
 
-    public void WalkSES()
+    public void DestroySES()
     {
-        AudioSource.PlayOneShot(WalkSE);
+        AudioSource.PlayOneShot(DestroySE);
     }
 }

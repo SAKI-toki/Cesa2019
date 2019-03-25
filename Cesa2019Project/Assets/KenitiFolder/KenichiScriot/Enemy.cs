@@ -246,7 +246,6 @@ public class Enemy : MonoBehaviour
         if (MoveSwitch && NonDirectAttack == false)
         {
             Animator.SetBool("EnemyWalk", true);
-            EnemySe.WalkSES();
             transform.Translate(0, 0, ZMove * Time.deltaTime);
         }
         else
@@ -438,6 +437,7 @@ public class Enemy : MonoBehaviour
             ++playerController.ComboController.CurrentComboNum;
             EnemyStatus.CurrentHp -= 10;//HPを減らす
             AttackCount++;
+            EnemySe.DamageSES();
 
             if (EnemyStatus.CurrentHp <= 0)
             {
