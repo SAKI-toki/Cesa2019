@@ -63,6 +63,7 @@ public class MiniMapController : MonoBehaviour
             }
             //一つのオブジェクトにまとめる
             starObj.transform.SetParent(StarImageParent.transform);
+            starObj.transform.localScale = new Vector3(0.08f, 0.08f, 1.0f);
             //位置をセット
             SetPositionImage(starObj.GetComponent<RectTransform>(), star.transform.position);
             //リストに追加
