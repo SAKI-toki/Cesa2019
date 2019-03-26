@@ -115,19 +115,12 @@ public class StarPlaceManager : MonoBehaviour
                     }
                 }
             }
-            // 星の色選択
+            // 星の色選択中
             else if (StarSelect)
             {
-                // 色決定
-                if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown("joystick button 2"))
                 {
-                    // 星を置く
-                    //StarSet();
-                }
-                // キャンセル
-                if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
-                {
-                    //StarSelectCancel();
+                    StarSelectController.DeleteSelect();
                 }
             }
             //LineCheck();

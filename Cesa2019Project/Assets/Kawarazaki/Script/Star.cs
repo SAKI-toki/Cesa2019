@@ -83,7 +83,7 @@ public class Star : MonoBehaviour
     //初期化
     void Start()
     {
-
+        HaveStarManager.AllZeroReset();
     }
 
     void Update()
