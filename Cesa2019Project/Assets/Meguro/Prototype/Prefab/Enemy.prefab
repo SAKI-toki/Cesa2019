@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2885688125327369919}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -104,7 +104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47269ddc39179f40b4b03d61d4a1f70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StarPiece: {fileID: 7781425003810171942, guid: ac196be2881b15d49a12972dfc8632ec,
+  playerController: {fileID: 0}
+  StarPiece: {fileID: 2136917350764799977, guid: aa1e1885d190ff748bb86279fc46b498,
     type: 3}
-  Hp: 10
-  StarPieceNum: 5
+  Hp: 45
+  defense: 2
+  StarPieceNum: 20

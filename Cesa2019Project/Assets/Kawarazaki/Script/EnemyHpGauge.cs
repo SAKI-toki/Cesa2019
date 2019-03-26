@@ -25,6 +25,7 @@ public class EnemyHpGauge : MonoBehaviour
         //カメラと同じ向きに設定
         transform.rotation = Camera.main.transform.rotation;
         //HPバー減少
+       
         EnemyHp.fillAmount = Mathf.Clamp01(HpEnemy.EnemyStatus.CurrentHp / HpEnemy.EnemyStatus.Hp);
     }
 }

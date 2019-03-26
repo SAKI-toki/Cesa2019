@@ -17,6 +17,7 @@ public class StarPlace : MonoBehaviour
     public bool isSet = false;              // 星をセットしたフラグ
     [SerializeField,Header("最初からセットしておくかどうか")]
     public bool IsAwakeSet = false;
+    public HaveStarManager.StarColorEnum StarColor = HaveStarManager.StarColorEnum.None;
     void Awake()
     {
         Pos = transform.position;

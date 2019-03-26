@@ -23,10 +23,6 @@ public class StarPlaceManager : MonoBehaviour
     GameObject Player = null;               // プレイヤー
     [SerializeField, Header("星")]
     GameObject Star = null;                 // 星
-    //[SerializeField, Header("星選択UI")]
-    //GameObject StarSelectUI = null;         // 星の色を選択するUI
-    //[SerializeField, Header("最初に選択されるボタン")]
-    //GameObject StartButton = null;
     Vector3 PlayerPos = Vector3.zero;       // プレイヤーの位置
     [SerializeField]
     List<Line> LineList = new List<Line>();
@@ -36,6 +32,7 @@ public class StarPlaceManager : MonoBehaviour
     int StarSelectPlaceNum = 0;
     public static bool StarSelect = false;  // 星の色を選択中か
     bool AllPlaceSet = false;               // 星が全てセットされているかのフラグ
+    public bool StarPut = true;            //星をセットした
     [SerializeField]
     StarSlect StarSelectController = null;
     [SerializeField]
@@ -46,6 +43,16 @@ public class StarPlaceManager : MonoBehaviour
     GameObject BlueStar = null;
     [SerializeField]
     Pause Pause = null;
+
+    [System.NonSerialized]
+    public int RedStarNum = 0;
+    [System.NonSerialized]
+    public int GreenStarNum = 0;
+    [System.NonSerialized]
+    public int BlueStarNum = 0;
+    [System.NonSerialized]
+    public int StarNum = 0;
+
     void Start()
     {
         int num = 0;
@@ -64,6 +71,7 @@ public class StarPlaceManager : MonoBehaviour
             }
             ++num;
         }
+        LineCheck();
     }
 
     void Update()
@@ -131,7 +139,7 @@ public class StarPlaceManager : MonoBehaviour
 
         }
     }
-    
+
     void StarSelectActive()
     {
         StarSelect = true;
@@ -157,8 +165,15 @@ public class StarPlaceManager : MonoBehaviour
         //Time.timeScale = 1.0f;
         //StarSelectUI.SetActive(false);
         StarPlaceList[StarSelectPlaceNum].isSet = true;
+        StarPlaceList[StarSelectPlaceNum].StarColor = starColor;
+        if (starColor == HaveStarManager.StarColorEnum.Red) ++RedStarNum;
+        if (starColor == HaveStarManager.StarColorEnum.Green) ++GreenStarNum;
+        if (starColor == HaveStarManager.StarColorEnum.Blue) ++BlueStarNum;
+        ++StarNum;
         //PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
         GenerateStar(StarSelectPlaceNum, starColor);
+        StarPut = true;
+        LineCheck();
     }
 
     void GenerateStar(int n, HaveStarManager.StarColorEnum starColor)
@@ -169,7 +184,7 @@ public class StarPlaceManager : MonoBehaviour
             StarPlaceList[n].gameObject.transform.position + new Vector3(0, 1, 0),
             Quaternion.identity);
         var colliderList = StarPlaceList[n].GetComponents<SphereCollider>();
-        foreach(var collider in colliderList)
+        foreach (var collider in colliderList)
         {
             collider.enabled = false;
         }
@@ -195,15 +210,17 @@ public class StarPlaceManager : MonoBehaviour
     /// <summary>
     /// 星が配置されて線を描く
     /// </summary>
-    void LineCheck()
+    public void LineCheck()
     {
         for (int i = 0; i < LineList.Count; ++i)
         {
             if (!LineList[i].DorwEnd)
             {
+                Debug.Log(i+":DorwEnd"+LineList[i].DorwEnd);
                 if (LineList[i].StarPlace1.GetComponent<StarPlace>().isSet &&
                     LineList[i].StarPlace2.GetComponent<StarPlace>().isSet)
                 {
+                    Debug.Log("線を引く");
                     LineRenderer lineRendererStarPlace1 = LineList[i].StarPlace1.GetComponent<LineRenderer>();
                     lineRendererStarPlace1.positionCount = lineRendererStarPlace1.positionCount + 2;
 

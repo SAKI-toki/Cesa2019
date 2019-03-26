@@ -8,8 +8,6 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class StarSlect : MonoBehaviour
 {
-    //[SerializeField]
-    //private Star StarScript = null;
     [SerializeField]
     GameObject SelectColor = null;
     [SerializeField, Header("赤")]
@@ -33,9 +31,7 @@ public class StarSlect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (!SelectFlg) return;
-
         //0:赤 1:青 2:緑
         switch (Select)
         {
@@ -48,6 +44,7 @@ public class StarSlect : MonoBehaviour
                         HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Red);
                         StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Red);
                     }
+                    StarPlaceController.LineCheck();
                     DeleteSelect();
                 }
                 break;
@@ -64,6 +61,7 @@ public class StarSlect : MonoBehaviour
                         HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Blue);
                         StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Blue);
                     }
+                    StarPlaceController.LineCheck();
                     DeleteSelect();
                 }
                 break;
@@ -80,6 +78,7 @@ public class StarSlect : MonoBehaviour
                         HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Green);
                         StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Green);
                     }
+                    StarPlaceController.LineCheck();
                     DeleteSelect();
                 }
                 break;
