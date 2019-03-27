@@ -31,6 +31,9 @@ public class MiniMapController : MonoBehaviour
     GameObject ImageParentObject = null;
     [SerializeField, Header("StarImageの親オブジェクト")]
     GameObject StarImageParent = null;
+    /// <summary>
+    /// ミニマップの初期化
+    /// </summary>
     void Start()
     {
         ImageParentObject.transform.localPosition = UiPosition;
@@ -70,7 +73,9 @@ public class MiniMapController : MonoBehaviour
             StarImages.Add(starObj);
         }
     }
-
+    /// <summary>
+    /// ミニマップの更新
+    /// </summary>
     void Update()
     {
         UpdatePlayer();

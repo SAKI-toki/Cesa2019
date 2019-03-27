@@ -25,6 +25,9 @@ public class BladeAfterImageMesh : MonoBehaviour
     //インデックスリスト
     List<int> IndexList = new List<int>();
 
+    /// <summary>
+    /// 各値の初期化
+    /// </summary>
     void Start()
     {
         AfterImageMesh = GetComponent<MeshFilter>().mesh;
@@ -32,6 +35,9 @@ public class BladeAfterImageMesh : MonoBehaviour
         PrevEndPos = BladeEndTransform.position;
     }
     
+    /// <summary>
+    /// 全てのUpdateが終わってからメッシュ更新する
+    /// </summary>
     void LateUpdate()
     {
         CreateMesh();
