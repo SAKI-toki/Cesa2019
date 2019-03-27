@@ -13,13 +13,15 @@ public class InputBirthday : MonoBehaviour
     int BirthDay = 1;
     [SerializeField, Header("誕生日を表示するテキスト")]
     Text BirthdayText = null;
+    [SerializeField, Header("入力されている誕生日の星座を表示するテキスト")]
+    Text ConstellationText = null;
 
     //現在の入力がどれか
     enum Birth { Month, Day, None };
     Birth CurrentInputBirth = Birth.Month;
 
     [SerializeField, Header("入力の間隔")]
-    float InputDelay = 0.3f;
+    float InputDelay = 0.1f;
     float InputTime = 0.0f;
 
     //それぞれの月の最大日数を格納
@@ -40,6 +42,8 @@ public class InputBirthday : MonoBehaviour
         InputBirth();
         SwitchMonthDay();
         UpdateText();
+        ConstellationText.text =
+            Constellations.GetConstellation(BirthMonth, BirthDay).ToString();
     }
 
     /// <summary>
@@ -49,11 +53,11 @@ public class InputBirthday : MonoBehaviour
     {
         if (CurrentInputBirth == Birth.Month)
         {
-            BirthdayText.text = "誕生日:<color=#00ff00>" + BirthMonth.ToString("##") + "</color>月" + BirthDay.ToString("##") + "日";
+            BirthdayText.text = "誕生日:<color=#00ff00>" + BirthMonth.ToString("00") + "</color>月" + BirthDay.ToString("00") + "日";
         }
         else if (CurrentInputBirth == Birth.Day)
         {
-            BirthdayText.text = "誕生日:" + BirthMonth.ToString("##") + "月<color=#00ff00>" + BirthDay.ToString("##") + "</color>日";
+            BirthdayText.text = "誕生日:" + BirthMonth.ToString("00") + "月<color=#00ff00>" + BirthDay.ToString("00") + "</color>日";
         }
     }
 
@@ -62,20 +66,22 @@ public class InputBirthday : MonoBehaviour
     /// </summary>
     void InputBirth()
     {
+        bool hitUp = Input.GetKey(KeyCode.UpArrow);
+        bool hitDown = Input.GetKey(KeyCode.DownArrow);
         if (InputTime > InputDelay)
         {
-            if (Input.GetKey(KeyCode.UpArrow))
+            if (hitUp)
             {
                 IncrementBirth(1);
                 InputTime = 0.0f;
             }
-            else if (Input.GetKey(KeyCode.DownArrow))
+            else if (hitDown)
             {
                 IncrementBirth(-1);
                 InputTime = 0.0f;
             }
         }
-        else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) 
+        else if (hitUp || hitDown)
         {
             InputTime += Time.deltaTime;
         }
@@ -94,14 +100,17 @@ public class InputBirthday : MonoBehaviour
     /// </summary>
     void SwitchMonthDay()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        bool hitLeft = Input.GetKey(KeyCode.LeftArrow);
+        bool hitRight = Input.GetKey(KeyCode.RightArrow);
+        if (hitLeft)
         {
-            CurrentInputBirth = Birth.Month;
+            --CurrentInputBirth;
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (hitRight)
         {
-            CurrentInputBirth = Birth.Day;
+            ++CurrentInputBirth;
         }
+        CurrentInputBirth = (Birth)Mathf.Clamp((int)CurrentInputBirth, (int)Birth.Month, (int)Birth.None - 1);
     }
 
     /// <summary>
