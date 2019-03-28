@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// フェード管理
+/// </summary>
 public class FadeController : MonoBehaviour
 {
     //フェード用のcanvasとImage
@@ -13,7 +16,7 @@ public class FadeController : MonoBehaviour
     //フェードしたい時間
     float FadeSpeed = 0.02f;
 
-    static float Alfa = 0.0f;
+    static float Alpha = 0.0f;
 
     //フェードインアウトのフラグ
     public static bool IsFadeOut = false;
@@ -21,8 +24,10 @@ public class FadeController : MonoBehaviour
 
     //偏移先のシーン名
     private static string NextScene;
-    
-    //canvasとImage生成
+
+    /// <summary>
+    ///  canvasとImage生成
+    /// </summary>
     static void Init()
     {
         //canvas生成
@@ -43,7 +48,7 @@ public class FadeController : MonoBehaviour
         //Imageのサイズ設定
         FadeImage.rectTransform.sizeDelta = new Vector2(9999, 9999);
 
-        Alfa = FadeImage.color.a;
+        Alpha = FadeImage.color.a;
     }
     
 
@@ -53,13 +58,13 @@ public class FadeController : MonoBehaviour
         if (IsFadeIn)
         {
             //透明度変化
-            Alfa -=  FadeSpeed;
+            Alpha -=  FadeSpeed;
 
             //フェードイン終了判定
-            if(Alfa <= 0.0f)
+            if(Alpha <= 0.0f)
             {
                 IsFadeIn = false;
-                Alfa = 0.0f;
+                Alpha = 0.0f;
                 FadeImage.enabled = false;
             }
             SetAlpha();
@@ -69,13 +74,13 @@ public class FadeController : MonoBehaviour
         else if(IsFadeOut)
         {
             //透明度変化
-            Alfa +=  FadeSpeed;
+            Alpha += FadeSpeed;
 
             //フェードアウト終了判定
-            if(Alfa >= 1.0f)
+            if (Alpha >= 1.0f)
             {
                 IsFadeOut = false;
-                Alfa = 1.0f;
+                Alpha = 1.0f;
 
                 //次のシーンへ偏移
                 SceneManager.LoadScene(NextScene);
@@ -84,7 +89,9 @@ public class FadeController : MonoBehaviour
         }
     }
 
-    //フェードイン開始
+    /// <summary>
+    /// フェードイン開始
+    /// </summary>
     public static void FadeIn()
     {
         if (FadeImage == null)
@@ -92,8 +99,11 @@ public class FadeController : MonoBehaviour
         IsFadeIn = true;
     }
 
-    //フェードアウト開始
-   public static void FadeOut(string n)
+    /// <summary>
+    /// フェードアウト開始
+    /// </summary>
+    /// <param name="n"></param>
+    public static void FadeOut(string n)
     {
         if (FadeImage == null) Init();
         NextScene = n;
@@ -101,9 +111,11 @@ public class FadeController : MonoBehaviour
         IsFadeOut = true;
     }
 
-    //カラー設定
+    /// <summary>
+    /// FadeImageのカラー設定
+    /// </summary>
     void SetAlpha()
     {
-        FadeImage.color = new Color(255, 255, 255, Alfa);
+        FadeImage.color = new Color(0, 0, 0, Alpha);
     }
 }

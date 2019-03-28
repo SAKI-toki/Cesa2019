@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
+/// <summary>
+/// シーン遷移
+/// </summary>
 public class ShiftScene : MonoBehaviour
 {
+    int Time = 60;
     void Start()
     {
         FadeController.FadeIn();
@@ -14,14 +18,19 @@ public class ShiftScene : MonoBehaviour
     {
         GameOverScene();
         GameScene();
+        TitleScene();
+        StageScene();
     }
 
     void GameOverScene()
     {
         if (SceneManager.GetActiveScene().name == "UiTestScene")
-            if (PlayerController.PlayerStatus.CurrentHp == 0  )
+            if (PlayerController.PlayerStatus.CurrentHp <= 0  )
             {
-                FadeController.FadeOut("GameOverTestScene");
+                if (--Time <= 0)
+                {
+                    FadeController.FadeOut("GameOverTestScene");
+                }
             }
     }
     
@@ -30,7 +39,25 @@ public class ShiftScene : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "GameOverTestScene")
             if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
             {
-                FadeController.FadeOut("UiTestScene");
+                FadeController.FadeOut("TitleTestScene");
+            }
+    }
+
+    void TitleScene()
+    {
+        if (SceneManager.GetActiveScene().name == "TitleTestScene")
+            if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
+            {
+                FadeController.FadeOut("StageSelectScene");
+            }
+    }
+
+    void StageScene()
+    {
+        if(SceneManager.GetActiveScene().name== "StageSelectScene")
+            if(StageSelectController.GetStageFlg())
+            {
+                FadeController.FadeOut("Stage" + StageSelectController.GetSeasonNumber() + "-" + StageSelectController.GetStageNumber());
             }
     }
 }
