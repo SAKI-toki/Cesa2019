@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class BGM : MonoBehaviour
 {
+     [SerializeField]
+     AudioSource Audios=null;
     [SerializeField]
-    private AudioSource[] Audios;
+     AudioClip[] Audio = null;
 
-    // Start is called before the first frame update
+
+    /// <summary>
+    /// 戦闘中のBGMを流す
+    /// </summary>
     void Start()
     {
-        Audios[0].Play();
+        Audios.clip = Audio[0];
+        Audios.Play();
     }
 
     private void Update()
@@ -18,9 +24,21 @@ public class BGM : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// ボス戦のBGMをならす
+    /// </summary>
     public void Play()
     {
-        Audios[0].Stop();//停止
-        Audios[1].Play();//再生
+        Audios.clip = Audio[1];
+        Audios.Play();
+    }
+
+    /// <summary>
+    /// リザルトのBGMをならす
+    /// </summary>
+    public void Result()
+    {
+        Audios.clip = Audio[2];
+        Audios.Play();
     }
 }

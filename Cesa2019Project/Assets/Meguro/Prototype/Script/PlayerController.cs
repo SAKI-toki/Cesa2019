@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     float RoteVal = 0.1f;                       // プレイヤーの回転する速度
     [SerializeField, Header("攻撃時の回転速度")]
     float AttackRoteVal = 0.07f;                // 攻撃時の回転する速度
+    [SerializeField, Header("ノックバック時の移動量")]
+    float Zforword = 30;
     public Combo ComboController = new Combo(); // コンボスクリプト
     [SerializeField, Header("コンボテキスト")]
     Text ComboText = null;                      // コンボテキスト
@@ -55,7 +57,7 @@ public class PlayerController : MonoBehaviour
                 PlayerStatusDebugText.Add(child.GetComponent<Text>());
             }
         }
-        PlayerStatus.InitStatus(100, 5, 5, 50);// HP Attack Defense Speed
+        PlayerStatus.InitStatus(100, 15, 5, 50);// HP Attack Defense Speed
         ComboController.InitCombo(4);           // コンボの時間
         PlayerAddAttackController.InitPlayerAddAttack(TimingCanvas, TimingCircle, TimingIcon, this.transform);
         PlayerRigid = GetComponent<Rigidbody>();
@@ -206,6 +208,12 @@ public class PlayerController : MonoBehaviour
             Debug.Log("player,Hp: -" + damege);
             PlayerStatus.CurrentHp -= damege;
         }
+    }
+
+    public void KnockBack()
+    {
+        Vector3 force = this.transform.forward * -Zforword;
+        PlayerRigid.AddForce(force, ForceMode.Impulse);
     }
 
     /// <summary>

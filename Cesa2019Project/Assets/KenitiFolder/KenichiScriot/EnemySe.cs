@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class EnemySe : MonoBehaviour
 {
-    public AudioClip AttackSE = null;
-    public AudioClip DamageSE = null;
-    public AudioClip DestroySE = null;
+    [SerializeField]
+    AudioClip AttackSE = null;
+    [SerializeField]
+    AudioClip DamageSE = null;
+    [SerializeField]
+    AudioClip DestroySE = null;
 
     AudioSource AudioSource;
 
