@@ -8,8 +8,6 @@ using UnityEngine;
 //======================
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField, Header("プレイヤー")]
-    PlayerController playerController = null;
     [SerializeField]
     GameObject StarPiece = null;        // 星の欠片
 
@@ -24,7 +22,7 @@ public class EnemyController : MonoBehaviour
     {
         if (other.gameObject.tag == "PlayerAttack")
         {
-            ++playerController.ComboController.CurrentComboNum;
+            ++PlayerController.ComboController.CurrentComboNum;
             Hp -= Status.Damage(PlayerController.PlayerStatus.CurrentAttack, defense);
             if (Hp <= 0)
             {
@@ -41,7 +39,7 @@ public class EnemyController : MonoBehaviour
     {
         if (other.gameObject.tag == "PlayerAttack")
         {
-            ++playerController.ComboController.CurrentComboNum;
+            ++PlayerController.ComboController.CurrentComboNum;
             Hp -= 2;
             if (Hp <= 0)
             {

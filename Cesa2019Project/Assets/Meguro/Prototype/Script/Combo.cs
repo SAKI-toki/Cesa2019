@@ -40,15 +40,24 @@ public class Combo
     /// <summary>
     /// コンボ中
     /// </summary>
-    public void InCombo()
+    public void InCombo(Text text)
     {
         CurrentComboTime += Time.deltaTime;
         if (ComboTime < CurrentComboTime)
         {
-            CurrentComboNum = 0;
-            ComboNum = 0;
-            ComboFlg = false;
+            ComboStop(text);
         }
+    }
+
+    /// <summary>
+    /// コンボ中断
+    /// </summary>
+    public void ComboStop(Text text)
+    {
+        text.color = new Color(255, 255, 255, 0);
+        ComboFlg = false;
+        CurrentComboNum = 0;
+        ComboNum = 0;
     }
 
     /// <summary>
@@ -63,5 +72,14 @@ public class Combo
         float alpa = (ComboTime - CurrentComboTime) / ComboTime;
         text.color = new Color(red, green, blue, alpa);
         text.text = "Combo:" + ComboNum.ToString();
+    }
+
+    /// <summary>
+    /// コンボUIの非表示
+    /// </summary>
+    /// <param name="text"></param>
+    public void ComboUIHidden(Text text)
+    {
+        text.enabled = false;
     }
 }
