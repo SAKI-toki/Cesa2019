@@ -54,6 +54,34 @@ public class Status
         CurrentStamina = Stamina;
     }
 
+    public void HpUp(float num)
+    {
+        Hp += num;
+    }
+
+    public void AttackUp(float num)
+    {
+        Attack += num;
+        CurrentAttack = Attack;
+    }
+
+    public void DefenseUp(float num)
+    {
+        Defense += num;
+        CurrentDefense = Defense;
+    }
+
+    public void SpeedUp(float num)
+    {
+        Speed += num;
+        CurrentSpeed = Speed;
+    }
+
+    public void StaminaUp(float num)
+    {
+
+    }
+
     /// <summary>
     /// ダメージ
     /// </summary>

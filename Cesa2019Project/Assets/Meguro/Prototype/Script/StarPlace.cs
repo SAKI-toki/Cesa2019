@@ -15,13 +15,13 @@ public class StarPlace : MonoBehaviour
     public bool isActive = false;           // 星を置けるようになるフラグ
     [System.NonSerialized]
     public bool isSet = false;              // 星をセットしたフラグ
-    [SerializeField,Header("最初からセットしておくかどうか")]
+    [SerializeField, Header("最初からセットしておくかどうか")]
     public bool IsAwakeSet = false;
     public HaveStarManager.StarColorEnum StarColor = HaveStarManager.StarColorEnum.None;
     void Awake()
     {
         Pos = transform.position;
-        if(IsAwakeSet)
+        if (IsAwakeSet)
         {
             isActive = true;
             isSet = true;

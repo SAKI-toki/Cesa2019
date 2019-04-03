@@ -47,7 +47,7 @@ public class HpGauge : MonoBehaviour
     void FixedUpdate()
     {
         //HP減少スピード変数
-        float reduceSpeed = 1.5f;
+        float reduceSpeed = 3.0f;
         float waitSpeed = 10.0f;
 
         ////ダメージ

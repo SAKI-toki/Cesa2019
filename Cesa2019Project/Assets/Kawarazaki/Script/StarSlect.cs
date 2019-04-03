@@ -37,53 +37,50 @@ public class StarSlect : MonoBehaviour
         switch (Select)
         {
             case 0:
-                EventSystem.current.SetSelectedGameObject(SelectGreen);
+                EventSystem.current.SetSelectedGameObject(SelectRed);
                 if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
                     //if (StarScript.BigStarGreen >= 1)
                     //{
                     //    StarScript.AddBigStarGreen(--StarScript.BigGreen);
                     //}
-                    if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Green) >= 1)
+                    if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) >= 1)
                     {
-                        HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Green);
-                        StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Green);
+                        HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Red);
+                        StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Red);
                     }
-                    StarPlaceController.LineCheck();
                     DeleteSelect();
                 }
                 break;
             case 1:
-                EventSystem.current.SetSelectedGameObject(SelectRed);
+                EventSystem.current.SetSelectedGameObject(SelectBlue);
                 if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
                     //if (StarScript.BigStarRed >= 1)
                     //{
                     //    StarScript.AddBigStarRed(--StarScript.BigRed);
                     //}
-                    if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) >= 1)
+                    if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue) >= 1)
                     {
-                        HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Red);
-                        StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Red);
+                        HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Blue);
+                        StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Blue);
                     }
-                    StarPlaceController.LineCheck();
                     DeleteSelect();
                 }
                 break;
             case 2:
-                EventSystem.current.SetSelectedGameObject(SelectBlue);
+                EventSystem.current.SetSelectedGameObject(SelectGreen);
                 if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
                     //if (StarScript.BigStarBlue >= 1)
                     //{
                     //    StarScript.AddBigStarBlue(--StarScript.BigBlue);
                     //}
-                    if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue) >= 1)
+                    if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Green) >= 1)
                     {
-                        HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Blue);
-                        StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Blue);
+                        HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Green);
+                        StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Green);
                     }
-                    StarPlaceController.LineCheck();
                     DeleteSelect();
                 }
                 break;

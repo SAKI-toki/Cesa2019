@@ -432,8 +432,8 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "PlayerAttack")
         {
-            ++playerController.ComboController.CurrentComboNum;
-            EnemyStatus.CurrentHp -= 10;//HPを減らす
+            ++PlayerController.ComboController.CurrentComboNum;
+            EnemyStatus.CurrentHp -= Status.Damage(PlayerController.PlayerStatus.CurrentAttack, EnemyStatus.CurrentDefense) + (int)(PlayerController.ComboController.CurrentComboNum / 10);//HPを減らす
             AttackCount++;
 
             if (EnemyStatus.CurrentHp <= 0)
@@ -466,7 +466,7 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.tag == "PlayerAttack")
         {
             AttackCount++;
-            ++playerController.ComboController.CurrentComboNum;
+            ++PlayerController.ComboController.CurrentComboNum;
             EnemyStatus.CurrentHp -= 2;//HPを減らす
             if (EnemyStatus.CurrentHp <= 0)
             {
