@@ -9,29 +9,29 @@ using TMPro;
 /// </summary>
 public class Star : MonoBehaviour
 {
-    //小さい星のテキスト(緑)
-    [SerializeField]
-    private TextMeshProUGUI LittleStarGreenText = null;
-    //大きい星のテキスト(緑)
-    [SerializeField]
-    private TextMeshProUGUI BigStarGreenText = null;
+    ////小さい星のテキスト(緑)
+    //[SerializeField]
+    //private TextMeshProUGUI LittleStarGreenText = null;
+    ////大きい星のテキスト(緑)
+    //[SerializeField]
+    //private TextMeshProUGUI BigStarGreenText = null;
 
-    //小さい星のテキスト(赤)
-    [SerializeField]
-    private TextMeshProUGUI LittleStarRedText = null;
-    //大きい星のテキスト(赤)
-    [SerializeField]
-    private TextMeshProUGUI BigStarRedText = null;
+    ////小さい星のテキスト(赤)
+    //[SerializeField]
+    //private TextMeshProUGUI LittleStarRedText = null;
+    ////大きい星のテキスト(赤)
+    //[SerializeField]
+    //private TextMeshProUGUI BigStarRedText = null;
 
-    //小さい星のテキスト(青)
-    [SerializeField]
-    private TextMeshProUGUI LittleStarBlueText = null;
-    //大きい星のテキスト(青)
-    [SerializeField]
-    private TextMeshProUGUI BigStarBlueText = null;
+    ////小さい星のテキスト(青)
+    //[SerializeField]
+    //private TextMeshProUGUI LittleStarBlueText = null;
+    ////大きい星のテキスト(青)
+    //[SerializeField]
+    //private TextMeshProUGUI BigStarBlueText = null;
 
-    const string LittleString = "Little:";
-    const string BigString = "Big:";
+    //const string LittleString = "Little:";
+    //const string BigString = "Big:";
 
     //座標(Big)
     //X
@@ -83,7 +83,7 @@ public class Star : MonoBehaviour
     //初期化
     void Start()
     {
-
+        HaveStarManager.AllZeroReset();
     }
 
     void Update()
@@ -92,23 +92,23 @@ public class Star : MonoBehaviour
         UpdatePrevStarBig();
     }
 
-    void FixedUpdate()
-    {
-        LittleStarGreenText.text = LittleString +
-            HaveStarManager.GetLittleStar(HaveStarManager.StarColorEnum.Green).ToString("00");
-        BigStarGreenText.text = BigString +
-            HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Green).ToString("00");
+    //void FixedUpdate()
+    //{
+    //    LittleStarGreenText.text = LittleString +
+    //        HaveStarManager.GetLittleStar(HaveStarManager.StarColorEnum.Green).ToString("00");
+    //    BigStarGreenText.text = BigString +
+    //        HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Green).ToString("00");
 
-        LittleStarRedText.text = LittleString +
-            HaveStarManager.GetLittleStar(HaveStarManager.StarColorEnum.Red).ToString("00");
-        BigStarRedText.text = BigString +
-            HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red).ToString("00");
+    //    LittleStarRedText.text = LittleString +
+    //        HaveStarManager.GetLittleStar(HaveStarManager.StarColorEnum.Red).ToString("00");
+    //    BigStarRedText.text = BigString +
+    //        HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red).ToString("00");
 
-        LittleStarBlueText.text = LittleString +
-            HaveStarManager.GetLittleStar(HaveStarManager.StarColorEnum.Blue).ToString("00");
-        BigStarBlueText.text = BigString +
-            HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue).ToString("00");
-    }
+    //    LittleStarBlueText.text = LittleString +
+    //        HaveStarManager.GetLittleStar(HaveStarManager.StarColorEnum.Blue).ToString("00");
+    //    BigStarBlueText.text = BigString +
+    //        HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue).ToString("00");
+    //}
 
     /// <summary>
     /// 小さい星の増加

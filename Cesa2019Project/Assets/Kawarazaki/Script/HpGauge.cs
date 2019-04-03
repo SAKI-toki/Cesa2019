@@ -48,7 +48,7 @@ public class HpGauge : MonoBehaviour
     {
         //HP減少スピード変数
         float reduceSpeed = 1.5f;
-        float waitSpeed = 10.0f;
+        float waitSpeed = 1.5f;
 
         ////ダメージ
         //if (Input.GetMouseButtonDown(0))
