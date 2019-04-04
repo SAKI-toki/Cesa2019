@@ -48,7 +48,7 @@ public class StarPlaceManager : MonoBehaviour
     float ActiveDistance = 0;               // 星を置けるようになる距離
     int StarSelectPlaceNum = 0;
     public static bool StarSelect = false;  // 星の色を選択中か
-    bool AllPlaceSet = false;               // 星が全てセットされているかのフラグ
+    public bool AllPlaceSet = false;               // 星が全てセットされているかのフラグ
     public bool StarPut = true;             // 星をセットした
     [SerializeField]
     StarSlect StarSelectController = null;

@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
     float RoteVal = 0.1f;                       // プレイヤーの回転する速度
     [SerializeField, Header("攻撃時の回転速度")]
     float AttackRoteVal = 0.07f;                // 攻撃時の回転する速度
+    [SerializeField, Header("ノックバック時の移動量")]
+    float Zforword = 30;
     [SerializeField, Header("攻撃時の移動速度"), Range(0, 1)]
     float AttackMoveVal = 0;                    // 攻撃時の移動量
     public static Combo ComboController = new Combo(); // コンボスクリプト
@@ -289,7 +291,11 @@ public class PlayerController : MonoBehaviour
             PlayerStatus.CurrentHp -= damege;
         }
     }
-
+    public void KnockBack()
+    {
+        Vector3 force = this.transform.forward * -Zforword;
+        PlayerRigid.AddForce(force, ForceMode.Impulse);
+    }
     /// <summary>
     /// トリガーの押されたときだけの判定処理
     /// </summary>
