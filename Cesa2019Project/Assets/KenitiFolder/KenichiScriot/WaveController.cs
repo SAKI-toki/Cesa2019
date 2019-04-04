@@ -8,7 +8,7 @@ using UnityEngine;
 public class WaveController : MonoBehaviour
 {
     [SerializeField, Header("チュートリアルならtrue")]
-    bool Tutorial = false;
+    public bool Tutorial = false;
     [SerializeField, Header("このステージで置く星の数を入れる")]
     int StarPut = 0;
     [SerializeField]
@@ -20,7 +20,7 @@ public class WaveController : MonoBehaviour
     [SerializeField, Header("現在のwave確認用")]
     GameObject wave = null;
 
-    bool WaveStop = false;
+    public bool WaveStop = false;
     bool ResultFirst = false;
     bool BossWaveFirst = false;
     private int CurrentWave = 0;// 現在のWave

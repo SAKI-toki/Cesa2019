@@ -383,6 +383,7 @@ MonoBehaviour:
   Animator: {fileID: 0}
   NearObj: {fileID: 0}
   DestroyFlag: 0
+  JampFlag: 0
   PlayerController: {fileID: 0}
 --- !u!114 &6266043026157422518
 MonoBehaviour:
@@ -398,7 +399,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   KnockBackDecision: 10
   Enemy: {fileID: 8484428215708899457}
-  LeoGroundWave: {fileID: 0}
+  LeoGroundWave: {fileID: 6474251736554538047}
+  GetMeshAgent: {fileID: 0}
 --- !u!65 &6266043026157422514
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1390,6 +1392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ground: 0
+  Check: 0
   GetLeoEnemy: {fileID: 6266043026157422518}
 --- !u!65 &7524276165579945675
 BoxCollider:
