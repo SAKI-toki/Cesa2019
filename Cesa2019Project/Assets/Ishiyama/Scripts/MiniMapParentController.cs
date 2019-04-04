@@ -9,6 +9,9 @@ public class MiniMapParentController : MonoBehaviour
     Transform CameraTransform = null;
     [SerializeField, Header("回転するかどうか")]
     bool IsRotation = true;
+    /// <summary>
+    /// ミニマップが回転する処理
+    /// </summary>
     void Update()
     {
         if (IsRotation) transform.localEulerAngles = new Vector3(0, 0, CameraTransform.eulerAngles.y);

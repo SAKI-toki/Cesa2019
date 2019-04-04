@@ -18,7 +18,7 @@ public class WaveController : MonoBehaviour
     [SerializeField, Header("StarPlaceManagerを入れる")]
     StarPlaceManager StarPlaceManager = null;
     [SerializeField, Header("現在のwave確認用")]
-    GameObject wave = null;
+    public GameObject wave = null;
 
     public bool WaveStop = false;
     bool ResultFirst = false;

@@ -308,7 +308,7 @@ public class Enemy : MonoBehaviour
             }
 
             if (BossEnemy == false && ReceivedDamage == false)
-            {         
+            {
                 Animator.SetTrigger("EnemyDamage");
                 DamageFlag = true;
                 EnemyTime = 0;
@@ -317,7 +317,7 @@ public class Enemy : MonoBehaviour
 
             if (BossEnemy && AttackCount >= DamageCount && ReceivedDamage == false)
             {
-                
+
                 DamageFlag = true;
                 EnemyTime = 0;
                 ReceivedDamage = true;/*敵を硬直させる*/
@@ -354,7 +354,7 @@ public class Enemy : MonoBehaviour
             if (StarRandom == 1) { Star = RedStar; }//赤の星を生成させる
             if (StarRandom == 2) { Star = BlueStar; }//青の星を生成させる
             if (StarRandom == 3) { Star = YellowStar; }//黄の星を生成させる
-            GameObject item= Instantiate(Star) as GameObject;//星の生成
+            GameObject item = Instantiate(Star) as GameObject;//星の生成
             item.transform.position = transform.position;
             item.transform.Rotate(0, Random.Range(-180, 180), 0);
         }
@@ -365,7 +365,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void BossEnemyStar()
     {
-        
+
         for (int i = 0; i < StarCount; i++)//大きい星を生成できる分だけ星を生成
         {
             Star = RedStar;//赤の星を生成させる 
@@ -562,10 +562,4 @@ public class Enemy : MonoBehaviour
     }
 
 }
-
-
-
-
-
-
 

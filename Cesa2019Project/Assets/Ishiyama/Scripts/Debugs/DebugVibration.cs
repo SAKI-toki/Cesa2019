@@ -9,6 +9,9 @@ public class DebugVibration : MonoBehaviour
     [SerializeField]
     Text VibrationPower = null;
 
+    /// <summary>
+    /// 振動させるでデバッグ
+    /// </summary>
     void Update()
     {
         float left_power, right_power;
