@@ -218,37 +218,37 @@ PrefabInstance:
     - target: {fileID: 9032042283045429950, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.016210299
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9032042283045429950, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99986863
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9032042283045429950, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.4999995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9032042283045429950, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8209686625573302862, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: field of view
-      value: 60
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8595809267355691691, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.016210627
+      value: -0.016210778
       objectReference: {fileID: 0}
     - target: {fileID: 1720495282124065008, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.04478122
+      value: -0.044781152
       objectReference: {fileID: 0}
     - target: {fileID: 6064771358159177798, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
@@ -295,8 +295,37 @@ PrefabInstance:
       propertyPath: StarPlaceManager
       value: 
       objectReference: {fileID: 548737252}
+    - target: {fileID: 4517209733558218721, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: StarPlaceController
+      value: 
+      objectReference: {fileID: 548737252}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfda9e26ba7460446ac41bcfb8396f45, type: 3}
+--- !u!114 &854251406 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4517209732821900294, guid: bfda9e26ba7460446ac41bcfb8396f45,
+    type: 3}
+  m_PrefabInstance: {fileID: 854251405}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e70895a72ffcf0b4d9aa9047f4190e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &854251407 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4517209733558218721, guid: bfda9e26ba7460446ac41bcfb8396f45,
+    type: 3}
+  m_PrefabInstance: {fileID: 854251405}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e54502f416d5f7d4c8f35bb27b0941d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &957035321
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,18 +423,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 854251405}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1031183495 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6064771357293378465, guid: bfda9e26ba7460446ac41bcfb8396f45,
-    type: 3}
-  m_PrefabInstance: {fileID: 854251405}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e70895a72ffcf0b4d9aa9047f4190e8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1034975580 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1436500152, guid: 893cd06e29e8079449e77de386612a79,
@@ -489,11 +506,11 @@ PrefabInstance:
     - target: {fileID: 1997347631, guid: 893cd06e29e8079449e77de386612a79, type: 3}
       propertyPath: StarSelectController
       value: 
-      objectReference: {fileID: 1350836104}
+      objectReference: {fileID: 854251407}
     - target: {fileID: 1997347631, guid: 893cd06e29e8079449e77de386612a79, type: 3}
       propertyPath: Pause
       value: 
-      objectReference: {fileID: 1031183495}
+      objectReference: {fileID: 854251406}
     - target: {fileID: 1997347631, guid: 893cd06e29e8079449e77de386612a79, type: 3}
       propertyPath: Player
       value: 
@@ -510,18 +527,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9514241785ada4e4f80f30f108d9fe21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1350836104 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6064771358159177798, guid: bfda9e26ba7460446ac41bcfb8396f45,
-    type: 3}
-  m_PrefabInstance: {fileID: 854251405}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e54502f416d5f7d4c8f35bb27b0941d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1351153121 stripped
