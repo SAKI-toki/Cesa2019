@@ -97,6 +97,11 @@ public class MiniMapController : MonoBehaviour
                         StarImages[i].color = new Color(0.0f, 0.0f, 1.0f, 1.0f);
                         break;
                     }
+                case HaveStarManager.StarColorEnum.Yellow:
+                    {
+                        StarImages[i].color = new Color(1.0f, 1.0f, 0.0f, 1.0f);
+                        break;
+                    }
                 case HaveStarManager.StarColorEnum.None:
                     {
                         StarImages[i].color = new Color(0.3f, 0.3f, 0.3f, 1.0f);

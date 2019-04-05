@@ -4,7 +4,7 @@
 static public class HaveStarManager
 {
     //色の列挙型
-    public enum StarColorEnum { Red, Blue, Green, None };
+    public enum StarColorEnum { Red, Blue, Green, Yellow ,None };
     //小さい星と大きい星を保持する構造体
     struct LittleAndBigStar
     {
