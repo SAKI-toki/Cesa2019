@@ -44,6 +44,7 @@ public class StarSlect : MonoBehaviour
                         HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Red);
                         StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Red);
                     }
+                    
                     StarPlaceController.LineCheck();
                     DeleteSelect();
                 }
