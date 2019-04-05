@@ -1068,12 +1068,7 @@ MonoBehaviour:
     StarPlace2: {fileID: 4777466319128746251}
   - StarPlace1: {fileID: 1494370316}
     StarPlace2: {fileID: 346491789}
-  TriangleList: []
-  ParalysisTime: 0
-  PoisonDamage: 0
-  PoisonTime: 0
   ActiveDistance: 3
-  AllPlaceSet: 0
   StarPut: 1
   StarSelectController: {fileID: 0}
   RedStar: {fileID: 375441331326510875, guid: 4462c1941d6e8654b9091491ff80c9de, type: 3}
@@ -1082,6 +1077,7 @@ MonoBehaviour:
   BlueStar: {fileID: 7568371819467208806, guid: ee9a2c34a891bc54ab9a9006310a59f0,
     type: 3}
   Pause: {fileID: 0}
+  GetWaveController: {fileID: 5109645874808226827}
 --- !u!1001 &516042884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1872,3 +1868,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2261335404555416311}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5109645874808226827 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6451682753358739196, guid: 233c1ec9177b60344bec29f55fe1e2cf,
+    type: 3}
+  m_PrefabInstance: {fileID: 2261335404555416311}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 975a17e3ef8046445beb9865b3601859, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
