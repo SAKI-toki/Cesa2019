@@ -153,7 +153,7 @@ public class StarPlaceManager : MonoBehaviour
                             // 星を持っていない
                             else
                             {
-                                Debug.Log("====星が無いよ====");
+                                //Debug.Log("====星が無いよ====");
                             }
                         }
                         else if (distance > ActiveDistance)
