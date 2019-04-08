@@ -11,8 +11,8 @@ public class LeoEnemy : MonoBehaviour
     bool AssaultFlag = false;
     PlayerController GetPlayerController = null;
     Rigidbody Rigidbody = null;
-    [SerializeField]
-    float KnockBackDecision = 50;
+    //[SerializeField]
+    //float KnockBackDecision = 50;
     [SerializeField]
     Enemy Enemy = null;
     [SerializeField]
@@ -108,7 +108,6 @@ public class LeoEnemy : MonoBehaviour
 
     public void KnockBackOn()
     {
-        Debug.Log("FFF");
         GetPlayerController.KnockBack();
     }
 }

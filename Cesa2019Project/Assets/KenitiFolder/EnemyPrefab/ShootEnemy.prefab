@@ -492,14 +492,15 @@ MonoBehaviour:
     Hp: 0
     Attack: 0
     Defense: 0
-    Speed: 0
     CurrentHp: 0
     CurrentAttack: 0
     CurrentDefense: 0
-    CurrentSpeed: 0
   TargetPos: {x: 0, y: 0, z: 0}
   Animator: {fileID: 0}
   NearObj: {fileID: 0}
+  DestroyFlag: 0
+  JampFlag: 0
+  PlayerController: {fileID: 0}
 --- !u!114 &125382861135539597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,7 +528,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemy: {fileID: 5606006049320481679}
   Bullet: {fileID: 8007724781779347628, guid: 33dce22f8f3bfdb49bd26b6dbe43fd74, type: 3}
-  BulletGenelateTime: 2
+  BulletGenelateTime: 5
   HighPlus: {x: 0.5, y: 1, z: 0}
   WayBullet: 1
   BulletInterval: 10

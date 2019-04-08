@@ -131,6 +131,8 @@ public class Enemy : MonoBehaviour
     public PlayerController PlayerController;
     EnemySe EnemySe;
     StarMove StarMove = null;
+    Rigidbody GetRigidbody = null;
+
     /// <summary>
     /// 数値初期化
     /// </summary>
@@ -150,6 +152,7 @@ public class Enemy : MonoBehaviour
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
         Agent = GetComponent<NavMeshAgent>();
         EnemySe = this.GetComponent<EnemySe>();
+        GetRigidbody = GetComponent<Rigidbody>();
         StarPlace = GameObject.Find("StarPlaceManager");
         StarPlaceManager = StarPlace.GetComponent<StarPlaceManager>();
     }
@@ -171,6 +174,8 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
+
+        if (NonDirectAttack) { GetRigidbody.velocity = Vector3.zero; }
 
         EnemyTime += Time.deltaTime;
         BossTime += Time.deltaTime;
