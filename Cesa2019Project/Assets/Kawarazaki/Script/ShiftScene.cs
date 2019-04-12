@@ -8,42 +8,70 @@ using UnityEngine;
 /// </summary>
 public class ShiftScene : MonoBehaviour
 {
-    int Time = 60;
+    int Time;
     void Start()
     {
+        Time = 60;
         FadeController.FadeIn();
     }
 
     void Update()
     {
-        GameOverScene();
-        GameScene();
         TitleScene();
         StageScene();
+        SelectScene();
+        ResultScene();
+        //GameOverScene();
     }
 
+    /// <summary>
+    /// ゲームオーバーシーンへ遷移
+    /// </summary>
     void GameOverScene()
     {
         if (SceneManager.GetActiveScene().name == "UiTestScene")
-            if (PlayerController.PlayerStatus.CurrentHp <= 0  )
+        {
+            if (PlayerController.PlayerStatus.CurrentHp <= 0)
             {
                 if (--Time <= 0)
                 {
                     FadeController.FadeOut("GameOverTestScene");
                 }
             }
+        }
     }
-    
-    void GameScene()
+
+    /// <summary>
+    /// リザルトシーンへ遷移
+    /// </summary>
+    void ResultScene()
     {
-        if(SceneManager.GetActiveScene().name == "GameOverTestScene")
+        if(SceneManager.GetActiveScene().name=="UiTestScene")
+            if(StarPlaceManager.AllPlaceSet)
+                if(--Time <= 0)
+                {
+                    FadeController.FadeOut("ResultScene");
+                }
+    }
+
+    /// <summary>
+    /// タイトルシーンへ遷移
+    /// </summary>
+    void TitleScene()
+    {
+        if(SceneManager.GetActiveScene().name== "GameOverTestScene"|| SceneManager.GetActiveScene().name == "ResultScene")
+        {
             if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
             {
                 FadeController.FadeOut("TitleTestScene");
             }
+        }
     }
 
-    void TitleScene()
+    /// <summary>
+    /// ステージシーンへ遷移
+    /// </summary>
+    void SelectScene()
     {
         if (SceneManager.GetActiveScene().name == "TitleTestScene")
             if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
@@ -52,6 +80,9 @@ public class ShiftScene : MonoBehaviour
             }
     }
 
+    /// <summary>
+    ///　各ステージシーンへ遷移
+    /// </summary>
     void StageScene()
     {
         if(SceneManager.GetActiveScene().name== "StageSelectScene")
