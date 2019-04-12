@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// 光輪を出す敵のサンプル
+/// 光輪を出す敵のサンプルスクリプト
 /// </summary>
 public class DebugHaloEnemy : MonoBehaviour
 {
