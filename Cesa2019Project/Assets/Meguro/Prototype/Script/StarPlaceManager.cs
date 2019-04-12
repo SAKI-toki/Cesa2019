@@ -162,7 +162,7 @@ public class StarPlaceManager : MonoBehaviour
                         }
 
                         // 範囲内にいるとき
-                        if (StarPlaceList[i].isActive && !Pause.GetPauseFlg()&&GetWaveController.Tutorial)
+                        if (StarPlaceList[i].isActive && !Pause.GetPauseFlg() && GetWaveController.Tutorial)
                         {
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {
@@ -171,11 +171,11 @@ public class StarPlaceManager : MonoBehaviour
                                 StarSelectActive();
                             }
                         }
-                        else if(StarPlaceList[i].isActive && !Pause.GetPauseFlg() && !GetWaveController.Tutorial)
+                        else if (StarPlaceList[i].isActive && !Pause.GetPauseFlg() && !GetWaveController.BossWaveFlag)
                         {
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {
-                                
+
                                 StarSelectPlaceNum = i;
                                 StarSelectActive();
                             }

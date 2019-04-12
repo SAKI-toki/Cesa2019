@@ -13,9 +13,8 @@ public class Enemy : MonoBehaviour
 {
 
     GameObject Star = null;
-    GameObject AttackObject = null;
     [SerializeField, Header("直接攻撃しない敵の場合true")]
-    bool NonDirectAttack = false;
+    public bool NonDirectAttack = false;
     [SerializeField, Header("Bossの場合true")]
     bool BossEnemy = false;
     [SerializeField, Header("Bulletに付ける場合true")]
@@ -31,7 +30,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     float KnockBackMove = 0.5f;
     [SerializeField, Header("敵のHP")]
-    float EnemyHp = 30;//HPを設定する
+    public float EnemyHp = 30;//HPを設定する
     [SerializeField, Header("敵の攻撃力")]
     float EnemyAttackPoint = 0;
     [SerializeField, Header("敵の防御力")]
@@ -57,11 +56,11 @@ public class Enemy : MonoBehaviour
     [SerializeField, Header("移動後の待機時間")]
     public float Latency = 1;//待機時間
     [SerializeField, Header("攻撃のために止まる範囲")]
-    float AttackDecision = 2f;
+    public float AttackDecision = 2;
     [SerializeField, Header("攻撃判定を出す時間")]
-    float OutPutAttackDecision = 1;
+    public float OutPutAttackDecision = 1;
     [SerializeField, Header("攻撃の硬直時間")]
-    float AttackWait = 3;//攻撃の硬直時間
+    public float AttackWait = 3;//攻撃の硬直時間
     [SerializeField, Header("被弾時の硬直時間")]
     float Rigor_Cancellation = 3;//被弾時の硬直時間
     [SerializeField, Header("何回攻撃が当たったら怯むか")]
@@ -70,14 +69,10 @@ public class Enemy : MonoBehaviour
     int MinStarCount = 1;
     [SerializeField, Header("星を出す最大数")]
     int MaxStarCount = 3;
-    [SerializeField, Header("敵の回る速度")]
-    public float RotationPlus = 5f;
-    [SerializeField, Header("回転が足される時間")]
-    public float RotateHours = 0.1f;
     [SerializeField, Header("攻撃判定を出す位置")]
-    Vector3 Offset = new Vector3();
+    public Vector3 Offset = new Vector3();
     [SerializeField, Header("AttackPrefabを入れる")]
-    GameObject AttackPrefab = null;
+    public GameObject AttackPrefab = null;
 
     int StarRandom = 0;
     int StarCount = 5;
@@ -86,18 +81,12 @@ public class Enemy : MonoBehaviour
     int RedStarCount = 0;
     int BlueStarCount = 0;
     int GreenStarCount = 0;
-    int StatusUpNum = 1;
-
-    float SpeedAttackTime = 0;//スピードアタックの時間  
-    float AttackTime = 0;//攻撃の時間
+    int StatusUpNum = 1; 
+    
 
     bool Wait = false;//待機状態が解けたか
-    bool AttackOn = false;//攻撃中か
-    bool AttackFirst = false;//攻撃を一度だけ実行
-    bool AttackMotionFirst = false;//攻撃モーションを一度だけ実行
-    bool DamageFlag = false;//ダメージを受けたか
-
-
+    [SerializeField]
+    public bool DamageFlag = false;//ダメージを受けたか
     [HideInInspector]
     public bool ReceivedDamage = false;//ダメージをうけたときtrue
     [HideInInspector]
@@ -121,15 +110,16 @@ public class Enemy : MonoBehaviour
     [HideInInspector]
     public GameObject NearObj = null;//プレイヤーの位置取得
     [HideInInspector]
-    public bool DestroyFlag = false;
+    public bool DestroyFlag = false;//撃破フラグを立てる
     [HideInInspector]
-    public bool JampFlag = false;
+    public bool JampFlag = false;//ジャンプ中のフラグ
+    [SerializeField]
+    public EnemySe EnemySe;
 
     GameObject StarPlace = null;
     StarPlaceManager StarPlaceManager = null;
     NavMeshAgent Agent = null;
     public PlayerController PlayerController;
-    EnemySe EnemySe;
     StarMove StarMove = null;
     Rigidbody GetRigidbody = null;
 
@@ -175,8 +165,6 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        if (NonDirectAttack) { GetRigidbody.velocity = Vector3.zero; }
-
         EnemyTime += Time.deltaTime;
         BossTime += Time.deltaTime;
         //敵とプレイヤーの距離差
@@ -202,95 +190,12 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        if (PlayerRangeDifference <= AttackDecision
-            && AttackOn == false
-            && !NonDirectAttack
-            && ReceivedDamage == false)
-        { AttackOn = true; }//攻撃中
-
-        if (AttackOn == true) { Attack(); }
-
         /*
          * 毎フレーム実行しているためコメントアウト
          * by 石山
          */
         //StatusUp();//ステータスアップ
         //StatusDown();//ステータスダウン
-    }
-
-
-    /// <summary>
-    /// 一旦止まって高速で突撃する攻撃をするときに使う
-    /// </summary>
-    void SpeedAttack()
-    {
-        float taiki = 0.5f;
-        if (PlayerRangeDifference <= taiki && Wait == false)
-        {
-            ZMove = 0;
-            int speedTime = 1;
-            SpeedAttackTime += Time.deltaTime;
-            if (SpeedAttackTime >= speedTime)
-            {
-                Wait = true;
-                SpeedAttackTime = 0;
-            }
-        }
-
-        if (Wait == true)
-        {
-            TargetPos = NearObj.transform.position;
-            //プレイヤーのYの位置と敵のYの位置を同じにしてX軸が回転しないようにします。
-            TargetPos.y = this.transform.position.y;
-            ZMove = ZMove * 2;
-            SpeedAttackTime += Time.deltaTime;
-            float speedTime2 = 5;
-            int speedAttackMove = 3;
-            transform.LookAt(TargetPos);//対象の位置方向を向く 
-            transform.Translate(0, 0, ZMove * speedAttackMove * Time.deltaTime);
-            if (SpeedAttackTime >= speedTime2)
-            {
-                Wait = false;
-            }
-        }
-
-    }
-
-    /// <summary>
-    /// 攻撃判定をだす
-    /// </summary>
-    void Attack()
-    {
-        AttackTime += Time.deltaTime;
-        AttackEnemy = true;
-        Animator.SetBool("EnemyWalk", false);
-        if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
-        {
-            Animator.SetTrigger("EnemyAttack");
-            EnemySe.AttackSES();
-            AttackMotionFirst = true;
-        }
-
-        if (AttackFirst == false && AttackTime >= OutPutAttackDecision && DamageFlag == false)
-        {//敵の前にオブジェクト生成
-            Vector3 position = transform.position + transform.up * Offset.y +
-            transform.right * Offset.x +
-            transform.forward * Offset.z;
-            AttackObject = (GameObject)Instantiate(AttackPrefab, position, transform.rotation);
-            AttackObject.transform.parent = this.transform;
-            Destroy(AttackObject, 0.1f);
-            AttackFirst = true;
-        }
-
-        if (AttackTime >= AttackWait || DamageFlag == true)
-        {
-            AttackEnemy = false;
-            AttackTime = 0;
-            EnemyTime = 0;
-            AttackOn = false;
-            AttackFirst = false;
-            AttackMotionFirst = false;
-        }
     }
 
     /// <summary>
