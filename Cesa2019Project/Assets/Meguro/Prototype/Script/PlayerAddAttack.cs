@@ -14,6 +14,7 @@ public class PlayerAddAttack
     float StartSize = 0.0f;
     float CurrentSize = 0.0f;
     float CurrentTime = 0.0f;
+    bool TimingPush = false;
     public bool TimingFlg { get; private set; }
 
     /// <summary>
@@ -21,6 +22,7 @@ public class PlayerAddAttack
     /// </summary>
     /// <param name="canvas"></param>
     /// <param name="circle"></param>
+    /// <param name="icon"></param>
     /// <param name="target"></param>
     public void InitPlayerAddAttack(GameObject canvas, Image circle, Image icon, Transform target)
     {
@@ -57,6 +59,13 @@ public class PlayerAddAttack
     }
 
     /// <summary>
+    /// タイミングUIの非表示
+    /// </summary>
+    public void TimingUIHidden()
+    {
+        TimingCanvas.SetActive(false);
+    }
+    /// <summary>
     /// タイミング良く押せたか
     /// </summary>
     /// <returns></returns>
@@ -64,8 +73,9 @@ public class PlayerAddAttack
     {
         if (TimingFlg)
         {
-            if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.R))
+            if ((Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return)) && !TimingPush)
             {
+                TimingPush = true;
                 if (CurrentTime > 0.35f && CurrentTime < 0.50f)
                 {
                     TimingIcon.color = new Color(0, 100, 100, 1);
@@ -83,6 +93,7 @@ public class PlayerAddAttack
             if (CurrentSize < 0.1f)
             {
                 TimingFlg = false;
+                TimingPush = false;
                 TimingCanvas.SetActive(false);
                 return false;
             }

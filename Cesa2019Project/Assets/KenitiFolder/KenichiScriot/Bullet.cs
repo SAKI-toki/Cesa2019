@@ -8,10 +8,16 @@ public class Bullet : MonoBehaviour
     float BulletMove = 2;
     [SerializeField, Header("弾の破壊時間")]
     float DestroyTime = 0;
-
+    [SerializeField]
+    bool NonDestroy = false;
+    [SerializeField]
+    AudioClip ShotSe = null;
+    [SerializeField]
+    AudioSource AudioSource = null;
     // Start is called before the first frame update
     void Start()
     {
+        AudioSource.PlayOneShot(ShotSe);
     }
 
     /// <summary>
@@ -33,9 +39,13 @@ public class Bullet : MonoBehaviour
     /// <param name="col"></param>
     private void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Player"&&!NonDestroy)
         {
             Destroy(gameObject);
+        }
+        else if(col.gameObject.tag == "Player"&&NonDestroy)
+        {
+            this.gameObject.GetComponent<BoxCollider>().enabled = false;
         }
     }
 }

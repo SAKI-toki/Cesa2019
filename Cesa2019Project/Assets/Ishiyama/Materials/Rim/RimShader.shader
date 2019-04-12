@@ -10,6 +10,7 @@
 	   {
 			Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 
+			Cull off
 			CGPROGRAM
 			#pragma surface surf Lambert alpha
 

@@ -31,7 +31,7 @@ public class StarPlaceManager : MonoBehaviour
     float ActiveDistance = 0;               // 星を置けるようになる距離
     int StarSelectPlaceNum = 0;
     public static bool StarSelect = false;  // 星の色を選択中か
-    bool AllPlaceSet = false;               // 星が全てセットされているかのフラグ
+    public static bool AllPlaceSet = false;        // 星が全てセットされているかのフラグ
     public bool StarPut = true;            //星をセットした
     [SerializeField]
     StarSlect StarSelectController = null;
@@ -43,6 +43,17 @@ public class StarPlaceManager : MonoBehaviour
     GameObject BlueStar = null;
     [SerializeField]
     Pause Pause = null;
+    [SerializeField]
+    WaveController GetWaveController = null;
+
+    [System.NonSerialized]
+    public int RedStarNum = 0;
+    [System.NonSerialized]
+    public int GreenStarNum = 0;
+    [System.NonSerialized]
+    public int BlueStarNum = 0;
+    [System.NonSerialized]
+    public int StarNum = 0;
     void Start()
     {
         int num = 0;
@@ -93,7 +104,7 @@ public class StarPlaceManager : MonoBehaviour
                             // 星を持っていない
                             else
                             {
-                                Debug.Log("====星が無いよ====");
+                                //Debug.Log("====星が無いよ====");
                             }
                         }
                         else if (distance > ActiveDistance)
@@ -102,10 +113,20 @@ public class StarPlaceManager : MonoBehaviour
                         }
 
                         // 範囲内にいるとき
-                        if (StarPlaceList[i].isActive && !Pause.GetPauseFlg())
+                        if (StarPlaceList[i].isActive && !Pause.GetPauseFlg()&&GetWaveController.Tutorial)
                         {
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {
+                                if (GetWaveController.WaveStop) { return; }
+                                StarSelectPlaceNum = i;
+                                StarSelectActive();
+                            }
+                        }
+                        else if(StarPlaceList[i].isActive && !Pause.GetPauseFlg() && !GetWaveController.Tutorial)
+                        {
+                            if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
+                            {
+                                
                                 StarSelectPlaceNum = i;
                                 StarSelectActive();
                             }
@@ -113,19 +134,12 @@ public class StarPlaceManager : MonoBehaviour
                     }
                 }
             }
-            // 星の色選択
+            // 星の色選択中
             else if (StarSelect)
             {
-                // 色決定
-                if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown("joystick button 2"))
                 {
-                    // 星を置く
-                    //StarSet();
-                }
-                // キャンセル
-                if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
-                {
-                    //StarSelectCancel();
+                    StarSelectController.DeleteSelect();
                 }
             }
             //LineCheck();
@@ -163,6 +177,10 @@ public class StarPlaceManager : MonoBehaviour
         //StarSelectUI.SetActive(false);
         StarPlaceList[StarSelectPlaceNum].isSet = true;
         StarPlaceList[StarSelectPlaceNum].StarColor = starColor;
+        if (starColor == HaveStarManager.StarColorEnum.Red) ++RedStarNum;
+        if (starColor == HaveStarManager.StarColorEnum.Green) ++GreenStarNum;
+        if (starColor == HaveStarManager.StarColorEnum.Blue) ++BlueStarNum;
+        ++StarNum;
         //PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
         GenerateStar(StarSelectPlaceNum, starColor);
         StarPut = true;
@@ -203,15 +221,17 @@ public class StarPlaceManager : MonoBehaviour
     /// <summary>
     /// 星が配置されて線を描く
     /// </summary>
-    void LineCheck()
+    public void LineCheck()
     {
         for (int i = 0; i < LineList.Count; ++i)
         {
             if (!LineList[i].DorwEnd)
             {
+                Debug.Log(i+":DorwEnd"+LineList[i].DorwEnd);
                 if (LineList[i].StarPlace1.GetComponent<StarPlace>().isSet &&
                     LineList[i].StarPlace2.GetComponent<StarPlace>().isSet)
                 {
+                    Debug.Log("線を引く");
                     LineRenderer lineRendererStarPlace1 = LineList[i].StarPlace1.GetComponent<LineRenderer>();
                     lineRendererStarPlace1.positionCount = lineRendererStarPlace1.positionCount + 2;
 

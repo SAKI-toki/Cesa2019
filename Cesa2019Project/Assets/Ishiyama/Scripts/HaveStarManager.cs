@@ -4,7 +4,7 @@
 static public class HaveStarManager
 {
     //色の列挙型
-    public enum StarColorEnum { Red, Blue, Green, None };
+    public enum StarColorEnum { Red, Blue, Green, Yellow ,None };
     //小さい星と大きい星を保持する構造体
     struct LittleAndBigStar
     {
@@ -32,12 +32,28 @@ static public class HaveStarManager
     /// <param name="starColor">増やす星の色</param>
     static public void AddLittleStar(StarColorEnum starColor)
     {
-        if (++StarNum[(int)(starColor)].Little >= Constant.ConstNumber.StarConversion)
+        if(StarNum[(int)(starColor)].Little < Constant.ConstNumber.StarConversion)
         {
-            StarNum[(int)(starColor)].Little -= Constant.ConstNumber.StarConversion;
-            AddBigStar(starColor);
+            if (++StarNum[(int)(starColor)].Little >= Constant.ConstNumber.StarConversion)
+            {
+                if(StarNum[(int)(starColor)].Big < 1)
+                {
+                    StarNum[(int)(starColor)].Little -= Constant.ConstNumber.StarConversion;
+                    AddBigStar(starColor);
+                }
+            }
         }
     }
+
+    //static public void AddStar(StarColorEnum starColor)
+    //{
+    //    if (StarNum[(int)(starColor)].Little >= Constant.ConstNumber.StarConversion)
+    //    {
+    //        StarNum[(int)(starColor)].Little -= Constant.ConstNumber.StarConversion;
+    //        //AddBigStar(starColor);
+    //    }
+    //}
+
     /// <summary>
     /// 大きい星を1増やす
     /// </summary>
@@ -58,6 +74,7 @@ static public class HaveStarManager
             --StarNum[(int)(starColor)].Little;
         }
     }
+
     /// <summary>
     /// 大きい星を1減らす
     /// </summary>
@@ -67,6 +84,11 @@ static public class HaveStarManager
         if (StarNum[(int)(starColor)].Big >= 1)
         {
             --StarNum[(int)(starColor)].Big;
+        }
+        if (StarNum[(int)(starColor)].Little >= Constant.ConstNumber.StarConversion)
+        {
+            StarNum[(int)(starColor)].Little -= Constant.ConstNumber.StarConversion;
+            AddBigStar(starColor);
         }
     }
 

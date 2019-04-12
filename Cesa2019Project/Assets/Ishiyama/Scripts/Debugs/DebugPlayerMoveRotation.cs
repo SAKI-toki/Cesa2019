@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// プレイヤーの移動をするデバッグ用クラス
+/// </summary>
 public class DebugPlayerMoveRotation : MonoBehaviour
 {
     [SerializeField, Header("移動速度")]
@@ -8,6 +11,10 @@ public class DebugPlayerMoveRotation : MonoBehaviour
     Transform CameraTransform = null;
     [SerializeField, Header("プレイヤーTransform")]
     Transform PlayerTransform = null;
+
+    /// <summary>
+    /// 位置の更新
+    /// </summary>
     void Update()
     {
         var pos = transform.position;
