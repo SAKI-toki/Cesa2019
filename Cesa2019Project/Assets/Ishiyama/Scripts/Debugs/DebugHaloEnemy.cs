@@ -31,7 +31,7 @@ public class DebugHaloEnemy : MonoBehaviour
         //左に出ていく光輪の生成
         {
             GameObject haloObjectLeft = Instantiate(HaloObject, transform.position, Quaternion.identity);
-            haloObjectRight.GetComponent<DebugHalo>().HaloInit(TargetTransform.position, false);
+            haloObjectLeft.GetComponent<DebugHalo>().HaloInit(TargetTransform.position, false);
         }
     }
 }
