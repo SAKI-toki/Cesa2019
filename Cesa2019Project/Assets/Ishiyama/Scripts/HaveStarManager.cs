@@ -14,6 +14,9 @@ static public class HaveStarManager
     //それぞれの色がいくつ星をもっているか保持している
     static LittleAndBigStar[] StarNum = new LittleAndBigStar[(int)(StarColorEnum.None)];
 
+    static int BigStarLimit = 1;
+
+    static public bool[] Conversionflg = new bool[(int)(StarColorEnum.None)];
     /// <summary>
     /// 全てゼロにリセットする
     /// </summary>
@@ -36,7 +39,7 @@ static public class HaveStarManager
         {
             if (++StarNum[(int)(starColor)].Little >= Constant.ConstNumber.StarConversion)
             {
-                if(StarNum[(int)(starColor)].Big < 1)
+                if(StarNum[(int)(starColor)].Big < BigStarLimit)
                 {
                     StarNum[(int)(starColor)].Little -= Constant.ConstNumber.StarConversion;
                     AddBigStar(starColor);
@@ -44,15 +47,6 @@ static public class HaveStarManager
             }
         }
     }
-
-    //static public void AddStar(StarColorEnum starColor)
-    //{
-    //    if (StarNum[(int)(starColor)].Little >= Constant.ConstNumber.StarConversion)
-    //    {
-    //        StarNum[(int)(starColor)].Little -= Constant.ConstNumber.StarConversion;
-    //        //AddBigStar(starColor);
-    //    }
-    //}
 
     /// <summary>
     /// 大きい星を1増やす
@@ -81,14 +75,17 @@ static public class HaveStarManager
     /// <param name="starColor">減らす星の色</param>
     static public void SubBigStar(StarColorEnum starColor)
     {
+        
         if (StarNum[(int)(starColor)].Big >= 1)
         {
             --StarNum[(int)(starColor)].Big;
         }
+        
         if (StarNum[(int)(starColor)].Little >= Constant.ConstNumber.StarConversion)
         {
             StarNum[(int)(starColor)].Little -= Constant.ConstNumber.StarConversion;
             AddBigStar(starColor);
+            Conversionflg[(int)(starColor)] = true;
         }
     }
 

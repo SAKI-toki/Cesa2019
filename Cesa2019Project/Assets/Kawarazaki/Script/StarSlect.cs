@@ -21,7 +21,7 @@ public class StarSlect : MonoBehaviour
     private int Select;
 
     bool SelectFlg = false;
-
+    
     // Start is called before the first frame update
     void Start()
     {
