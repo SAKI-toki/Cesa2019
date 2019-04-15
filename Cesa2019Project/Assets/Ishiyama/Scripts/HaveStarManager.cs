@@ -14,7 +14,7 @@ static public class HaveStarManager
     //それぞれの色がいくつ星をもっているか保持している
     static LittleAndBigStar[] StarNum = new LittleAndBigStar[(int)(StarColorEnum.None)];
 
-    static int BigStarLimit = 1;
+    static int BigStarLimit = 3;
 
     static public bool[] Conversionflg = new bool[(int)(StarColorEnum.None)];
     /// <summary>
