@@ -20,17 +20,21 @@ public class SagittariusEnemy : MonoBehaviour
     float SagittariusHp = 0;
     GameObject Point = null;
     Vector3 PlayerPoint = new Vector3(0, 20, 0);
+    Vector3 PlayerPoint2 = new Vector3(0, 20, 0);
+    Vector3 PlayerPoint3 = new Vector3(0, 20, 0);
     float BulletTime = 0;
+    float BulletTime2 = 0;
+    float BulletTime3 = 0;
     bool PointFlag = false;
+    bool PointFlag2 = false;
+    bool PointFlag3 = false;
     bool First = false;
-    bool Second = false;
-    bool Third = false;
 
     float SagittariusTime = 0;
     // Start is called before the first frame update
     void Start()
     {
-        SagittariusHp = GetEnemy.EnemyHp / 2;
+        SagittariusHp = GetEnemy.EnemyHp * 0.5f;
     }
 
     // Update is called once per frame
@@ -40,11 +44,12 @@ public class SagittariusEnemy : MonoBehaviour
         {
             Following();
             Attack();
-            if(GetEnemy.EnemyStatus.CurrentHp>=SagittariusHp)
+            if (GetEnemy.EnemyStatus.CurrentHp <= SagittariusHp)
             {
                 Attack2();
-                Attack2();
+                Attack3();
             }
+
             SagittariusMove();
         }
     }
@@ -73,9 +78,7 @@ public class SagittariusEnemy : MonoBehaviour
             {
                 PlayerPoint.x = GetEnemy.TargetPos.x;
                 PlayerPoint.z = GetEnemy.TargetPos.z;
-                Point = Instantiate(PointObj) as GameObject;//弾を生成
-                Point.transform.position = GetEnemy.TargetPos;//指定した位置に移動
-                Point.transform.Rotate(0, 0, 0);
+                PointGenerate();
                 PointFlag = true;
             }
             if (BulletTime >= ShotInterval + LazerInterval && !First)
@@ -86,43 +89,72 @@ public class SagittariusEnemy : MonoBehaviour
                     bullet.transform.position = PlayerPoint;//指定した位置に移動
                     bullet.transform.Rotate(90, 0, 0);
                     PointFlag = false;
-                    Destroy(Point);
                     BulletTime = 0;
                 }
             }
         }
     }
 
+
     void Attack2()
     {
-        BulletTime += Time.deltaTime;
-
-        if (BulletTime >= ShotInterval)
+        BulletTime2 += Time.deltaTime;
+        if (BulletTime2 >= ShotInterval)
         {
-            if (!PointFlag)
+            if (!PointFlag2)
             {
-                float xPlus = Random.Range(-1, 1);
-                float zPlus = Random.Range(-1, 1);
-                PlayerPoint.x = GetEnemy.TargetPos.x;
-                PlayerPoint.z = GetEnemy.TargetPos.z;
-                Point = Instantiate(PointObj) as GameObject;//弾を生成
-                Point.transform.position = GetEnemy.TargetPos;//指定した位置に移動
-                Point.transform.Rotate(0, 0, 0);
-                PointFlag = true;
+                float xPlus = Random.Range(-2, 2);
+                float zPlus = Random.Range(-2, 2);
+                PlayerPoint2.x = GetEnemy.TargetPos.x + xPlus;
+                PlayerPoint2.z = GetEnemy.TargetPos.z + zPlus;
+                PointFlag2 = true;
             }
-            if (BulletTime >= ShotInterval + LazerInterval && !First)
+            if (BulletTime2 >= ShotInterval + LazerInterval && !First)
             {
-                if (BulletTime >= ShotInterval + LazerInterval)
+                if (BulletTime2 >= ShotInterval + LazerInterval)
                 {
-                    GameObject bullet = Instantiate(LazerBulletObj) as GameObject;//弾を生成
-                    bullet.transform.position = PlayerPoint;//指定した位置に移動
-                    bullet.transform.Rotate(90, 0, 0);
-                    PointFlag = false;
-                    Destroy(Point);
-                    BulletTime = 0;
+                    GameObject bullet2 = Instantiate(LazerBulletObj) as GameObject;//弾を生成
+                    bullet2.transform.position = PlayerPoint2;//指定した位置に移動
+                    bullet2.transform.Rotate(90, 0, 0);
+                    PointFlag2 = false;
                 }
             }
         }
+    }
+
+
+    void Attack3()
+    {
+
+        if (BulletTime2 >= ShotInterval)
+        {
+            if (!PointFlag3)
+            {
+                float xPlus2 = Random.Range(-3, 3);
+                float zPlus2 = Random.Range(-3, 3);
+                PlayerPoint3.x = GetEnemy.TargetPos.x + xPlus2;
+                PlayerPoint3.z = GetEnemy.TargetPos.z + zPlus2;
+                PointFlag3 = true;
+            }
+            if (BulletTime2 >= ShotInterval + LazerInterval && !First)
+            {
+                if (BulletTime2 >= ShotInterval + LazerInterval)
+                {
+                    GameObject bullet3 = Instantiate(LazerBulletObj) as GameObject;//弾を生成
+                    bullet3.transform.position = PlayerPoint3;//指定した位置に移動
+                    bullet3.transform.Rotate(90, 0, 0);
+                    PointFlag3 = false;
+                    BulletTime2 = 0;
+                }
+            }
+        }
+    }
+
+    void PointGenerate()
+    {
+        Point = Instantiate(PointObj) as GameObject;//弾を生成
+        Point.transform.position = GetEnemy.TargetPos;//指定した位置に移動
+        Point.transform.Rotate(0, 0, 0);
     }
 
     /// <summary>

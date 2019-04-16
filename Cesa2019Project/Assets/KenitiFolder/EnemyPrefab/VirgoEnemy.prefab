@@ -1389,7 +1389,7 @@ GameObject:
   - component: {fileID: 1606446970837104092}
   m_Layer: 0
   m_Name: VirgoEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1513,6 +1513,7 @@ MonoBehaviour:
   MaxStarCount: 3
   Offset: {x: 0, y: 0, z: 0}
   AttackPrefab: {fileID: 0}
+  DamageFlag: 0
   ReceivedDamage: 0
   PlayerTracking: 0
   AttackEnemy: 0
@@ -1532,6 +1533,7 @@ MonoBehaviour:
   NearObj: {fileID: 0}
   DestroyFlag: 0
   JampFlag: 0
+  EnemySe: {fileID: 0}
   PlayerController: {fileID: 0}
 --- !u!114 &732889793295461812
 MonoBehaviour:

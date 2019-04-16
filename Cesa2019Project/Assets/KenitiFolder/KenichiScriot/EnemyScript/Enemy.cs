@@ -84,7 +84,6 @@ public class Enemy : MonoBehaviour
     int StatusUpNum = 1; 
     
 
-    bool Wait = false;//待機状態が解けたか
     [SerializeField]
     public bool DamageFlag = false;//ダメージを受けたか
     [HideInInspector]
