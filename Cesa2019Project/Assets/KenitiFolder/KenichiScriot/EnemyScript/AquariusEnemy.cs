@@ -11,11 +11,14 @@ public class AquariusEnemy : MonoBehaviour
     [SerializeField]
     GameObject Wave = null;
 
+    GameObject CurrentWave = null;
     float AquariusTime = 0;
+    bool First = false;
+    bool HpFirst = false;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -25,7 +28,25 @@ public class AquariusEnemy : MonoBehaviour
         {
             Following();
 
-            if (GetEnemy.EnemyTime <= 60) { EnemyGenerate(); }
+            if (GetEnemy.EnemyTime >= 6 && !First)
+            {
+                EnemyGenerate();
+                GetEnemy.EnemyTime = 0;
+                First = true;
+            }
+
+            if (GetEnemy.EnemyTime >= 12 && First)
+            {
+                EnemyGenerate();
+                GetEnemy.EnemyTime = 0;
+            }
+
+            if (GetEnemy.EnemyStatus.CurrentHp <= GetEnemy.EnemyHp / 4&&!HpFirst)
+            {
+                Destroy(CurrentWave);
+                GetEnemy.EnemyStatus.CurrentHp += GetEnemy.EnemyHp / 2;
+                HpFirst = true;
+            }
         }
     }
 
@@ -42,10 +63,12 @@ public class AquariusEnemy : MonoBehaviour
         }
     }
 
-   void EnemyGenerate()
+    void EnemyGenerate()
     {
-        GameObject wave = Instantiate(Wave) as GameObject;//弾を生成
-        wave.transform.position = this.transform.position;//指定した位置に移動
+        Vector3 position = transform.position + transform.up * GetEnemy.Offset.y +
+             transform.right * GetEnemy.Offset.x +
+             transform.forward * GetEnemy.Offset.z;
+        CurrentWave = (GameObject)Instantiate(Wave, position, transform.rotation);
     }
 
     /// <summary>
