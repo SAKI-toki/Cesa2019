@@ -72,10 +72,9 @@ MonoBehaviour:
   DamageCount: 3
   MinStarCount: 1
   MaxStarCount: 3
-  RotationPlus: 5
-  RotateHours: 0.1
   Offset: {x: 0, y: 0, z: 0}
   AttackPrefab: {fileID: 0}
+  DamageFlag: 0
   ReceivedDamage: 0
   PlayerTracking: 0
   AttackEnemy: 0
@@ -95,6 +94,7 @@ MonoBehaviour:
   NearObj: {fileID: 0}
   DestroyFlag: 0
   JampFlag: 0
+  EnemySe: {fileID: 0}
   PlayerController: {fileID: 0}
 --- !u!1001 &5114277558597368418
 PrefabInstance:
@@ -162,6 +162,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156501237200000701, guid: 4729ce0fb6c72714ba86bfbe2be5d49f,
+        type: 3}
+      propertyPath: BulletCategory
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156501237200000701, guid: 4729ce0fb6c72714ba86bfbe2be5d49f,
+        type: 3}
+      propertyPath: BulletMove
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4729ce0fb6c72714ba86bfbe2be5d49f, type: 3}

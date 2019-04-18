@@ -20,9 +20,13 @@ public class WaveController : MonoBehaviour
     [SerializeField, Header("現在のwave確認用")]
     public GameObject wave = null;
 
+    [HideInInspector]
     public bool WaveStop = false;
-    bool ResultFirst = false;
+    [HideInInspector]
+    public bool BossWaveFlag = false;
     bool BossWaveFirst = false;
+    bool ResultFirst = false;
+
     private int CurrentWave = 0;// 現在のWave
     int StarPutCount = 0;
     int Child = 0;
@@ -59,24 +63,21 @@ public class WaveController : MonoBehaviour
         //敵を全て倒したら次のWaveを生成
         if (wave.transform.childCount == 0 && BossWaveFirst == false) { WaveStop = false; CurrentWave += 1; }
 
+        //ボス敵の生成
         if (StarPut == StarPutCount && BossWaveFirst == false)
         {
             WaveStop = true;
             wave = (GameObject)Instantiate(BossWave, transform.position, Quaternion.identity);
             wave.transform.parent = transform;
+            BossWaveFlag = true;
             BossWaveFirst = true;
         }
 
-        //Waveの中の敵が全て削除されたらWaveそのWaveを消す
-        for (int i = 0; i < Child; i++)
+        if (BossWaveFirst)
         {
-            ChildCount = transform.GetChild(i).gameObject;
-            if (ChildCount.transform.childCount == 0)
-            {
-                Child -= 1;
-                Destroy(ChildCount);
-            }
+            if (wave.transform.childCount == 0) { BossWaveFlag = false; }
         }
+
         //格納されているWaveを全て実行したらCurrentWaveを0にする
         if (Waves.Length == CurrentWave) { CurrentWave = 0; }
 
@@ -108,9 +109,12 @@ public class WaveController : MonoBehaviour
             StarPlaceManager.StarPut = false;
         }
 
+
+
         if (this.transform.childCount >= 1)
         {
-            //敵がRemainingEnemy分残ったら次のWaveを生成
+
+            //敵全滅で次のWaveを生成
             if (wave.transform.childCount == 0) { WaveStop = false; CurrentWave += 1; }
 
             //Waveの中の敵が全て削除されたらWaveそのWaveを消す
@@ -131,6 +135,7 @@ public class WaveController : MonoBehaviour
     /// </summary>
     void WaveGenerat()
     {
+        Destroy(wave);
         // Waveを作成する
         wave = (GameObject)Instantiate(Waves[CurrentWave], transform.position, Quaternion.identity);
 

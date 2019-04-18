@@ -10,6 +10,15 @@ public class ClabEnemy : MonoBehaviour
     bool CrabFirst = true;//移動速度を一度だけ上げる
     int MoveDouble = 3;
     float MoveChange = 1;
+
+    float AttackTime = 0;//攻撃の時間
+    bool AttackOn = false;//攻撃中か
+    bool AttackFirst = false;//攻撃を一度だけ実行
+    bool AttackMotionFirst = false;//攻撃モーションを一度だけ実行
+    GameObject AttackObject = null;
+
+
+
     [SerializeField]
     Enemy Enemy = null;
     // Start is called before the first frame update
@@ -38,6 +47,14 @@ public class ClabEnemy : MonoBehaviour
             Enemy.BossTime = 0;
         }
 
+        if (Enemy.PlayerRangeDifference <= Enemy.AttackDecision
+          && AttackOn == false
+          && !Enemy.NonDirectAttack
+          && Enemy.ReceivedDamage == false)
+        { AttackOn = true; }//攻撃中
+
+        if (AttackOn == true) { Attack(); }
+
         if (MoveChange == 1) { transform.position += transform.right * Enemy.ZMove * Time.deltaTime; }
         else { transform.position -= transform.right * Enemy.ZMove * Time.deltaTime; }
 
@@ -64,6 +81,42 @@ public class ClabEnemy : MonoBehaviour
         else
         {
             Enemy.PlayerTracking = false;
+        }
+    }
+    /// <summary>
+    /// 攻撃判定をだす
+    /// </summary>
+    void Attack()
+    {
+        AttackTime += Time.deltaTime;
+        Enemy.AttackEnemy = true;
+        Enemy.Animator.SetBool("EnemyWalk", false);
+        if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
+        {
+            Enemy.Animator.SetTrigger("EnemyAttack");
+            Enemy.EnemySe.AttackSES();
+            AttackMotionFirst = true;
+        }
+
+        if (AttackFirst == false && AttackTime >= Enemy.OutPutAttackDecision && Enemy.DamageFlag == false)
+        {//敵の前にオブジェクト生成
+            Vector3 position = transform.position + transform.up * Enemy.Offset.y +
+            transform.right * Enemy.Offset.x +
+            transform.forward * Enemy.Offset.z;
+            AttackObject = (GameObject)Instantiate(Enemy.AttackPrefab, position, transform.rotation);
+            AttackObject.transform.parent = this.transform;
+            Destroy(AttackObject, 0.1f);
+            AttackFirst = true;
+        }
+
+        if (AttackTime >= Enemy.AttackWait || Enemy.DamageFlag == true)
+        {
+            Enemy.AttackEnemy = false;
+            AttackTime = 0;
+            Enemy.EnemyTime = 0;
+            AttackOn = false;
+            AttackFirst = false;
+            AttackMotionFirst = false;
         }
     }
 }

@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class EnemyMove : MonoBehaviour
 {
+    [SerializeField, Header("敵の回る速度")]
+    float RotationPlus = 5f;
+    [SerializeField, Header("回転が足される時間")]
+    float RotateHours = 0.1f;
+
     bool First = false;//一度だけ実行させる
+
 
     int RandomNumber = 0;//ランダムな数値を入れる
     int DerectionLow = 1;//ランダムの低値
@@ -19,13 +25,20 @@ public class EnemyMove : MonoBehaviour
     float RandomOn = 0;//移動方向変更の時
     float MoveTimeLow = 1.0f;//移動している時間の低値
     float MoveTimeHigh = 3.0f;//移動している時間高値
+
+    float AttackTime = 0;//攻撃の時間
+    bool AttackOn = false;//攻撃中か
+    bool AttackFirst = false;//攻撃を一度だけ実行
+    bool AttackMotionFirst = false;//攻撃モーションを一度だけ実行
+    GameObject AttackObject = null;
+
     [SerializeField]
-    Enemy Enemy=null;
+    Enemy Enemy = null;
     // Start is called before the first frame update
     void Start()
     {
 
-        YPlus = Enemy.RotationPlus;
+        YPlus = RotationPlus;
         RandomOn = Random.Range(MoveTimeLow, MoveTimeHigh);
     }
 
@@ -38,6 +51,14 @@ public class EnemyMove : MonoBehaviour
             Following();
             DrectionChange();
         }
+
+        if (Enemy.PlayerRangeDifference <= Enemy.AttackDecision
+           && AttackOn == false
+           && !Enemy.NonDirectAttack
+           && Enemy.ReceivedDamage == false)
+        { AttackOn = true; }//攻撃中
+
+        if (AttackOn == true) { Attack(); }
     }
 
     /// <summary>
@@ -108,7 +129,7 @@ public class EnemyMove : MonoBehaviour
                         if (RandomNumber >= -18 && RandomNumber <= -1) { DrectionNumber = 1; }
                         if (RandomNumber >= -36 && RandomNumber <= -19) { DrectionNumber = 3; }
                     }
-                    if (RandomNumber >= 0) { if (YPlus <= 0) { YPlus = Enemy.RotationPlus; } }
+                    if (RandomNumber >= 0) { if (YPlus <= 0) { YPlus = RotationPlus; } }
 
                     if (RandomNumber <= 0)
                     {
@@ -118,7 +139,7 @@ public class EnemyMove : MonoBehaviour
                     First = true;
                 }
                 //決められた方向にむくまで移動しない
-                if (RandomNumber != RotationCount & RotationTime >= Enemy.RotateHours)
+                if (RandomNumber != RotationCount & RotationTime >= RotateHours)
                 {
                     transform.Rotate(0, YPlus, 0);
                     RotationCount++;
@@ -131,6 +152,43 @@ public class EnemyMove : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// 攻撃判定をだす
+    /// </summary>
+    void Attack()
+    {
+        AttackTime += Time.deltaTime;
+        Enemy.AttackEnemy = true;
+        Enemy.Animator.SetBool("EnemyWalk", false);
+        if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
+        {
+            Enemy.Animator.SetTrigger("EnemyAttack");
+            Enemy.EnemySe.AttackSES();
+            AttackMotionFirst = true;
+        }
+
+        if (AttackFirst == false && AttackTime >= Enemy.OutPutAttackDecision && Enemy.DamageFlag == false)
+        {//敵の前にオブジェクト生成
+            Vector3 position = transform.position + transform.up * Enemy.Offset.y +
+            transform.right * Enemy.Offset.x +
+            transform.forward * Enemy.Offset.z;
+            AttackObject = (GameObject)Instantiate(Enemy.AttackPrefab, position, transform.rotation);
+            AttackObject.transform.parent = this.transform;
+            Destroy(AttackObject, 0.1f);
+            AttackFirst = true;
+        }
+
+        if (AttackTime >= Enemy.AttackWait || Enemy.DamageFlag == true)
+        {
+            Enemy.AttackEnemy = false;
+            AttackTime = 0;
+            Enemy.EnemyTime = 0;
+            AttackOn = false;
+            AttackFirst = false;
+            AttackMotionFirst = false;
         }
     }
 }
