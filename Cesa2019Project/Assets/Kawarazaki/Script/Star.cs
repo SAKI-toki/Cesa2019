@@ -36,22 +36,14 @@ public class Star : MonoBehaviour
     //座標(Big)
     //X
     [SerializeField]
-    float RedPosX = -90.0f;
-    [SerializeField]
-    float BluePosX = -65.0f;
-    [SerializeField]
-    float GreenPosX = -40.0f;
+    float StarPosX = -65.0f;
     //Y
     [SerializeField]
-    float RedPosY = 60.0f;
-    [SerializeField]
-    float BluePosY = 60.0f;
-    [SerializeField]
-    float GreenPosY = 60.0f;
+    float StarPosY = 125.0f;
 
     //星のサイズ(Big)
     [SerializeField]
-    float Scale = 0.25f;
+    float StarScale = 0.25f;
 
     //星(Big)
     [SerializeField]
@@ -68,6 +60,9 @@ public class Star : MonoBehaviour
     Image BlueLittleStar = null;
     [SerializeField]
     Image GreenLittleStar = null;
+
+    [SerializeField]
+    ParticleSystem StarParticle = null;
 
     //星のリスト（Big）
     List<GameObject> RedStarList = new List<GameObject>();
@@ -87,7 +82,7 @@ public class Star : MonoBehaviour
 
     //1フレーム前の星の数を格納(LITTLE)
     int[] PrevStarLittleNum = new int[(int)(HaveStarManager.StarColorEnum.None)];
-    
+
     //初期化
     void Start()
     {
@@ -95,10 +90,25 @@ public class Star : MonoBehaviour
         RedLittleStar.fillAmount = 0.0f;
         BlueLittleStar.fillAmount = 0.0f;
         GreenLittleStar.fillAmount = 0.0f;
+        StarParticle.Stop();
     }
 
     void Update()
     {
+#if UNITY_EDITOR
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            HaveStarManager.AddLittleStar(HaveStarManager.StarColorEnum.Red);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            HaveStarManager.AddLittleStar(HaveStarManager.StarColorEnum.Blue);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            HaveStarManager.AddLittleStar(HaveStarManager.StarColorEnum.Green);
+        }
+#endif
         UpdatePrevStarLittle();
         UpdatePrevStarBig();
     }
@@ -131,28 +141,15 @@ public class Star : MonoBehaviour
         switch (starColor)
         {
             case HaveStarManager.StarColorEnum.Red:
-                //for (int i = 0; i < HaveStarManager.GetLittleStar(starColor); ++i)
-                //{
-                //if (RedLittleStar[i].activeSelf == false)
-                //    RedLittleStar[i].SetActive(true);
-                //Debug.Log(RedLittleStar[i]);
                 RedLittleStar.fillAmount = HaveStarManager.GetLittleStar(starColor) / 5.0f;
-                //}
                 break;
             case HaveStarManager.StarColorEnum.Blue:
-                //for (int i = 0; i < HaveStarManager.GetLittleStar(starColor); ++i)
-                //    if (BlueLittleStar[i].activeSelf == false)
-                //        BlueLittleStar[i].SetActive(true);
                 BlueLittleStar.fillAmount = HaveStarManager.GetLittleStar(starColor) / 5.0f;
                 break;
             case HaveStarManager.StarColorEnum.Green:
-                //for (int i = 0; i < HaveStarManager.GetLittleStar(starColor); ++i)
-                //    if (GreenLittleStar[i].activeSelf == false)
-                //        GreenLittleStar[i].SetActive(true);
                 GreenLittleStar.fillAmount = HaveStarManager.GetLittleStar(starColor) / 5.0f;
                 break;
         }
-        Debug.Log(HaveStarManager.GetLittleStar(starColor));
     }
         //小さい星の換算
         public void ConversionLittleStarUi(HaveStarManager.StarColorEnum starColor)
@@ -160,18 +157,12 @@ public class Star : MonoBehaviour
             switch (starColor)
             {
                 case HaveStarManager.StarColorEnum.Red:
-                    //for (int i = 0; i < RedLittleStar.Length; i++)
-                    //    RedLittleStar[i].SetActive(false);
                     RedLittleStar.fillAmount = 0.0f;
                     break;
                 case HaveStarManager.StarColorEnum.Blue:
-                    //for (int i = 0; i < BlueLittleStar.Length; i++)
-                    //    BlueLittleStar[i].SetActive(false); 
                     BlueLittleStar.fillAmount = 0.0f;
                     break;
                 case HaveStarManager.StarColorEnum.Green:
-                    //for (int i = 0; i <GreenLittleStar.Length; i++)
-                    //    GreenLittleStar[i].SetActive(false);
                     GreenLittleStar.fillAmount = 0.0f;
                     break;
             }
@@ -183,34 +174,37 @@ public class Star : MonoBehaviour
     /// <param name="starColor"></param>
     public void AddBigStarUI(HaveStarManager.StarColorEnum starColor)
     {
+        System.Func<GameObject, bool> starGeneration =
+            (GameObject obj) =>
+            {
+                obj.transform.SetParent(gameObject.transform, false);
+                obj.GetComponent<RectTransform>().localPosition = new Vector3(StarPosX, StarPosY, 1.0f);
+                obj.GetComponent<RectTransform>().localScale = new Vector3(StarScale, StarScale, 1.0f);
+                return true;
+            };
         switch (starColor)
         {
             case HaveStarManager.StarColorEnum.Red:
                 GameObject redStarPrefab = Instantiate(RedBigStar);
-                redStarPrefab.transform.SetParent(gameObject.transform, false);
-                redStarPrefab.GetComponent<RectTransform>().localPosition = new Vector3(RedPosX, RedPosY, 1.0f);
-                redStarPrefab.GetComponent<RectTransform>().localScale = new Vector3(Scale, Scale, 1.0f);
+                starGeneration(redStarPrefab);
                 RedStarList.Add(redStarPrefab);
-                RedPosY += 10.0f;
                 break;
             case HaveStarManager.StarColorEnum.Blue:
                 GameObject blueStarPrefab = Instantiate(BlueBigStar);
-                blueStarPrefab.transform.SetParent(gameObject.transform, false);
-                blueStarPrefab.GetComponent<RectTransform>().localPosition = new Vector3(BluePosX, BluePosY, 1.0f);
-                blueStarPrefab.GetComponent<RectTransform>().localScale = new Vector3(Scale, Scale, 1.0f);
+                starGeneration(blueStarPrefab);
                 BlueStarList.Add(blueStarPrefab);
-                BluePosY += 10.0f;
                 break;
             case HaveStarManager.StarColorEnum.Green:
                 GameObject greenStarPrefab = Instantiate(GreenBigStar);
-                greenStarPrefab.transform.SetParent(gameObject.transform, false);
-                greenStarPrefab.GetComponent<RectTransform>().localPosition = new Vector3(GreenPosX, GreenPosY, 1.0f);
-                greenStarPrefab.GetComponent<RectTransform>().localScale = new Vector3(Scale, Scale, 1.0f);
+                starGeneration(greenStarPrefab);
                 GreenStarList.Add(greenStarPrefab);
-                GreenPosY += 10.0f;
                 break;
         }
-        
+
+        //大きい星が生成された時のパーティクル
+        StarParticle.Play();
+        if (!StarParticle.IsAlive())
+            StarParticle.Stop();
     }
 
     /// <summary>
@@ -224,20 +218,18 @@ public class Star : MonoBehaviour
             case HaveStarManager.StarColorEnum.Red:
                 Destroy(RedStarList[RedStarList.Count - 1]);
                 RedStarList.RemoveAt(RedStarList.Count - 1);
-                RedPosY -= 10.0f;
                 break;
             case HaveStarManager.StarColorEnum.Blue:
                 Destroy(BlueStarList[BlueStarList.Count - 1]);
                 BlueStarList.RemoveAt(BlueStarList.Count - 1);
-                BluePosY -= 10.0f;
                 break;
             case HaveStarManager.StarColorEnum.Green:
                 Destroy(GreenStarList[GreenStarList.Count - 1]);
                 GreenStarList.RemoveAt(GreenStarList.Count - 1);
-                GreenPosY -= 10.0f;
                 break;
         }
     }
+
     void UpdatePrevStarLittle()
     {
         for (int i = 0; i < PrevStarLittleNum.Length; ++i)
@@ -283,6 +275,13 @@ public class Star : MonoBehaviour
                     SubBigStarUI((HaveStarManager.StarColorEnum)i);
                 }
                 PrevStarBigNum[i] = currentStarNum;
+            }
+
+            if (HaveStarManager.Conversionflg[i])
+            {
+                SubBigStarUI((HaveStarManager.StarColorEnum)i);
+                AddBigStarUI((HaveStarManager.StarColorEnum)i);
+                HaveStarManager.Conversionflg[i] = false;
             }
         }
     }

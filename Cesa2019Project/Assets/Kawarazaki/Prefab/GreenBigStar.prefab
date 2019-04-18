@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4457919543577144323}
   - component: {fileID: 4457919543577144325}
   - component: {fileID: 4457919543577144322}
+  - component: {fileID: 2882957077304077266}
+  - component: {fileID: 4323195401308069694}
   m_Layer: 5
   m_Name: GreenBigStar
   m_TagString: Untagged
@@ -74,3 +76,61 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!60 &2882957077304077266
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4457919543577144320}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 12.65845, y: 13.528125}
+      - {x: -0.78222674, y: 51.081966}
+      - {x: -12.247439, y: 14.917835}
+      - {x: -51.797375, y: 12.047961}
+      - {x: -21.289557, y: -13.776507}
+      - {x: -30.313362, y: -50.893276}
+      - {x: -31.877815, y: -50.11044}
+      - {x: -0.2572022, y: -28.981895}
+      - {x: 30.31324, y: -50.11404}
+      - {x: 20.976446, y: -15.203205}
+      - {x: 19.893559, y: -14.852558}
+      - {x: 51.015026, y: 12.044421}
+--- !u!50 &4323195401308069694
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4457919543577144320}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 20
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
