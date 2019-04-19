@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
 {
 
     GameObject Star = null;
+    [SerializeField, Header("Animatorがない場合true")]
+    bool NonAnimator = false;
     [SerializeField, Header("直接攻撃しない敵の場合true")]
     public bool NonDirectAttack = false;
     [SerializeField, Header("Bossの場合true")]
@@ -81,8 +83,8 @@ public class Enemy : MonoBehaviour
     int RedStarCount = 0;
     int BlueStarCount = 0;
     int GreenStarCount = 0;
-    int StatusUpNum = 1; 
-    
+    int StatusUpNum = 1;
+
 
     [SerializeField]
     public bool DamageFlag = false;//ダメージを受けたか
@@ -114,6 +116,8 @@ public class Enemy : MonoBehaviour
     public bool JampFlag = false;//ジャンプ中のフラグ
     [SerializeField]
     public EnemySe EnemySe;
+    [HideInInspector]
+    public bool NoDamage = false;
 
     GameObject StarPlace = null;
     StarPlaceManager StarPlaceManager = null;
@@ -179,7 +183,7 @@ public class Enemy : MonoBehaviour
 
         if (ReceivedDamage == true)//硬直時間の解除
         {
-            if (!NonDirectAttack) Animator.SetBool("EnemyWalk", false);
+            if (!NonDirectAttack || !NonAnimator) Animator.SetBool("EnemyWalk", false);
             if (EnemyTime >= Rigor_Cancellation)
             {
                 JampFlag = true;
@@ -205,11 +209,15 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "PlayerAttack")
         {
-            ++PlayerController.ComboController.CurrentComboNum;
-            EnemyStatus.CurrentHp -= Status.Damage(PlayerController.PlayerStatus.CurrentAttack, EnemyStatus.CurrentDefense);//HPを減らす
-            AttackCount++;
-            EnemySe.DamageSES();
-            transform.Translate(0, 0, -KnockBackMove);
+            if (!NoDamage)
+            {
+                ++PlayerController.ComboController.CurrentComboNum;
+                EnemyStatus.CurrentHp -= Status.Damage(PlayerController.PlayerStatus.CurrentAttack, EnemyStatus.CurrentDefense);//HPを減らす
+                AttackCount++;
+                EnemySe.DamageSES();
+                transform.Translate(0, 0, -KnockBackMove);
+            }
+
 
             if (EnemyStatus.CurrentHp <= 0)
             {
@@ -218,7 +226,7 @@ public class Enemy : MonoBehaviour
 
             if (BossEnemy == false && ReceivedDamage == false)
             {
-                Animator.SetTrigger("EnemyDamage");
+                if (!NonAnimator) { Animator.SetTrigger("EnemyDamage"); }
                 DamageFlag = true;
                 EnemyTime = 0;
                 ReceivedDamage = true;/*敵を硬直させる*/

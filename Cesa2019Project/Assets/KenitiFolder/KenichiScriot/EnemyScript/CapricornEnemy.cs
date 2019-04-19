@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class LeoEnemy : MonoBehaviour
+public class CapricornEnemy : MonoBehaviour
 {
     float MoveSave = 0;
-    float ReoTime = 0;
+    float CapricornTime = 0;
     float Yforword = 30;
     bool AssaultFlag = false;
     float AttackTime = 0;//攻撃の時間
@@ -18,17 +17,12 @@ public class LeoEnemy : MonoBehaviour
     PlayerController GetPlayerController = null;
     Rigidbody Rigidbody = null;
 
-
+    [SerializeField]
+    float DebuffSpeed = 1;
     [SerializeField]
     GameObject EffectRush = null;
-    //[SerializeField]
-    //float KnockBackDecision = 50;
     [SerializeField]
     Enemy Enemy = null;
-    [SerializeField]
-    LeoGroundWave LeoGroundWave = null;
-    [SerializeField]
-    public NavMeshAgent GetMeshAgent = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,10 +37,9 @@ public class LeoEnemy : MonoBehaviour
     {
         if (Enemy.ReceivedDamage == false
             && Enemy.AttackEnemy == false
-            && LeoGroundWave.Ground == false
             )//ダメージを受けたら動かない,攻撃中も動かない,ジャンプ中も動かない
         {
-            ReoMove();
+            CapricornMove();
         }
 
         if (Enemy.PlayerRangeDifference <= Enemy.AttackDecision
@@ -56,24 +49,19 @@ public class LeoEnemy : MonoBehaviour
 
         if (AttackOn == true) { Attack(); }
 
-        if (Enemy.JampFlag)
-        {
-            FalterMove();
-            Enemy.JampFlag = false;
-        }
     }
 
     /// <summary>
-    /// 獅子座の動き
+    /// 牡羊座の動き
     /// </summary>
-    void ReoMove()
+    void CapricornMove()
     {
         if (Enemy.PlayerRangeDifference <= Enemy.OnPlayerTracking && AssaultFlag == false)
         {
-            ReoTime += Time.deltaTime;
+            CapricornTime += Time.deltaTime;
         }
 
-        if (ReoTime <= 3) { Enemy.MoveSwitch = false; }
+        if (CapricornTime <= 3) { Enemy.MoveSwitch = false; }
         else if (!AssaultFlag)
         {
 
@@ -93,13 +81,13 @@ public class LeoEnemy : MonoBehaviour
             if (Enemy.BossTime >= 4)
             {
                 Enemy.MoveSwitch = false;
-                ReoTime = 0;
-               
+                CapricornTime = 0;
+
                 Enemy.BossTime = 0;
             }
             else
             {
-               AssaultFlag = false;
+                AssaultFlag = false;
             }
         }
     }
@@ -157,15 +145,13 @@ public class LeoEnemy : MonoBehaviour
         }
     }
 
-    void FalterMove()
+    private void OnTriggerEnter(Collider other)
     {
-        GetMeshAgent.enabled = false;
-        Vector3 force = new Vector3(0, Yforword, 0);
-        Rigidbody.AddForce(force, ForceMode.Impulse);
-    }
+        if (other.gameObject.tag == "PlayerAttack")
+        {
+            PlayerController.PlayerStatus.Speed = -DebuffSpeed;
+        }
 
-    public void KnockBackOn()
-    {
-        GetPlayerController.KnockBack();
     }
 }
+
