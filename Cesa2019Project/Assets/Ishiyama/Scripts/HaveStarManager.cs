@@ -4,7 +4,7 @@
 static public class HaveStarManager
 {
     //色の列挙型
-    public enum StarColorEnum { Red, Blue, Green, None };
+    public enum StarColorEnum { Red, Blue, Green, Yellow ,None };
     //小さい星と大きい星を保持する構造体
     struct LittleAndBigStar
     {
@@ -14,6 +14,9 @@ static public class HaveStarManager
     //それぞれの色がいくつ星をもっているか保持している
     static LittleAndBigStar[] StarNum = new LittleAndBigStar[(int)(StarColorEnum.None)];
 
+    static int BigStarLimit = 3;
+
+    static public bool[] Conversionflg = new bool[(int)(StarColorEnum.None)];
     /// <summary>
     /// 全てゼロにリセットする
     /// </summary>
@@ -32,12 +35,19 @@ static public class HaveStarManager
     /// <param name="starColor">増やす星の色</param>
     static public void AddLittleStar(StarColorEnum starColor)
     {
-        if (++StarNum[(int)(starColor)].Little >= Constant.ConstNumber.StarConversion)
+        if(StarNum[(int)(starColor)].Little < Constant.ConstNumber.StarConversion)
         {
-            StarNum[(int)(starColor)].Little -= Constant.ConstNumber.StarConversion;
-            AddBigStar(starColor);
+            if (++StarNum[(int)(starColor)].Little >= Constant.ConstNumber.StarConversion)
+            {
+                if(StarNum[(int)(starColor)].Big < BigStarLimit)
+                {
+                    StarNum[(int)(starColor)].Little -= Constant.ConstNumber.StarConversion;
+                    AddBigStar(starColor);
+                }
+            }
         }
     }
+
     /// <summary>
     /// 大きい星を1増やす
     /// </summary>
@@ -58,15 +68,24 @@ static public class HaveStarManager
             --StarNum[(int)(starColor)].Little;
         }
     }
+
     /// <summary>
     /// 大きい星を1減らす
     /// </summary>
     /// <param name="starColor">減らす星の色</param>
     static public void SubBigStar(StarColorEnum starColor)
     {
+        
         if (StarNum[(int)(starColor)].Big >= 1)
         {
             --StarNum[(int)(starColor)].Big;
+        }
+        
+        if (StarNum[(int)(starColor)].Little >= Constant.ConstNumber.StarConversion)
+        {
+            StarNum[(int)(starColor)].Little -= Constant.ConstNumber.StarConversion;
+            AddBigStar(starColor);
+            Conversionflg[(int)(starColor)] = true;
         }
     }
 
