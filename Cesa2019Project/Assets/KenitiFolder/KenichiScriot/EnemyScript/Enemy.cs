@@ -183,7 +183,7 @@ public class Enemy : MonoBehaviour
 
         if (ReceivedDamage == true)//硬直時間の解除
         {
-            if (!NonDirectAttack || !NonAnimator) Animator.SetBool("EnemyWalk", false);
+            if (!NonDirectAttack&& !NonAnimator) Animator.SetBool("EnemyWalk", false);
             if (EnemyTime >= Rigor_Cancellation)
             {
                 JampFlag = true;
@@ -375,7 +375,6 @@ public class Enemy : MonoBehaviour
         while (RedStarCount < StarPlaceManager.RedStarNum)
         {
             DebuffAttack();
-            Debug.Log(StarPlaceManager.RedStarNum);
             RedStarCount++;
         }
 
