@@ -57,11 +57,22 @@ public class Status
     public void HpUp(float num)
     {
         Hp += num;
+        CurrentHp += num;
+    }
+    public void HpDown(float num)
+    {
+        Hp -= num;
+        CurrentHp -= num;
     }
 
     public void AttackUp(float num)
     {
         Attack += num;
+        CurrentAttack = Attack;
+    }
+    public void AttackDown(float num)
+    {
+        Attack -= num;
         CurrentAttack = Attack;
     }
 
@@ -70,10 +81,20 @@ public class Status
         Defense += num;
         CurrentDefense = Defense;
     }
+    public void DefenseDown(float num)
+    {
+        Defense -= num;
+        CurrentDefense = Defense;
+    }
 
     public void SpeedUp(float num)
     {
         Speed += num;
+        CurrentSpeed = Speed;
+    }
+    public void SpeedDown(float num)
+    {
+        Speed -= num;
         CurrentSpeed = Speed;
     }
 

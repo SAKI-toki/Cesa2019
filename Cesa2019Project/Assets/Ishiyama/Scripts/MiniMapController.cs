@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// ミニマップ
@@ -17,16 +18,10 @@ public class MiniMapController : MonoBehaviour
     List<StarPlace> StarPlaces = new List<StarPlace>();
     [SerializeField, Header("プレイヤーImageのRectTransform")]
     RectTransform PlayerImageRectTransform = null;
-    [SerializeField, Header("赤星ImageObject")]
-    GameObject RedStarImage = null;
-    [SerializeField, Header("緑星ImageObject")]
-    GameObject GreenStarImage = null;
-    [SerializeField, Header("青星ImageObject")]
-    GameObject BlueStarImage = null;
-    [SerializeField, Header("まだはまっていないImageObject")]
-    GameObject NoneStarImage = null;
+    [SerializeField, Header("星のイメージ")]
+    GameObject StarImage = null;
     //星のImageリスト
-    List<GameObject> StarImages = new List<GameObject>();
+    List<Image> StarImages = new List<Image>();
     [SerializeField, Header("ImageObjectの親オブジェクト")]
     GameObject ImageParentObject = null;
     [SerializeField, Header("StarImageの親オブジェクト")]
@@ -39,38 +34,14 @@ public class MiniMapController : MonoBehaviour
         ImageParentObject.transform.localPosition = UiPosition;
         foreach (var star in StarPlaces)
         {
-            GameObject starObj = null;
-            //星の色によってImageを生成する
-            switch (star.StarColor)
-            {
-                case HaveStarManager.StarColorEnum.Red:
-                    {
-                        starObj = Instantiate(RedStarImage);
-                        break;
-                    }
-                case HaveStarManager.StarColorEnum.Green:
-                    {
-                        starObj = Instantiate(GreenStarImage);
-                        break;
-                    }
-                case HaveStarManager.StarColorEnum.Blue:
-                    {
-                        starObj = Instantiate(BlueStarImage);
-                        break;
-                    }
-                case HaveStarManager.StarColorEnum.None:
-                    {
-                        starObj = Instantiate(NoneStarImage);
-                        break;
-                    }
-            }
+            GameObject starObj = Instantiate(StarImage);
             //一つのオブジェクトにまとめる
             starObj.transform.SetParent(StarImageParent.transform);
             starObj.transform.localScale = new Vector3(0.08f, 0.08f, 1.0f);
             //位置をセット
             SetPositionImage(starObj.GetComponent<RectTransform>(), star.transform.position);
             //リストに追加
-            StarImages.Add(starObj);
+            StarImages.Add(starObj.GetComponent<Image>());
         }
     }
     /// <summary>
@@ -78,6 +49,7 @@ public class MiniMapController : MonoBehaviour
     /// </summary>
     void Update()
     {
+        UpdateColor();
         UpdatePlayer();
     }
 
@@ -98,5 +70,39 @@ public class MiniMapController : MonoBehaviour
     void SetPositionImage(RectTransform rectTransform, Vector3 pos)
     {
         rectTransform.transform.localPosition = new Vector3(pos.x, pos.z, 0) * PositionRatio;
+    }
+
+    /// <summary>
+    /// 色の更新
+    /// </summary>
+    void UpdateColor()
+    {
+        for (int i = 0; i < StarPlaces.Count; ++i)
+        {
+            //星の色によってImageを生成する
+            switch (StarPlaces[i].StarColor)
+            {
+                case HaveStarManager.StarColorEnum.Red:
+                    {
+                        StarImages[i].color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+                        break;
+                    }
+                case HaveStarManager.StarColorEnum.Green:
+                    {
+                        StarImages[i].color = new Color(0.0f, 1.0f, 0.0f, 1.0f);
+                        break;
+                    }
+                case HaveStarManager.StarColorEnum.Blue:
+                    {
+                        StarImages[i].color = new Color(0.0f, 0.0f, 1.0f, 1.0f);
+                        break;
+                    }
+                case HaveStarManager.StarColorEnum.None:
+                    {
+                        StarImages[i].color = new Color(0.3f, 0.3f, 0.3f, 1.0f);
+                        break;
+                    }
+            }
+        }
     }
 }
