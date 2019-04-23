@@ -51,7 +51,7 @@ public class SelectConstellation : MonoBehaviour, ISelectSceneState
         }
         if (InputStickFlg) return;
         InputStickFlg = true;
-        if (leftStickH > 0 && CurrentStageNum < StageList.Count)
+        if (leftStickH > 0 && CurrentStageNum < StageList.Count - 1)
         {
             ++CurrentStageNum;
         }
