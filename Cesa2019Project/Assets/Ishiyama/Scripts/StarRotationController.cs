@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// 常にカメラのほうを向き星の形を維持する
+/// </summary>
 public class StarRotationController : MonoBehaviour
 {
-    void Start()
+    void Update()
     {
-        transform.eulerAngles = new Vector3(-90, 0, 0);
+        transform.LookAt(Camera.main.transform);
     }
 }

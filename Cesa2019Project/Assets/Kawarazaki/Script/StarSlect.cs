@@ -21,7 +21,7 @@ public class StarSlect : MonoBehaviour
     private int Select;
 
     bool SelectFlg = false;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +44,7 @@ public class StarSlect : MonoBehaviour
                         HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Red);
                         StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Red);
                     }
+                    
                     StarPlaceController.LineCheck();
                     DeleteSelect();
                 }

@@ -8,7 +8,7 @@ using UnityEngine;
 public class WaveController : MonoBehaviour
 {
     [SerializeField, Header("チュートリアルならtrue")]
-    bool Tutorial = false;
+    public bool Tutorial = false;
     [SerializeField, Header("このステージで置く星の数を入れる")]
     int StarPut = 0;
     [SerializeField]
@@ -20,11 +20,17 @@ public class WaveController : MonoBehaviour
     [SerializeField, Header("現在のwave確認用")]
     public GameObject wave = null;
 
-    bool WaveStop = false;
-    bool ResultFirst = false;
+    [HideInInspector]
+    public bool WaveStop = false;
+    [HideInInspector]
+    public bool BossWaveFlag = false;
     bool BossWaveFirst = false;
+    bool ResultFirst = false;
+
     private int CurrentWave = 0;// 現在のWave
     int StarPutCount = 0;
+    int Child = 0;
+    static public int WaveCount = 0;
     GameObject ChildCount = null;
     BGM BGM = null;
 
@@ -57,12 +63,19 @@ public class WaveController : MonoBehaviour
         //敵を全て倒したら次のWaveを生成
         if (wave.transform.childCount == 0 && BossWaveFirst == false) { WaveStop = false; CurrentWave += 1; }
 
+        //ボス敵の生成
         if (StarPut == StarPutCount && BossWaveFirst == false)
         {
             WaveStop = true;
             wave = (GameObject)Instantiate(BossWave, transform.position, Quaternion.identity);
             wave.transform.parent = transform;
+            BossWaveFlag = true;
             BossWaveFirst = true;
+        }
+
+        if (BossWaveFirst)
+        {
+            if (wave.transform.childCount == 0) { BossWaveFlag = false; }
         }
 
         //格納されているWaveを全て実行したらCurrentWaveを0にする
@@ -84,26 +97,36 @@ public class WaveController : MonoBehaviour
         //格納されているWaveを全て実行したら終了する
         if (Waves.Length <= CurrentWave) { return; }
 
-        // Wave生成
-        if (!WaveStop)
+        if (CurrentWave <= 1 && WaveStop == false)
         {
             WaveGenerat();
             StarPlaceManager.StarPut = false;
         }
 
-        // 次のWaveへ（Wave1のみ)
-        if (CurrentWave == 0 && wave.transform.childCount == 0)
+        if (StarPlaceManager.StarPut == true && WaveStop == false)
         {
-            Destroy(wave);
-            WaveStop = false;
-            CurrentWave += 1;
+            WaveGenerat();
+            StarPlaceManager.StarPut = false;
         }
-        // 次のWaveへ（Wave1以外）
-        if (CurrentWave > 0 && StarPlaceManager.StarPut == true && wave.transform.childCount == 0)
+
+
+
+        if (this.transform.childCount >= 1)
         {
-            Destroy(wave);
-            WaveStop = false;
-            CurrentWave += 1;
+
+            //敵全滅で次のWaveを生成
+            if (wave.transform.childCount == 0) { WaveStop = false; CurrentWave += 1; }
+
+            //Waveの中の敵が全て削除されたらWaveそのWaveを消す
+            for (int i = 0; i < Child; i++)
+            {
+                ChildCount = transform.GetChild(i).gameObject;
+                if (ChildCount.transform.childCount == 0)
+                {
+                    Child -= 1;
+                    Destroy(ChildCount);
+                }
+            }
         }
     }
 
@@ -112,11 +135,14 @@ public class WaveController : MonoBehaviour
     /// </summary>
     void WaveGenerat()
     {
+        Destroy(wave);
         // Waveを作成する
         wave = (GameObject)Instantiate(Waves[CurrentWave], transform.position, Quaternion.identity);
+
         // WaveをWaveController の子要素にする
         wave.transform.parent = transform;
-        // Waveの生成を止める
+        Child += 1;
+        WaveCount += 1;
         WaveStop = true;
     }
 }
