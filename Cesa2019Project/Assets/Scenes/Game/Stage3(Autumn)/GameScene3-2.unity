@@ -239,20 +239,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8595809267355691691, guid: bfda9e26ba7460446ac41bcfb8396f45,
+    - target: {fileID: 9032042283045429950, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.016210392
+      value: -0.016210299
       objectReference: {fileID: 0}
-    - target: {fileID: 1720495282124065008, guid: bfda9e26ba7460446ac41bcfb8396f45,
+    - target: {fileID: 9032042283045429950, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.04478124
+      propertyPath: m_LocalRotation.w
+      value: 0.99986863
       objectReference: {fileID: 0}
-    - target: {fileID: 6064771358159177798, guid: bfda9e26ba7460446ac41bcfb8396f45,
+    - target: {fileID: 9032042283045429950, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
-      propertyPath: StarPlaceController
-      value: 
+      propertyPath: m_LocalPosition.y
+      value: 4.4999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 9032042283045429950, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 2743556551248644138, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
@@ -349,30 +354,15 @@ PrefabInstance:
       propertyPath: StarPlaces.Array.data[17]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 2652824493641650228, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: StarPlaceManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 9032042283045429950, guid: bfda9e26ba7460446ac41bcfb8396f45,
+    - target: {fileID: 8595809267355691691, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.016210299
+      value: -0.016210778
       objectReference: {fileID: 0}
-    - target: {fileID: 9032042283045429950, guid: bfda9e26ba7460446ac41bcfb8396f45,
+    - target: {fileID: 1720495282124065008, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.99986863
-      objectReference: {fileID: 0}
-    - target: {fileID: 9032042283045429950, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.4999995
-      objectReference: {fileID: 0}
-    - target: {fileID: 9032042283045429950, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -10
+      propertyPath: m_LocalRotation.x
+      value: -0.044781286
       objectReference: {fileID: 0}
     - target: {fileID: 4517209733558218721, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
@@ -383,6 +373,16 @@ PrefabInstance:
         type: 3}
       propertyPath: field of view
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6064771358159177798, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: StarPlaceController
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2652824493641650228, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: StarPlaceManager
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfda9e26ba7460446ac41bcfb8396f45, type: 3}
@@ -398,6 +398,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Aquarius
       objectReference: {fileID: 0}
+    - target: {fileID: 6781979367119306224, guid: a5321a215a26f714c8a2d87e881e9882,
+        type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1240597288}
+    - target: {fileID: 6781979367119306224, guid: a5321a215a26f714c8a2d87e881e9882,
+        type: 3}
+      propertyPath: StarSelectController
+      value: 
+      objectReference: {fileID: 1920380633}
+    - target: {fileID: 6781979367119306224, guid: a5321a215a26f714c8a2d87e881e9882,
+        type: 3}
+      propertyPath: Pause
+      value: 
+      objectReference: {fileID: 138514951}
     - target: {fileID: 435165222696235734, guid: a5321a215a26f714c8a2d87e881e9882,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -453,21 +468,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6781979367119306224, guid: a5321a215a26f714c8a2d87e881e9882,
-        type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 1240597288}
-    - target: {fileID: 6781979367119306224, guid: a5321a215a26f714c8a2d87e881e9882,
-        type: 3}
-      propertyPath: StarSelectController
-      value: 
-      objectReference: {fileID: 1920380633}
-    - target: {fileID: 6781979367119306224, guid: a5321a215a26f714c8a2d87e881e9882,
-        type: 3}
-      propertyPath: Pause
-      value: 
-      objectReference: {fileID: 138514951}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5321a215a26f714c8a2d87e881e9882, type: 3}
 --- !u!1 &1240597288 stripped
