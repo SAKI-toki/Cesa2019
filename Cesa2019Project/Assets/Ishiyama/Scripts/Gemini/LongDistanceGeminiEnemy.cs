@@ -103,17 +103,26 @@ public class LongDistanceGeminiEnemy : MonoBehaviour
         Instantiate(BulletObject, transform.position, transform.rotation);
     }
 
+    /// <summary>
+    /// レーザーの発射
+    /// </summary>
     void ShotLaser()
     {
-        Instantiate(LaserObject, transform.position, transform.rotation);
-        GameObject obj = Instantiate(LaserObject, transform.position, transform.rotation);
+        GameObject obj=Instantiate(LaserObject, transform.position, transform.rotation);
+        obj.GetComponent<GeminiLaser>().LaserInit();
+        //obj.transform.Rotate
+        obj = Instantiate(LaserObject, transform.position, transform.rotation);
         obj.transform.Rotate(0, 20, 0);
+        obj.GetComponent<GeminiLaser>().LaserInit();
         obj = Instantiate(LaserObject, transform.position, transform.rotation);
         obj.transform.Rotate(0, -20, 0);
+        obj.GetComponent<GeminiLaser>().LaserInit();
         obj = Instantiate(LaserObject, transform.position, transform.rotation);
         obj.transform.Rotate(0, 40, 0);
+        obj.GetComponent<GeminiLaser>().LaserInit();
         obj = Instantiate(LaserObject, transform.position, transform.rotation);
         obj.transform.Rotate(0, -40, 0);
+        obj.GetComponent<GeminiLaser>().LaserInit();
     }
 
     void UnionState()

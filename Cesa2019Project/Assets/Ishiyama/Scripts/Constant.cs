@@ -11,4 +11,12 @@ namespace Constant
         //星の換算
         public const int StarConversion = 5;
     }
+    /// <summary>
+    /// シーンの名前
+    /// </summary>
+    static public class SceneName
+    {
+        //ゲームシーンの名前
+        public const string GameSceneName = "GameScene";
+    }
 }
