@@ -20,7 +20,7 @@ public class EnemyStrate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GetEnemy.EnemyTime <= 5)
+        if (GetEnemy.EnemyTime <= StopTime)
         {
             Move();
         }

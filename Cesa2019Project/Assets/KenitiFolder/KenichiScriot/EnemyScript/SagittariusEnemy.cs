@@ -24,7 +24,6 @@ public class SagittariusEnemy : MonoBehaviour
     Vector3 PlayerPoint3 = new Vector3(0, 20, 0);
     float BulletTime = 0;
     float BulletTime2 = 0;
-    float BulletTime3 = 0;
     bool PointFlag = false;
     bool PointFlag2 = false;
     bool PointFlag3 = false;

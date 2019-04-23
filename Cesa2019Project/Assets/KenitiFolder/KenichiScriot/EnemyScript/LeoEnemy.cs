@@ -19,6 +19,8 @@ public class LeoEnemy : MonoBehaviour
     Rigidbody Rigidbody = null;
 
 
+    [SerializeField]
+    GameObject EffectRush = null;
     //[SerializeField]
     //float KnockBackDecision = 50;
     [SerializeField]
@@ -49,7 +51,6 @@ public class LeoEnemy : MonoBehaviour
 
         if (Enemy.PlayerRangeDifference <= Enemy.AttackDecision
           && AttackOn == false
-          && !Enemy.NonDirectAttack
           && Enemy.ReceivedDamage == false)
         { AttackOn = true; }//攻撃中
 
@@ -58,9 +59,7 @@ public class LeoEnemy : MonoBehaviour
         if (Enemy.JampFlag)
         {
             FalterMove();
-
             Enemy.JampFlag = false;
-
         }
     }
 
@@ -75,8 +74,9 @@ public class LeoEnemy : MonoBehaviour
         }
 
         if (ReoTime <= 3) { Enemy.MoveSwitch = false; }
-        else
+        else if (!AssaultFlag)
         {
+
             Enemy.TargetPos = Enemy.NearObj.transform.position;
             //プレイヤーのYの位置と敵のYの位置を同じにしてX軸が回転しないようにします。
             Enemy.TargetPos.y = this.transform.position.y;
@@ -94,11 +94,12 @@ public class LeoEnemy : MonoBehaviour
             {
                 Enemy.MoveSwitch = false;
                 ReoTime = 0;
+               
                 Enemy.BossTime = 0;
             }
             else
             {
-                AssaultFlag = false;
+               AssaultFlag = false;
             }
         }
     }
@@ -112,7 +113,9 @@ public class LeoEnemy : MonoBehaviour
         if (Enemy.MoveSwitch)
         {
             transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime);
+            EffectRush.SetActive(true);
         }
+        else { EffectRush.SetActive(false); }
     }
 
     /// <summary>
@@ -122,9 +125,11 @@ public class LeoEnemy : MonoBehaviour
     {
         AttackTime += Time.deltaTime;
         Enemy.AttackEnemy = true;
-        Enemy.Animator.SetBool("EnemyWalk", false);
+        //Enemy.Animator.SetBool("EnemyWalk", false);
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
+            EffectRush.SetActive(false);
+            Debug.Log("ji");
             Enemy.Animator.SetTrigger("EnemyAttack");
             Enemy.EnemySe.AttackSES();
             AttackMotionFirst = true;
