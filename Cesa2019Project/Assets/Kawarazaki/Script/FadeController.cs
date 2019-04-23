@@ -47,8 +47,6 @@ public class FadeController : MonoBehaviour
 
         //Imageのサイズ設定
         FadeImage.rectTransform.sizeDelta = new Vector2(9999, 9999);
-
-        Alpha = FadeImage.color.a;
     }
     
 
@@ -97,6 +95,7 @@ public class FadeController : MonoBehaviour
         if (FadeImage == null)
             Init();
         IsFadeIn = true;
+        Alpha = 1.0f;
     }
 
     /// <summary>
@@ -109,6 +108,7 @@ public class FadeController : MonoBehaviour
         NextScene = n;
         FadeImage.enabled = true;
         IsFadeOut = true;
+        Alpha = 0.0f;
     }
 
     /// <summary>

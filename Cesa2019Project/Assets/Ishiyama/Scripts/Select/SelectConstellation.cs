@@ -19,7 +19,10 @@ public class SelectConstellation : MonoBehaviour, ISelectSceneState
     GameObject SelectSeasonStateObject = null;
     //押している間はtrue
     bool InputStickFlg = false;
+    //現在の選択中のステージ
     int CurrentStageNum = 0;
+    //シーン遷移中かどうか
+    bool IsSceneTransition = false;
 
     void ISelectSceneState.SelectSceneInit()
     {
@@ -28,6 +31,7 @@ public class SelectConstellation : MonoBehaviour, ISelectSceneState
 
     void ISelectSceneState.SelectSceneUpdate(Stack<ISelectSceneState> stateStack)
     {
+        if (IsSceneTransition) return;
         InputMoveFlame();
         MoveFlame();
         InputDecisionOrReturn(stateStack);
@@ -36,6 +40,7 @@ public class SelectConstellation : MonoBehaviour, ISelectSceneState
     void ISelectSceneState.SelectSceneDestroy()
     {
         ObjectSetActive(false);
+        CurrentStageNum = 0;
     }
 
     /// <summary>
@@ -61,6 +66,10 @@ public class SelectConstellation : MonoBehaviour, ISelectSceneState
         }
     }
 
+    /// <summary>
+    /// 決定か戻るの入力
+    /// </summary>
+    /// <param name="stateStack">ステートのスタック</param>
     void InputDecisionOrReturn(Stack<ISelectSceneState> stateStack)
     {
         //戻る
@@ -70,11 +79,11 @@ public class SelectConstellation : MonoBehaviour, ISelectSceneState
         }
         else if (Input.GetKeyDown("joystick button 1"))
         {
-            var nextSceneName = Constant.SceneName.GameSceneName +
+            string nextSceneName = Constant.SceneName.GameSceneName +
                 ((int)ThisSeason + 1).ToString() +
                 "-" +
                 (CurrentStageNum + 1).ToString();
-            Debug.Log(nextSceneName);
+            FadeController.FadeOut(nextSceneName);
             //UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
         }
     }
