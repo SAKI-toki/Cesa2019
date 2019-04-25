@@ -114,9 +114,8 @@ public class Enemy : MonoBehaviour
     public bool DestroyFlag = false;//撃破フラグを立てる
     [HideInInspector]
     public bool JampFlag = false;//ジャンプ中のフラグ
-    [SerializeField]
-    public EnemySe EnemySe;
     [HideInInspector]
+    public EnemySe EnemySe;
     public bool NoDamage = false;
 
     GameObject StarPlace = null;

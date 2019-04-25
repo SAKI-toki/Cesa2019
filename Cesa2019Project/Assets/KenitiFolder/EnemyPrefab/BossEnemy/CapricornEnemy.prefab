@@ -414,6 +414,7 @@ MonoBehaviour:
   DestroyFlag: 0
   JampFlag: 0
   EnemySe: {fileID: 0}
+  NoDamage: 0
   PlayerController: {fileID: 0}
 --- !u!114 &281091968648773704
 MonoBehaviour:
@@ -427,6 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0477873a4e56cc4ea0788247a08c405, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DebuffSpeed: 1
   EffectRush: {fileID: 7469788347844390876}
   Enemy: {fileID: 5790840263000511348}
 --- !u!65 &8293089427184471111
@@ -1485,8 +1487,7 @@ PrefabInstance:
         type: 3}
       propertyPath: HpEnemy
       value: 
-      objectReference: {fileID: 548531673414085480, guid: dadd01708c22c2c4e98beebda3e69c90,
-        type: 3}
+      objectReference: {fileID: 5790840263000511348}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d115fd54cf301c40b6eab61c5bb607b, type: 3}
 --- !u!224 &7300630553781483036 stripped
