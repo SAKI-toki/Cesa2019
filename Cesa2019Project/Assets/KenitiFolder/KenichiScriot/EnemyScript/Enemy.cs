@@ -247,12 +247,15 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "PlayerAttack")
         {
-            AttackCount++;
-            ++PlayerController.ComboController.CurrentComboNum;
-            EnemyStatus.CurrentHp -= 2;//HPを減らす
-            if (EnemyStatus.CurrentHp <= 0)
+            if (!NoDamage)
             {
-                EnemyStatus.CurrentHp = 0;
+                AttackCount++;
+                ++PlayerController.ComboController.CurrentComboNum;
+                EnemyStatus.CurrentHp -= 2;//HPを減らす
+                if (EnemyStatus.CurrentHp <= 0)
+                {
+                    EnemyStatus.CurrentHp = 0;
+                }
             }
         }
     }
