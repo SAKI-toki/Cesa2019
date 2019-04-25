@@ -154,7 +154,7 @@ public class StageSelectController : MonoBehaviour
             Stageflg = true;
         }
 
-        if(Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.Space))
         {
             SeasonActive();
         }
