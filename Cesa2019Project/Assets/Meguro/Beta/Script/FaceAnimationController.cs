@@ -6,8 +6,10 @@ public class FaceAnimationController : MonoBehaviour
 {
     public enum FaceTypes
     {
-        Default,
+        Defalut,
+        Angry,
         Happy,
+        No
     }
 
     [SerializeField]
@@ -26,7 +28,7 @@ public class FaceAnimationController : MonoBehaviour
     }
     AnimationInfo FaceInfo;
 
-    private void Awake()
+    void Awake()
     {
         FaceInfo.Mat = FaceMat;
         Texture texture = FaceInfo.Mat.mainTexture;
@@ -38,7 +40,7 @@ public class FaceAnimationController : MonoBehaviour
         FaceInfo.HNum = (int)(FaceInfo.TextureSize.x / FaceInfo.Atlas.width);
     }
 
-    public void ChangeFaceType(FaceTypes type)
+    public void FaceChange(FaceTypes type)
     {
         FaceInfo.Type = (int)type;
 
@@ -55,18 +57,12 @@ public class FaceAnimationController : MonoBehaviour
         FaceInfo.Mat.SetTextureOffset("_MainTex", offset);
     }
 
-    private void Update()
+    void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            Debug.Log("Happy");
-            ChangeFaceType(FaceTypes.Default);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            Debug.Log("Default");
-            ChangeFaceType(FaceTypes.Happy);
-        }
+        /*debug用*/
+        if (Input.GetKeyDown(KeyCode.Alpha7)) { FaceChange(FaceTypes.Defalut); }
+        if (Input.GetKeyDown(KeyCode.Alpha8)) { FaceChange(FaceTypes.Angry); }
+        if (Input.GetKeyDown(KeyCode.Alpha9)) { FaceChange(FaceTypes.Happy); }
+        if (Input.GetKeyDown(KeyCode.Alpha0)) { FaceChange(FaceTypes.No); }
     }
 }

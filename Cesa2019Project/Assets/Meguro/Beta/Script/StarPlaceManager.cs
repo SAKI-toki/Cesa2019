@@ -17,8 +17,9 @@ public class StarPlaceManager : MonoBehaviour
         [SerializeField]
         public GameObject StarPlace2 = null;
         [System.NonSerialized]
-        public bool DorwEnd = false;
+        public bool DrawEnd = false;
     }
+
     [SerializeField, Header("プレイヤー")]
     GameObject Player = null;               // プレイヤー
     [SerializeField, Header("星")]
@@ -26,13 +27,18 @@ public class StarPlaceManager : MonoBehaviour
     Vector3 PlayerPos = Vector3.zero;       // プレイヤーの位置
     [SerializeField]
     List<Line> LineList = new List<Line>();
+    HaveStarManager.StarColorEnum[] StarPutMemory = new HaveStarManager.StarColorEnum[3] { HaveStarManager.StarColorEnum.None, HaveStarManager.StarColorEnum.None, HaveStarManager.StarColorEnum.None };
     List<StarPlace> StarPlaceList = new List<StarPlace>();      // 星を置く場所のリスト
+    [SerializeField, Header("WaveController")]
+    WaveController EnemyWave = null;
+    [SerializeField, Header("麻痺範囲")]
+    float ParalysisDis = 0;
     [SerializeField, Header("星が置けるようになる距離")]
     float ActiveDistance = 0;               // 星を置けるようになる距離
     int StarSelectPlaceNum = 0;
     public static bool StarSelect = false;  // 星の色を選択中か
     public static bool AllPlaceSet = false;        // 星が全てセットされているかのフラグ
-    public bool StarPut = true;            //星をセットした
+    public bool StarPut = true;             // 星をセットした
     [SerializeField]
     StarSlect StarSelectController = null;
     [SerializeField]
@@ -43,8 +49,6 @@ public class StarPlaceManager : MonoBehaviour
     GameObject BlueStar = null;
     [SerializeField]
     Pause Pause = null;
-    [SerializeField]
-    WaveController GetWaveController = null;
 
     [System.NonSerialized]
     public int RedStarNum = 0;
@@ -54,6 +58,7 @@ public class StarPlaceManager : MonoBehaviour
     public int BlueStarNum = 0;
     [System.NonSerialized]
     public int StarNum = 0;
+
     void Start()
     {
         int num = 0;
@@ -65,13 +70,44 @@ public class StarPlaceManager : MonoBehaviour
                 //最初からセットしているかどうか
                 if (child.GetComponent<StarPlace>().IsAwakeSet)
                 {
-                    StarPlaceList[num].Star = Instantiate(Star,
-                        child.transform.position + new Vector3(0, 1, 0),
-                        Quaternion.identity);
+                    ++StarNum;
+                    switch (child.GetComponent<StarPlace>().StarColor)
+                    {
+                        case HaveStarManager.StarColorEnum.Red:
+                            ++RedStarNum;
+                            PlayerController.PlayerStatus.HpUp(1);
+                            PlayerController.PlayerStatus.AttackUp(5);
+                            StarPlaceList[num].Star = Instantiate(RedStar,
+                                child.transform.position + new Vector3(0, 1, 0),
+                                Quaternion.identity);
+                            break;
+                        case HaveStarManager.StarColorEnum.Blue:
+                            ++BlueStarNum;
+                            PlayerController.PlayerStatus.HpUp(1);
+                            PlayerController.PlayerStatus.DefenseUp(5);
+                            StarPlaceList[num].Star = Instantiate(BlueStar,
+                                child.transform.position + new Vector3(0, 1, 0),
+                                Quaternion.identity);
+                            break;
+                        case HaveStarManager.StarColorEnum.Green:
+                            ++GreenStarNum;
+                            PlayerController.PlayerStatus.HpUp(1);
+                            PlayerController.PlayerStatus.SpeedUp(2);
+                            StarPlaceList[num].Star = Instantiate(GreenStar,
+                                child.transform.position + new Vector3(0, 1, 0),
+                                Quaternion.identity);
+                            break;
+                        default:
+                            StarPlaceList[num].Star = Instantiate(Star,
+                                child.transform.position + new Vector3(0, 1, 0),
+                                Quaternion.identity);
+                            break;
+                    }
                 }
             }
             ++num;
         }
+        PlayerController.PlayerStatus.ResetStatus();
         LineCheck();
     }
 
@@ -94,7 +130,6 @@ public class StarPlaceManager : MonoBehaviour
                         if (distance < ActiveDistance)
                         {
                             // 星を持っていたら
-                            //if (PlayerController.StarPieceHave >= Constant.ConstNumber.StarConversion)
                             if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue) >= 1 ||
                                HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Green) >= 1 ||
                                HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) >= 1)
@@ -113,58 +148,43 @@ public class StarPlaceManager : MonoBehaviour
                         }
 
                         // 範囲内にいるとき
-                        if (StarPlaceList[i].isActive && !Pause.GetPauseFlg() && GetWaveController.Tutorial)
+                        if (StarPlaceList[i].isActive && !Pause.GetPauseFlg())
                         {
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {
-                                if (GetWaveController.WaveStop) { return; }
-                                StarSelectPlaceNum = i;
-                                StarSelectActive();
-                            }
-                        }
-                        else if (StarPlaceList[i].isActive && !Pause.GetPauseFlg() && !GetWaveController.BossWaveFlag)
-                        {
-                            if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
-                            {
-
                                 StarSelectPlaceNum = i;
                                 StarSelectActive();
                             }
                         }
                     }
                 }
-            }
-            // 星の色選択中
-            else if (StarSelect)
-            {
-                if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown("joystick button 2"))
-                {
-                    StarSelectController.DeleteSelect();
-                }
-            }
-            //LineCheck();
-        }
-        // 全ての星がセットされている
-        else if (AllPlaceSet)
-        {
 
+                // Debug用
+                /* ============================================================= */
+                // 麻痺
+                if (Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    ParalysisBonus();
+                }
+                // 毒
+                if (Input.GetKeyDown(KeyCode.Alpha2))
+                {
+                    PoisonBonus();
+                }
+                /* ============================================================= */
+            }
         }
     }
-    
+
     void StarSelectActive()
     {
         StarSelect = true;
         StarSelectController.StartSelect();
-        //Time.timeScale = 0;
-        //StarSelectUI.SetActive(true);
-        //EventSystem.current.SetSelectedGameObject(StartButton);
     }
 
     public void StarSelectCancel()
     {
         StarSelect = false;
-        //Time.timeScale = 1.0f;
-        //StarSelectUI.SetActive(false);
     }
 
     /// <summary>
@@ -172,16 +192,49 @@ public class StarPlaceManager : MonoBehaviour
     /// </summary>
     public void StarSet(HaveStarManager.StarColorEnum starColor)
     {
-        //StarSelect = false;
-        //Time.timeScale = 1.0f;
-        //StarSelectUI.SetActive(false);
+        if (StarPutMemory[StarPutMemory.Length - 1] == HaveStarManager.StarColorEnum.None)
+        {
+            for (int i = 0; i < StarPutMemory.Length; ++i)
+            {
+                if (StarPutMemory[i] == HaveStarManager.StarColorEnum.None)
+                {
+                    StarPutMemory[i] = starColor;
+                    if (i == StarPutMemory.Length - 1)
+                    {
+                        ColorCheck();
+                    }
+                    break;
+                }
+            }
+        }
+        else
+        {
+            for (int j = 1; j < StarPutMemory.Length; ++j)
+            {
+                StarPutMemory[j - 1] = StarPutMemory[j];
+            }
+            StarPutMemory[StarPutMemory.Length - 1] = starColor;
+            ColorCheck();
+        }
+
         StarPlaceList[StarSelectPlaceNum].isSet = true;
         StarPlaceList[StarSelectPlaceNum].StarColor = starColor;
-        if (starColor == HaveStarManager.StarColorEnum.Red) ++RedStarNum;
-        if (starColor == HaveStarManager.StarColorEnum.Green) ++GreenStarNum;
-        if (starColor == HaveStarManager.StarColorEnum.Blue) ++BlueStarNum;
+        if (starColor == HaveStarManager.StarColorEnum.Red)
+        {
+            ++RedStarNum;
+            PlayerController.PlayerStatus.AttackUp(5);
+        }
+        if (starColor == HaveStarManager.StarColorEnum.Blue)
+        {
+            ++BlueStarNum;
+            PlayerController.PlayerStatus.DefenseUp(5);
+        }
+        if (starColor == HaveStarManager.StarColorEnum.Green)
+        {
+            ++GreenStarNum;
+            PlayerController.PlayerStatus.SpeedUp(2);
+        }
         ++StarNum;
-        //PlayerController.StarPieceHave -= Constant.ConstNumber.StarConversion;
         GenerateStar(StarSelectPlaceNum, starColor);
         StarPut = true;
         LineCheck();
@@ -195,7 +248,7 @@ public class StarPlaceManager : MonoBehaviour
             StarPlaceList[n].gameObject.transform.position + new Vector3(0, 1, 0),
             Quaternion.identity);
         var colliderList = StarPlaceList[n].GetComponents<SphereCollider>();
-        foreach(var collider in colliderList)
+        foreach (var collider in colliderList)
         {
             collider.enabled = false;
         }
@@ -214,7 +267,6 @@ public class StarPlaceManager : MonoBehaviour
                 return false;
             }
         }
-        Debug.Log("====星のセット完了====");
         return true;
     }
 
@@ -223,28 +275,121 @@ public class StarPlaceManager : MonoBehaviour
     /// </summary>
     public void LineCheck()
     {
+        // 線
         for (int i = 0; i < LineList.Count; ++i)
         {
-            if (!LineList[i].DorwEnd)
+            if (!LineList[i].DrawEnd)
             {
-                Debug.Log(i+":DorwEnd"+LineList[i].DorwEnd);
-                if (LineList[i].StarPlace1.GetComponent<StarPlace>().isSet &&
-                    LineList[i].StarPlace2.GetComponent<StarPlace>().isSet)
+                DorwLine(LineList[i]);
+            }
+        }
+    }
+
+    void DorwLine(Line line)
+    {
+        if (line.StarPlace1.GetComponent<StarPlace>().isSet &&
+            line.StarPlace2.GetComponent<StarPlace>().isSet)
+        {
+            LineRenderer lineRendererStarPlace1 = line.StarPlace1.GetComponent<LineRenderer>();
+            lineRendererStarPlace1.positionCount = lineRendererStarPlace1.positionCount + 2;
+
+            lineRendererStarPlace1.SetPosition(
+                lineRendererStarPlace1.positionCount - 2,
+                line.StarPlace1.GetComponent<StarPlace>().Star.transform.position);
+
+            lineRendererStarPlace1.SetPosition(
+                lineRendererStarPlace1.positionCount - 1,
+                line.StarPlace2.GetComponent<StarPlace>().Star.transform.position);
+            line.DrawEnd = true;
+
+            // 線同色ボーナス
+            if (line.StarPlace1.GetComponent<StarPlace>().StarColor == line.StarPlace2.GetComponent<StarPlace>().StarColor)
+            {
+                switch (line.StarPlace1.GetComponent<StarPlace>().StarColor)
                 {
-                    Debug.Log("線を引く");
-                    LineRenderer lineRendererStarPlace1 = LineList[i].StarPlace1.GetComponent<LineRenderer>();
-                    lineRendererStarPlace1.positionCount = lineRendererStarPlace1.positionCount + 2;
-
-                    lineRendererStarPlace1.SetPosition(
-                        lineRendererStarPlace1.positionCount - 2,
-                        LineList[i].StarPlace1.GetComponent<StarPlace>().Star.transform.position);
-
-                    lineRendererStarPlace1.SetPosition(
-                        lineRendererStarPlace1.positionCount - 1,
-                        LineList[i].StarPlace2.GetComponent<StarPlace>().Star.transform.position);
-                    LineList[i].DorwEnd = true;
+                    case HaveStarManager.StarColorEnum.Red:
+                        PlayerController.PlayerStatus.AttackUp(5);
+                        break;
+                    case HaveStarManager.StarColorEnum.Blue:
+                        PlayerController.PlayerStatus.DefenseUp(5);
+                        break;
+                    case HaveStarManager.StarColorEnum.Green:
+                        PlayerController.PlayerStatus.SpeedUp(2);
+                        break;
+                    default:
+                        break;
                 }
             }
+        }
+    }
+
+    void ColorCheck()
+    {
+        bool bonusflg = true;
+        for (int i = 0; i < StarPutMemory.Length - 1; ++i)
+        {
+            if (StarPutMemory[i] == StarPutMemory[i + 1])
+            {
+                bonusflg = false;
+                break;
+            }
+        }
+        if (bonusflg)
+        {
+            if (StarPutMemory[0] != StarPutMemory[StarPutMemory.Length - 1])
+            {
+                // 敵がいないときはボーナスなし
+                if (EnemyWave.wave.transform.childCount > 0)
+                {
+                    if (Random.Range(0, 2) == 0)
+                    {
+                        // 麻痺
+                        ParalysisBonus();
+                    }
+                    else
+                    {
+                        // 毒
+                        PoisonBonus();
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 麻痺ボーナス
+    /// </summary>
+    void ParalysisBonus()
+    {
+        Debug.Log("麻痺");
+        foreach (Transform child in EnemyWave.wave.transform)
+        {
+            float dis = Vector3.Distance(PlayerPos, child.transform.position);
+
+            if (dis < ParalysisDis)
+            {
+                child.GetComponent<Enemy>().EnemyAbnormalState.ParalysisStart();
+            }
+        }
+        // 範囲debug
+        Ray ray = new Ray(PlayerPos, transform.forward);
+        for (int i = 0; i < 16; ++i)
+        {
+            int angle = 360 - ((360 / 16) * i);
+            Vector3 dir = new Vector3(Mathf.Sin(Mathf.Deg2Rad * angle), 0, Mathf.Cos(Mathf.Deg2Rad * angle));
+            Debug.DrawRay(ray.origin, dir * ParalysisDis, Color.red, 5);
+        }
+    }
+
+    /// <summary>
+    /// 毒ボーナス
+    /// </summary>
+    void PoisonBonus()
+    {
+        Debug.Log("毒");
+        foreach (Transform child in EnemyWave.wave.transform)
+        {
+            child.GetComponent<Enemy>().EnemyAbnormalState.PoisonStart();
         }
     }
 }

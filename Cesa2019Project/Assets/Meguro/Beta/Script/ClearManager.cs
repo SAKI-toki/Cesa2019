@@ -61,10 +61,6 @@ public class ClearManager : MonoBehaviour
     void Awake()
     {
         EnemyDownNum = 0;
-        StartHp = PlayerController.PlayerStatus.Hp;
-        StartAttack = PlayerController.PlayerStatus.Attack;
-        StartDefense = PlayerController.PlayerStatus.Defense;
-        StartSpeed = PlayerController.PlayerStatus.Speed;
         TextAlphaZero(ClearText);
         ImageAlphaZero(Panel);
         TextAlphaZero(ResultText);
@@ -81,25 +77,20 @@ public class ClearManager : MonoBehaviour
         TextAlphaZero(EvaluationText);
     }
 
+    private void Start()
+    {
+        StartHp = PlayerController.PlayerStatus.Hp;
+        StartAttack = PlayerController.PlayerStatus.Attack;
+        StartDefense = PlayerController.PlayerStatus.Defense;
+        StartSpeed = PlayerController.PlayerStatus.Speed;
+    }
     void Update()
     {
         if (!ClearInitFlg)
         {
             ClearInitFlg = true;
         }
-        /*
-         *エフェクト 
-         * ↓
-         * UIフェード、所定の位置に移動、カメラ主人公の前
-         * ↓
-         * 左端に移動
-         * ↓
-         * クリア文字、主人公クリアモーション
-         * ↓
-         * リザルト
-         * ↓
-         * ステージセレクトと季節セレクトを文字表示
-         */
+
         if (StarPlaceManager.AllPlaceSet)
         {
             if (!ClearMoveFlg)
@@ -107,13 +98,13 @@ public class ClearManager : MonoBehaviour
                 CameraScript.ClearMoveInit();
                 CameraScript.ClearMove();
                 Vector3 dir = ClearPos.position - Player.transform.position;
-                Player.GetComponent<PlayerController>().Move(dir, 300);
+                Player.GetComponent<PlayerController>().Move(dir, 50);
                 float dis = Vector3.Distance(Player.transform.position, ClearPos.position);
                 if (dis < 1.0f) { ClearMoveFlg = true; }
             }
             if (ClearMoveFlg && !ClearTextFlg)
             {
-                if (CameraScript.Distance > 7)
+                if (CameraScript.Distance > 8)
                 {
                     CameraScript.ZoomIn(0.1f);
                 }
@@ -145,7 +136,7 @@ public class ClearManager : MonoBehaviour
                 {
                     Vector3 dir = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
                     dir = dir * -0.4f + Camera.main.transform.right * -1.0f;
-                    Player.GetComponent<PlayerController>().Move(dir, 200);
+                    Player.GetComponent<PlayerController>().Move(dir, 30);
                 }
                 else
                 {

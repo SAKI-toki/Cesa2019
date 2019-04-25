@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbnormalState : MonoBehaviour
+public class AbnormalState
 {
     public float ParalysisTime = 0;         // 麻痺時間
     float CurrentParalysisTime = 0;
@@ -95,6 +95,5 @@ public class AbnormalState : MonoBehaviour
             CurrentPoisonTime = 0;
             CurrentPoisonDamageTime = 0;
         }
-
     }
 }

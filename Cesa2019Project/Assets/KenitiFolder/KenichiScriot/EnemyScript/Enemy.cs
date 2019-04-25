@@ -149,6 +149,7 @@ public class Enemy : MonoBehaviour
         GetRigidbody = GetComponent<Rigidbody>();
         StarPlace = GameObject.Find("StarPlaceManager");
         StarPlaceManager = StarPlace.GetComponent<StarPlaceManager>();
+        EnemyAbnormalState.Init(5, 10, 1, 5);
     }
 
     // Update is called once per frame
@@ -168,7 +169,7 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
-
+        EnemyAbnormalState.Abnormal(ref EnemyStatus.CurrentHp);
         EnemyTime += Time.deltaTime;
         BossTime += Time.deltaTime;
         //敵とプレイヤーの距離差
