@@ -11,7 +11,6 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-
     GameObject Star = null;
     [SerializeField, Header("Animatorがない場合true")]
     bool NonAnimator = false;
@@ -105,6 +104,8 @@ public class Enemy : MonoBehaviour
     [HideInInspector]
     public Status EnemyStatus = new Status();
     [HideInInspector]
+    public AbnormalState EnemyAbnormalState = new AbnormalState();
+    [HideInInspector]
     public Vector3 TargetPos;
     [HideInInspector]
     public Animator Animator = null;
@@ -147,6 +148,7 @@ public class Enemy : MonoBehaviour
         GetRigidbody = GetComponent<Rigidbody>();
         StarPlace = GameObject.Find("StarPlaceManager");
         StarPlaceManager = StarPlace.GetComponent<StarPlaceManager>();
+        EnemyAbnormalState.Init(5, 10, 1, 5);
     }
 
     // Update is called once per frame
@@ -166,7 +168,7 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
-
+        EnemyAbnormalState.Abnormal(ref EnemyStatus.CurrentHp);
         EnemyTime += Time.deltaTime;
         BossTime += Time.deltaTime;
         //敵とプレイヤーの距離差
@@ -182,7 +184,7 @@ public class Enemy : MonoBehaviour
 
         if (ReceivedDamage == true)//硬直時間の解除
         {
-            if (!NonDirectAttack&& !NonAnimator) Animator.SetBool("EnemyWalk", false);
+            if (!NonDirectAttack && !NonAnimator) Animator.SetBool("EnemyWalk", false);
             if (EnemyTime >= Rigor_Cancellation)
             {
                 JampFlag = true;

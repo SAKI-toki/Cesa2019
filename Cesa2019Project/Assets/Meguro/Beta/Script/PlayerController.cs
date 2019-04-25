@@ -11,8 +11,9 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody PlayerRigid;                      // プレイヤーリジッドボディ
     Animator PlayerAnimator;                    // プレイヤーアニメータ
-    AnimatorStateInfo AttackAniStateInfo;       // プレイヤー攻撃アニメータの情報取得
+    AnimatorStateInfo AniStateInfo;       // プレイヤー攻撃アニメータの情報取得
     public static Status PlayerStatus = new Status();// プレイヤーステータス
+    public static AbnormalState PlayerAbnormalState = new AbnormalState();
     float LeftStickH = 0;                       // コントローラー左右
     float LeftStickV = 0;                       // コントローラー上下
     float Trigger = 0;                          // コントローラートリガー
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
     float AvoidHealingCurrentTime = 0;
     bool MoveJump = false;                      // ジャンプのフラグ
     bool MoveAvoid = false;                     // 回避のフラグ
-    bool DeathFlg = false;                      // 死亡フラグ
+    public bool DeathFlg = false;                      // 死亡フラグ
     // debug用
     [SerializeField, Header("プレイヤーステータスデバッグUI")]
     GameObject PlayerStatusDebugUI = null;
@@ -84,7 +85,8 @@ public class PlayerController : MonoBehaviour
                 PlayerStatusDebugText.Add(child.GetComponent<Text>());
             }
         }
-        PlayerStatus.InitStatus(Hp, Attack, Defense, Speed, Stamina);   // プレイヤーステータス初期化
+        PlayerStatus.InitStatus(Hp, Attack, Defense, Speed, Stamina);   // ステータス初期化
+        PlayerAbnormalState.Init(5, 10, 1, 5);                          // 異常状態初期化
         ComboController.InitCombo(4);           // コンボの時間
         PlayerAddAttackController.InitPlayerAddAttack(TimingCanvas, TimingCircle, TimingIcon, this.transform);
         PlayerRigid = GetComponent<Rigidbody>();
@@ -93,9 +95,23 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (DeathFlg) { return; }
+        // コンボ処理
+        ComboController.CheckCombo();
+        // プレイヤーデバッグ
+        if (Input.GetKeyDown(KeyCode.P)) { PlayerStatusDebugSwitch(); }
+        DebugPlayerStatus();
+        if (ComboController.ComboFlg)
+        {
+            ComboController.InCombo(ComboText);
+            ComboController.ComboUI(ComboText, 255, 255, 255);
+        }
+        if (DeathFlg) { MoveStop(); return; }
+        if (StarPlaceManager.AllPlaceSet) { MoveStop(); return; }
+        // 異常状態
+        PlayerAbnormalState.Abnormal(ref PlayerStatus.CurrentHp);
+        if (PlayerAbnormalState.ParalysisFlg) { MoveStop(); return; }
         // プレイヤー攻撃アニメーションの情報更新
-        AttackAniStateInfo = PlayerAnimator.GetCurrentAnimatorStateInfo(1);
+        AniStateInfo = PlayerAnimator.GetCurrentAnimatorStateInfo(0);
         // 移動
         LeftStickH = Input.GetAxis("L_Stick_H");
         LeftStickV = Input.GetAxis("L_Stick_V");
@@ -107,7 +123,7 @@ public class PlayerController : MonoBehaviour
             // 星選択中で操作させないため
             if (!StarPlaceManager.StarSelect)
             {
-                PlayerAnimator.SetBool("Jumpflg", true);
+                //PlayerAnimator.SetBool("Jumpflg", true);
                 PlayerRigid.AddForce(JumpVal * Vector3.up, ForceMode.Impulse);
                 MoveJump = true;
             }
@@ -118,31 +134,31 @@ public class PlayerController : MonoBehaviour
             // 星選択中で操作させないため
             if (!StarPlaceManager.StarSelect)
             {
-                PlayerAnimator.SetTrigger("Attack");
+                PlayerAnimator.SetTrigger("AttackTrigger");
             }
         }
-        if (AttackAniStateInfo.IsTag("Attack1"))
+        if (AniStateInfo.IsTag("Attack1"))
         {
             PlayerStatus.CurrentAttack = PlayerStatus.Attack;
         }
-        if (AttackAniStateInfo.IsTag("Attack2"))
+        if (AniStateInfo.IsTag("Attack2"))
         {
-            PlayerStatus.CurrentAttack = PlayerStatus.Attack + 15;
+            PlayerStatus.CurrentAttack = PlayerStatus.Attack + 5;
         }
-        if (AttackAniStateInfo.IsTag("Attack3"))
+        if (AniStateInfo.IsTag("Attack3"))
         {
-            PlayerStatus.CurrentAttack = PlayerStatus.Attack + 30;
+            PlayerStatus.CurrentAttack = PlayerStatus.Attack + 10;
         }
         // 攻撃のアニメーション中
-        if (AttackAniStateInfo.IsTag("Attack1") || AttackAniStateInfo.IsTag("Attack2") || AttackAniStateInfo.IsTag("Attack3"))
+        if (AniStateInfo.IsTag("Attack1") || AniStateInfo.IsTag("Attack2") || AniStateInfo.IsTag("Attack3"))
         {
-            if (AttackAniStateInfo.normalizedTime < 0.7f)
+            if (AniStateInfo.normalizedTime < 0.7f)
             {
                 LeftStickH = Mathf.Clamp(LeftStickH, -AttackMoveVal, AttackMoveVal);
                 LeftStickV = Mathf.Clamp(LeftStickV, -AttackMoveVal, AttackMoveVal);
             }
         }
-        if (AttackAniStateInfo.IsTag("Attack3") && !PlayerAddAttackController.TimingFlg)
+        if (AniStateInfo.IsTag("Attack3") && !PlayerAddAttackController.TimingFlg)
         {
             PlayerAddAttackController.TimingUIAwake();
         }
@@ -159,13 +175,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        // コンボ処理
-        ComboController.CheckCombo();
-        if (ComboController.ComboFlg)
-        {
-            ComboController.InCombo(ComboText);
-            ComboController.ComboUI(ComboText, 255, 255, 255);
-        }
 
         // 追加攻撃
         PlayerAddAttackController.TargetTracking();
@@ -180,9 +189,6 @@ public class PlayerController : MonoBehaviour
             Death();
         }
 
-        // プレイヤーデバッグ
-        if (Input.GetKeyDown(KeyCode.P)) { PlayerStatusDebugSwitch(); }
-        DebugPlayerStatus();
         // ステータス初期化
         if (Input.GetKeyDown(KeyCode.R)) { PlayerStatus.InitStatus(Hp, Attack, Defense, Speed, Stamina); }
     }
@@ -192,14 +198,14 @@ public class PlayerController : MonoBehaviour
         PlayerRigid.AddForce(Vector3.down * ForceGravity, ForceMode.Acceleration);
         if ((LeftStickH != 0 || LeftStickV != 0) && !MoveAvoid)
         {
-            PlayerAnimator.SetBool("Dashflg", true);
+            PlayerAnimator.SetBool("RunFlg", true);
             Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
             Vector3 moveForward = cameraForward * LeftStickV + Camera.main.transform.right * LeftStickH;
             Quaternion playerRotation = Quaternion.LookRotation(moveForward);
             // 移動
-            PlayerRigid.AddForce(PlayerStatus.CurrentSpeed * 10 * moveForward * ContactNormalY);
+            PlayerRigid.AddForce(PlayerStatus.CurrentSpeed * moveForward * ContactNormalY);
             // 攻撃のアニメーション中
-            if (AttackAniStateInfo.IsTag("Attack1") || AttackAniStateInfo.IsTag("Attack2") || AttackAniStateInfo.IsTag("Attack3"))
+            if (AniStateInfo.IsTag("Attack1") || AniStateInfo.IsTag("Attack2") || AniStateInfo.IsTag("Attack3"))
             {
                 // 攻撃時の回転
                 transform.rotation = Quaternion.Slerp(transform.rotation, playerRotation, AttackRoteVal);
@@ -218,7 +224,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            PlayerAnimator.SetBool("Dashflg", false);
+            PlayerAnimator.SetBool("RunFlg", false);
         }
         // 回避
         if (MoveAvoid)
@@ -260,7 +266,7 @@ public class PlayerController : MonoBehaviour
         {
             if (contact.normal.y <= 1 && contact.normal.y > 0.0f)
             {
-                PlayerAnimator.SetBool("Jumpflg", false);
+                //PlayerAnimator.SetBool("Jumpflg", false);
                 MoveJump = false;
             }
         }
@@ -296,6 +302,12 @@ public class PlayerController : MonoBehaviour
         Vector3 force = this.transform.forward * -Zforword;
         PlayerRigid.AddForce(force, ForceMode.Impulse);
     }
+
+    void MoveStop()
+    {
+        LeftStickH = 0;
+        LeftStickV = 0;
+    }
     /// <summary>
     /// トリガーの押されたときだけの判定処理
     /// </summary>
@@ -324,12 +336,37 @@ public class PlayerController : MonoBehaviour
     void Death()
     {
         DeathFlg = true;
-        PlayerAnimator.SetBool("Deathflg", true);
+        //PlayerAnimator.SetBool("Deathflg", true);
         LeftStickH = 0;
         LeftStickV = 0;
         ComboController.ComboUIHidden(ComboText);
         PlayerAddAttackController.TimingUIHidden();
     }
+
+    public void Move(Vector3 dir, float speed)
+    {
+        PlayerAnimator.SetBool("RunFlg", true);
+        dir = Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized;
+        Quaternion playerRotation = Quaternion.LookRotation(dir);
+        PlayerRigid.AddForce(dir * speed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, playerRotation, RoteVal);
+    }
+
+    public void Look(Vector3 dir)
+    {
+        dir = Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized;
+        Quaternion playerRotation = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, playerRotation, RoteVal);
+    }
+
+    //public void ClearAniPlay()
+    //{
+    //    PlayerAnimator.SetBool("Clearflg", true);
+    //}
+    //public void ClearAniStop()
+    //{
+    //    PlayerAnimator.SetBool("Clearflg", false);
+    //}
 
     /// <summary>
     /// デバッグUIの表示・非表示

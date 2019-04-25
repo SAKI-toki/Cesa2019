@@ -2527,7 +2527,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4527590287231399171}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e1f9b31ad3a19174b9ee286d9926adc8, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.2
@@ -2547,24 +2547,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hp: 100
-  Attack: 5
+  Attack: 10
   Defense: 5
   Speed: 50
   Stamina: 6
-  JumpVal: 9
-  ForceGravity: 10
+  JumpVal: 12
+  ForceGravity: 20
   RoteVal: 0.1
   AttackRoteVal: 0.07
-  AttackMoveVal: 0.3
+  Zforword: 30
+  AttackMoveVal: 0.2
   ComboText: {fileID: 0}
   TimingCanvas: {fileID: 0}
   TimingCircle: {fileID: 0}
   TimingIcon: {fileID: 0}
-  AddAttackEffect: {fileID: 2284985125441494835, guid: b7db792a65459aa49a9a948c031339c5,
+  AddAttackEffect: {fileID: 6327161661330545604, guid: 78bdb790b23192d4fa56cc74978067c0,
     type: 3}
+  StartAvoidTime: 0.1
   AvoidTime: 0.4
+  EndAvoidTime: 0.1
   AvoidSpeed: 800
-  AvoidHealingTime: 1
+  AvoidHealingTime: 6
   PlayerStatusDebugUI: {fileID: 4527590286709580913}
 --- !u!1 &4527590287237559198
 GameObject:
