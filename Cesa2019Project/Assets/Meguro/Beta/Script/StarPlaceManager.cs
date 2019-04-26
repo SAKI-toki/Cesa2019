@@ -63,6 +63,8 @@ public class StarPlaceManager : MonoBehaviour
 
     void Start()
     {
+        StarSelect = false;
+        AllPlaceSet = false;
         int num = 0;
         foreach (Transform child in transform)
         {
@@ -154,16 +156,18 @@ public class StarPlaceManager : MonoBehaviour
                         {
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {
-                                if (GetWaveController.WaveStop) { return; }
-                                StarSelectPlaceNum = i;
-                                StarSelectActive();
+                                Debug.Log(GetWaveController.EnemyZero);
+                                if (GetWaveController.EnemyZero)
+                                {
+                                    StarSelectPlaceNum = i;
+                                    StarSelectActive();
+                                }
                             }
                         }
                         else if (StarPlaceList[i].isActive && !Pause.GetPauseFlg() && !GetWaveController.BossWaveFlag)
                         {
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {
-
                                 StarSelectPlaceNum = i;
                                 StarSelectActive();
                             }
