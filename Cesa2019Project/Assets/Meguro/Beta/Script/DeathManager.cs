@@ -28,6 +28,10 @@ public class DeathManager : MonoBehaviour
             {
                 CameraControll.DeathRotation();
             }
+            if (!FadeController.IsFadeOut)
+            {
+                FadeController.FadeOut("SelectScene");
+            }
         }
     }
 }
