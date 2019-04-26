@@ -114,8 +114,6 @@ public class WaveController : MonoBehaviour
             StarPlaceManager.StarPut = false;
         }
 
-
-
         if (this.transform.childCount >= 1)
         {
 
