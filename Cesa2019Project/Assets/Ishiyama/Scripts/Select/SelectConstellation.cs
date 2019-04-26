@@ -83,8 +83,10 @@ public class SelectConstellation : MonoBehaviour, ISelectSceneState
                 ((int)ThisSeason + 1).ToString() +
                 "-" +
                 (CurrentStageNum + 1).ToString();
-            FadeController.FadeOut(nextSceneName);
-            //UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
+            if (!FadeController.IsFadeOut)
+            {
+                FadeController.FadeOut(nextSceneName);
+            }
         }
     }
 
