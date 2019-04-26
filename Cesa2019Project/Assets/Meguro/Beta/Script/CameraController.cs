@@ -65,32 +65,32 @@ public class CameraController : MonoBehaviour
 
         if (XReverse)
         {
-            RotX -= Mathf.Sign(RightStickV) * Mathf.Pow(Mathf.Abs(RightStickV), 3) * RotXSpeed;
+            RotX -= Mathf.Sign(RightStickV) * Mathf.Pow(Mathf.Abs(RightStickV), 3) * RotXSpeed * Time.deltaTime;
         }
         else
         {
-            RotX += Mathf.Sign(RightStickV) * Mathf.Pow(Mathf.Abs(RightStickV), 3) * RotXSpeed;
+            RotX += Mathf.Sign(RightStickV) * Mathf.Pow(Mathf.Abs(RightStickV), 3) * RotXSpeed * Time.deltaTime;
         }
         if (RightStickH != 0)
         {
             if (YReverse)
             {
-                RotY -= RightStickH * RotYSpeed;
+                RotY -= RightStickH * RotYSpeed * Time.deltaTime;
             }
             else
             {
-                RotY += RightStickH * RotYSpeed;
+                RotY += RightStickH * RotYSpeed * Time.deltaTime;
             }
         }
         else
         {
             if (YReverse)
             {
-                RotY -= LeftStickH;
+                RotY -= LeftStickH * Time.deltaTime;
             }
             else
             {
-                RotY += LeftStickH;
+                RotY += LeftStickH * Time.deltaTime;
             }
         }
         RotX = Mathf.Clamp(RotX, RotXmin, RotXmax);
