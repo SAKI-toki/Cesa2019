@@ -109,6 +109,8 @@ public class ClabEnemy : MonoBehaviour
             AttackFirst = true;
         }
 
+        if (AttackFirst) { transform.Translate(0,0,-Enemy.ZMove*Time.deltaTime); }
+
         if (AttackTime >= Enemy.AttackWait || Enemy.DamageFlag == true)
         {
             Enemy.AttackEnemy = false;
