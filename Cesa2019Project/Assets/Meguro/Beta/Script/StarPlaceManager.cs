@@ -49,6 +49,8 @@ public class StarPlaceManager : MonoBehaviour
     GameObject BlueStar = null;
     [SerializeField]
     Pause Pause = null;
+    [SerializeField]
+    WaveController GetWaveController = null;
 
     [System.NonSerialized]
     public int RedStarNum = 0;
@@ -148,10 +150,20 @@ public class StarPlaceManager : MonoBehaviour
                         }
 
                         // 範囲内にいるとき
-                        if (StarPlaceList[i].isActive && !Pause.GetPauseFlg())
+                        if (StarPlaceList[i].isActive && !Pause.GetPauseFlg() && GetWaveController.Tutorial)
                         {
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {
+                                if (GetWaveController.WaveStop) { return; }
+                                StarSelectPlaceNum = i;
+                                StarSelectActive();
+                            }
+                        }
+                        else if (StarPlaceList[i].isActive && !Pause.GetPauseFlg() && !GetWaveController.BossWaveFlag)
+                        {
+                            if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
+                            {
+
                                 StarSelectPlaceNum = i;
                                 StarSelectActive();
                             }

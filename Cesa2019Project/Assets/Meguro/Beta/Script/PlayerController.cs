@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviour
     float AvoidHealingCurrentTime = 0;
     bool MoveJump = false;                      // ジャンプのフラグ
     bool MoveAvoid = false;                     // 回避のフラグ
+    [System.NonSerialized]
     public bool DeathFlg = false;                      // 死亡フラグ
     // debug用
     [SerializeField, Header("プレイヤーステータスデバッグUI")]
