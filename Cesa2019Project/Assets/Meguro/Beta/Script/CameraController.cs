@@ -7,6 +7,8 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     Transform Player = null;
     [SerializeField]
+    PlayerController PlayerControll = null;
+    [SerializeField]
     Transform LookAt = null;
     [SerializeField]
     float RotXmax = 0;
@@ -45,6 +47,11 @@ public class CameraController : MonoBehaviour
             return;
         }
         if (StarPlaceManager.AllPlaceSet)
+        {
+            MoveStop();
+            return;
+        }
+        if (PlayerControll.DeathFlg)
         {
             MoveStop();
             return;
@@ -110,7 +117,7 @@ public class CameraController : MonoBehaviour
 
     Quaternion InitQuaternion;
     Quaternion PlayerQuaternion;
-    float ClearRotationTime = 0.0f; 
+    float RotationTime = 0.0f;
     public void ClearMoveInit()
     {
         InitQuaternion = this.transform.rotation;
@@ -122,13 +129,34 @@ public class CameraController : MonoBehaviour
     public void ClearMove()
     {
         transform.position = LookAt.position;
-        ClearRotationTime += Time.deltaTime / 20.0f;
-        transform.rotation = Quaternion.Lerp(InitQuaternion, PlayerQuaternion, ClearRotationTime);
+        RotationTime += Time.deltaTime / 20.0f;
+        transform.rotation = Quaternion.Lerp(InitQuaternion, PlayerQuaternion, RotationTime);
     }
 
     public void ZoomIn(float num)
     {
         Distance -= num;
         CameraTransform.localPosition = new Vector3(0, 0, -Distance);
+    }
+
+    public void DeathMoveInit()
+    {
+        InitQuaternion = this.transform.rotation;
+        Quaternion quat = new Quaternion();
+        quat.eulerAngles = new Vector3(60, 0, 0);
+        PlayerQuaternion = Player.rotation * quat;
+    }
+
+    public void DeathMove()
+    {
+        transform.position = LookAt.position;
+        RotationTime += Time.deltaTime / 20.0f;
+        transform.rotation = Quaternion.Lerp(InitQuaternion, PlayerQuaternion, RotationTime);
+    }
+
+    public void DeathRotation()
+    {
+        transform.position = LookAt.position;
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y - 0.5f, transform.eulerAngles.z);
     }
 }

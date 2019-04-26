@@ -102,6 +102,8 @@ MonoBehaviour:
     StarPlace2: {fileID: 2410692148493351050}
   - StarPlace1: {fileID: 2410692148493351050}
     StarPlace2: {fileID: 2410692148939961088}
+  EnemyWave: {fileID: 302074217464747238}
+  ParalysisDis: 0
   ActiveDistance: 3
   StarPut: 1
   StarSelectController: {fileID: 0}
@@ -111,7 +113,7 @@ MonoBehaviour:
   BlueStar: {fileID: 7568371819467208806, guid: ee9a2c34a891bc54ab9a9006310a59f0,
     type: 3}
   Pause: {fileID: 0}
-  GetWaveController: {fileID: 0}
+  GetWaveController: {fileID: 302074217464747238}
 --- !u!1 &2087469505697068997
 GameObject:
   m_ObjectHideFlags: 0
@@ -2411,6 +2413,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 109627793131235519, guid: d3208143198ad2a4296a88a05103230c,
         type: 3}
+    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: StarPlaceManager
+      value: 
+      objectReference: {fileID: 5207050850367402754}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
 --- !u!4 &302074217464747239 stripped
@@ -2419,3 +2425,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 302074215987822430}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &302074217464747238 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0,
+    type: 3}
+  m_PrefabInstance: {fileID: 302074215987822430}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 975a17e3ef8046445beb9865b3601859, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
