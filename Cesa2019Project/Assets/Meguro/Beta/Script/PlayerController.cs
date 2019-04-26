@@ -144,11 +144,11 @@ public class PlayerController : MonoBehaviour
         }
         if (AniStateInfo.IsTag("Attack2"))
         {
-            PlayerStatus.CurrentAttack = PlayerStatus.Attack + 5;
+            PlayerStatus.CurrentAttack = PlayerStatus.Attack + 10;
         }
         if (AniStateInfo.IsTag("Attack3"))
         {
-            PlayerStatus.CurrentAttack = PlayerStatus.Attack + 10;
+            PlayerStatus.CurrentAttack = PlayerStatus.Attack + 15;
         }
         // 攻撃のアニメーション中
         if (AniStateInfo.IsTag("Attack1") || AniStateInfo.IsTag("Attack2") || AniStateInfo.IsTag("Attack3"))

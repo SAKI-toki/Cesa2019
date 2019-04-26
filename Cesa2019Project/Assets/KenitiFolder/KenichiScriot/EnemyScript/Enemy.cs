@@ -177,6 +177,7 @@ public class Enemy : MonoBehaviour
 
         if (EnemyStatus.CurrentHp <= 0 || EnemyHp <= 0)
         {
+            ++ClearManager.EnemyDownNum;
             if (BossEnemy == false) { EnemyStar(); }
             if (BossEnemy) { BossEnemyStar(); }
             DestroyFlag = true;
