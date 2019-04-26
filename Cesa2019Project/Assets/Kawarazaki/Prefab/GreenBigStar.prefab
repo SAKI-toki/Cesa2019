@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4457919543577144323}
   - component: {fileID: 4457919543577144325}
   - component: {fileID: 4457919543577144322}
-  - component: {fileID: 2882957077304077266}
   - component: {fileID: 4323195401308069694}
+  - component: {fileID: 9217714324063906658}
   m_Layer: 5
   m_Name: GreenBigStar
   m_TagString: Untagged
@@ -30,7 +30,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.24999994, y: 0.24999994, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 7468717422695711837}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -67,7 +68,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 8b4a9072086b4cf4dab767b57a78c832, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ed7aefe25c03e4e4a80836ea2745b818, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -76,7 +77,28 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!60 &2882957077304077266
+--- !u!50 &4323195401308069694
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4457919543577144320}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 20
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!60 &9217714324063906658
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,36 +123,87 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 12.65845, y: 13.528125}
-      - {x: -0.78222674, y: 51.081966}
-      - {x: -12.247439, y: 14.917835}
-      - {x: -51.797375, y: 12.047961}
-      - {x: -21.289557, y: -13.776507}
-      - {x: -30.313362, y: -50.893276}
-      - {x: -31.877815, y: -50.11044}
-      - {x: -0.2572022, y: -28.981895}
-      - {x: 30.31324, y: -50.11404}
-      - {x: 20.976446, y: -15.203205}
-      - {x: 19.893559, y: -14.852558}
-      - {x: 51.015026, y: 12.044421}
---- !u!50 &4323195401308069694
-Rigidbody2D:
-  serializedVersion: 4
+    - - {x: 23.712347, y: -14.54842}
+      - {x: 47.108105, y: 7.9976673}
+      - {x: 15.116764, y: 16.253773}
+      - {x: 2.5463874, y: 45.530697}
+      - {x: -15.903141, y: 16.936085}
+      - {x: -46.786022, y: 12.713977}
+      - {x: -25.669012, y: -12.231341}
+      - {x: -31.781013, y: -45.33975}
+      - {x: -2.5952156, y: -31.344322}
+      - {x: 26.414923, y: -47.402493}
+--- !u!1 &4588134529158289233
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4457919543577144320}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 20
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7468717422695711837}
+  - component: {fileID: 1611617053807514926}
+  - component: {fileID: 2373340179326700157}
+  m_Layer: 5
+  m_Name: GreenStarFream
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7468717422695711837
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4588134529158289233}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4457919543577144323}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1611617053807514926
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4588134529158289233}
+  m_CullTransparentMesh: 0
+--- !u!114 &2373340179326700157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4588134529158289233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: da8b5121d1bd96d4a83e3bab9d36b844, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0

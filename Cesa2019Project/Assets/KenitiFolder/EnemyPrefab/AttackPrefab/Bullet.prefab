@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6802738616984770430}
   - component: {fileID: 3118930367218941673}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Bullet
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -96,6 +96,7 @@ MonoBehaviour:
   DestroyFlag: 0
   JampFlag: 0
   EnemySe: {fileID: 0}
+  NoDamage: 0
   PlayerController: {fileID: 0}
 --- !u!1001 &5114277558597368418
 PrefabInstance:
@@ -108,6 +109,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MagicBullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 1915813563132471966, guid: 4729ce0fb6c72714ba86bfbe2be5d49f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1915813563132471965, guid: 4729ce0fb6c72714ba86bfbe2be5d49f,
         type: 3}
@@ -163,6 +169,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1915813565162727749, guid: 4729ce0fb6c72714ba86bfbe2be5d49f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1915813563376204843, guid: 4729ce0fb6c72714ba86bfbe2be5d49f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1915813563634924716, guid: 4729ce0fb6c72714ba86bfbe2be5d49f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4156501237200000701, guid: 4729ce0fb6c72714ba86bfbe2be5d49f,
         type: 3}

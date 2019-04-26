@@ -67,6 +67,8 @@ MonoBehaviour:
     StarPlace2: {fileID: 4237946308546294901}
   - StarPlace1: {fileID: 8691047848320034162}
     StarPlace2: {fileID: 8691047849187387123}
+  EnemyWave: {fileID: 4500738840048675189}
+  ParalysisDis: 0
   ActiveDistance: 3
   StarPut: 1
   StarSelectController: {fileID: 0}
@@ -199,7 +201,7 @@ BoxCollider:
   m_GameObject: {fileID: 8691047848320034162}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -399,7 +401,7 @@ BoxCollider:
   m_GameObject: {fileID: 8691047848512537938}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -599,7 +601,7 @@ BoxCollider:
   m_GameObject: {fileID: 8691047849187387123}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -799,7 +801,7 @@ BoxCollider:
   m_GameObject: {fileID: 8691047849672081449}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -999,7 +1001,7 @@ BoxCollider:
   m_GameObject: {fileID: 8691047849889483123}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -1121,11 +1123,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaveGenerator
       objectReference: {fileID: 0}
-    - target: {fileID: 6451682753358739196, guid: 233c1ec9177b60344bec29f55fe1e2cf,
-        type: 3}
-      propertyPath: StarPlaceManager
-      value: 
-      objectReference: {fileID: 8691047848689972817}
     - target: {fileID: 4969044347415548401, guid: 233c1ec9177b60344bec29f55fe1e2cf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1181,6 +1178,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6451682753358739196, guid: 233c1ec9177b60344bec29f55fe1e2cf,
+        type: 3}
+      propertyPath: StarPlaceManager
+      value: 
+      objectReference: {fileID: 8691047848689972817}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 233c1ec9177b60344bec29f55fe1e2cf, type: 3}
 --- !u!4 &2524473100331667064 stripped
@@ -1358,6 +1360,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4777466320200493636, guid: 1bcf738648e2fdd479454328f91e51db,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bcf738648e2fdd479454328f91e51db, type: 3}
 --- !u!1 &4237946308746338938 stripped
@@ -1527,6 +1534,11 @@ PrefabInstance:
     - target: {fileID: 4777466320200493633, guid: 1bcf738648e2fdd479454328f91e51db,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4777466320200493636, guid: 1bcf738648e2fdd479454328f91e51db,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

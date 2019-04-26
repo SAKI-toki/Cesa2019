@@ -37,7 +37,6 @@ public class EnemyMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         YPlus = RotationPlus;
         RandomOn = Random.Range(MoveTimeLow, MoveTimeHigh);
     }
@@ -45,6 +44,7 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Enemy.EnemyAbnormalState.ParalysisFlg) { return; }
         if (Enemy.ReceivedDamage == false && Enemy.AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
         {
             Move();
