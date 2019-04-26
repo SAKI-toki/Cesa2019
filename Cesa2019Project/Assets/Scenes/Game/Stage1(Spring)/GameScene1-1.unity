@@ -470,10 +470,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4500738840048675189, guid: 893cd06e29e8079449e77de386612a79,
+        type: 3}
+      propertyPath: StarPut
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4500738840048675189, guid: 893cd06e29e8079449e77de386612a79,
+        type: 3}
+      propertyPath: BossWave
+      value: 
+      objectReference: {fileID: 3170667440961557335, guid: c8f0065386d7cbb4bbda9bf0af4961b3,
+        type: 3}
+    - target: {fileID: 4500738840048675189, guid: 893cd06e29e8079449e77de386612a79,
+        type: 3}
+      propertyPath: Tutorial
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4237946308746338943, guid: 893cd06e29e8079449e77de386612a79,
         type: 3}
       propertyPath: IsAwakeSet
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6528676151770467331, guid: 893cd06e29e8079449e77de386612a79,
         type: 3}
@@ -574,12 +590,12 @@ PrefabInstance:
     - target: {fileID: 8691047848126770630, guid: 893cd06e29e8079449e77de386612a79,
         type: 3}
       propertyPath: IsAwakeSet
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8691047848873329147, guid: 893cd06e29e8079449e77de386612a79,
         type: 3}
       propertyPath: IsAwakeSet
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 893cd06e29e8079449e77de386612a79, type: 3}
@@ -669,24 +685,14 @@ PrefabInstance:
       objectReference: {fileID: 1920106675}
     - target: {fileID: 6832700206611247013, guid: d858c0f3ed7efc449ab399e257f07863,
         type: 3}
-      propertyPath: LookAt
-      value: 
-      objectReference: {fileID: 3878012076620809935}
-    - target: {fileID: 6832700206611247013, guid: d858c0f3ed7efc449ab399e257f07863,
-        type: 3}
       propertyPath: PlayerControll
       value: 
       objectReference: {fileID: 2576363717660733140}
     - target: {fileID: 6832700206611247013, guid: d858c0f3ed7efc449ab399e257f07863,
         type: 3}
-      propertyPath: RotXSpeed
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 6832700206611247013, guid: d858c0f3ed7efc449ab399e257f07863,
-        type: 3}
-      propertyPath: RotYSpeed
-      value: 140
-      objectReference: {fileID: 0}
+      propertyPath: LookAt
+      value: 
+      objectReference: {fileID: 3878012076620809935}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d858c0f3ed7efc449ab399e257f07863, type: 3}
 --- !u!114 &1286193383 stripped
@@ -800,11 +806,6 @@ PrefabInstance:
       propertyPath: TimingIcon
       value: 
       objectReference: {fileID: 416016345}
-    - target: {fileID: 2576363717660733140, guid: 93fd8a456c3e4ad44901bcde90d87ed2,
-        type: 3}
-      propertyPath: JumpVal
-      value: 15
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93fd8a456c3e4ad44901bcde90d87ed2, type: 3}
 --- !u!114 &1528196100 stripped
