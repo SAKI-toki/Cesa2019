@@ -339,7 +339,7 @@ public class StarPlaceManager : MonoBehaviour
             if (StarPutMemory[0] != StarPutMemory[StarPutMemory.Length - 1])
             {
                 // 敵がいないときはボーナスなし
-                if (EnemyWave.wave.transform.childCount > 0)
+                if (EnemyWave.Wave.transform.childCount > 0)
                 {
                     if (Random.Range(0, 2) == 0)
                     {
@@ -362,7 +362,7 @@ public class StarPlaceManager : MonoBehaviour
     void ParalysisBonus()
     {
         Debug.Log("麻痺");
-        foreach (Transform child in EnemyWave.wave.transform)
+        foreach (Transform child in EnemyWave.Wave.transform)
         {
             float dis = Vector3.Distance(PlayerPos, child.transform.position);
 
@@ -387,7 +387,7 @@ public class StarPlaceManager : MonoBehaviour
     void PoisonBonus()
     {
         Debug.Log("毒");
-        foreach (Transform child in EnemyWave.wave.transform)
+        foreach (Transform child in EnemyWave.Wave.transform)
         {
             child.GetComponent<Enemy>().EnemyAbnormalState.PoisonStart();
         }
