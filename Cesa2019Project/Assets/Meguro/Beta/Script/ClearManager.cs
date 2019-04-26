@@ -98,13 +98,13 @@ public class ClearManager : MonoBehaviour
                 CameraScript.ClearMoveInit();
                 CameraScript.ClearMove();
                 Vector3 dir = ClearPos.position - Player.transform.position;
-                Player.GetComponent<PlayerController>().Move(dir, 50);
+                Player.GetComponent<PlayerController>().Move(dir, 30);
                 float dis = Vector3.Distance(Player.transform.position, ClearPos.position);
                 if (dis < 1.0f) { ClearMoveFlg = true; }
             }
             if (ClearMoveFlg && !ClearTextFlg)
             {
-                if (CameraScript.Distance > 8)
+                if (CameraScript.Distance > 9)
                 {
                     CameraScript.ZoomIn(0.1f);
                 }
@@ -136,7 +136,7 @@ public class ClearManager : MonoBehaviour
                 {
                     Vector3 dir = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
                     dir = dir * -0.4f + Camera.main.transform.right * -1.0f;
-                    Player.GetComponent<PlayerController>().Move(dir, 30);
+                    Player.GetComponent<PlayerController>().Move(dir, 25);
                 }
                 else
                 {
