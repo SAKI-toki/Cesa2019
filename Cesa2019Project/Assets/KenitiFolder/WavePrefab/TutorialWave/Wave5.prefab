@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6170667166737319088}
+  - component: {fileID: 55397088689237466}
   m_Layer: 0
   m_Name: Wave5
   m_TagString: Untagged
@@ -31,6 +32,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &55397088689237466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3170667440961557335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97dc6280ba4a3b84bb38adb3a0b28a33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7161917098188645255
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -98,10 +111,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7853086108626903496, guid: dadd01708c22c2c4e98beebda3e69c90,
+        type: 3}
+      propertyPath: DestroySE
+      value: 
+      objectReference: {fileID: 8300000, guid: 99e96809fac44e74cad4a60c8b717cdc, type: 3}
     - target: {fileID: 548531673414085480, guid: dadd01708c22c2c4e98beebda3e69c90,
         type: 3}
       propertyPath: EnemyHp
-      value: 90
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 548531673414085480, guid: dadd01708c22c2c4e98beebda3e69c90,
+        type: 3}
+      propertyPath: EnemyDefence
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 548531673414085480, guid: dadd01708c22c2c4e98beebda3e69c90,
+        type: 3}
+      propertyPath: AttackDecision
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 548531673414085480, guid: dadd01708c22c2c4e98beebda3e69c90,
         type: 3}

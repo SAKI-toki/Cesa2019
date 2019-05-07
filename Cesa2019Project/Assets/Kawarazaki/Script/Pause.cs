@@ -15,7 +15,7 @@ public class Pause : MonoBehaviour
     bool PauseFlg = false;
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && !Slect.GetSelectFlg()) 
+        if ((Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown("joystick button 7")) && !Slect.GetSelectFlg() && !StarPlaceManager.AllPlaceSet)
         {
             //ポーズUIのアクティブ、非アクティブを切り替え
             PauseUi.SetActive(!PauseUi.activeSelf);

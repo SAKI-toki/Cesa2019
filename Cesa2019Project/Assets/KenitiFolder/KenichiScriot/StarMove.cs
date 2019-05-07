@@ -17,7 +17,10 @@ public class StarMove : MonoBehaviour
     float LimitTime = 2;
     [SerializeField, Header("プレイヤーに向かう時の速さ")]
     float ZMove = 10;
-    int DestroyDecision = 0;
+    [HideInInspector]
+    public bool BossStar=false;
+    
+    int DestroyDecistion = 0;
     float ItemTime;
     float PlayerRange;
     bool First = true;
@@ -30,7 +33,7 @@ public class StarMove : MonoBehaviour
     {
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得 
         Collider = GetComponent<SphereCollider>();
-        DestroyDecision = Random.Range(0, 10);
+        DestroyDecistion = Random.Range(0, 10);
     }
 
     /// <summary>
@@ -57,8 +60,11 @@ public class StarMove : MonoBehaviour
 
         if (ItemTime >= LimitTime)//時間が来たらプレイヤーに向かうようにする
         {
-            if (DestroyDecision <= 3) { Destroy(gameObject); }
             rigidbody.velocity = Vector3.zero;
+            if (!BossStar)
+            {
+                if (DestroyDecistion <= 3) { Destroy(gameObject); }
+            }
 
             if (PlayerRange <= ItemOn)//範囲に入ったら
             {

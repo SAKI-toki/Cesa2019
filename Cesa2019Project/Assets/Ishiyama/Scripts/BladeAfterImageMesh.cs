@@ -25,6 +25,9 @@ public class BladeAfterImageMesh : MonoBehaviour
     //インデックスリスト
     List<int> IndexList = new List<int>();
 
+    /// <summary>
+    /// 各値の初期化
+    /// </summary>
     void Start()
     {
         AfterImageMesh = GetComponent<MeshFilter>().mesh;
@@ -32,6 +35,9 @@ public class BladeAfterImageMesh : MonoBehaviour
         PrevEndPos = BladeEndTransform.position;
     }
     
+    /// <summary>
+    /// 全てのUpdateが終わってからメッシュ更新する
+    /// </summary>
     void LateUpdate()
     {
         CreateMesh();
@@ -52,7 +58,9 @@ public class BladeAfterImageMesh : MonoBehaviour
             PositionList.AddRange(new Vector3[]
             {
             PrevTipPos,PrevEndPos,tipPos,
-            tipPos,PrevEndPos,endPos
+            tipPos,PrevEndPos,endPos,
+            tipPos,PrevEndPos,PrevTipPos,
+            endPos,PrevEndPos,tipPos
             });
             PrevTipPos = tipPos;
             PrevEndPos = endPos;
@@ -65,7 +73,7 @@ public class BladeAfterImageMesh : MonoBehaviour
         //UV
         {
             UvList.Clear();
-            int size = PositionList.Count / 6;
+            int size = PositionList.Count / 12;
             Vector2 prevTipUv = new Vector2(0, 0), prevEndUv = new Vector2(0, 1);
             Vector2 currentTipUv, currentEndUv;
             for (int i = 0; i < size; ++i)
@@ -75,7 +83,9 @@ public class BladeAfterImageMesh : MonoBehaviour
                 UvList.AddRange(new Vector2[]
                 {
                 prevTipUv,prevEndUv,currentTipUv,
-                currentTipUv,prevEndUv,currentEndUv
+                currentTipUv,prevEndUv,currentEndUv,
+                currentTipUv,prevEndUv,prevTipUv,
+                currentEndUv,prevEndUv,currentTipUv
                 });
                 prevTipUv = currentTipUv;
                 prevEndUv = currentEndUv;

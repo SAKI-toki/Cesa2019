@@ -6,9 +6,17 @@ namespace Constant
     /// <summary>
     /// 定数を定義しているクラス
     /// </summary>
-    public class ConstNumber
+    static public class ConstNumber
     {
         //星の換算
         public const int StarConversion = 5;
+    }
+    /// <summary>
+    /// シーンの名前
+    /// </summary>
+    static public class SceneName
+    {
+        //ゲームシーンの名前
+        public const string GameSceneName = "GameScene";
     }
 }
