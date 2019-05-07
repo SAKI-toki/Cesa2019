@@ -56,7 +56,6 @@ public class CameraController : MonoBehaviour
             MoveStop();
             return;
         }
-
         transform.position = LookAt.position;
 
         RightStickH = Input.GetAxis("R_Stick_H");
