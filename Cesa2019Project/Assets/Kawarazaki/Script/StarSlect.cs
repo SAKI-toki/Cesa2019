@@ -26,15 +26,15 @@ public class StarSlect : MonoBehaviour
     float OriginalScale = 1.0f;
 
     float LStick;
-    bool Right = false;
-    bool Left = false;
+    bool StickFlg = false;
+    //bool Right = false;
+    //bool Left = false;
 
     bool SelectFlg = false;
     
     void Start()
     {
         Select = 0;
-        LStick = Input.GetAxis("L_Stick_H");
     }
     
     void Update()
@@ -87,29 +87,62 @@ public class StarSlect : MonoBehaviour
                 break;
         }
 
-
-        //色の選択
-        //キーボード
-        //if (Input.GetKeyDown(KeyCode.RightArrow))
-        //{
-        //}
-        //if (Input.GetKeyDown(KeyCode.LeftArrow))
-        //{
-        //}
-
-        if (LStick >= 1.0f)
+        //スティック入力
+        SelectMove();
+        //キーボード入力
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            Select++;
-            if (Select > 2)
-                Select = 0;
+            AddSelect();
         }
-
-        if(LStick <= -1.0f)
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            Select--;
-            if (Select < 0)
-                Select = 2;
+            DecSelect();
         }
+    }
+
+    /// <summary>
+    /// 星の選択
+    /// </summary>
+    void SelectMove()
+    {
+        LStick = Input.GetAxis("L_Stick_H");
+        if (LStick == 0)
+        {
+            StickFlg = false;
+            return;
+        }
+        if (StickFlg)
+            return;
+        StickFlg = true;
+        if (LStick > 0)
+        {
+            AddSelect();
+        }
+        if (LStick < 0 )
+        {
+            DecSelect();
+        }
+        
+    }
+
+    /// <summary>
+    /// Select変数を加算
+    /// </summary>
+    void AddSelect()
+    {
+        ++Select;
+        if (Select > 2)
+            Select = 0;
+    }
+
+    /// <summary>
+    /// Select変数を減算
+    /// </summary>
+    void DecSelect()
+    {
+        --Select;
+        if (Select < 0)
+            Select = 2;
     }
     
     /// <summary>
@@ -131,7 +164,6 @@ public class StarSlect : MonoBehaviour
         Select = 0;
         Time.timeScale = 0;
         SelectColor.SetActive(true);
-        //EventSystem.current.SetSelectedGameObject(SelectColor);
         SelectFlg = true;
     }
 
