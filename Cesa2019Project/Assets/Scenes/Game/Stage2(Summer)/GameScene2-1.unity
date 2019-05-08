@@ -148,18 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9514241785ada4e4f80f30f108d9fe21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &827916099 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4517209732821900294, guid: bfda9e26ba7460446ac41bcfb8396f45,
-    type: 3}
-  m_PrefabInstance: {fileID: 854251405}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e70895a72ffcf0b4d9aa9047f4190e8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &841403762 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8438769944636362775, guid: 12992ddbaa7d27f438e9ebb765aaa752,
@@ -184,6 +172,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CommonGameObject
       objectReference: {fileID: 0}
+    - target: {fileID: 4517209733558218721, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: StarPlaceController
+      value: 
+      objectReference: {fileID: 121384941}
     - target: {fileID: 3688123995375410246, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -239,21 +232,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8595809267355691691, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.016210543
-      objectReference: {fileID: 0}
-    - target: {fileID: 1720495282124065008, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.044781342
-      objectReference: {fileID: 0}
-    - target: {fileID: 6064771358159177798, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: StarPlaceController
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2743556551248644138, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: StarPlaces.Array.size
@@ -294,6 +272,26 @@ PrefabInstance:
       propertyPath: StarPlaces.Array.data[6]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7653201727258992600, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: StarPlaceController
+      value: 
+      objectReference: {fileID: 121384941}
+    - target: {fileID: 8595809267355691691, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.016210543
+      objectReference: {fileID: 0}
+    - target: {fileID: 1720495282124065008, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.044781342
+      objectReference: {fileID: 0}
+    - target: {fileID: 6064771358159177798, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: StarPlaceController
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2652824493641650228, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: StarPlaceManager
@@ -319,11 +317,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -10
       objectReference: {fileID: 0}
-    - target: {fileID: 4517209733558218721, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: StarPlaceController
-      value: 
-      objectReference: {fileID: 121384941}
     - target: {fileID: 8209686625573302862, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: field of view
@@ -337,9 +330,21 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 854251405}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1003637710 stripped
+--- !u!114 &854251407 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4517209733558218721, guid: bfda9e26ba7460446ac41bcfb8396f45,
+  m_CorrespondingSourceObject: {fileID: 7653201728169284968, guid: bfda9e26ba7460446ac41bcfb8396f45,
+    type: 3}
+  m_PrefabInstance: {fileID: 854251405}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e70895a72ffcf0b4d9aa9047f4190e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &854251408 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7653201727258992600, guid: bfda9e26ba7460446ac41bcfb8396f45,
     type: 3}
   m_PrefabInstance: {fileID: 854251405}
   m_PrefabAsset: {fileID: 0}
@@ -385,6 +390,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Libra
       objectReference: {fileID: 0}
+    - target: {fileID: 6049080887804431073, guid: 12992ddbaa7d27f438e9ebb765aaa752,
+        type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 854251406}
+    - target: {fileID: 6049080887804431073, guid: 12992ddbaa7d27f438e9ebb765aaa752,
+        type: 3}
+      propertyPath: StarSelectController
+      value: 
+      objectReference: {fileID: 854251408}
+    - target: {fileID: 6049080887804431073, guid: 12992ddbaa7d27f438e9ebb765aaa752,
+        type: 3}
+      propertyPath: Pause
+      value: 
+      objectReference: {fileID: 854251407}
     - target: {fileID: 857598450357044679, guid: 12992ddbaa7d27f438e9ebb765aaa752,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -440,21 +460,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6049080887804431073, guid: 12992ddbaa7d27f438e9ebb765aaa752,
-        type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 854251406}
-    - target: {fileID: 6049080887804431073, guid: 12992ddbaa7d27f438e9ebb765aaa752,
-        type: 3}
-      propertyPath: StarSelectController
-      value: 
-      objectReference: {fileID: 1003637710}
-    - target: {fileID: 6049080887804431073, guid: 12992ddbaa7d27f438e9ebb765aaa752,
-        type: 3}
-      propertyPath: Pause
-      value: 
-      objectReference: {fileID: 827916099}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12992ddbaa7d27f438e9ebb765aaa752, type: 3}
 --- !u!114 &1904484149 stripped
