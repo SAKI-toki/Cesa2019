@@ -19,7 +19,6 @@ public class DeathManager : MonoBehaviour
         {
             if (!CameraMoveFlg)
             {
-                Debug.Log(CameraObject.localEulerAngles.x);
                 if (CameraObject.localEulerAngles.x < 60) { CameraControll.DeathMoveInit(); CameraControll.DeathMove(); }
                 else { CameraMoveFlg = true; }
             }
