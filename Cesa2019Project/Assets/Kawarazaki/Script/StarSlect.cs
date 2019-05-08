@@ -20,14 +20,21 @@ public class StarSlect : MonoBehaviour
     StarPlaceManager StarPlaceController = null;
     private int Select;
 
+    //星の大きさ
     float StarScale = 1.0f;
     float v = 0.1f;
     float OriginalScale = 1.0f;
+
+    float LStick;
+    bool Right = false;
+    bool Left = false;
+
     bool SelectFlg = false;
     
     void Start()
     {
         Select = 0;
+        LStick = Input.GetAxis("L_Stick_H");
     }
     
     void Update()
@@ -82,20 +89,29 @@ public class StarSlect : MonoBehaviour
 
 
         //色の選択
-        if (Input.GetKeyDown("joystick button 5") || Input.GetKeyDown(KeyCode.RightArrow))
+        //キーボード
+        //if (Input.GetKeyDown(KeyCode.RightArrow))
+        //{
+        //}
+        //if (Input.GetKeyDown(KeyCode.LeftArrow))
+        //{
+        //}
+
+        if (LStick >= 1.0f)
         {
             Select++;
             if (Select > 2)
                 Select = 0;
         }
-        if (Input.GetKeyDown("joystick button 4") || Input.GetKeyDown(KeyCode.LeftArrow))
+
+        if(LStick <= -1.0f)
         {
             Select--;
             if (Select < 0)
                 Select = 2;
         }
     }
-
+    
     /// <summary>
     /// 選択画面を消す処理
     /// </summary>
