@@ -51,8 +51,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4081583563110409488}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: fac9c1a32f96862468d764b6617932f6, type: 3}
-  m_Controller: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: fbf29d58a43c1f84eb963dacd85d23bc, type: 3}
+  m_Controller: {fileID: 9100000, guid: 66e7ceb29cffff14aa16aa469084c26e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f766a04b988d44eb7ac2eb3976abb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NonAnimator: 1
+  NonAnimator: 0
   NonDirectAttack: 0
   BossEnemy: 0
   Bullet: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   OnPlayerTracking: 20
   Latency: 1
   AttackDecision: 2
-  OutPutAttackDecision: 0.7
+  OutPutAttackDecision: 1
   AttackWait: 3
   Rigor_Cancellation: 1.5
   DamageCount: 3
