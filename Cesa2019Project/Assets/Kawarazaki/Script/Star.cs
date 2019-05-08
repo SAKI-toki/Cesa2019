@@ -141,13 +141,13 @@ public class Star : MonoBehaviour
         switch (starColor)
         {
             case HaveStarManager.StarColorEnum.Red:
-                RedLittleStar.fillAmount = HaveStarManager.GetLittleStar(starColor) / 5.0f;
+                RedLittleStar.fillAmount = HaveStarManager.GetLittleStar(starColor) / 15.0f;
                 break;
             case HaveStarManager.StarColorEnum.Blue:
-                BlueLittleStar.fillAmount = HaveStarManager.GetLittleStar(starColor) / 5.0f;
+                BlueLittleStar.fillAmount = HaveStarManager.GetLittleStar(starColor) / 15.0f;
                 break;
             case HaveStarManager.StarColorEnum.Green:
-                GreenLittleStar.fillAmount = HaveStarManager.GetLittleStar(starColor) / 5.0f;
+                GreenLittleStar.fillAmount = HaveStarManager.GetLittleStar(starColor) / 15.0f;
                 break;
         }
     }

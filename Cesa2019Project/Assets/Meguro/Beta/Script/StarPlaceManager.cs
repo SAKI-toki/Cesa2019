@@ -29,8 +29,6 @@ public class StarPlaceManager : MonoBehaviour
     List<Line> LineList = new List<Line>();
     HaveStarManager.StarColorEnum[] StarPutMemory = new HaveStarManager.StarColorEnum[3] { HaveStarManager.StarColorEnum.None, HaveStarManager.StarColorEnum.None, HaveStarManager.StarColorEnum.None };
     List<StarPlace> StarPlaceList = new List<StarPlace>();      // 星を置く場所のリスト
-    [SerializeField, Header("WaveController")]
-    WaveController EnemyWave = null;
     [SerializeField, Header("麻痺範囲")]
     float ParalysisDis = 0;
     [SerializeField, Header("星が置けるようになる距離")]
@@ -143,7 +141,6 @@ public class StarPlaceManager : MonoBehaviour
                             // 星を持っていない
                             else
                             {
-                                //Debug.Log("====星が無いよ====");
                             }
                         }
                         else if (distance > ActiveDistance)
@@ -156,7 +153,6 @@ public class StarPlaceManager : MonoBehaviour
                         {
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {
-                                Debug.Log(GetWaveController.EnemyZero);
                                 if (GetWaveController.EnemyZero)
                                 {
                                     StarSelectPlaceNum = i;
@@ -355,7 +351,7 @@ public class StarPlaceManager : MonoBehaviour
             if (StarPutMemory[0] != StarPutMemory[StarPutMemory.Length - 1])
             {
                 // 敵がいないときはボーナスなし
-                if (EnemyWave.Wave.transform.childCount > 0)
+                if (GetWaveController.Wave.transform.childCount > 0)
                 {
                     if (Random.Range(0, 2) == 0)
                     {
@@ -377,8 +373,7 @@ public class StarPlaceManager : MonoBehaviour
     /// </summary>
     void ParalysisBonus()
     {
-        Debug.Log("麻痺");
-        foreach (Transform child in EnemyWave.Wave.transform)
+        foreach (Transform child in GetWaveController.Wave.transform)
         {
             float dis = Vector3.Distance(PlayerPos, child.transform.position);
 
@@ -402,8 +397,7 @@ public class StarPlaceManager : MonoBehaviour
     /// </summary>
     void PoisonBonus()
     {
-        Debug.Log("毒");
-        foreach (Transform child in EnemyWave.Wave.transform)
+        foreach (Transform child in GetWaveController.Wave.transform)
         {
             child.GetComponent<Enemy>().EnemyAbnormalState.PoisonStart();
         }

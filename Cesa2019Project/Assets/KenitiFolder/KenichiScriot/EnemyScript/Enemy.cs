@@ -293,7 +293,6 @@ public class Enemy : MonoBehaviour
             Star = RedStar;//赤の星を生成させる 
             GameObject item = Instantiate(Star) as GameObject;//星の生成
             StarMove = item.GetComponent<StarMove>();
-            StarMove.BossStar = true;
             item.transform.position = transform.position;
             item.transform.Rotate(0, Random.Range(-180, 180), 0);
         }
@@ -303,7 +302,6 @@ public class Enemy : MonoBehaviour
             Star = BlueStar;//青の星を生成させる
             GameObject item = Instantiate(Star) as GameObject;//星の生成
             StarMove = item.GetComponent<StarMove>();
-            StarMove.BossStar = true;
             item.transform.position = transform.position;
             item.transform.Rotate(0, Random.Range(-180, 180), 0);
         }
@@ -313,7 +311,6 @@ public class Enemy : MonoBehaviour
             Star = YellowStar;//黄の星を生成させる
             GameObject item = Instantiate(Star) as GameObject;//星の生成
             StarMove = item.GetComponent<StarMove>();
-            StarMove.BossStar = true;
             item.transform.position = transform.position;
             item.transform.Rotate(0, Random.Range(-180, 180), 0);
         }

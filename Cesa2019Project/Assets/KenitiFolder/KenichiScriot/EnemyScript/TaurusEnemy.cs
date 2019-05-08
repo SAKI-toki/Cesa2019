@@ -116,7 +116,6 @@ public class TaurusEnemy : MonoBehaviour
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
             EffectRush.SetActive(false);
-            Debug.Log("ji");
             Enemy.Animator.SetTrigger("EnemyAttack");
             Enemy.EnemySe.AttackSES();
             AttackMotionFirst = true;

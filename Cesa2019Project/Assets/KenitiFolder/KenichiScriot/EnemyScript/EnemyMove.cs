@@ -69,12 +69,12 @@ public class EnemyMove : MonoBehaviour
         //前に進む
         if (Enemy.MoveSwitch)
         {
-            //Enemy.Animator.SetBool("EnemyWalk", true);
+            Enemy.Animator.SetBool("EnemyWalk", true);
             transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime);
         }
         else
         {
-            //Enemy.Animator.SetBool("EnemyWalk", false);
+            Enemy.Animator.SetBool("EnemyWalk", false);
         }
     }
 
@@ -162,10 +162,10 @@ public class EnemyMove : MonoBehaviour
     {
         AttackTime += Time.deltaTime;
         Enemy.AttackEnemy = true;
-       //Enemy.Animator.SetBool("EnemyWalk", false);
+        Enemy.Animator.SetBool("EnemyWalk", false);
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
-           // Enemy.Animator.SetTrigger("EnemyAttack");
+            Enemy.Animator.SetTrigger("EnemyAttack");
             Enemy.EnemySe.AttackSES();
             AttackMotionFirst = true;
         }
