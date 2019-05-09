@@ -5,8 +5,6 @@ using UnityEngine;
 public class PiscesEnemy : MonoBehaviour
 {
     [SerializeField]
-    Enemy GetEnemy = null;
-    [SerializeField]
     GameObject PisceBoss = null;
 
     PlayerController PlayerController;

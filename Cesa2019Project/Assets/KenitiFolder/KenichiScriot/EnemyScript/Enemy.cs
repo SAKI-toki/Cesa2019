@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour
     public GameObject AttackPrefab = null;
 
     int StarRandom = 0;
-    int StarCount = 5;
+    int StarCount = 20;
     int AttackCount = 0;
     int StatusUpCount = 1;
     int RedStarCount = 0;
