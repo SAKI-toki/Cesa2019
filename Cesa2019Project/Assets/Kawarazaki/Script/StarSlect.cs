@@ -87,6 +87,12 @@ public class StarSlect : MonoBehaviour
                 break;
         }
 
+        //選択画面のキャンセル
+        if (Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.F))
+        {
+            DeleteSelect();
+        }
+
         //スティック入力
         SelectMove();
         //キーボード入力
