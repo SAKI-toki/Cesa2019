@@ -164,6 +164,11 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        if(StarPlaceManager.AllPlaceSet)
+        {
+            Destroy(this.gameObject);
+        }
+
         if (Time.timeScale == 0 || Bullet == true)
         {
             return;
