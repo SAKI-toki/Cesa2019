@@ -6,7 +6,6 @@ public class AriesEnemy : MonoBehaviour
 {
     float MoveSave = 0;
     float AriesTime = 0;
-    float Yforword = 30;
     bool AssaultFlag = false;
     float AttackTime = 0;//攻撃の時間
     bool AttackOn = false;//攻撃中か

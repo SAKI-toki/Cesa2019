@@ -26,12 +26,6 @@ public class ShootEnemyMove : MonoBehaviour
     float MoveTimeLow = 1.0f;//移動している時間の低値
     float MoveTimeHigh = 3.0f;//移動している時間高値
 
-    float AttackTime = 0;//攻撃の時間
-    bool AttackOn = false;//攻撃中か
-    bool AttackFirst = false;//攻撃を一度だけ実行
-    bool AttackMotionFirst = false;//攻撃モーションを一度だけ実行
-    GameObject AttackObject = null;
-
     [SerializeField]
     Enemy Enemy = null;
     // Start is called before the first frame update
