@@ -31,8 +31,6 @@ public class WaveController : MonoBehaviour
 
     private int CurrentWave = 0;// 現在のWave
     int StarPutCount = 0;
-    //static public int WaveCount = 0;
-    GameObject ChildCount = null;
     BGM BGM = null;
 
     private void Start()
