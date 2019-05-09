@@ -15,7 +15,7 @@ public class LibraEnemy : MonoBehaviour
     [SerializeField]
     GameObject Bullet = null;
     [SerializeField]
-    GameObject Bulet2 = null;
+    GameObject Bullet2 = null;
 
     float VirgoTime = 0;
     float BulletTime = 0;
@@ -73,7 +73,7 @@ public class LibraEnemy : MonoBehaviour
         Vector3 position2 = transform.position + transform.up * Offset2.y +
            transform.right * Offset2.x +
            transform.forward * Offset2.z;
-        GameObject bullet2 = (GameObject)Instantiate(Bullet, position2, transform.rotation);
+        GameObject bullet2 = (GameObject)Instantiate(Bullet2, position2, transform.rotation);
     }
 
 

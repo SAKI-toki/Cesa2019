@@ -6,7 +6,6 @@ public class CapricornEnemy : MonoBehaviour
 {
     float MoveSave = 0;
     float CapricornTime = 0;
-    float Yforword = 30;
     bool AssaultFlag = false;
     float AttackTime = 0;//攻撃の時間
     bool AttackOn = false;//攻撃中か
