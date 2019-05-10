@@ -48,7 +48,7 @@ public class FadeController : MonoBehaviour
         //Imageのサイズ設定
         FadeImage.rectTransform.sizeDelta = new Vector2(9999, 9999);
     }
-    
+
 
     void Update()
     {
@@ -56,10 +56,10 @@ public class FadeController : MonoBehaviour
         if (IsFadeIn)
         {
             //透明度変化
-            Alpha -=  FadeSpeed;
+            Alpha -= FadeSpeed;
 
             //フェードイン終了判定
-            if(Alpha <= 0.0f)
+            if (Alpha <= 0.0f)
             {
                 IsFadeIn = false;
                 Alpha = 0.0f;
@@ -69,7 +69,7 @@ public class FadeController : MonoBehaviour
         }
 
         //フェードアウト
-        else if(IsFadeOut)
+        else if (IsFadeOut)
         {
             //透明度変化
             Alpha += FadeSpeed;
@@ -96,6 +96,7 @@ public class FadeController : MonoBehaviour
             Init();
         IsFadeIn = true;
         Alpha = 1.0f;
+        SetAlpha();
     }
 
     /// <summary>
@@ -109,12 +110,13 @@ public class FadeController : MonoBehaviour
         FadeImage.enabled = true;
         IsFadeOut = true;
         Alpha = 0.0f;
+        SetAlpha();
     }
 
     /// <summary>
     /// FadeImageのカラー設定
     /// </summary>
-    void SetAlpha()
+    static void SetAlpha()
     {
         FadeImage.color = new Color(0, 0, 0, Alpha);
     }
