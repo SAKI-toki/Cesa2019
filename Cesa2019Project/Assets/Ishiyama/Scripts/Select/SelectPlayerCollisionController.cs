@@ -8,21 +8,25 @@ public class SelectPlayerCollisionController : MonoBehaviour
 {
     [SerializeField, Header("季節を表示するUI")]
     Text SeasonText = null;
+    //衝突している季節
     SelectSeasonInfo.Season CurrentCollisionSeason = SelectSeasonInfo.Season.None;
 
     private void Start()
     {
+        //テキストは最初表示しない
         SeasonText.enabled = false;
     }
 
     private void Update()
     {
         if (Time.timeScale == 0.0f) return;
+        //テキストが表示され、決定ボタンを押したらシーン遷移
         if (SeasonText.enabled &&
          (Input.GetKeyDown("joystick button 1") ||
           Input.GetKeyDown(KeyCode.Return)))
         {
             string sceneName = "GameScene";
+            //列挙型から季節を取得
             switch (CurrentCollisionSeason)
             {
                 case SelectSeasonInfo.Season.Spring:
