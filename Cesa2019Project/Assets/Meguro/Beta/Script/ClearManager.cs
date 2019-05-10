@@ -260,6 +260,10 @@ public class ClearManager : MonoBehaviour
                     /*=================================================*/
                     //遷移
                     /*=================================================*/
+                    if (!FadeController.IsFadeOut)
+                    {
+                        FadeController.FadeOut("SelectScene");
+                    }
                 }
             }
         }

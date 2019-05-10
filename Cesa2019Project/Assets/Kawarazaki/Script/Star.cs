@@ -36,10 +36,10 @@ public class Star : MonoBehaviour
     //座標(Big)
     //X
     [SerializeField]
-    float StarPosX = -65.0f;
+    float StarPosX = -0.0f;
     //Y
     [SerializeField]
-    float StarPosY = 125.0f;
+    float StarPosY = 0.0f;
 
     //星のサイズ(Big)
     [SerializeField]

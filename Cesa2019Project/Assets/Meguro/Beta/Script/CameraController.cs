@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     Transform CameraTransform = null;
     [SerializeField]
-    LayerMask Mask;
+    LayerMask Mask = 0;
     float RightStickH = 0, RightStickV = 0;
     float LeftStickH = 0;
     float RotX, RotY;

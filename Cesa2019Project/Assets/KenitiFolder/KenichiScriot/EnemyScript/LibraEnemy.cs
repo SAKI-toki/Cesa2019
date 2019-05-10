@@ -8,8 +8,19 @@ public class LibraEnemy : MonoBehaviour
     Enemy GetEnemy = null;
     [SerializeField, Header("移動時間")]
     float BackTime = 10;
+    [SerializeField]
+    Vector3 Offset = new Vector3(5, 5, 0);
+    [SerializeField]
+    Vector3 Offset2 = new Vector3(-5, 5, 0);
+    [SerializeField]
+    GameObject Bullet = null;
+    [SerializeField]
+    GameObject Bulet2 = null;
 
     float VirgoTime = 0;
+    float BulletTime = 0;
+    float BulletTime2 = 0;
+    int BulletCount = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +35,18 @@ public class LibraEnemy : MonoBehaviour
             Following();
 
             LiblaMove();
+            BulletTime += Time.deltaTime;
+            if(BulletTime>=2)
+            {
+                BulletTime2 += Time.deltaTime;
+                if(BulletTime2>=1.5)
+                {
+                    BulletGenerate();
+                    BulletCount++;
+                    if (BulletCount >= 3) { BulletTime = 0;BulletTime2 = 0; };
+                    BulletTime2 = 0;
+                }
+            }
         }
     }
 
@@ -39,6 +62,20 @@ public class LibraEnemy : MonoBehaviour
             GetEnemy.JampFlag = false;
         }
     }
+
+    void BulletGenerate()
+    {
+        Vector3 position = transform.position + transform.up * Offset.y +
+           transform.right * Offset.x +
+           transform.forward * Offset.z;
+        GameObject bullet = (GameObject)Instantiate(Bullet, position, transform.rotation);
+
+        Vector3 position2 = transform.position + transform.up * Offset2.y +
+           transform.right * Offset2.x +
+           transform.forward * Offset2.z;
+        GameObject bullet2 = (GameObject)Instantiate(Bullet, position2, transform.rotation);
+    }
+
 
     /// <summary>
     /// 敵の索敵範囲に入ったらプレイヤーに向く

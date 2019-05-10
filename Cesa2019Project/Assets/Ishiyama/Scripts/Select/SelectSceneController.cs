@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// セレクトシーンのステートのインターフェース
+/// </summary>
 interface ISelectSceneState
 {
     void SelectSceneInit();
@@ -8,6 +11,9 @@ interface ISelectSceneState
     void SelectSceneDestroy();
 }
 
+/// <summary>
+/// セレクトシーンの制御
+/// </summary>
 public class SelectSceneController : MonoBehaviour
 {
     [SerializeField, Header("最初のステート")]
@@ -21,6 +27,7 @@ public class SelectSceneController : MonoBehaviour
     {
         SelectSceneState = FirstStateObject.GetComponent(typeof(ISelectSceneState)) as ISelectSceneState;
         SelectSceneState.SelectSceneInit();
+        FadeController.FadeIn();
     }
 
     void Update()

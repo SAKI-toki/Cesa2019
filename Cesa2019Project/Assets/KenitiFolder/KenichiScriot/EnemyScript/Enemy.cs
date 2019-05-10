@@ -74,6 +74,7 @@ public class Enemy : MonoBehaviour
     public Vector3 Offset = new Vector3();
     [SerializeField, Header("AttackPrefabを入れる")]
     public GameObject AttackPrefab = null;
+    HitStopManager HitStop = null;
 
     int StarRandom = 0;
     int StarCount = 5;
@@ -115,9 +116,8 @@ public class Enemy : MonoBehaviour
     public bool DestroyFlag = false;//撃破フラグを立てる
     [HideInInspector]
     public bool JampFlag = false;//ジャンプ中のフラグ
-    [SerializeField]
-    public EnemySe EnemySe;
     [HideInInspector]
+    public EnemySe EnemySe;
     public bool NoDamage = false;
 
     GameObject StarPlace = null;
@@ -150,6 +150,7 @@ public class Enemy : MonoBehaviour
         StarPlace = GameObject.Find("StarPlaceManager");
         StarPlaceManager = StarPlace.GetComponent<StarPlaceManager>();
         EnemyAbnormalState.Init(5, 10, 1, 5);
+        HitStop = GameObject.Find("HitStopManager").GetComponent<HitStopManager>();
     }
 
     // Update is called once per frame
@@ -214,6 +215,7 @@ public class Enemy : MonoBehaviour
         {
             if (!NoDamage)
             {
+                HitStop.SlowDown();
                 ++PlayerController.ComboController.CurrentComboNum;
                 EnemyStatus.CurrentHp -= Status.Damage(PlayerController.PlayerStatus.CurrentAttack, EnemyStatus.CurrentDefense);//HPを減らす
                 AttackCount++;
@@ -250,12 +252,15 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "PlayerAttack")
         {
-            AttackCount++;
-            ++PlayerController.ComboController.CurrentComboNum;
-            EnemyStatus.CurrentHp -= 2;//HPを減らす
-            if (EnemyStatus.CurrentHp <= 0)
+            if (!NoDamage)
             {
-                EnemyStatus.CurrentHp = 0;
+                AttackCount++;
+                ++PlayerController.ComboController.CurrentComboNum;
+                EnemyStatus.CurrentHp -= 2;//HPを減らす
+                if (EnemyStatus.CurrentHp <= 0)
+                {
+                    EnemyStatus.CurrentHp = 0;
+                }
             }
         }
     }

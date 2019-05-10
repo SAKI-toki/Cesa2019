@@ -7,19 +7,13 @@ using UnityEngine.UI;
 /// </summary>
 public class HpGauge : MonoBehaviour
 {
-    //緑ゲージのHPバー(円)
+    //HPバー(円)
     [SerializeField]
-    public Image FrontCircleHp = null;
-    //赤ゲージのHPバー（円）
-    [SerializeField]
-    public Image BackCircleHp = null;
+    public Image CircleHp = null;
 
-    //緑ゲージのHPバー(横)
+    //HPバー(横)
     [SerializeField]
-    public Image FrontHorizontalHp = null;
-    //赤ゲージのHPバー（横）
-    [SerializeField]
-    public Image BackHorizontalHp = null;
+    public Image HorizontalHp = null;
 
     //プレイヤーHP
     //[SerializeField]
@@ -37,19 +31,14 @@ public class HpGauge : MonoBehaviour
     void Start()
     {
         //MaxHp = Hp;
-        FrontCircleHp.fillAmount = 1.0f;
-        BackCircleHp.fillAmount = 1.0f;
-        FrontHorizontalHp.fillAmount= 1.0f;
-        BackHorizontalHp.fillAmount = 1.0f;
+        CircleHp.fillAmount = 1.0f;
+        HorizontalHp.fillAmount= 1.0f;
     }
 
 
-    void FixedUpdate()
+    void Update()
     {
-        //HP減少スピード変数
-        float reduceSpeed = 3.0f;
-        float waitSpeed = 10.0f;
-
+        HorizontalHp.fillAmount = PlayerController.PlayerStatus.CurrentHp / PlayerController.PlayerStatus.Hp;
         ////ダメージ
         //if (Input.GetMouseButtonDown(0))
         //{
@@ -67,44 +56,31 @@ public class HpGauge : MonoBehaviour
         //    Debug.Log(1);
         //}
         //HPダメージ
-        if(PlayerController.PlayerStatus.Hp > 0 ) 
-        {
-            if(horizonflg)
-            {
-                FrontHorizontalHp.fillAmount = (PlayerController.PlayerStatus.CurrentHp - (PlayerController.PlayerStatus.Hp * 3 / 7)) / (PlayerController.PlayerStatus.Hp * 4 / 7);
-                if(PlayerController.PlayerStatus.CurrentHp <= PlayerController.PlayerStatus.Hp * 3 / 7 )
-                {
-                    horizonflg = false;
-                    circleflg = true;
-                }
-            }
-            else if(circleflg)
-            {
-                if(PlayerController.PlayerStatus.CurrentHp <= PlayerController.PlayerStatus.Hp * 3 / 7)
-                {
-                    horizonflg = true;
-                    circleflg = false;
-                }
-                FrontCircleHp.fillAmount = (PlayerController.PlayerStatus.CurrentHp + (PlayerController.PlayerStatus.Hp * 1 / 7)) / (PlayerController.PlayerStatus.Hp * 4 / 7);
-                if(PlayerController.PlayerStatus.CurrentHp <= 0)
-                {
-                    horizonflg = false;
-                    circleflg = false;
-                }
-            }
-        }
-
-        //FrontHpを追いかける
-        if (FrontCircleHp.fillAmount <= BackCircleHp.fillAmount)
-            BackCircleHp.fillAmount -= Mathf.Clamp01(reduceSpeed / waitSpeed * Time.deltaTime);
-
-        if (FrontHorizontalHp.fillAmount <= BackHorizontalHp.fillAmount)
-            BackHorizontalHp.fillAmount -= Mathf.Clamp01(reduceSpeed / waitSpeed * Time.deltaTime);
-
-        ////HP回復
-        //if (FrontCircleHp.fillAmount >= BackCircleHp.fillAmount)
+        //if(PlayerController.PlayerStatus.Hp > 0 ) 
         //{
-        //    BackCircleHp.fillAmount = FrontCircleHp.fillAmount;
+        //    if(horizonflg)
+        //    {
+        //        HorizontalHp.fillAmount = (PlayerController.PlayerStatus.CurrentHp - (PlayerController.PlayerStatus.Hp * 3 / 7)) / (PlayerController.PlayerStatus.Hp * 4 / 7);
+        //        if(PlayerController.PlayerStatus.CurrentHp <= PlayerController.PlayerStatus.Hp * 3 / 7 )
+        //        {
+        //            horizonflg = false;
+        //            circleflg = true;
+        //        }
+        //    }
+        //    else if(circleflg)
+        //    {
+        //        if(PlayerController.PlayerStatus.CurrentHp <= PlayerController.PlayerStatus.Hp * 3 / 7)
+        //        {
+        //            horizonflg = true;
+        //            circleflg = false;
+        //        }
+        //        CircleHp.fillAmount = (PlayerController.PlayerStatus.CurrentHp + (PlayerController.PlayerStatus.Hp * 1 / 7)) / (PlayerController.PlayerStatus.Hp * 4 / 7);
+        //        if(PlayerController.PlayerStatus.CurrentHp <= 0)
+        //        {
+        //            horizonflg = false;
+        //            circleflg = false;
+        //        }
+        //    }
         //}
     }
 }

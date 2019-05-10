@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f766a04b988d44eb7ac2eb3976abb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NonAnimator: 0
+  NonAnimator: 1
   NonDirectAttack: 0
   BossEnemy: 0
   Bullet: 0
@@ -107,6 +107,7 @@ MonoBehaviour:
   Offset: {x: 0, y: 1, z: 1.5}
   AttackPrefab: {fileID: 9027682551869182764, guid: 7115063cdc7c456419fba109e6139a06,
     type: 3}
+  HitStop: {fileID: 0}
   DamageFlag: 0
   ReceivedDamage: 0
   PlayerTracking: 0
@@ -515,6 +516,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4406562756855210368, guid: 4d115fd54cf301c40b6eab61c5bb607b,
         type: 3}
+      propertyPath: EnemyHp
+      value: 
+      objectReference: {fileID: 2912712622703613593}
+    - target: {fileID: 4406562756855210368, guid: 4d115fd54cf301c40b6eab61c5bb607b,
+        type: 3}
       propertyPath: HpEnemy
       value: 
       objectReference: {fileID: 4081583563110409491}
@@ -526,6 +532,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6795132769712639760}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2912712622703613593 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8512122097283963273, guid: 4d115fd54cf301c40b6eab61c5bb607b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6795132769712639760}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8621911355591579217
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -593,11 +611,35 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
+      propertyPath: m_Bones.Array.data[0]
+      value: 
+      objectReference: {fileID: 8621911355591970005}
+    - target: {fileID: 13700000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
+      propertyPath: m_Bones.Array.data[1]
+      value: 
+      objectReference: {fileID: 8621911355591970007}
+    - target: {fileID: 13700000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
+      propertyPath: m_RootBone
+      value: 
+      objectReference: {fileID: 8621911355591970005}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
 --- !u!4 &8621911355591970001 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 7f069214c35182e4697d88ead254cd37,
+    type: 3}
+  m_PrefabInstance: {fileID: 8621911355591579217}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8621911355591970005 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400004, guid: 7f069214c35182e4697d88ead254cd37,
+    type: 3}
+  m_PrefabInstance: {fileID: 8621911355591579217}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8621911355591970007 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400006, guid: 7f069214c35182e4697d88ead254cd37,
     type: 3}
   m_PrefabInstance: {fileID: 8621911355591579217}
   m_PrefabAsset: {fileID: 0}

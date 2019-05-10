@@ -10,8 +10,12 @@ public class LongDistanceGeminiEnemy : MonoBehaviour
     GameObject BulletObject = null;
     [SerializeField]
     GameObject LaserObject = null;
-    [SerializeField]
-    ShortDistanceGeminiEnemy ShortGeminiEnemy = null;
+    [SerializeField, Header("近距離")]
+    Enemy ShortEnemy = null;
+    [SerializeField, Header("バリア")]
+    GameObject BarrierObject = null;
+    [SerializeField, Header("バリアの弾")]
+    GameObject BarrierBullet = null;
 
     delegate void StateType();
 
@@ -29,18 +33,24 @@ public class LongDistanceGeminiEnemy : MonoBehaviour
     const float AfterLaserIdleTimeLimit = 5.0f;
     const float LaserTimeLimit = 5.0f;
     const float MoveSpeed = 10.0f;
+    bool ShotBarrierFlg = false;
 
     void Start()
     {
         State = BulletState;
+        BarrierObject.SetActive(false);
     }
 
     void Update()
     {
-        if (GetHpPercent() < 0.25f &&
-            ShortGeminiEnemy.GetHpPercent() < 0.25f) 
+        if (ThisEnemy.EnemyStatus.CurrentHp <= ThisEnemy.EnemyStatus.Hp / 4)
         {
-            State = UnionState;
+            State = null;
+            ThisEnemy.NoDamage = true;
+        }
+        if (!ShotBarrierFlg && State != null && ShortEnemy.NoDamage)
+        {
+            State = ShotBarrierState;
         }
         State?.Invoke();
     }
@@ -51,7 +61,9 @@ public class LongDistanceGeminiEnemy : MonoBehaviour
     void BulletState()
     {
         BulletTimeCount += Time.deltaTime;
-        transform.LookAt(ThisEnemy.PlayerController.transform);
+        var lookAtPos = ThisEnemy.PlayerController.transform.position;
+        lookAtPos.y = transform.position.y;
+        transform.LookAt(lookAtPos);
         if (BulletTimeCount > BulletRate)
         {
             ShotBullet();
@@ -62,6 +74,7 @@ public class LongDistanceGeminiEnemy : MonoBehaviour
                 State = IdleState;
                 AfterIdleState = LaserState;
                 IdleTimeLimit = AfterBulletIdleTimeLimit;
+                BulletGroupNum = 0;
             }
         }
     }
@@ -85,14 +98,27 @@ public class LongDistanceGeminiEnemy : MonoBehaviour
     void LaserState()
     {
         LaserTimeCount += Time.deltaTime;
-        transform.LookAt(ThisEnemy.PlayerController.transform);
+        var lookAtPos = ThisEnemy.PlayerController.transform.position;
+        lookAtPos.y = transform.position.y;
+        transform.LookAt(lookAtPos);
         if (LaserTimeCount > LaserTimeLimit)
         {
             ShotLaser();
             State = IdleState;
             AfterIdleState = BulletState;
             IdleTimeLimit = AfterLaserIdleTimeLimit;
+            LaserTimeCount = 0.0f;
         }
+    }
+
+    void ShotBarrierState()
+    {
+        Debug.Log("shot");
+        ShotBarrierFlg = true;
+        Instantiate(BarrierBullet, transform.position + new Vector3(0, 2, 0), transform.rotation).
+            GetComponent<GeminiBarrierBullet>().GeminiBarrierBulletInit(
+            ShortEnemy.transform.position - transform.position);
+        State = IdleState;
     }
 
     /// <summary>
@@ -100,7 +126,7 @@ public class LongDistanceGeminiEnemy : MonoBehaviour
     /// </summary>
     void ShotBullet()
     {
-        Instantiate(BulletObject, transform.position, transform.rotation);
+        Instantiate(BulletObject, transform.position + new Vector3(0, 2, 0), transform.rotation);
     }
 
     /// <summary>
@@ -109,35 +135,31 @@ public class LongDistanceGeminiEnemy : MonoBehaviour
     void ShotLaser()
     {
         GameObject obj=Instantiate(LaserObject, transform.position, transform.rotation);
-        obj.GetComponent<GeminiLaser>().LaserInit();
-        //obj.transform.Rotate
+        obj.GetComponent<GeminiLaser>().LaserInit(transform.position);
         obj = Instantiate(LaserObject, transform.position, transform.rotation);
         obj.transform.Rotate(0, 20, 0);
-        obj.GetComponent<GeminiLaser>().LaserInit();
+        obj.GetComponent<GeminiLaser>().LaserInit(transform.position);
         obj = Instantiate(LaserObject, transform.position, transform.rotation);
         obj.transform.Rotate(0, -20, 0);
-        obj.GetComponent<GeminiLaser>().LaserInit();
+        obj.GetComponent<GeminiLaser>().LaserInit(transform.position);
         obj = Instantiate(LaserObject, transform.position, transform.rotation);
         obj.transform.Rotate(0, 40, 0);
-        obj.GetComponent<GeminiLaser>().LaserInit();
+        obj.GetComponent<GeminiLaser>().LaserInit(transform.position);
         obj = Instantiate(LaserObject, transform.position, transform.rotation);
         obj.transform.Rotate(0, -40, 0);
-        obj.GetComponent<GeminiLaser>().LaserInit();
-    }
-
-    void UnionState()
-    {
-        if (Vector3.Distance(transform.position, ShortGeminiEnemy.gameObject.transform.position) < 4.0f)
-        {
-            State = null;
-            return;
-        }
-        transform.LookAt(ShortGeminiEnemy.gameObject.transform);
-        transform.Translate(0, MoveSpeed * Time.deltaTime, 0);
+        obj.GetComponent<GeminiLaser>().LaserInit(transform.position);
     }
 
     public float GetHpPercent()
     {
         return ThisEnemy.EnemyStatus.CurrentHp / ThisEnemy.EnemyStatus.Hp;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.GetComponent<GeminiBarrierBullet>() && ThisEnemy.NoDamage)
+        {
+            BarrierObject.SetActive(true);
+            Destroy(other.gameObject);
+        }
     }
 }

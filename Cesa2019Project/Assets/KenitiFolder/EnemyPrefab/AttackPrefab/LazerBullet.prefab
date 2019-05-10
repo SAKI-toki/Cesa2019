@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4339194094335792189}
   - component: {fileID: 5034207804112660518}
   - component: {fileID: 7604683291761433964}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: BulletChild
   m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 850a51806120aa8448f000a4283f4562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BulletCategory: 0
   BulletMove: 0
   DestroyTime: 3
   NonDestroy: 1
@@ -233,7 +234,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4721959666047621187}
   - component: {fileID: 3794073033640735188}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: LazerBullet
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -267,6 +268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f766a04b988d44eb7ac2eb3976abb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NonAnimator: 0
   NonDirectAttack: 0
   BossEnemy: 0
   Bullet: 1
@@ -295,10 +297,9 @@ MonoBehaviour:
   DamageCount: 3
   MinStarCount: 1
   MaxStarCount: 3
-  RotationPlus: 5
-  RotateHours: 0.1
   Offset: {x: 0, y: 0, z: 0}
   AttackPrefab: {fileID: 0}
+  DamageFlag: 0
   ReceivedDamage: 0
   PlayerTracking: 0
   AttackEnemy: 0
@@ -310,12 +311,14 @@ MonoBehaviour:
     Hp: 0
     Attack: 0
     Defense: 0
-    Speed: 0
     CurrentHp: 0
     CurrentAttack: 0
     CurrentDefense: 0
-    CurrentSpeed: 0
   TargetPos: {x: 0, y: 0, z: 0}
   Animator: {fileID: 0}
   NearObj: {fileID: 0}
   DestroyFlag: 0
+  JampFlag: 0
+  EnemySe: {fileID: 0}
+  NoDamage: 0
+  PlayerController: {fileID: 0}
