@@ -34,9 +34,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        CameraTransform.localPosition = new Vector3(0, 0, -Distance);
-        RotX = transform.eulerAngles.x;
-        RotY = transform.eulerAngles.y;
+        CameraInit();
     }
 
     void Update()
@@ -107,6 +105,15 @@ public class CameraController : MonoBehaviour
             CameraTransform.localPosition = new Vector3(0, 0, -Distance);
         }
     }
+
+    public void CameraInit()
+    {
+        CameraTransform.localPosition = new Vector3(0, 0, -Distance);
+        RotX = transform.eulerAngles.x;
+        RotY = transform.eulerAngles.y;
+        transform.position = LookAt.position;
+    }
+
 
     void MoveStop()
     {
