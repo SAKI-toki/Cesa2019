@@ -98,11 +98,6 @@ public class Status
         CurrentSpeed = Speed;
     }
 
-    public void StaminaUp(float num)
-    {
-
-    }
-
     /// <summary>
     /// ダメージ
     /// </summary>

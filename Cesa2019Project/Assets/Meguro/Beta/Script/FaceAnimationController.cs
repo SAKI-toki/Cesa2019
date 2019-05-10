@@ -13,9 +13,9 @@ public class FaceAnimationController : MonoBehaviour
     }
 
     [SerializeField]
-    Material FaceMat;
+    Material FaceMat = null;
     [SerializeField]
-    Vector2 FaceAtlasSize;
+    Vector2 FaceAtlasSize = Vector2.zero;
 
     struct AnimationInfo
     {
