@@ -84,7 +84,6 @@ public class Enemy : MonoBehaviour
     int GreenStarCount = 0;
     int StatusUpNum = 1;
 
-
     [SerializeField]
     public bool DamageFlag = false;//ダメージを受けたか
     [HideInInspector]
