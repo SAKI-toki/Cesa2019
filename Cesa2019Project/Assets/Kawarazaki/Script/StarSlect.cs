@@ -20,9 +20,16 @@ public class StarSlect : MonoBehaviour
     StarPlaceManager StarPlaceController = null;
     private int Select;
 
+    //星の大きさ
     float StarScale = 1.0f;
     float v = 0.1f;
     float OriginalScale = 1.0f;
+
+    float LStick;
+    bool StickFlg = false;
+    //bool Right = false;
+    //bool Left = false;
+
     bool SelectFlg = false;
     
     void Start()
@@ -80,22 +87,70 @@ public class StarSlect : MonoBehaviour
                 break;
         }
 
-
-        //色の選択
-        if (Input.GetKeyDown("joystick button 5") || Input.GetKeyDown(KeyCode.RightArrow))
+        //選択画面のキャンセル
+        if (Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.F))
         {
-            Select++;
-            if (Select > 2)
-                Select = 0;
+            DeleteSelect();
         }
-        if (Input.GetKeyDown("joystick button 4") || Input.GetKeyDown(KeyCode.LeftArrow))
+
+        //スティック入力
+        SelectMove();
+        //キーボード入力
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            Select--;
-            if (Select < 0)
-                Select = 2;
+            AddSelect();
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            DecSelect();
         }
     }
 
+    /// <summary>
+    /// 星の選択
+    /// </summary>
+    void SelectMove()
+    {
+        LStick = Input.GetAxis("L_Stick_H");
+        if (LStick == 0)
+        {
+            StickFlg = false;
+            return;
+        }
+        if (StickFlg)
+            return;
+        StickFlg = true;
+        if (LStick > 0)
+        {
+            AddSelect();
+        }
+        if (LStick < 0 )
+        {
+            DecSelect();
+        }
+        
+    }
+
+    /// <summary>
+    /// Select変数を加算
+    /// </summary>
+    void AddSelect()
+    {
+        ++Select;
+        if (Select > 2)
+            Select = 0;
+    }
+
+    /// <summary>
+    /// Select変数を減算
+    /// </summary>
+    void DecSelect()
+    {
+        --Select;
+        if (Select < 0)
+            Select = 2;
+    }
+    
     /// <summary>
     /// 選択画面を消す処理
     /// </summary>
@@ -115,7 +170,6 @@ public class StarSlect : MonoBehaviour
         Select = 0;
         Time.timeScale = 0;
         SelectColor.SetActive(true);
-        //EventSystem.current.SetSelectedGameObject(SelectColor);
         SelectFlg = true;
     }
 

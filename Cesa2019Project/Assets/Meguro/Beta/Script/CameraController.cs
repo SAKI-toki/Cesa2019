@@ -27,16 +27,14 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     Transform CameraTransform = null;
     [SerializeField]
-    LayerMask Mask;
+    LayerMask Mask = 0;
     float RightStickH = 0, RightStickV = 0;
     float LeftStickH = 0;
     float RotX, RotY;
 
     void Start()
     {
-        CameraTransform.localPosition = new Vector3(0, 0, -Distance);
-        RotX = transform.eulerAngles.x;
-        RotY = transform.eulerAngles.y;
+        CameraInit();
     }
 
     void Update()
@@ -56,7 +54,6 @@ public class CameraController : MonoBehaviour
             MoveStop();
             return;
         }
-
         transform.position = LookAt.position;
 
         RightStickH = Input.GetAxis("R_Stick_H");
@@ -108,6 +105,15 @@ public class CameraController : MonoBehaviour
             CameraTransform.localPosition = new Vector3(0, 0, -Distance);
         }
     }
+
+    public void CameraInit()
+    {
+        CameraTransform.localPosition = new Vector3(0, 0, -Distance);
+        RotX = transform.eulerAngles.x;
+        RotY = transform.eulerAngles.y;
+        transform.position = LookAt.position;
+    }
+
 
     void MoveStop()
     {

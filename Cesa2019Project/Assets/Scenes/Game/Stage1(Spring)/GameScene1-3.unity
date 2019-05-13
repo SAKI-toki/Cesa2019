@@ -124,6 +124,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9514241785ada4e4f80f30f108d9fe21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &167081544 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7653201727258992600, guid: bfda9e26ba7460446ac41bcfb8396f45,
+    type: 3}
+  m_PrefabInstance: {fileID: 1897204724}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e54502f416d5f7d4c8f35bb27b0941d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &286500202
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -227,6 +239,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9514241785ada4e4f80f30f108d9fe21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &502083199 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7653201728169284968, guid: bfda9e26ba7460446ac41bcfb8396f45,
+    type: 3}
+  m_PrefabInstance: {fileID: 1897204724}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e70895a72ffcf0b4d9aa9047f4190e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &611727742 stripped
@@ -358,12 +382,12 @@ PrefabInstance:
         type: 3}
       propertyPath: StarSelectController
       value: 
-      objectReference: {fileID: 1986506010}
+      objectReference: {fileID: 167081544}
     - target: {fileID: 1570534423521524880, guid: 919a12676b8166a48ad670d4cef8e67d,
         type: 3}
       propertyPath: Pause
       value: 
-      objectReference: {fileID: 2032683502}
+      objectReference: {fileID: 502083199}
     - target: {fileID: 3548461106637449109, guid: 919a12676b8166a48ad670d4cef8e67d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -422,7 +446,7 @@ PrefabInstance:
     - target: {fileID: 4253661082586925112, guid: 919a12676b8166a48ad670d4cef8e67d,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 919a12676b8166a48ad670d4cef8e67d, type: 3}
@@ -438,6 +462,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CommonGameObject
       objectReference: {fileID: 0}
+    - target: {fileID: 7653201727258992600, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: StarPlaceController
+      value: 
+      objectReference: {fileID: 1135027456}
     - target: {fileID: 4517209733558218721, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: StarPlaceController
@@ -636,29 +665,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9514241785ada4e4f80f30f108d9fe21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1986506010 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4517209733558218721, guid: bfda9e26ba7460446ac41bcfb8396f45,
-    type: 3}
-  m_PrefabInstance: {fileID: 1897204724}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e54502f416d5f7d4c8f35bb27b0941d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2032683502 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4517209732821900294, guid: bfda9e26ba7460446ac41bcfb8396f45,
-    type: 3}
-  m_PrefabInstance: {fileID: 1897204724}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e70895a72ffcf0b4d9aa9047f4190e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

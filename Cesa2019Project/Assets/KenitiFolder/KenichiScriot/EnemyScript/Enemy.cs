@@ -74,6 +74,7 @@ public class Enemy : MonoBehaviour
     public Vector3 Offset = new Vector3();
     [SerializeField, Header("AttackPrefabを入れる")]
     public GameObject AttackPrefab = null;
+    HitStopManager HitStop = null;
 
     int StarRandom = 0;
     int StarCount = 20;
@@ -148,6 +149,7 @@ public class Enemy : MonoBehaviour
         StarPlace = GameObject.Find("StarPlaceManager");
         StarPlaceManager = StarPlace.GetComponent<StarPlaceManager>();
         EnemyAbnormalState.Init(5, 10, 1, 5);
+        HitStop = GameObject.Find("HitStopManager").GetComponent<HitStopManager>();
     }
 
     // Update is called once per frame
@@ -180,6 +182,7 @@ public class Enemy : MonoBehaviour
 
         if (EnemyStatus.CurrentHp <= 0 || EnemyHp <= 0)
         {
+            ++ClearManager.EnemyDownNum;
             if (BossEnemy == false) { EnemyStar(); }
             if (BossEnemy) { BossEnemyStar(); }
             DestroyFlag = true;
@@ -216,6 +219,7 @@ public class Enemy : MonoBehaviour
         {
             if (!NoDamage)
             {
+                HitStop.SlowDown();
                 ++PlayerController.ComboController.CurrentComboNum;
                 EnemyStatus.CurrentHp -= Status.Damage(PlayerController.PlayerStatus.CurrentAttack, EnemyStatus.CurrentDefense);//HPを減らす
                 AttackCount++;

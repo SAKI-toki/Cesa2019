@@ -10,8 +10,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     Rigidbody PlayerRigid;                      // プレイヤーリジッドボディ
-    Animator PlayerAnimator;                    // プレイヤーアニメータ
-    AnimatorStateInfo AniStateInfo;       // プレイヤー攻撃アニメータの情報取得
+    PlayerAnimatorController AnimatorController = new PlayerAnimatorController();
     public static Status PlayerStatus = new Status();// プレイヤーステータス
     public static AbnormalState PlayerAbnormalState = new AbnormalState();
     float LeftStickH = 0;                       // コントローラー左右
@@ -91,13 +90,14 @@ public class PlayerController : MonoBehaviour
         ComboController.InitCombo(4);           // コンボの時間
         PlayerAddAttackController.InitPlayerAddAttack(TimingCanvas, TimingCircle, TimingIcon, this.transform);
         PlayerRigid = GetComponent<Rigidbody>();
-        PlayerAnimator = GetComponent<Animator>();
+        AnimatorController.Init(GetComponent<Animator>());
     }
 
     void Update()
     {
         // コンボ処理
         ComboController.CheckCombo();
+        AnimatorController.Update();
         // プレイヤーデバッグ
         if (Input.GetKeyDown(KeyCode.P)) { PlayerStatusDebugSwitch(); }
         DebugPlayerStatus();
@@ -111,8 +111,6 @@ public class PlayerController : MonoBehaviour
         // 異常状態
         PlayerAbnormalState.Abnormal(ref PlayerStatus.CurrentHp);
         if (PlayerAbnormalState.ParalysisFlg) { MoveStop(); return; }
-        // プレイヤー攻撃アニメーションの情報更新
-        AniStateInfo = PlayerAnimator.GetCurrentAnimatorStateInfo(0);
         // 移動
         LeftStickH = Input.GetAxis("L_Stick_H");
         LeftStickV = Input.GetAxis("L_Stick_V");
@@ -124,7 +122,7 @@ public class PlayerController : MonoBehaviour
             // 星選択中で操作させないため
             if (!StarPlaceManager.StarSelect)
             {
-                //PlayerAnimator.SetBool("Jumpflg", true);
+                AnimatorController.PlayerAnimator.SetBool("JumpFlg", true);
                 PlayerRigid.AddForce(JumpVal * Vector3.up, ForceMode.Impulse);
                 MoveJump = true;
             }
@@ -132,34 +130,31 @@ public class PlayerController : MonoBehaviour
         // 攻撃
         if ((Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return)) && !MoveAvoid)
         {
-            // 星選択中で操作させないため
-            if (!StarPlaceManager.StarSelect)
-            {
-                PlayerAnimator.SetTrigger("AttackTrigger");
-            }
+            AnimatorController.AttackAniState();
         }
-        if (AniStateInfo.IsTag("Attack1"))
+        if (AnimatorController.AniStateInfo.IsTag("Attack1"))
         {
             PlayerStatus.CurrentAttack = PlayerStatus.Attack;
         }
-        if (AniStateInfo.IsTag("Attack2"))
-        {
-            PlayerStatus.CurrentAttack = PlayerStatus.Attack + 5;
-        }
-        if (AniStateInfo.IsTag("Attack3"))
+        else if (AnimatorController.AniStateInfo.IsTag("Attack2"))
         {
             PlayerStatus.CurrentAttack = PlayerStatus.Attack + 10;
         }
-        // 攻撃のアニメーション中
-        if (AniStateInfo.IsTag("Attack1") || AniStateInfo.IsTag("Attack2") || AniStateInfo.IsTag("Attack3"))
+        else if (AnimatorController.AniStateInfo.IsTag("Attack3"))
         {
-            if (AniStateInfo.normalizedTime < 0.7f)
+            PlayerStatus.CurrentAttack = PlayerStatus.Attack + 20;
+        }
+        AnimatorController.AttackAniStop();
+        // 攻撃のアニメーション中
+        if (AnimatorController.Attacking())
+        {
+            if (AnimatorController.AniTime() < 0.7f)
             {
                 LeftStickH = Mathf.Clamp(LeftStickH, -AttackMoveVal, AttackMoveVal);
                 LeftStickV = Mathf.Clamp(LeftStickV, -AttackMoveVal, AttackMoveVal);
             }
         }
-        if (AniStateInfo.IsTag("Attack3") && !PlayerAddAttackController.TimingFlg)
+        if (AnimatorController.AniStateInfo.IsTag("Attack3") && !PlayerAddAttackController.TimingFlg)
         {
             PlayerAddAttackController.TimingUIAwake();
         }
@@ -199,14 +194,14 @@ public class PlayerController : MonoBehaviour
         PlayerRigid.AddForce(Vector3.down * ForceGravity, ForceMode.Acceleration);
         if ((LeftStickH != 0 || LeftStickV != 0) && !MoveAvoid)
         {
-            PlayerAnimator.SetBool("RunFlg", true);
+            AnimatorController.PlayerAnimator.SetBool("RunFlg", true);
             Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
             Vector3 moveForward = cameraForward * LeftStickV + Camera.main.transform.right * LeftStickH;
             Quaternion playerRotation = Quaternion.LookRotation(moveForward);
             // 移動
             PlayerRigid.AddForce(PlayerStatus.CurrentSpeed * moveForward * ContactNormalY);
             // 攻撃のアニメーション中
-            if (AniStateInfo.IsTag("Attack1") || AniStateInfo.IsTag("Attack2") || AniStateInfo.IsTag("Attack3"))
+            if (AnimatorController.Attacking())
             {
                 // 攻撃時の回転
                 transform.rotation = Quaternion.Slerp(transform.rotation, playerRotation, AttackRoteVal);
@@ -225,7 +220,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            PlayerAnimator.SetBool("RunFlg", false);
+            AnimatorController.PlayerAnimator.SetBool("RunFlg", false);
         }
         // 回避
         if (MoveAvoid)
@@ -267,7 +262,7 @@ public class PlayerController : MonoBehaviour
         {
             if (contact.normal.y <= 1 && contact.normal.y > 0.0f)
             {
-                //PlayerAnimator.SetBool("Jumpflg", false);
+                AnimatorController.PlayerAnimator.SetBool("JumpFlg", false);
                 MoveJump = false;
             }
         }
@@ -346,7 +341,7 @@ public class PlayerController : MonoBehaviour
 
     public void Move(Vector3 dir, float speed)
     {
-        PlayerAnimator.SetBool("RunFlg", true);
+        AnimatorController.PlayerAnimator.SetBool("RunFlg", true);
         dir = Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized;
         Quaternion playerRotation = Quaternion.LookRotation(dir);
         PlayerRigid.AddForce(dir * speed);
