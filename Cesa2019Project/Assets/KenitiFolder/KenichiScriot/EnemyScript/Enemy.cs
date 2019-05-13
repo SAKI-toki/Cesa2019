@@ -85,7 +85,6 @@ public class Enemy : MonoBehaviour
     int GreenStarCount = 0;
     int StatusUpNum = 1;
 
-
     [SerializeField]
     public bool DamageFlag = false;//ダメージを受けたか
     [HideInInspector]
@@ -468,7 +467,6 @@ public class Enemy : MonoBehaviour
     {
         float tmpDis = 0;//距離用一時変数
         float nearDis = 0;//最も近いオブジェクトの距離
-        //string nearObjName="";//オブジェクト名称
         GameObject targetObj = null;//オブジェクト
         //tag指定されたオブジェクトを配列で取得する
         foreach (GameObject obs in GameObject.FindGameObjectsWithTag(tagName))
@@ -478,12 +476,9 @@ public class Enemy : MonoBehaviour
             if (nearDis == 0 || nearDis > tmpDis)
             {
                 nearDis = tmpDis;
-                //nearObjName=obs.name;
                 targetObj = obs;
             }
         }
-        //最も近かったオブジェクトを返す
-        //return GameObject.Find(nearObjName);
         return targetObj;
     }
 
