@@ -112,6 +112,16 @@ public class CameraController : MonoBehaviour
         RotX = transform.eulerAngles.x;
         RotY = transform.eulerAngles.y;
         transform.position = LookAt.position;
+        RaycastHit hit;
+        Ray ray = new Ray(transform.position, CameraTransform.position - transform.position);
+        if (Physics.Raycast(ray, out hit, Distance, Mask))
+        {
+            CameraTransform.localPosition = new Vector3(0, 0, -hit.distance);
+        }
+        else
+        {
+            CameraTransform.localPosition = new Vector3(0, 0, -Distance);
+        }
     }
 
 

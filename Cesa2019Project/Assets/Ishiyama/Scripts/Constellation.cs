@@ -17,13 +17,15 @@ static public class Constellations
     /// Aries(アリーズ)「牡羊座」
     /// Taurus(トーラス)「おうし座」
     /// Gemini(ジェミニ)「ふたご座」
+    /// Serpent(サーペント)「蛇使い座」
     /// </summary>
     public enum Constellation
     {
         Cancer, Leo, Virgo,
         Libra, Scorpio, Sagittarius,
         Capricorn, Aquarius, Pisces,
-        Aries, Taurus, Gemini, None
+        Aries, Taurus, Gemini,
+        Serpent, None
     };
 
     /// <summary>

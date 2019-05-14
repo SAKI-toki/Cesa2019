@@ -5,6 +5,8 @@
 /// </summary>
 public class TitleController : MonoBehaviour
 {
+    //二回目以降はタイトル画面を表示しないようにするためのフラグ
+    static bool AlreadyStart = false;
     [SerializeField, Header("カメラの制御")]
     CameraController SelectCameraController = null;
     [SerializeField, Header("セレクト用のカメラ")]
@@ -39,7 +41,15 @@ public class TitleController : MonoBehaviour
         StartCameraRotation = TitleCameraObject.transform.rotation;
         EndCameraPosition = SelectCameraObject.transform.position;
         EndCameraRotation = SelectCameraObject.transform.rotation;
-        Statefunc = TitleState;
+        if (AlreadyStart)
+        {
+            Statefunc = TranslationState;
+            TitleTextObject.SetActive(false);
+        }
+        else
+        {
+            Statefunc = TitleState;
+        }
     }
     void Update()
     {
@@ -55,6 +65,7 @@ public class TitleController : MonoBehaviour
         {
             Statefunc = TranslationState;
             TitleTextObject.SetActive(false);
+            AlreadyStart = true;
         }
     }
 
