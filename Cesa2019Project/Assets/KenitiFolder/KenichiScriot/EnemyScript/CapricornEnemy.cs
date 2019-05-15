@@ -99,10 +99,15 @@ public class CapricornEnemy : MonoBehaviour
         //前に進む
         if (Enemy.MoveSwitch)
         {
+            Enemy.Animator.SetBool("EenmyWalk", true);
             transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime);
             EffectRush.SetActive(true);
         }
-        else { EffectRush.SetActive(false); }
+        else
+        {
+            Enemy.Animator.SetBool("EnemyWalk", false);
+            EffectRush.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -117,7 +122,7 @@ public class CapricornEnemy : MonoBehaviour
         {
             EffectRush.SetActive(false);
             Debug.Log("ji");
-            Enemy.Animator.SetTrigger("EnemyAttack");
+            Enemy.Animator.SetTrigger("EnemyAttack1");
             Enemy.EnemySe.AttackSES();
             AttackMotionFirst = true;
         }

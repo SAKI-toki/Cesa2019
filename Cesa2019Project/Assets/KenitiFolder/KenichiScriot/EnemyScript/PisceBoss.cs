@@ -44,7 +44,7 @@ public class PisceBoss : MonoBehaviour
 
         if (FlockObj != null)
         {
-             GetEnemy.NoDamage = true;
+            GetEnemy.NoDamage = true;
         }
         else
         {
@@ -103,7 +103,7 @@ public class PisceBoss : MonoBehaviour
         //Enemy.Animator.SetBool("EnemyWalk", false);
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
-            GetEnemy.Animator.SetTrigger("EnemyAttack");
+            GetEnemy.Animator.SetTrigger("EnemyAttack1");
             GetEnemy.EnemySe.AttackSES();
             AttackMotionFirst = true;
         }
@@ -146,7 +146,12 @@ public class PisceBoss : MonoBehaviour
         //前に進む
         if (GetEnemy.MoveSwitch)
         {
+            GetEnemy.Animator.SetBool("EenmyWalk", true);
             transform.Translate(0, 0, GetEnemy.ZMove * Time.deltaTime);
+        }
+        else
+        {
+            GetEnemy.Animator.SetBool("EenmyWalk", true);
         }
     }
 }

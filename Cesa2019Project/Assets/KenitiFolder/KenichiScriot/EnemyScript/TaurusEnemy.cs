@@ -98,10 +98,11 @@ public class TaurusEnemy : MonoBehaviour
         //前に進む
         if (Enemy.MoveSwitch)
         {
+            Enemy.Animator.SetBool("EenmyWalk", true);
             transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime);
             EffectRush.SetActive(true);
         }
-        else { EffectRush.SetActive(false); }
+        else { EffectRush.SetActive(false); Enemy.Animator.SetBool("EenmyWalk", false); }
     }
 
     /// <summary>
@@ -115,7 +116,7 @@ public class TaurusEnemy : MonoBehaviour
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
             EffectRush.SetActive(false);
-            Enemy.Animator.SetTrigger("EnemyAttack");
+            Enemy.Animator.SetTrigger("EnemyAttack2");
             Enemy.EnemySe.AttackSES();
             AttackMotionFirst = true;
         }
