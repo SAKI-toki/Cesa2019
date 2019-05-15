@@ -179,6 +179,8 @@ public class Enemy : MonoBehaviour
             if (BossEnemy == false) { EnemyStar(); }
             if (BossEnemy) { BossEnemyStar(); }
             DestroyFlag = true;
+            //敵を倒したカウント
+            ++ClearManager.EnemyDownNum;
             Destroy(this.gameObject);//敵の消滅
         }
 

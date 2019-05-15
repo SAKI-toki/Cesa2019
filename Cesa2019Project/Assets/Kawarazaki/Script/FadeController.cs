@@ -15,7 +15,7 @@ public class FadeController : MonoBehaviour
 
     //フェードしたい時間
     float FadeSpeed = 0.02f;
-
+    //アルファ値
     static float Alpha = 0.0f;
 
     //フェードインアウトのフラグ
@@ -23,8 +23,9 @@ public class FadeController : MonoBehaviour
     public static bool IsFadeIn = false;
 
     //偏移先のシーン名
-    private static string NextScene;
-
+    private static string NextSceneName;
+    private static int NextSceneNumber;
+    static bool NumberFlg = false;
     /// <summary>
     ///  canvasとImage生成
     /// </summary>
@@ -48,7 +49,7 @@ public class FadeController : MonoBehaviour
         //Imageのサイズ設定
         FadeImage.rectTransform.sizeDelta = new Vector2(9999, 9999);
     }
-    
+
 
     void Update()
     {
@@ -56,10 +57,10 @@ public class FadeController : MonoBehaviour
         if (IsFadeIn)
         {
             //透明度変化
-            Alpha -=  FadeSpeed;
+            Alpha -= FadeSpeed;
 
             //フェードイン終了判定
-            if(Alpha <= 0.0f)
+            if (Alpha <= 0.0f)
             {
                 IsFadeIn = false;
                 Alpha = 0.0f;
@@ -69,7 +70,7 @@ public class FadeController : MonoBehaviour
         }
 
         //フェードアウト
-        else if(IsFadeOut)
+        else if (IsFadeOut)
         {
             //透明度変化
             Alpha += FadeSpeed;
@@ -81,7 +82,10 @@ public class FadeController : MonoBehaviour
                 Alpha = 1.0f;
 
                 //次のシーンへ偏移
-                SceneManager.LoadScene(NextScene);
+                if (NumberFlg)
+                    SceneManager.LoadScene(NextSceneNumber);
+                else
+                    SceneManager.LoadScene(NextSceneName);
             }
             SetAlpha();
         }
@@ -99,13 +103,27 @@ public class FadeController : MonoBehaviour
     }
 
     /// <summary>
-    /// フェードアウト開始
+    /// フェードアウト開始(string)
     /// </summary>
     /// <param name="n"></param>
     public static void FadeOut(string n)
     {
         if (FadeImage == null) Init();
-        NextScene = n;
+        NextSceneName = n;
+        NumberFlg = false;
+        FadeImage.enabled = true;
+        IsFadeOut = true;
+        Alpha = 0.0f;
+    }
+    /// <summary>
+    /// フェードアウト開始(int)
+    /// </summary>
+    /// <param name="n"></param>
+    public static void FadeOut(int n)
+    {
+        if (FadeImage == null) Init();
+        NextSceneNumber = n;
+        NumberFlg = true;
         FadeImage.enabled = true;
         IsFadeOut = true;
         Alpha = 0.0f;
