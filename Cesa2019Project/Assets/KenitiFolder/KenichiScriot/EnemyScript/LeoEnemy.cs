@@ -94,12 +94,12 @@ public class LeoEnemy : MonoBehaviour
             {
                 Enemy.MoveSwitch = false;
                 ReoTime = 0;
-               
+
                 Enemy.BossTime = 0;
             }
             else
             {
-               AssaultFlag = false;
+                AssaultFlag = false;
             }
         }
     }
@@ -112,10 +112,15 @@ public class LeoEnemy : MonoBehaviour
         //前に進む
         if (Enemy.MoveSwitch)
         {
+            Enemy.Animator.SetBool("EnemyWalk", true);
             transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime);
             EffectRush.SetActive(true);
         }
-        else { EffectRush.SetActive(false); }
+        else
+        {
+            Enemy.Animator.SetBool("EnemyWalk", true);
+            EffectRush.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -125,12 +130,12 @@ public class LeoEnemy : MonoBehaviour
     {
         AttackTime += Time.deltaTime;
         Enemy.AttackEnemy = true;
-        //Enemy.Animator.SetBool("EnemyWalk", false);
+        Enemy.Animator.SetBool("EnemyWalk", false);
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
             EffectRush.SetActive(false);
             Debug.Log("ji");
-            Enemy.Animator.SetTrigger("EnemyAttack");
+            Enemy.Animator.SetTrigger("EnemyAttack1");
             Enemy.EnemySe.AttackSES();
             AttackMotionFirst = true;
         }

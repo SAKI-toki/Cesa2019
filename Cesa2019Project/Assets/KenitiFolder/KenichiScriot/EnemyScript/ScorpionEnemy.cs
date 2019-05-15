@@ -102,7 +102,12 @@ public class ScorpionEnemy : MonoBehaviour
         //前に進む
         if (Enemy.MoveSwitch)
         {
+            Enemy.Animator.SetBool("EenmyWalk", true);
             transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime);
+        }
+        else
+        {
+            Enemy.Animator.SetBool("EenmyWalk", false);
         }
     }
 
@@ -112,9 +117,11 @@ public class ScorpionEnemy : MonoBehaviour
     void Attack()
     {
         AttackTime += Time.deltaTime;
+        Enemy.Animator.SetBool("EenmyWalk", false);
         Enemy.AttackEnemy = true;
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
+            Enemy.Animator.SetTrigger("EnemyAttack");
             Enemy.EnemySe.AttackSES();
             if (Enemy.EnemyStatus.CurrentHp < SecondPoisonHp && PoisonCount <= 3)
             {

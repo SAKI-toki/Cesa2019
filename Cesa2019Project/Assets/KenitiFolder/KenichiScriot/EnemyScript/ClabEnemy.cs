@@ -75,7 +75,16 @@ public class ClabEnemy : MonoBehaviour
         if (MoveChange == 1) { transform.position += transform.right * Enemy.ZMove * Time.deltaTime; }
         else { transform.position -= transform.right * Enemy.ZMove * Time.deltaTime; }
 
-        transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime / 10);
+        if (Enemy.ReceivedDamage == false && Enemy.AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
+        {
+            Enemy.Animator.SetBool("EnemyWalk", true);
+            transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime / 10);
+        }
+        else
+        {
+            Enemy.Animator.SetBool("EnemyWalk", false);
+        }
+
     }
 
     /// <summary>
@@ -110,7 +119,7 @@ public class ClabEnemy : MonoBehaviour
         Enemy.Animator.SetBool("EnemyWalk", false);
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
-            Enemy.Animator.SetTrigger("EnemyAttack");
+            Enemy.Animator.SetTrigger("EnemyAttack2");
             Enemy.EnemySe.AttackSES();
             AttackMotionFirst = true;
         }

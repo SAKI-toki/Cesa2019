@@ -121,7 +121,7 @@ public class Enemy : MonoBehaviour
 
     GameObject StarPlace = null;
     StarPlaceManager StarPlaceManager = null;
-    NavMeshAgent Agent = null;
+    //NavMeshAgent Agent = null;
     public PlayerController PlayerController;
     StarMove StarMove = null;
     Rigidbody GetRigidbody = null;
@@ -143,7 +143,7 @@ public class Enemy : MonoBehaviour
         MoveDown = 1 - (MoveDown * 0.01f);
         Animator = this.GetComponent<Animator>();
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
-        Agent = GetComponent<NavMeshAgent>();
+        //Agent = GetComponent<NavMeshAgent>();
         EnemySe = this.GetComponent<EnemySe>();
         GetRigidbody = GetComponent<Rigidbody>();
         StarPlace = GameObject.Find("StarPlaceManager");
@@ -165,7 +165,7 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if(StarPlaceManager.AllPlaceSet)
+        if (StarPlaceManager.AllPlaceSet)
         {
             Destroy(this.gameObject);
         }
