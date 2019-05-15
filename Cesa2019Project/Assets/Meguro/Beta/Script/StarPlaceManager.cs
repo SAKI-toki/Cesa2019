@@ -80,7 +80,7 @@ public class StarPlaceManager : MonoBehaviour
                             PlayerController.PlayerStatus.HpUp(1);
                             PlayerController.PlayerStatus.AttackUp(5);
                             StarPlaceList[num].Star = Instantiate(RedStar,
-                                child.transform.position + new Vector3(0, 1, 0),
+                                child.transform.position + new Vector3(0, 0, 0),
                                 Quaternion.identity);
                             break;
                         case HaveStarManager.StarColorEnum.Blue:
@@ -88,7 +88,7 @@ public class StarPlaceManager : MonoBehaviour
                             PlayerController.PlayerStatus.HpUp(1);
                             PlayerController.PlayerStatus.DefenseUp(5);
                             StarPlaceList[num].Star = Instantiate(BlueStar,
-                                child.transform.position + new Vector3(0, 1, 0),
+                                child.transform.position + new Vector3(0, 0, 0),
                                 Quaternion.identity);
                             break;
                         case HaveStarManager.StarColorEnum.Green:
@@ -96,12 +96,12 @@ public class StarPlaceManager : MonoBehaviour
                             PlayerController.PlayerStatus.HpUp(1);
                             PlayerController.PlayerStatus.SpeedUp(2);
                             StarPlaceList[num].Star = Instantiate(GreenStar,
-                                child.transform.position + new Vector3(0, 1, 0),
+                                child.transform.position + new Vector3(0, 0, 0),
                                 Quaternion.identity);
                             break;
                         default:
                             StarPlaceList[num].Star = Instantiate(Star,
-                                child.transform.position + new Vector3(0, 1, 0),
+                                child.transform.position + new Vector3(0, 0, 0),
                                 Quaternion.identity);
                             break;
                     }
@@ -257,7 +257,7 @@ public class StarPlaceManager : MonoBehaviour
         StarPlaceList[n].Star =
             Instantiate((starColor == HaveStarManager.StarColorEnum.Red ? RedStar :
             starColor == HaveStarManager.StarColorEnum.Green ? GreenStar : BlueStar),
-            StarPlaceList[n].gameObject.transform.position + new Vector3(0, 1, 0),
+            StarPlaceList[n].gameObject.transform.position + new Vector3(0, 0, 0),
             Quaternion.identity);
         var colliderList = StarPlaceList[n].GetComponents<SphereCollider>();
         foreach (var collider in colliderList)
