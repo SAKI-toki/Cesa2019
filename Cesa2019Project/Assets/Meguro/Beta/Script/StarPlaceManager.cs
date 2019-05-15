@@ -159,8 +159,11 @@ public class StarPlaceManager : MonoBehaviour
                             {
                                 if (GetWaveController.EnemyZero)
                                 {
-                                    StarSelectPlaceNum = i;
-                                    StarSelectActive();
+                                    if (!StarSelectController.GetSelectFlg())
+                                    {
+                                        StarSelectPlaceNum = i;
+                                        StarSelectActive();
+                                    }
                                 }
                             }
                         }
@@ -168,8 +171,11 @@ public class StarPlaceManager : MonoBehaviour
                         {
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {
-                                StarSelectPlaceNum = i;
-                                StarSelectActive();
+                                if (!StarSelectController.GetSelectFlg())
+                                {
+                                    StarSelectPlaceNum = i;
+                                    StarSelectActive();
+                                }
                             }
                         }
                     }
@@ -188,6 +194,13 @@ public class StarPlaceManager : MonoBehaviour
                     PoisonBonus();
                 }
                 /* ============================================================= */
+            }
+            else
+            {
+                if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
+                {
+                    StarSelectController.DeleteSelect();
+                }
             }
         }
     }

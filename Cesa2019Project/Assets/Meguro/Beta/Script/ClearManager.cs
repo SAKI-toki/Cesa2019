@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ClearManager : MonoBehaviour
 {
@@ -10,42 +12,62 @@ public class ClearManager : MonoBehaviour
     float StartDefense = 0;
     float StartSpeed = 0;
     public static int EnemyDownNum = 0;
-    [SerializeField,Header("チュートリアルならチェック")]
+    [SerializeField, Header("チュートリアルならチェック")]
     bool TutorialFlg = false;
+    //「クリア」のテキスト
     [SerializeField]
-    Text ClearText = null;
+    TextMeshProUGUI ClearText = null;
+    //背景のUI
     [SerializeField]
     Image Panel = null;
+    //ステータステキスト
     [SerializeField]
-    Text ResultText = null;
+    TextMeshProUGUI ResultText = null;
     [SerializeField]
-    Text HpText = null;
+    TextMeshProUGUI HpText = null;
     [SerializeField]
-    Text HpNumText = null;
+    TextMeshProUGUI HpNumText = null;
     [SerializeField]
-    Text AttackText = null;
+    TextMeshProUGUI AttackText = null;
     [SerializeField]
-    Text AttackNumText = null;
+    TextMeshProUGUI AttackNumText = null;
     [SerializeField]
-    Text DefenseText = null;
+    TextMeshProUGUI DefenseText = null;
     [SerializeField]
-    Text DefenseNumText = null;
+    TextMeshProUGUI DefenseNumText = null;
     [SerializeField]
-    Text SpeedText = null;
+    TextMeshProUGUI SpeedText = null;
     [SerializeField]
-    Text SpeedNumText = null;
+    TextMeshProUGUI SpeedNumText = null;
     [SerializeField]
-    Text EnemyText = null;
+    TextMeshProUGUI EnemyText = null;
     [SerializeField]
-    Text EnemyNumText = null;
+    TextMeshProUGUI EnemyNumText = null;
     [SerializeField]
-    Text EvaluationText = null;
+    TextMeshProUGUI EvaluationText = null;
     [SerializeField]
-    Button NextButton = null;
+    TextMeshProUGUI NextStageText = null;
+    //次ステージUI
     [SerializeField]
-    Button StageSelectButton = null;
+    Image NextButton = null;
+    //ステージセレクトUI
+    [SerializeField]
+    Image StageSelectButton = null;
+    //カーソル
+    [SerializeField]
+    GameObject CarsorRed = null;
+    [SerializeField]
+    GameObject CarsorBlue = null;
+
+    //プレイヤー
     [SerializeField]
     GameObject Player = null;
+    //UICanvas
+    [SerializeField]
+    GameObject UI = null;
+    //MiniMap
+    [SerializeField]
+    GameObject MiniMap = null;
     [SerializeField]
     CameraController CameraScript = null;
     [SerializeField]
@@ -57,6 +79,14 @@ public class ClearManager : MonoBehaviour
     bool ResultTextFlg = false;
     bool TextFadeOutFlg = false;
     bool TransitionFlg = false;
+
+    bool StickFlg;
+    float LStick;
+    int Carsor;
+    int NextStage;
+    int StageSelect;
+
+    int SceneNumber;
 
     void Awake()
     {
@@ -75,6 +105,8 @@ public class ClearManager : MonoBehaviour
         TextAlphaZero(EnemyText);
         TextAlphaZero(EnemyNumText);
         TextAlphaZero(EvaluationText);
+        UI.SetActive(true);
+        MiniMap.SetActive(true);
     }
 
     private void Start()
@@ -83,6 +115,10 @@ public class ClearManager : MonoBehaviour
         StartAttack = PlayerController.PlayerStatus.Attack;
         StartDefense = PlayerController.PlayerStatus.Defense;
         StartSpeed = PlayerController.PlayerStatus.Speed;
+        NextStage = 0;
+        StageSelect = 1;
+        Carsor = NextStage;
+        SceneNumber = SceneManager.GetActiveScene().buildIndex;
     }
     void Update()
     {
@@ -93,6 +129,10 @@ public class ClearManager : MonoBehaviour
 
         if (StarPlaceManager.AllPlaceSet)
         {
+            //クリア画面の時ゲーム画面のActiveをfalse
+            UI.SetActive(false);
+            MiniMap.SetActive(false);
+
             if (!ClearMoveFlg)
             {
                 CameraScript.ClearMoveInit();
@@ -145,10 +185,10 @@ public class ClearManager : MonoBehaviour
                     if (Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized == Player.transform.forward)
                     {
                         ResultMoveFlg = true;
-                        HpNumText.text = StartHp.ToString() + " ➡ " + PlayerController.PlayerStatus.Hp;
-                        AttackNumText.text = StartAttack.ToString() + " ➡ " + PlayerController.PlayerStatus.Attack;
-                        DefenseNumText.text = StartDefense.ToString() + " ➡ " + PlayerController.PlayerStatus.Defense;
-                        SpeedNumText.text = StartSpeed.ToString() + " ➡ " + PlayerController.PlayerStatus.Speed;
+                        HpNumText.text = StartHp.ToString("00") + " > " + PlayerController.PlayerStatus.Hp;
+                        AttackNumText.text = StartAttack.ToString("00") + " > " + PlayerController.PlayerStatus.Attack;
+                        DefenseNumText.text = StartDefense.ToString("00") + " > " + PlayerController.PlayerStatus.Defense;
+                        SpeedNumText.text = StartSpeed.ToString("00") + " > " + PlayerController.PlayerStatus.Speed;
                     }
                 }
             }
@@ -177,7 +217,7 @@ public class ClearManager : MonoBehaviour
                         if (HpNumText.color.a >= 1)
                         {
                             ResultTextFlg = true;
-                            EnemyNumText.text = EnemyDownNum.ToString();
+                            EnemyNumText.text = EnemyDownNum.ToString("00");
                             if (!TutorialFlg)
                             {
                                 if (EnemyDownNum > 40)
@@ -255,21 +295,76 @@ public class ClearManager : MonoBehaviour
             }
             if (TransitionFlg)
             {
-                if (Input.GetKeyDown("joystick button 1"))
+                SelectStick();
+                if (Carsor == NextStage)
                 {
-                    /*=================================================*/
-                    //遷移
-                    /*=================================================*/
-                    if (!FadeController.IsFadeOut)
+                    CarsorRed.SetActive(true);
+                    CarsorBlue.SetActive(false);
+                    if (Input.GetKeyDown("joystick button 1"))
                     {
-                        FadeController.FadeOut("SelectScene");
+                        /*=================================================*/
+                        //遷移
+                        /*=================================================*/
+                        if (!FadeController.IsFadeOut)
+                        {
+                            NextStageText.text = "次へ";
+                            FadeController.FadeOut(++SceneNumber);
+                        }
+                    }
+
+                }
+                if (Carsor == StageSelect)
+                {
+                    CarsorRed.SetActive(false);
+                    CarsorBlue.SetActive(true);
+                    if (Input.GetKeyDown("joystick button 1"))
+                    {
+                        /*=================================================*/
+                        //遷移
+                        /*=================================================*/
+                        if (!FadeController.IsFadeOut)
+                        {
+                            FadeController.FadeOut("SelectScene");
+                        }
                     }
                 }
             }
         }
     }
 
-    void TextAlphaZero(Text text)
+    /// <summary>
+    /// スティック選択
+    /// </summary>
+    void SelectStick()
+    {
+        LStick = Input.GetAxis("L_Stick_V");
+        if (LStick == 0)
+        {
+            StickFlg = false;
+            return;
+        }
+        if (StickFlg)
+            return;
+        StickFlg = true;
+        //スティックを上に倒す処理
+        if (LStick > 0)
+        {
+            if (Carsor == NextStage)
+                Carsor = StageSelect;
+            else
+                Carsor = NextStage;
+        }
+        //スティックを下に倒す処理
+        if (LStick < 0)
+        {
+            if (Carsor == StageSelect)
+                Carsor = NextStage;
+            else
+                Carsor = StageSelect;
+        }
+    }
+
+    void TextAlphaZero(TextMeshProUGUI text)
     {
         text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
     }
@@ -279,12 +374,12 @@ public class ClearManager : MonoBehaviour
         image.color = new Color(image.color.r, image.color.g, image.color.b, 0);
     }
 
-    void TextFadeIn(Text text, float speed)
+    void TextFadeIn(TextMeshProUGUI text, float speed)
     {
         text.color = new Color(text.color.r, text.color.g, text.color.b, text.color.a + speed);
     }
 
-    void TextFadeOut(Text text, float speed)
+    void TextFadeOut(TextMeshProUGUI text, float speed)
     {
         text.color = new Color(text.color.r, text.color.g, text.color.b, text.color.a - speed);
     }
