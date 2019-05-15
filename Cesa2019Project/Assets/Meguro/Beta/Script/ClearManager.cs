@@ -80,6 +80,7 @@ public class ClearManager : MonoBehaviour
     bool TextFadeOutFlg = false;
     bool TransitionFlg = false;
 
+
     bool StickFlg;
     float LStick;
     int Carsor;
@@ -87,7 +88,11 @@ public class ClearManager : MonoBehaviour
     int StageSelect;
 
     int SceneNumber;
+    string SceneName;
 
+    //UIポジション
+    float PosX;
+    float PosY1, PosY2;
     void Awake()
     {
         EnemyDownNum = 0;
@@ -119,6 +124,10 @@ public class ClearManager : MonoBehaviour
         StageSelect = 1;
         Carsor = NextStage;
         SceneNumber = SceneManager.GetActiveScene().buildIndex;
+        SceneName = SceneManager.GetActiveScene().name;
+        PosX = 120.0f;
+        PosY1 = 0.0f;
+        PosY2 = -70.0f;
     }
     void Update()
     {
@@ -289,44 +298,68 @@ public class ClearManager : MonoBehaviour
                 else
                 {
                     TransitionFlg = true;
-                    NextButton.gameObject.SetActive(true);
-                    StageSelectButton.gameObject.SetActive(true);
                 }
             }
             if (TransitionFlg)
             {
-                SelectStick();
-                if (Carsor == NextStage)
+                switch (SceneName)
                 {
-                    CarsorRed.SetActive(true);
-                    CarsorBlue.SetActive(false);
-                    if (Input.GetKeyDown("joystick button 1"))
-                    {
-                        /*=================================================*/
-                        //遷移
-                        /*=================================================*/
-                        if (!FadeController.IsFadeOut)
+                    case "GameScene1-3":
+                    case "GameScene2-3":
+                    case "GameScene3-3":
+                    case "GameScene4-3":
+                        StageSelectButton.gameObject.SetActive(true);
+                        CarsorBlue.SetActive(true);
+                        StageSelectButton.GetComponent<RectTransform>().localPosition = new Vector3(PosX, PosY1, 0);
+                        if (Input.GetKeyDown("joystick button 1"))
                         {
-                            NextStageText.text = "次へ";
-                            FadeController.FadeOut(++SceneNumber);
+                            /*=================================================*/
+                            //遷移
+                            /*=================================================*/
+                            if (!FadeController.IsFadeOut)
+                            {
+                                FadeController.FadeOut("SelectScene");
+                            }
                         }
-                    }
+                        break;
+                    default:
+                        SelectStick();
+                        NextButton.gameObject.SetActive(true);
+                        StageSelectButton.gameObject.SetActive(true);
+                        StageSelectButton.GetComponent<RectTransform>().localPosition = new Vector3(PosX, PosY2, 0);
+                        if (Carsor == NextStage)
+                        {
+                            CarsorRed.SetActive(true);
+                            CarsorBlue.SetActive(false);
+                            if (Input.GetKeyDown("joystick button 1"))
+                            {
+                                /*=================================================*/
+                                //遷移
+                                /*=================================================*/
+                                if (!FadeController.IsFadeOut)
+                                {
+                                    NextStageText.text = "次へ";
+                                    FadeController.FadeOut(++SceneNumber);
+                                }
+                            }
 
-                }
-                if (Carsor == StageSelect)
-                {
-                    CarsorRed.SetActive(false);
-                    CarsorBlue.SetActive(true);
-                    if (Input.GetKeyDown("joystick button 1"))
-                    {
-                        /*=================================================*/
-                        //遷移
-                        /*=================================================*/
-                        if (!FadeController.IsFadeOut)
-                        {
-                            FadeController.FadeOut("SelectScene");
                         }
-                    }
+                        if (Carsor == StageSelect)
+                        {
+                            CarsorRed.SetActive(false);
+                            CarsorBlue.SetActive(true);
+                            if (Input.GetKeyDown("joystick button 1"))
+                            {
+                                /*=================================================*/
+                                //遷移
+                                /*=================================================*/
+                                if (!FadeController.IsFadeOut)
+                                {
+                                    FadeController.FadeOut("SelectScene");
+                                }
+                            }
+                        }
+                        break;
                 }
             }
         }
