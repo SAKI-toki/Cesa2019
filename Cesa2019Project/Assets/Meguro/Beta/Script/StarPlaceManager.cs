@@ -49,6 +49,10 @@ public class StarPlaceManager : MonoBehaviour
     Pause Pause = null;
     [SerializeField]
     WaveController GetWaveController = null;
+    [SerializeField, Header("線のマテリアル")]
+    Material LineMaterial = null;
+    //線の幅
+    const float LineWidth = 0.3f;
 
     [System.NonSerialized]
     public int RedStarNum = 0;
@@ -296,13 +300,15 @@ public class StarPlaceManager : MonoBehaviour
             }
         }
     }
-
     void DorwLine(Line line)
     {
         if (line.StarPlace1.GetComponent<StarPlace>().isSet &&
             line.StarPlace2.GetComponent<StarPlace>().isSet)
         {
             LineRenderer lineRendererStarPlace1 = line.StarPlace1.GetComponent<LineRenderer>();
+            lineRendererStarPlace1.material = LineMaterial;
+            lineRendererStarPlace1.startWidth = LineWidth;
+            lineRendererStarPlace1.endWidth = LineWidth;
             lineRendererStarPlace1.positionCount = lineRendererStarPlace1.positionCount + 2;
 
             lineRendererStarPlace1.SetPosition(
