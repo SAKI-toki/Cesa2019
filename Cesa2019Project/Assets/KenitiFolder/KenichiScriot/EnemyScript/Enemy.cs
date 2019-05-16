@@ -223,6 +223,7 @@ public class Enemy : MonoBehaviour
                 ++PlayerController.ComboController.CurrentComboNum;
                 EnemyStatus.CurrentHp -= Status.Damage(PlayerController.PlayerStatus.CurrentAttack, EnemyStatus.CurrentDefense);//HPを減らす
                 AttackCount++;
+                if (!BossEnemy) { Animator.SetTrigger("EnemyDamage"); }
                 EnemySe.DamageSES();
                 transform.Translate(0, 0, -KnockBackMove);
             }
@@ -235,7 +236,6 @@ public class Enemy : MonoBehaviour
 
             if (BossEnemy == false && ReceivedDamage == false)
             {
-                if (!NonAnimator) { Animator.SetTrigger("EnemyDamage"); }
                 DamageFlag = true;
                 EnemyTime = 0;
                 ReceivedDamage = true;/*敵を硬直させる*/

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2030846861141059348}
-  - component: {fileID: 2137891278342218162}
   - component: {fileID: 2028162661925512156}
   - component: {fileID: 6689346512707952503}
   - component: {fileID: 2028162661925512159}
@@ -40,25 +39,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &2137891278342218162
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2028162661925512158}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: a492cbabea1026348ab6b7956b4e782f, type: 3}
-  m_Animations:
-  - {fileID: 7400000, guid: a492cbabea1026348ab6b7956b4e782f, type: 3}
-  - {fileID: 7400000, guid: e8b4947a8d66a124cbab1176113a8d3c, type: 3}
-  - {fileID: 7400000, guid: 2f8434480efda344384bb993d849c261, type: 3}
-  - {fileID: 7400000, guid: 3e94babe2b0575c49a1ddde21035b445, type: 3}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 1
 --- !u!95 &2028162661925512156
 Animator:
   serializedVersion: 3
@@ -68,8 +48,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2028162661925512158}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 751c3e6ca01453d4085a136a21cc0ad9, type: 3}
+  m_Controller: {fileID: 9100000, guid: 031c6ce0044316943838ae55300f223e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

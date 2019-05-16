@@ -51,7 +51,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6266043026157422519}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 0bec51077d064c84bb1b4798e6202c55, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 751c3e6ca01453d4085a136a21cc0ad9, type: 3}
   m_Controller: {fileID: 9100000, guid: 031c6ce0044316943838ae55300f223e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
@@ -144,7 +144,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EffectRush: {fileID: 4776499406462542889}
   Enemy: {fileID: 8484428215708899457}
-  LeoGroundWave: {fileID: 6474251736554538047}
   GetMeshAgent: {fileID: 4347745545034916971}
 --- !u!65 &6266043026157422514
 BoxCollider:
@@ -317,7 +316,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3081318097017808905}
-  - component: {fileID: 6474251736554538047}
   - component: {fileID: 7524276165579945675}
   m_Layer: 0
   m_Name: GameObject
@@ -340,21 +338,6 @@ Transform:
   m_Father: {fileID: 6266043026157313565}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6474251736554538047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7152396584622696145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 113a133b49e70774abc2167918f45771, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Ground: 0
-  Check: 0
-  GetLeoEnemy: {fileID: 6266043026157422518}
 --- !u!65 &7524276165579945675
 BoxCollider:
   m_ObjectHideFlags: 0

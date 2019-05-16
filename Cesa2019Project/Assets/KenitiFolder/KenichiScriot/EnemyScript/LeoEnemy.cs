@@ -25,8 +25,8 @@ public class LeoEnemy : MonoBehaviour
     //float KnockBackDecision = 50;
     [SerializeField]
     Enemy Enemy = null;
-    [SerializeField]
-    LeoGroundWave LeoGroundWave = null;
+    // [SerializeField]
+    // LeoGroundWave LeoGroundWave = null;
     [SerializeField]
     public NavMeshAgent GetMeshAgent = null;
     // Start is called before the first frame update
@@ -43,7 +43,7 @@ public class LeoEnemy : MonoBehaviour
     {
         if (Enemy.ReceivedDamage == false
             && Enemy.AttackEnemy == false
-            && LeoGroundWave.Ground == false
+            //&& LeoGroundWave.Ground == false
             )//ダメージを受けたら動かない,攻撃中も動かない,ジャンプ中も動かない
         {
             ReoMove();
@@ -134,7 +134,6 @@ public class LeoEnemy : MonoBehaviour
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
             EffectRush.SetActive(false);
-            Debug.Log("ji");
             Enemy.Animator.SetTrigger("EnemyAttack1");
             Enemy.EnemySe.AttackSES();
             AttackMotionFirst = true;
