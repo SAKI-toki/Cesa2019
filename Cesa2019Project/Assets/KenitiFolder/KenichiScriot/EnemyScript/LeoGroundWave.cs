@@ -14,13 +14,12 @@ public class LeoGroundWave : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         Ground = false;
-        GetLeoEnemy.KnockBackOn();
+        GetLeoEnemy.JampEnd();
         GetLeoEnemy.GetMeshAgent.enabled = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
         Ground = true;
-       
     }
 }

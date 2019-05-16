@@ -245,6 +245,7 @@ public class Enemy : MonoBehaviour
             {
 
                 DamageFlag = true;
+                JampFlag = true;
                 EnemyTime = 0;
                 ReceivedDamage = true;/*敵を硬直させる*/
                 AttackCount = 0;
