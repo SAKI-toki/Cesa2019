@@ -6,8 +6,6 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField]
     Transform Player = null;
-    //[SerializeField]
-    //PlayerController PlayerControll = null;
     [SerializeField]
     Transform LookAt = null;
     [SerializeField]
@@ -45,6 +43,11 @@ public class CameraController : MonoBehaviour
             return;
         }
         if (StarPlaceManager.AllPlaceSet)
+        {
+            MoveStop();
+            return;
+        }
+        if (Player.GetComponent<Player>().DeathFlg)
         {
             MoveStop();
             return;

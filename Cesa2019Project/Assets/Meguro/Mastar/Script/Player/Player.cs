@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     public Controller Controller = new Controller();
     public PlayerStatusData PlayerStatusData;
     public static Status PlayerStatus = new Status();
+    public CameraController CameraController;
+
     [System.NonSerialized]
     public float ContactNormalY;// 着地時の接地面の法線ベクトル
     [System.NonSerialized]
