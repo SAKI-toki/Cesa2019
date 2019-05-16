@@ -541,7 +541,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2410692148759329172}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.7, y: 0.6, z: 29.9}
+  m_LocalPosition: {x: 12, y: 1.48, z: 27}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 5207050851469243994}
@@ -740,7 +740,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2410692148939961088}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.1, y: 0.6, z: -23}
+  m_LocalPosition: {x: 13.8, y: 0.6, z: -22.07}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 5207050851469243994}
@@ -1337,7 +1337,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2410692150261829300}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.4, y: 0.6, z: 22.9}
+  m_LocalPosition: {x: 6.4, y: 0.82, z: 22.9}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 5207050851469243994}
@@ -1717,6 +1717,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaveGenerator
       objectReference: {fileID: 0}
+    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: Waves.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: StarPut
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: Waves.Array.data[0]
+      value: 
+      objectReference: {fileID: 4606851849693845742, guid: 0ec3322803fb12949ac6745bc00c25e1,
+        type: 3}
+    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: Waves.Array.data[1]
+      value: 
+      objectReference: {fileID: 586382317089579703, guid: 25b420a01a74ab24493eeb1a62a01ac3,
+        type: 3}
+    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: Waves.Array.data[2]
+      value: 
+      objectReference: {fileID: 8566309222562175131, guid: b594137f5b24d1d4b9c949abbe11205f,
+        type: 3}
+    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: BossWave
+      value: 
+      objectReference: {fileID: 109627793131235519, guid: d3208143198ad2a4296a88a05103230c,
+        type: 3}
+    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: StarPlaceManager
+      value: 
+      objectReference: {fileID: 5207050850367402754}
     - target: {fileID: 1476946873, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1761,38 +1793,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
-      propertyPath: Waves.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
-      propertyPath: StarPut
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
-      propertyPath: Waves.Array.data[0]
+    - target: {fileID: 1476946871, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: Audios
       value: 
-      objectReference: {fileID: 4606851849693845742, guid: 0ec3322803fb12949ac6745bc00c25e1,
-        type: 3}
-    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
-      propertyPath: Waves.Array.data[1]
-      value: 
-      objectReference: {fileID: 586382317089579703, guid: 25b420a01a74ab24493eeb1a62a01ac3,
-        type: 3}
-    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
-      propertyPath: Waves.Array.data[2]
-      value: 
-      objectReference: {fileID: 8566309222562175131, guid: b594137f5b24d1d4b9c949abbe11205f,
-        type: 3}
-    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
-      propertyPath: BossWave
-      value: 
-      objectReference: {fileID: 109627793131235519, guid: d3208143198ad2a4296a88a05103230c,
-        type: 3}
-    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
-      propertyPath: StarPlaceManager
-      value: 
-      objectReference: {fileID: 5207050850367402754}
+      objectReference: {fileID: 302074217464747240}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
 --- !u!4 &302074217464747239 stripped
@@ -1813,3 +1817,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 975a17e3ef8046445beb9865b3601859, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &302074217464747240 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1476946870, guid: cb0cb606c6b605b4a9edb25350ba02d0,
+    type: 3}
+  m_PrefabInstance: {fileID: 302074215987822430}
+  m_PrefabAsset: {fileID: 0}
