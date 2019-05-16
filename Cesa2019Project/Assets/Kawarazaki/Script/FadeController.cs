@@ -23,10 +23,10 @@ public class FadeController : MonoBehaviour
     public static bool IsFadeIn = false;
 
     //偏移先のシーン名
-    //private static string NextSceneName;
-    //private static int NextSceneNumber;
-    //static bool NumberFlg = false;
-    static AsyncOperation LoadSceneAsync = null;
+    private static string NextSceneName;
+    private static int NextSceneNumber;
+    static bool NumberFlg = false;
+    bool SceneTranslationPermission = false;
 
     /// <summary>
     ///  canvasとImage生成
@@ -51,6 +51,11 @@ public class FadeController : MonoBehaviour
         //Imageのサイズ設定
         FadeImage.rectTransform.sizeDelta = new Vector2(9999, 9999);
         SetAlpha();
+    }
+
+    private void Start()
+    {
+        StartCoroutine("LoadScene");
     }
 
     void Update()
@@ -82,7 +87,7 @@ public class FadeController : MonoBehaviour
             {
                 IsFadeOut = false;
                 Alpha = 1.0f;
-                LoadSceneAsync.allowSceneActivation = true;//シーン遷移を許可
+                SceneTranslationPermission = true;//シーン遷移を許可
             }
             SetAlpha();
         }
@@ -119,10 +124,8 @@ public class FadeController : MonoBehaviour
     public static void FadeOut(string n)
     {
         FadeOutImpl();
-        LoadSceneAsync = SceneManager.LoadSceneAsync(n);
-        LoadSceneAsync.allowSceneActivation = false;//シーン遷移を許可しない
-        //NextSceneName = n;
-        //NumberFlg = false;
+        NextSceneName = n;
+        NumberFlg = false;
     }
 
     /// <summary>
@@ -132,11 +135,27 @@ public class FadeController : MonoBehaviour
     public static void FadeOut(int n)
     {
         FadeOutImpl();
-        LoadSceneAsync = SceneManager.LoadSceneAsync(n);
-        LoadSceneAsync.allowSceneActivation = false;//シーン遷移を許可しない
-        //NextSceneNumber = n;
-        //NumberFlg = true;
+        NextSceneNumber = n;
+        NumberFlg = true;
     }
+
+    IEnumerator LoadScene()
+    {
+        AsyncOperation asyncLoad;
+        if (NumberFlg)
+            asyncLoad = SceneManager.LoadSceneAsync(NextSceneNumber);
+        else
+            asyncLoad = SceneManager.LoadSceneAsync(NextSceneName);
+
+        asyncLoad.allowSceneActivation = false;//シーン遷移を許可しない
+        while (asyncLoad.progress < 0.9f || !SceneTranslationPermission)
+        {
+            Debug.Log(asyncLoad.progress);
+            yield return new WaitForEndOfFrame();
+        }
+        asyncLoad.allowSceneActivation = true;
+    }
+
 
     /// <summary>
     /// FadeImageのカラー設定
