@@ -14,40 +14,34 @@ public class LeoEnemy : MonoBehaviour
     bool AttackFirst = false;//攻撃を一度だけ実行
     bool AttackMotionFirst = false;//攻撃モーションを一度だけ実行
     GameObject AttackObject = null;
-    float LTime = 0;
 
-    PlayerController GetPlayerController = null;
     Rigidbody Rigidbody = null;
+
 
     [SerializeField]
     GameObject EffectRush = null;
     //[SerializeField]
     //float KnockBackDecision = 50;
     [SerializeField]
-    public Enemy Enemy = null;
-    //[SerializeField]
-    // LeoGroundWave LeoGroundWave = null;
+    Enemy Enemy = null;
+    [SerializeField]
+    LeoGroundWave LeoGroundWave = null;
     [SerializeField]
     public NavMeshAgent GetMeshAgent = null;
-
-
     // Start is called before the first frame update
     void Start()
     {
         Rigidbody = this.GetComponent<Rigidbody>();
         MoveSave = Enemy.ZMove;
         Enemy.MoveSwitch = false;
-        GetPlayerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        LTime += Time.deltaTime;
-
         if (Enemy.ReceivedDamage == false
             && Enemy.AttackEnemy == false
-            //&& LeoGroundWave.Ground == false
+            && LeoGroundWave.Ground == false
             )//ダメージを受けたら動かない,攻撃中も動かない,ジャンプ中も動かない
         {
             ReoMove();
@@ -55,9 +49,7 @@ public class LeoEnemy : MonoBehaviour
 
         if (Enemy.PlayerRangeDifference <= Enemy.AttackDecision
           && AttackOn == false
-          && Enemy.ReceivedDamage == false
-          && LTime >= 1
-          )
+          && Enemy.ReceivedDamage == false)
         { AttackOn = true; }//攻撃中
 
         if (AttackOn == true) { Attack(); }
@@ -100,12 +92,12 @@ public class LeoEnemy : MonoBehaviour
             {
                 Enemy.MoveSwitch = false;
                 ReoTime = 0;
-                Debug.Log("aaa");
+               
                 Enemy.BossTime = 0;
             }
             else
             {
-                AssaultFlag = false;
+               AssaultFlag = false;
             }
         }
     }
@@ -118,15 +110,10 @@ public class LeoEnemy : MonoBehaviour
         //前に進む
         if (Enemy.MoveSwitch)
         {
-            Enemy.Animator.SetBool("EnemyWalk", true);
             transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime);
             EffectRush.SetActive(true);
         }
-        else
-        {
-            Enemy.Animator.SetBool("EnemyWalk", false);
-            EffectRush.SetActive(false);
-        }
+        else { EffectRush.SetActive(false); }
     }
 
     /// <summary>
@@ -136,11 +123,12 @@ public class LeoEnemy : MonoBehaviour
     {
         AttackTime += Time.deltaTime;
         Enemy.AttackEnemy = true;
-        // Enemy.Animator.SetBool("EnemyWalk", false);
+        //Enemy.Animator.SetBool("EnemyWalk", false);
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
             EffectRush.SetActive(false);
-            Enemy.Animator.SetTrigger("EnemyAttack1");
+            Debug.Log("ji");
+            Enemy.Animator.SetTrigger("EnemyAttack");
             Enemy.EnemySe.AttackSES();
             AttackMotionFirst = true;
         }
@@ -170,18 +158,7 @@ public class LeoEnemy : MonoBehaviour
     void FalterMove()
     {
         GetMeshAgent.enabled = false;
-        Enemy.Animator.SetBool("EnemyJamp", true);
         Vector3 force = new Vector3(0, Yforword, 0);
         Rigidbody.AddForce(force, ForceMode.Impulse);
-    }
-
-    public void JampEnd()
-    {
-        Enemy.Animator.SetBool("EnemyJamp", false);
-    }
-
-    public void KnockBackOn()
-    {
-        GetPlayerController.KnockBack();
     }
 }

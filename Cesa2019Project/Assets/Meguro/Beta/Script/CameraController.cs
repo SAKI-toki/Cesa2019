@@ -6,8 +6,8 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField]
     Transform Player = null;
-    [SerializeField]
-    PlayerController PlayerControll = null;
+    //[SerializeField]
+    //PlayerController PlayerControll = null;
     [SerializeField]
     Transform LookAt = null;
     [SerializeField]
@@ -34,7 +34,9 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        CameraInit();
+        CameraTransform.localPosition = new Vector3(0, 0, -Distance);
+        RotX = transform.eulerAngles.x;
+        RotY = transform.eulerAngles.y;
     }
 
     void Update()
@@ -49,11 +51,12 @@ public class CameraController : MonoBehaviour
             MoveStop();
             return;
         }
-        if (PlayerControll.DeathFlg)
-        {
-            MoveStop();
-            return;
-        }
+        //if (PlayerControll.DeathFlg)
+        //{
+        //    MoveStop();
+        //    return;
+        //}
+
         transform.position = LookAt.position;
 
         RightStickH = Input.GetAxis("R_Stick_H");
@@ -105,25 +108,6 @@ public class CameraController : MonoBehaviour
             CameraTransform.localPosition = new Vector3(0, 0, -Distance);
         }
     }
-
-    public void CameraInit()
-    {
-        CameraTransform.localPosition = new Vector3(0, 0, -Distance);
-        RotX = transform.eulerAngles.x;
-        RotY = transform.eulerAngles.y;
-        transform.position = LookAt.position;
-        RaycastHit hit;
-        Ray ray = new Ray(transform.position, CameraTransform.position - transform.position);
-        if (Physics.Raycast(ray, out hit, Distance, Mask))
-        {
-            CameraTransform.localPosition = new Vector3(0, 0, -hit.distance);
-        }
-        else
-        {
-            CameraTransform.localPosition = new Vector3(0, 0, -Distance);
-        }
-    }
-
 
     void MoveStop()
     {
