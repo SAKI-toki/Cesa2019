@@ -5,13 +5,13 @@ using UnityEngine;
 public class AbnormalState
 {
     public float ParalysisTime = 0;         // 麻痺時間
-    float CurrentParalysisTime = 0;
+    float CurrentParalysisTime = 0;         // 麻痺経過時間
     public bool ParalysisFlg = false;       // 麻痺フラグ
     public float PoisonDamage = 0;          // 毒ダメージ
     public float PoisonTime = 0;            // 毒時間
-    float CurrentPoisonTime = 0;
-    public float PoisonDamageTime = 0;      // 毒のダメージを受ける感覚
-    float CurrentPoisonDamageTime = 0;
+    float CurrentPoisonTime = 0;            // 毒経過時間
+    public float PoisonDamageTime = 0;      // 毒のダメージを受ける間隔
+    float CurrentPoisonDamageTime = 0;      // 毒ダメージ間隔の経過時間
     public bool PoisonFlg = false;          // 毒フラグ
 
     /// <summary>

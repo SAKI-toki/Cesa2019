@@ -61,7 +61,7 @@ public class LongDistanceGeminiEnemy : MonoBehaviour
     void BulletState()
     {
         BulletTimeCount += Time.deltaTime;
-        var lookAtPos = ThisEnemy.PlayerController.transform.position;
+        var lookAtPos = ThisEnemy.Player.transform.position;
         lookAtPos.y = transform.position.y;
         transform.LookAt(lookAtPos);
         if (BulletTimeCount > BulletRate)
@@ -98,7 +98,7 @@ public class LongDistanceGeminiEnemy : MonoBehaviour
     void LaserState()
     {
         LaserTimeCount += Time.deltaTime;
-        var lookAtPos = ThisEnemy.PlayerController.transform.position;
+        var lookAtPos = ThisEnemy.Player.transform.position;
         lookAtPos.y = transform.position.y;
         transform.LookAt(lookAtPos);
         if (LaserTimeCount > LaserTimeLimit)

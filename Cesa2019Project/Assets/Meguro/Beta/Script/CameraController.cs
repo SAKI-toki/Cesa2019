@@ -6,8 +6,8 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField]
     Transform Player = null;
-    [SerializeField]
-    PlayerController PlayerControll = null;
+    //[SerializeField]
+    //PlayerController PlayerControll = null;
     [SerializeField]
     Transform LookAt = null;
     [SerializeField]
@@ -51,11 +51,11 @@ public class CameraController : MonoBehaviour
             MoveStop();
             return;
         }
-        if (PlayerControll.DeathFlg)
-        {
-            MoveStop();
-            return;
-        }
+        //if (PlayerControll.DeathFlg)
+        //{
+        //    MoveStop();
+        //    return;
+        //}
 
         transform.position = LookAt.position;
 

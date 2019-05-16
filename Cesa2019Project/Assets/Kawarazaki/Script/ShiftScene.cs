@@ -31,7 +31,7 @@ public class ShiftScene : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "UiTestScene")
         {
-            if (PlayerController.PlayerStatus.CurrentHp <= 0)
+            if (Player.PlayerStatus.CurrentHp <= 0)
             {
                 if (--Time <= 0)
                 {

@@ -15,7 +15,6 @@ public class LeoEnemy : MonoBehaviour
     bool AttackMotionFirst = false;//攻撃モーションを一度だけ実行
     GameObject AttackObject = null;
 
-    PlayerController GetPlayerController = null;
     Rigidbody Rigidbody = null;
 
 
@@ -35,7 +34,6 @@ public class LeoEnemy : MonoBehaviour
         Rigidbody = this.GetComponent<Rigidbody>();
         MoveSave = Enemy.ZMove;
         Enemy.MoveSwitch = false;
-        GetPlayerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -162,10 +160,5 @@ public class LeoEnemy : MonoBehaviour
         GetMeshAgent.enabled = false;
         Vector3 force = new Vector3(0, Yforword, 0);
         Rigidbody.AddForce(force, ForceMode.Impulse);
-    }
-
-    public void KnockBackOn()
-    {
-        GetPlayerController.KnockBack();
     }
 }

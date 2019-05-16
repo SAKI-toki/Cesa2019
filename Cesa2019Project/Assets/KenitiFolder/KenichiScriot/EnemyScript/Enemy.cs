@@ -123,7 +123,7 @@ public class Enemy : MonoBehaviour
     GameObject StarPlace = null;
     StarPlaceManager StarPlaceManager = null;
     NavMeshAgent Agent = null;
-    public PlayerController PlayerController;
+    public Player Player;
     StarMove StarMove = null;
     Rigidbody GetRigidbody = null;
 
@@ -132,7 +132,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void Start()
     {
-        PlayerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        Player = GameObject.Find("Player").GetComponent<Player>();
         EnemyStatus.Hp = EnemyHp;
         EnemyStatus.CurrentHp = EnemyHp;
         EnemyStatus.Attack = EnemyAttackPoint;
@@ -215,9 +215,13 @@ public class Enemy : MonoBehaviour
         {
             if (!NoDamage)
             {
-                HitStop.SlowDown();
-                ++PlayerController.ComboController.CurrentComboNum;
-                EnemyStatus.CurrentHp -= Status.Damage(PlayerController.PlayerStatus.CurrentAttack, EnemyStatus.CurrentDefense);//HPを減らす
+                // ヒットストップ
+                if (HitStop.HitStopRestriction())
+                {
+                    HitStop.SlowDown();
+                }
+                ++Player.PlayerCombo.CurrentComboNum;
+                EnemyStatus.CurrentHp -= Status.Damage(Player.PlayerStatus.CurrentAttack, EnemyStatus.CurrentDefense);//HPを減らす
                 AttackCount++;
                 EnemySe.DamageSES();
                 transform.Translate(0, 0, -KnockBackMove);
@@ -255,7 +259,7 @@ public class Enemy : MonoBehaviour
             if (!NoDamage)
             {
                 AttackCount++;
-                ++PlayerController.ComboController.CurrentComboNum;
+                ++Player.PlayerCombo.CurrentComboNum;
                 EnemyStatus.CurrentHp -= 2;//HPを減らす
                 if (EnemyStatus.CurrentHp <= 0)
                 {

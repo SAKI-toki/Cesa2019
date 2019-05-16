@@ -47,7 +47,7 @@ public class GeminiController : MonoBehaviour
             if (State == RushState)
             {
                 //プレイヤーのほうを向く
-                var lookAtPos = ThisEnemy.PlayerController.transform.position;
+                var lookAtPos = ThisEnemy.Player.transform.position;
                 lookAtPos.y = transform.position.y;
                 transform.LookAt(lookAtPos);
                 InitRushPosition = transform.position;
@@ -92,7 +92,7 @@ public class GeminiController : MonoBehaviour
     void BulletState()
     {
         TimeCount += Time.deltaTime;
-        var lookAtPos = ThisEnemy.PlayerController.transform.position;
+        var lookAtPos = ThisEnemy.Player.transform.position;
         lookAtPos.y = transform.position.y;
         transform.LookAt(lookAtPos);
         if (TimeCount > BulletRate)

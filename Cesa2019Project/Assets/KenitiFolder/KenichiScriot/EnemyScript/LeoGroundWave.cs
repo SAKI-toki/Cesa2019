@@ -14,7 +14,6 @@ public class LeoGroundWave : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         Ground = false;
-        GetLeoEnemy.KnockBackOn();
         GetLeoEnemy.GetMeshAgent.enabled = true;
     }
 

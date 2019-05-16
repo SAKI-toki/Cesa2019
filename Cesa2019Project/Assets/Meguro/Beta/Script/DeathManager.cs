@@ -5,7 +5,7 @@ using UnityEngine;
 public class DeathManager : MonoBehaviour
 {
     [SerializeField]
-    PlayerController PlayerControll = null;
+    Player Player = null;
     [SerializeField]
     Transform CameraObject = null;
     [SerializeField]
@@ -15,11 +15,15 @@ public class DeathManager : MonoBehaviour
 
     void Update()
     {
-        if (PlayerControll.DeathFlg)
+        if (Player.DeathFlg)
         {
             if (!CameraMoveFlg)
             {
-                if (CameraObject.localEulerAngles.x < 60) { CameraControll.DeathMoveInit(); CameraControll.DeathMove(); }
+                if (CameraObject.localEulerAngles.x < 60)
+                {
+                    CameraControll.DeathMoveInit();
+                    CameraControll.DeathMove();
+                }
                 else { CameraMoveFlg = true; }
             }
 
@@ -27,10 +31,10 @@ public class DeathManager : MonoBehaviour
             {
                 CameraControll.DeathRotation();
             }
-            if (!FadeController.IsFadeOut)
-            {
-                FadeController.FadeOut("SelectScene");
-            }
+            //if (!FadeController.IsFadeOut)
+            //{
+            //    FadeController.FadeOut("SelectScene");
+            //}
         }
     }
 }
