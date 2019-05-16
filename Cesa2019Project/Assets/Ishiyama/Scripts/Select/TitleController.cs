@@ -17,8 +17,12 @@ public class TitleController : MonoBehaviour
     GameObject TitleCameraObject = null;
     [SerializeField, Header("タイトルテキスト")]
     GameObject TitleTextObject = null;
+    [SerializeField, Header("タイトルロゴのメッシュレンダラー")]
+    MeshRenderer TitleLogoMeshRenderer = null;
     [SerializeField, Header("遷移のスピード"), Range(0.0f, 1.0f)]
     float TranslationSpeed = 1.0f;
+    //タイトルロゴのアルファ値
+    float TitleLogoAlpha = 1.0f;
     //ステートのデリゲート
     delegate void StateFunction();
     //ステート
@@ -29,6 +33,7 @@ public class TitleController : MonoBehaviour
     Quaternion StartCameraRotation, EndCameraRotation;
     //遷移時間
     float TranslationTime = 0.0f;
+    const float TitleFadeSpeed = 1.0f;
     private void Start()
     {
         SelectCameraController.CameraInit();
@@ -44,6 +49,7 @@ public class TitleController : MonoBehaviour
         StarPlaceManager.AllPlaceSet = false;
         StarPlaceManager.StarSelect = false;
         Statefunc = FadeState;
+        UpdateTitleLogoAlpha();
         FadeController.FadeIn();
     }
     void Update()
@@ -78,9 +84,22 @@ public class TitleController : MonoBehaviour
     {
         if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
         {
+            Statefunc = TitleLogoFade;
+            AlreadyStart = true;
+        }
+    }
+
+    /// <summary>
+    /// タイトルロゴのフェード
+    /// </summary>
+    void TitleLogoFade()
+    {
+        TitleLogoAlpha -= Time.deltaTime * TitleFadeSpeed;
+        UpdateTitleLogoAlpha();
+        if (TitleLogoAlpha <= 0.0f)
+        {
             Statefunc = TranslationState;
             TitleTextObject.SetActive(false);
-            AlreadyStart = true;
         }
     }
 
@@ -102,5 +121,11 @@ public class TitleController : MonoBehaviour
             SelectCameraController.enabled = true;
             SelectPlayerController.enabled = true;
         }
+    }
+
+    void UpdateTitleLogoAlpha()
+    {
+        if (TitleLogoAlpha < 0.0f) TitleLogoAlpha = 0.0f;
+        TitleLogoMeshRenderer.material.SetFloat("_Alpha", TitleLogoAlpha);
     }
 }
