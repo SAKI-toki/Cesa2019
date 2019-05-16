@@ -16,7 +16,6 @@ public class AriesEnemy : MonoBehaviour
     PlayerController GetPlayerController = null;
     Rigidbody Rigidbody = null;
 
-
     [SerializeField]
     GameObject EffectRush = null;
     [SerializeField]
@@ -112,7 +111,7 @@ public class AriesEnemy : MonoBehaviour
     {
         AttackTime += Time.deltaTime;
         Enemy.AttackEnemy = true;
-        //Enemy.Animator.SetBool("EnemyWalk", false);
+        Enemy.Animator.SetBool("EnemyWalk", false);
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
             EffectRush.SetActive(false);

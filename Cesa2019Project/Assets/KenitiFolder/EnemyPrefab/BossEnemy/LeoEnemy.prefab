@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e40ae868fe48288478c76f0b962b21ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Animator: {fileID: 0}
   EffectRush: {fileID: 4776499406462542889}
   Enemy: {fileID: 8484428215708899457}
   GetMeshAgent: {fileID: 4347745545034916971}
@@ -317,8 +318,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3081318097017808905}
   - component: {fileID: 7524276165579945675}
+  - component: {fileID: 2801966688333565532}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -332,7 +334,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7152396584622696145}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalPosition: {x: 0, y: 0.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6266043026157313565}
@@ -351,6 +353,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.4929476, z: 1}
   m_Center: {x: 0, y: -0.24647379, z: 0}
+--- !u!114 &2801966688333565532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7152396584622696145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 113a133b49e70774abc2167918f45771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Ground: 0
+  Check: 0
+  GetLeoEnemy: {fileID: 6266043026157422518}
 --- !u!1001 &80928181213994514
 PrefabInstance:
   m_ObjectHideFlags: 0
