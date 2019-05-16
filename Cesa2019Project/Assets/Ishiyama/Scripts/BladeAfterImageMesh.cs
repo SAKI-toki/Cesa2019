@@ -34,7 +34,7 @@ public class BladeAfterImageMesh : MonoBehaviour
         PrevTipPos = BladeTipTransform.position;
         PrevEndPos = BladeEndTransform.position;
     }
-    
+
     /// <summary>
     /// 全てのUpdateが終わってからメッシュ更新する
     /// </summary>
