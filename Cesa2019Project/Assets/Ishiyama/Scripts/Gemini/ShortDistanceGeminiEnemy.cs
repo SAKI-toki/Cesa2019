@@ -67,7 +67,7 @@ public class ShortDistanceGeminiEnemy : MonoBehaviour
             AttackInitPosition = transform.position;
             IdleTimeCount = 0.0f;
             //プレイヤーのほうを向く
-            var lookAtPos = ThisEnemy.PlayerController.transform.position;
+            var lookAtPos = ThisEnemy.Player.transform.position;
             lookAtPos.y = transform.position.y;
             transform.LookAt(lookAtPos);
         }

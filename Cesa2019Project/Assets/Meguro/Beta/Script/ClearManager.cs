@@ -61,7 +61,7 @@ public class ClearManager : MonoBehaviour
 
     //プレイヤー
     [SerializeField]
-    GameObject Player = null;
+    Player Player = null;
     //UICanvas
     [SerializeField]
     GameObject UI = null;
@@ -116,10 +116,10 @@ public class ClearManager : MonoBehaviour
 
     private void Start()
     {
-        StartHp = PlayerController.PlayerStatus.Hp;
-        StartAttack = PlayerController.PlayerStatus.Attack;
-        StartDefense = PlayerController.PlayerStatus.Defense;
-        StartSpeed = PlayerController.PlayerStatus.Speed;
+        StartHp = Player.PlayerStatus.Hp;
+        StartAttack = Player.PlayerStatus.Attack;
+        StartDefense = Player.PlayerStatus.Defense;
+        StartSpeed = Player.PlayerStatus.Speed;
         NextStage = 0;
         StageSelect = 1;
         Carsor = NextStage;
@@ -147,7 +147,7 @@ public class ClearManager : MonoBehaviour
                 CameraScript.ClearMoveInit();
                 CameraScript.ClearMove();
                 Vector3 dir = ClearPos.position - Player.transform.position;
-                Player.GetComponent<PlayerController>().Move(dir, 30);
+                //Player.GetComponent<Player>().Move(dir, 30);
                 float dis = Vector3.Distance(Player.transform.position, ClearPos.position);
                 if (dis < 1.0f) { ClearMoveFlg = true; }
             }
@@ -185,19 +185,19 @@ public class ClearManager : MonoBehaviour
                 {
                     Vector3 dir = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
                     dir = dir * -0.4f + Camera.main.transform.right * -1.0f;
-                    Player.GetComponent<PlayerController>().Move(dir, 25);
+                    //Player.GetComponent<Player>().Move(dir, 25);
                 }
                 else
                 {
                     Vector3 dir = Camera.main.transform.position - Player.transform.position;
-                    Player.GetComponent<PlayerController>().Look(dir);
+                    //Player.GetComponent<Player>().Look(dir);
                     if (Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized == Player.transform.forward)
                     {
                         ResultMoveFlg = true;
-                        HpNumText.text = StartHp.ToString("00") + " > " + PlayerController.PlayerStatus.CurrentHp;
-                        AttackNumText.text = StartAttack.ToString("00") + " > " + PlayerController.PlayerStatus.Attack;
-                        DefenseNumText.text = StartDefense.ToString("00") + " > " + PlayerController.PlayerStatus.Defense;
-                        SpeedNumText.text = StartSpeed.ToString("00") + " > " + PlayerController.PlayerStatus.Speed;
+                        HpNumText.text = StartHp.ToString("00") + " > " + Player.PlayerStatus.CurrentHp;
+                        AttackNumText.text = StartAttack.ToString("00") + " > " + Player.PlayerStatus.Attack;
+                        DefenseNumText.text = StartDefense.ToString("00") + " > " + Player.PlayerStatus.Defense;
+                        SpeedNumText.text = StartSpeed.ToString("00") + " > " + Player.PlayerStatus.Speed;
                     }
                 }
             }

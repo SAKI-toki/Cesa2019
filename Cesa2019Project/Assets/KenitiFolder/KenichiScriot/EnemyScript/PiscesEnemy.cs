@@ -6,15 +6,13 @@ public class PiscesEnemy : MonoBehaviour
 {
     [SerializeField]
     GameObject PisceBoss = null;
-
-    PlayerController PlayerController;
-
+    Player Player;
     Status EnemyStatus = new Status();
 
     // Start is called before the first frame update
     void Start()
     {
-        PlayerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        Player = GameObject.Find("Player").GetComponent<Player>();
         PisceBoss = GameObject.Find("PiscesBoss");
     }
 
@@ -40,8 +38,8 @@ public class PiscesEnemy : MonoBehaviour
     {
         if (other.gameObject.tag == "PlayerAttack")
         {
-            ++PlayerController.ComboController.CurrentComboNum;
-            EnemyStatus.CurrentHp -= Status.Damage(PlayerController.PlayerStatus.CurrentAttack, EnemyStatus.CurrentDefense);//HPを減らす
+            ++Player.PlayerCombo.CurrentComboNum;
+            EnemyStatus.CurrentHp -= Status.Damage(Player.PlayerStatus.CurrentAttack, EnemyStatus.CurrentDefense);//HPを減らす
 
             if (EnemyStatus.CurrentHp <= 0)
             {

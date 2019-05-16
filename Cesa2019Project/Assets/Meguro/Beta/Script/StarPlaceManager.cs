@@ -21,7 +21,7 @@ public class StarPlaceManager : MonoBehaviour
     }
 
     [SerializeField, Header("プレイヤー")]
-    GameObject Player = null;               // プレイヤー
+    GameObject PlayerObj = null;               // プレイヤー
     [SerializeField, Header("星")]
     GameObject Star = null;                 // 星
     Vector3 PlayerPos = Vector3.zero;       // プレイヤーの位置
@@ -81,24 +81,24 @@ public class StarPlaceManager : MonoBehaviour
                     {
                         case HaveStarManager.StarColorEnum.Red:
                             ++RedStarNum;
-                            PlayerController.PlayerStatus.HpUp(1);
-                            PlayerController.PlayerStatus.AttackUp(5);
+                            Player.PlayerStatus.HpUp(1);
+                            Player.PlayerStatus.AttackUp(5);
                             StarPlaceList[num].Star = Instantiate(RedStar,
                                 child.transform.position + new Vector3(0, 0, 0),
                                 Quaternion.identity);
                             break;
                         case HaveStarManager.StarColorEnum.Blue:
                             ++BlueStarNum;
-                            PlayerController.PlayerStatus.HpUp(1);
-                            PlayerController.PlayerStatus.DefenseUp(5);
+                            Player.PlayerStatus.HpUp(1);
+                            Player.PlayerStatus.DefenseUp(5);
                             StarPlaceList[num].Star = Instantiate(BlueStar,
                                 child.transform.position + new Vector3(0, 0, 0),
                                 Quaternion.identity);
                             break;
                         case HaveStarManager.StarColorEnum.Green:
                             ++GreenStarNum;
-                            PlayerController.PlayerStatus.HpUp(1);
-                            PlayerController.PlayerStatus.SpeedUp(2);
+                            Player.PlayerStatus.HpUp(1);
+                            Player.PlayerStatus.SpeedUp(2);
                             StarPlaceList[num].Star = Instantiate(GreenStar,
                                 child.transform.position + new Vector3(0, 0, 0),
                                 Quaternion.identity);
@@ -113,7 +113,7 @@ public class StarPlaceManager : MonoBehaviour
             }
             ++num;
         }
-        PlayerController.PlayerStatus.ResetStatus();
+        Player.PlayerStatus.ResetStatus();
         LineCheck();
     }
 
@@ -129,7 +129,7 @@ public class StarPlaceManager : MonoBehaviour
                     // 星がセットされているか
                     if (!StarPlaceList[i].isSet)
                     {
-                        PlayerPos = Player.transform.position;
+                        PlayerPos = PlayerObj.transform.position;
 
                         float distance = Vector3.Distance(StarPlaceList[i].Pos, PlayerPos);
                         // 距離が範囲内か
@@ -251,17 +251,17 @@ public class StarPlaceManager : MonoBehaviour
         if (starColor == HaveStarManager.StarColorEnum.Red)
         {
             ++RedStarNum;
-            PlayerController.PlayerStatus.AttackUp(5);
+            Player.PlayerStatus.AttackUp(5);
         }
         if (starColor == HaveStarManager.StarColorEnum.Blue)
         {
             ++BlueStarNum;
-            PlayerController.PlayerStatus.DefenseUp(5);
+            Player.PlayerStatus.DefenseUp(5);
         }
         if (starColor == HaveStarManager.StarColorEnum.Green)
         {
             ++GreenStarNum;
-            PlayerController.PlayerStatus.SpeedUp(2);
+            Player.PlayerStatus.SpeedUp(2);
         }
         ++StarNum;
         GenerateStar(StarSelectPlaceNum, starColor);
@@ -339,13 +339,13 @@ public class StarPlaceManager : MonoBehaviour
                 switch (line.StarPlace1.GetComponent<StarPlace>().StarColor)
                 {
                     case HaveStarManager.StarColorEnum.Red:
-                        PlayerController.PlayerStatus.AttackUp(5);
+                        Player.PlayerStatus.AttackUp(5);
                         break;
                     case HaveStarManager.StarColorEnum.Blue:
-                        PlayerController.PlayerStatus.DefenseUp(5);
+                        Player.PlayerStatus.DefenseUp(5);
                         break;
                     case HaveStarManager.StarColorEnum.Green:
-                        PlayerController.PlayerStatus.SpeedUp(2);
+                        Player.PlayerStatus.SpeedUp(2);
                         break;
                     default:
                         break;

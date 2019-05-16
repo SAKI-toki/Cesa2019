@@ -12,7 +12,7 @@ public class TitleController : MonoBehaviour
     [SerializeField, Header("セレクト用のカメラ")]
     GameObject SelectCameraObject = null;
     [SerializeField, Header("セレクトから始動するプレイヤーの制御")]
-    PlayerController SelectPlayerController = null;
+    Player SelectPlayerController = null;
     [SerializeField, Header("タイトル用のカメラ")]
     GameObject TitleCameraObject = null;
     [SerializeField, Header("タイトルテキスト")]

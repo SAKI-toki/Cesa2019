@@ -86,7 +86,6 @@ public class FadeController : MonoBehaviour
             //フェードアウト終了判定
             if (Alpha >= 1.0f)
             {
-                IsFadeOut = false;
                 Alpha = 1.0f;
                 SceneTranslationPermission = true;//シーン遷移を許可
             }
@@ -159,6 +158,7 @@ public class FadeController : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         asyncLoad.allowSceneActivation = true;
+        IsFadeOut = false;
     }
 
 

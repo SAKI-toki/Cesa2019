@@ -20,7 +20,7 @@ public class Pause : MonoBehaviour
     [SerializeField]
     private StarSlect Slect = null;
     [SerializeField]
-    PlayerController PlayerControll = null;
+    Player PlayerControll = null;
     //プレイヤーステータステキスト
     [SerializeField]
     TextMeshProUGUI HpText = null;
@@ -108,10 +108,10 @@ public class Pause : MonoBehaviour
         //SelectCarsor.GetComponent<RectTransform>().localPosition = new Vector3(CarsorPosX, CarsorPosY, 1.0f);
 
         //ステータステキスト
-        HpText.text = "HP:" + PlayerController.PlayerStatus.CurrentHp;
-        AttackText.text = "ATTACK:" + PlayerController.PlayerStatus.CurrentAttack;
-        DefenseText.text = "DEFENCE:" + PlayerController.PlayerStatus.CurrentDefense;
-        SpeedText.text = "SPEED:" + PlayerController.PlayerStatus.CurrentSpeed;
+        HpText.text = "HP:" + Player.PlayerStatus.CurrentHp;
+        AttackText.text = "ATTACK:" + Player.PlayerStatus.CurrentAttack;
+        DefenseText.text = "DEFENCE:" + Player.PlayerStatus.CurrentDefense;
+        SpeedText.text = "SPEED:" + Player.PlayerStatus.CurrentSpeed;
     }
     /// <summary>
     /// スティック選択

@@ -77,13 +77,14 @@ public class Enemy : MonoBehaviour
     HitStopManager HitStop = null;
 
     int StarRandom = 0;
-    int StarCount = 20;
+    int StarCount = 5;
     int AttackCount = 0;
     int StatusUpCount = 1;
     int RedStarCount = 0;
     int BlueStarCount = 0;
     int GreenStarCount = 0;
     int StatusUpNum = 1;
+
 
     [SerializeField]
     public bool DamageFlag = false;//ダメージを受けたか
@@ -121,8 +122,7 @@ public class Enemy : MonoBehaviour
 
     GameObject StarPlace = null;
     StarPlaceManager StarPlaceManager = null;
-    //NavMeshAgent Agent = null;
-    public PlayerController PlayerController;
+    public Player Player;
     StarMove StarMove = null;
     Rigidbody GetRigidbody = null;
 
@@ -131,7 +131,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void Start()
     {
-        PlayerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        Player = GameObject.Find("Player").GetComponent<Player>();
         EnemyStatus.Hp = EnemyHp;
         EnemyStatus.CurrentHp = EnemyHp;
         EnemyStatus.Attack = EnemyAttackPoint;
@@ -143,7 +143,6 @@ public class Enemy : MonoBehaviour
         MoveDown = 1 - (MoveDown * 0.01f);
         Animator = this.GetComponent<Animator>();
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
-        //Agent = GetComponent<NavMeshAgent>();
         EnemySe = this.GetComponent<EnemySe>();
         GetRigidbody = GetComponent<Rigidbody>();
         StarPlace = GameObject.Find("StarPlaceManager");
@@ -165,11 +164,6 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (StarPlaceManager.AllPlaceSet)
-        {
-            Destroy(this.gameObject);
-        }
-
         if (Time.timeScale == 0 || Bullet == true)
         {
             return;
@@ -186,8 +180,6 @@ public class Enemy : MonoBehaviour
             if (BossEnemy == false) { EnemyStar(); }
             if (BossEnemy) { BossEnemyStar(); }
             DestroyFlag = true;
-            //敵を倒したカウント
-            ++ClearManager.EnemyDownNum;
             Destroy(this.gameObject);//敵の消滅
         }
 
@@ -221,11 +213,14 @@ public class Enemy : MonoBehaviour
         {
             if (!NoDamage)
             {
-                HitStop.SlowDown();
-                ++PlayerController.ComboController.CurrentComboNum;
-                EnemyStatus.CurrentHp -= Status.Damage(PlayerController.PlayerStatus.CurrentAttack, EnemyStatus.CurrentDefense);//HPを減らす
+                // ヒットストップ
+                if (HitStop.HitStopRestriction())
+                {
+                    HitStop.SlowDown();
+                }
+                ++Player.PlayerCombo.CurrentComboNum;
+                EnemyStatus.CurrentHp -= Status.Damage(Player.PlayerStatus.CurrentAttack, EnemyStatus.CurrentDefense);//HPを減らす
                 AttackCount++;
-                if (!BossEnemy) { Animator.SetTrigger("EnemyDamage"); }
                 EnemySe.DamageSES();
                 transform.Translate(0, 0, -KnockBackMove);
             }
@@ -238,6 +233,7 @@ public class Enemy : MonoBehaviour
 
             if (BossEnemy == false && ReceivedDamage == false)
             {
+                if (!NonAnimator) { Animator.SetTrigger("EnemyDamage"); }
                 DamageFlag = true;
                 EnemyTime = 0;
                 ReceivedDamage = true;/*敵を硬直させる*/
@@ -247,7 +243,6 @@ public class Enemy : MonoBehaviour
             {
 
                 DamageFlag = true;
-                JampFlag = true;
                 EnemyTime = 0;
                 ReceivedDamage = true;/*敵を硬直させる*/
                 AttackCount = 0;
@@ -262,7 +257,7 @@ public class Enemy : MonoBehaviour
             if (!NoDamage)
             {
                 AttackCount++;
-                ++PlayerController.ComboController.CurrentComboNum;
+                ++Player.PlayerCombo.CurrentComboNum;
                 EnemyStatus.CurrentHp -= 2;//HPを減らす
                 if (EnemyStatus.CurrentHp <= 0)
                 {
@@ -470,6 +465,7 @@ public class Enemy : MonoBehaviour
     {
         float tmpDis = 0;//距離用一時変数
         float nearDis = 0;//最も近いオブジェクトの距離
+        //string nearObjName="";//オブジェクト名称
         GameObject targetObj = null;//オブジェクト
         //tag指定されたオブジェクトを配列で取得する
         foreach (GameObject obs in GameObject.FindGameObjectsWithTag(tagName))
@@ -479,9 +475,12 @@ public class Enemy : MonoBehaviour
             if (nearDis == 0 || nearDis > tmpDis)
             {
                 nearDis = tmpDis;
+                //nearObjName=obs.name;
                 targetObj = obs;
             }
         }
+        //最も近かったオブジェクトを返す
+        //return GameObject.Find(nearObjName);
         return targetObj;
     }
 

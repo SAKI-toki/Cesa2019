@@ -6,8 +6,8 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField]
     Transform Player = null;
-    [SerializeField]
-    PlayerController PlayerControll = null;
+    //[SerializeField]
+    //PlayerController PlayerControll = null;
     [SerializeField]
     Transform LookAt = null;
     [SerializeField]
@@ -49,11 +49,7 @@ public class CameraController : MonoBehaviour
             MoveStop();
             return;
         }
-        if (PlayerControll.DeathFlg)
-        {
-            MoveStop();
-            return;
-        }
+
         transform.position = LookAt.position;
 
         RightStickH = Input.GetAxis("R_Stick_H");
@@ -105,7 +101,6 @@ public class CameraController : MonoBehaviour
             CameraTransform.localPosition = new Vector3(0, 0, -Distance);
         }
     }
-
     public void CameraInit()
     {
         CameraTransform.localPosition = new Vector3(0, 0, -Distance);
@@ -123,8 +118,6 @@ public class CameraController : MonoBehaviour
             CameraTransform.localPosition = new Vector3(0, 0, -Distance);
         }
     }
-
-
     void MoveStop()
     {
         RightStickH = 0;
