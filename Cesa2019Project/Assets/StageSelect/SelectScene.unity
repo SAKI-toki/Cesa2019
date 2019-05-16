@@ -6284,7 +6284,7 @@ RectTransform:
   - {fileID: 797552977}
   - {fileID: 1560372498}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -7153,51 +7153,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1010202347}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1010267331
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1010267333}
-  - component: {fileID: 1010267332}
-  m_Layer: 0
-  m_Name: PlayerRangeController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1010267332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1010267331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e5a636a4b80b154c8e78a302d757547, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerObject: {fileID: 71513027}
-  PlayerMoveRange: 35
---- !u!4 &1010267333
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1010267331}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1029465686
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9371,7 +9326,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1441485734, guid: be9e05b13cdfcea46ac29224d0935762, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1441485734, guid: be9e05b13cdfcea46ac29224d0935762, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9509,7 +9464,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1327203795
 GameObject:
@@ -9812,7 +9767,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -44.75, y: 0, z: 0}
 --- !u!1 &1357786151
 GameObject:
@@ -10877,9 +10832,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'ISHIYAMA YU
-
-'
+  m_Text: STAR REVIVAL
 --- !u!222 &1560372497
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11135,26 +11088,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 2576363717660733140, guid: 93fd8a456c3e4ad44901bcde90d87ed2,
-        type: 3}
-      propertyPath: ComboText
-      value: 
-      objectReference: {fileID: 3729567213224345002}
-    - target: {fileID: 2576363717660733140, guid: 93fd8a456c3e4ad44901bcde90d87ed2,
-        type: 3}
-      propertyPath: TimingCanvas
-      value: 
-      objectReference: {fileID: 1914915465939401633}
-    - target: {fileID: 2576363717660733140, guid: 93fd8a456c3e4ad44901bcde90d87ed2,
-        type: 3}
-      propertyPath: TimingCircle
-      value: 
-      objectReference: {fileID: 1914915465305650996}
-    - target: {fileID: 2576363717660733140, guid: 93fd8a456c3e4ad44901bcde90d87ed2,
-        type: 3}
-      propertyPath: TimingIcon
-      value: 
-      objectReference: {fileID: 1914915465945842009}
     - target: {fileID: 1920106675, guid: 93fd8a456c3e4ad44901bcde90d87ed2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -11199,6 +11132,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2576363717660733140, guid: 93fd8a456c3e4ad44901bcde90d87ed2,
+        type: 3}
+      propertyPath: ComboText
+      value: 
+      objectReference: {fileID: 3729567213224345002}
+    - target: {fileID: 2576363717660733140, guid: 93fd8a456c3e4ad44901bcde90d87ed2,
+        type: 3}
+      propertyPath: TimingCanvas
+      value: 
+      objectReference: {fileID: 1914915465939401633}
+    - target: {fileID: 2576363717660733140, guid: 93fd8a456c3e4ad44901bcde90d87ed2,
+        type: 3}
+      propertyPath: TimingCircle
+      value: 
+      objectReference: {fileID: 1914915465305650996}
+    - target: {fileID: 2576363717660733140, guid: 93fd8a456c3e4ad44901bcde90d87ed2,
+        type: 3}
+      propertyPath: TimingIcon
+      value: 
+      objectReference: {fileID: 1914915465945842009}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93fd8a456c3e4ad44901bcde90d87ed2, type: 3}
 --- !u!1 &1593225694

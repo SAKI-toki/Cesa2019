@@ -23,9 +23,11 @@ public class FadeController : MonoBehaviour
     public static bool IsFadeIn = false;
 
     //偏移先のシーン名
-    private static string NextSceneName;
-    private static int NextSceneNumber;
-    static bool NumberFlg = false;
+    //private static string NextSceneName;
+    //private static int NextSceneNumber;
+    //static bool NumberFlg = false;
+    static AsyncOperation LoadSceneAsync = null;
+
     /// <summary>
     ///  canvasとImage生成
     /// </summary>
@@ -48,8 +50,8 @@ public class FadeController : MonoBehaviour
 
         //Imageのサイズ設定
         FadeImage.rectTransform.sizeDelta = new Vector2(9999, 9999);
+        SetAlpha();
     }
-
 
     void Update()
     {
@@ -80,12 +82,7 @@ public class FadeController : MonoBehaviour
             {
                 IsFadeOut = false;
                 Alpha = 1.0f;
-
-                //次のシーンへ偏移
-                if (NumberFlg)
-                    SceneManager.LoadScene(NextSceneNumber);
-                else
-                    SceneManager.LoadScene(NextSceneName);
+                LoadSceneAsync.allowSceneActivation = true;//シーン遷移を許可
             }
             SetAlpha();
         }
@@ -104,31 +101,41 @@ public class FadeController : MonoBehaviour
     }
 
     /// <summary>
+    /// フェードアウトの実装
+    /// </summary>
+    private static void FadeOutImpl()
+    {
+        if (FadeImage == null) Init();
+        FadeImage.enabled = true;
+        IsFadeOut = true;
+        Alpha = 0.0f;
+        SetAlpha();
+    }
+
+    /// <summary>
     /// フェードアウト開始(string)
     /// </summary>
     /// <param name="n"></param>
     public static void FadeOut(string n)
     {
-        if (FadeImage == null) Init();
-        NextSceneName = n;
-        NumberFlg = false;
-        FadeImage.enabled = true;
-        IsFadeOut = true;
-        Alpha = 0.0f;
+        FadeOutImpl();
+        LoadSceneAsync = SceneManager.LoadSceneAsync(n);
+        LoadSceneAsync.allowSceneActivation = false;//シーン遷移を許可しない
+        //NextSceneName = n;
+        //NumberFlg = false;
     }
+
     /// <summary>
     /// フェードアウト開始(int)
     /// </summary>
     /// <param name="n"></param>
     public static void FadeOut(int n)
     {
-        if (FadeImage == null) Init();
-        NextSceneNumber = n;
-        NumberFlg = true;
-        FadeImage.enabled = true;
-        IsFadeOut = true;
-        Alpha = 0.0f;
-        SetAlpha();
+        FadeOutImpl();
+        LoadSceneAsync = SceneManager.LoadSceneAsync(n);
+        LoadSceneAsync.allowSceneActivation = false;//シーン遷移を許可しない
+        //NextSceneNumber = n;
+        //NumberFlg = true;
     }
 
     /// <summary>
