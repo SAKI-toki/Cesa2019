@@ -41,19 +41,34 @@ public class TitleController : MonoBehaviour
         StartCameraRotation = TitleCameraObject.transform.rotation;
         EndCameraPosition = SelectCameraObject.transform.position;
         EndCameraRotation = SelectCameraObject.transform.rotation;
-        if (AlreadyStart)
-        {
-            Statefunc = TranslationState;
-            TitleTextObject.SetActive(false);
-        }
-        else
-        {
-            Statefunc = TitleState;
-        }
+        StarPlaceManager.AllPlaceSet = false;
+        StarPlaceManager.StarSelect = false;
+        Statefunc = FadeState;
+        FadeController.FadeIn();
     }
     void Update()
     {
         Statefunc();
+    }
+
+    /// <summary>
+    /// フェードステート
+    /// </summary>
+    void FadeState()
+    {
+        //フェードが終了したらステート遷移
+        if (!FadeController.IsFadeIn)
+        {
+            if (AlreadyStart)
+            {
+                Statefunc = TranslationState;
+                TitleTextObject.SetActive(false);
+            }
+            else
+            {
+                Statefunc = TitleState;
+            }
+        }
     }
 
     /// <summary>

@@ -55,7 +55,7 @@ public class FadeController : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine("LoadScene");
+        if (IsFadeOut) StartCoroutine("LoadScene");
     }
 
     void Update()
@@ -71,7 +71,8 @@ public class FadeController : MonoBehaviour
             {
                 IsFadeIn = false;
                 Alpha = 0.0f;
-                FadeImage.enabled = false;
+                Destroy(FadeCanvas.gameObject);
+                Destroy(FadeImage.gameObject);
             }
             SetAlpha();
         }
@@ -98,10 +99,11 @@ public class FadeController : MonoBehaviour
     /// </summary>
     public static void FadeIn()
     {
-        if (FadeImage == null)
-            Init();
         IsFadeIn = true;
         Alpha = 1.0f;
+        if (FadeImage == null)
+            Init();
+        FadeImage.enabled = true;
         SetAlpha();
     }
 
@@ -110,10 +112,11 @@ public class FadeController : MonoBehaviour
     /// </summary>
     private static void FadeOutImpl()
     {
-        if (FadeImage == null) Init();
-        FadeImage.enabled = true;
         IsFadeOut = true;
         Alpha = 0.0f;
+        if (FadeImage == null)
+            Init();
+        FadeImage.enabled = true;
         SetAlpha();
     }
 
@@ -150,7 +153,6 @@ public class FadeController : MonoBehaviour
         asyncLoad.allowSceneActivation = false;//シーン遷移を許可しない
         while (asyncLoad.progress < 0.9f || !SceneTranslationPermission)
         {
-            Debug.Log(asyncLoad.progress);
             yield return new WaitForEndOfFrame();
         }
         asyncLoad.allowSceneActivation = true;

@@ -19,7 +19,7 @@ public class ClearManager : MonoBehaviour
     TextMeshProUGUI ClearText = null;
     //背景のUI
     [SerializeField]
-    Image Panel = null;
+    Image ResultPanel = null;
     //ステータステキスト
     [SerializeField]
     TextMeshProUGUI ResultText = null;
@@ -97,7 +97,7 @@ public class ClearManager : MonoBehaviour
     {
         EnemyDownNum = 0;
         TextAlphaZero(ClearText);
-        ImageAlphaZero(Panel);
+        ImageAlphaZero(ResultPanel);
         TextAlphaZero(ResultText);
         TextAlphaZero(HpText);
         TextAlphaZero(HpNumText);
@@ -203,9 +203,9 @@ public class ClearManager : MonoBehaviour
             }
             if (ResultMoveFlg && !ResultTextFlg)
             {
-                if (Panel.color.a < 1)
+                if (ResultPanel.color.a < 1)
                 {
-                    ImageFadeIn(Panel, 0.01f);
+                    ImageFadeIn(ResultPanel, 0.01f);
                 }
                 else
                 {
