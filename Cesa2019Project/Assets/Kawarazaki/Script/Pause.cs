@@ -19,7 +19,8 @@ public class Pause : MonoBehaviour
 
     [SerializeField]
     private StarSlect Slect = null;
-
+    [SerializeField]
+    PlayerController PlayerControll = null;
     //プレイヤーステータステキスト
     [SerializeField]
     TextMeshProUGUI HpText = null;
@@ -51,7 +52,7 @@ public class Pause : MonoBehaviour
     {
         //ポーズボタン入力
         if ((Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown("joystick button 7"))
-            && !Slect.GetSelectFlg() && !StarPlaceManager.AllPlaceSet)
+            && !Slect.GetSelectFlg() && !StarPlaceManager.AllPlaceSet && !PlayerControll.DeathFlg)
         {
             //ポーズUIのアクティブ、非アクティブを切り替え
             PauseUi.SetActive(!PauseUi.activeSelf);
@@ -96,7 +97,7 @@ public class Pause : MonoBehaviour
                 CarsorGreen.SetActive(true);
                 CarsorFalse(CarsorBlue, CarsorRed);
                 if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
-                {//仮でSelectSceneに遷移するようにしているのでタイトル出来たら変えて
+                {//仮でSelectSceneに遷移するようにしているので,タイトル出来たら変えて
                     PauseUi.SetActive(false);
                     FadeController.FadeOut(0);
                 }
