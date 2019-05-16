@@ -30,20 +30,6 @@ public class Pause : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI SpeedText = null;
 
-    //カーソルのポジション
-    //float CarsorPosX = -138;
-    //float CarsorPosY = 0;
-
-    ////「戻る」のポジションY
-    //[SerializeField]
-    //int GamePosY = 0;
-    ////「ステージ」のポジションY
-    //[SerializeField]
-    //int StagePosY = 0;
-    ////「タイトル」のポジションY
-    //[SerializeField]
-    //int TitlePosY = 0;
-
     //変動するSelect変数　最大値、最小値
     int Select, SelectMax, SelectMin;
     //スティック変数
@@ -86,7 +72,6 @@ public class Pause : MonoBehaviour
         {
             //「戻る」
             case 0:
-                //CarsorPosY = GamePosY;
                 CarsorRed.SetActive(true);
                 CarsorFalse(CarsorBlue, CarsorGreen);
                 if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
@@ -100,7 +85,6 @@ public class Pause : MonoBehaviour
             case 1:
                 CarsorBlue.SetActive(true);
                 CarsorFalse(CarsorRed, CarsorGreen);
-                //CarsorPosY = StagePosY;
                 if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
                     PauseUi.SetActive(false);
@@ -111,7 +95,6 @@ public class Pause : MonoBehaviour
             case 2:
                 CarsorGreen.SetActive(true);
                 CarsorFalse(CarsorBlue, CarsorRed);
-                //CarsorPosY = TitlePosY;
                 if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {//仮でSelectSceneに遷移するようにしているのでタイトル出来たら変えて
                     PauseUi.SetActive(false);
