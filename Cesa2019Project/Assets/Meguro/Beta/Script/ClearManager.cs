@@ -194,7 +194,7 @@ public class ClearManager : MonoBehaviour
                     if (Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized == Player.transform.forward)
                     {
                         ResultMoveFlg = true;
-                        HpNumText.text = StartHp.ToString("00") + " > " + PlayerController.PlayerStatus.Hp;
+                        HpNumText.text = StartHp.ToString("00") + " > " + PlayerController.PlayerStatus.CurrentHp;
                         AttackNumText.text = StartAttack.ToString("00") + " > " + PlayerController.PlayerStatus.Attack;
                         DefenseNumText.text = StartDefense.ToString("00") + " > " + PlayerController.PlayerStatus.Defense;
                         SpeedNumText.text = StartSpeed.ToString("00") + " > " + PlayerController.PlayerStatus.Speed;

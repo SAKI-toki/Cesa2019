@@ -57,12 +57,12 @@ public class Status
     public void HpUp(float num)
     {
         Hp += num;
-        CurrentHp += num;
+        CurrentHp = Hp;
     }
     public void HpDown(float num)
     {
         Hp -= num;
-        CurrentHp -= num;
+        CurrentHp = Hp;
     }
 
     public void AttackUp(float num)
