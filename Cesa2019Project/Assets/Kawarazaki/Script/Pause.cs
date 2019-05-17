@@ -97,9 +97,9 @@ public class Pause : MonoBehaviour
                 CarsorGreen.SetActive(true);
                 CarsorFalse(CarsorBlue, CarsorRed);
                 if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
-                {//仮でSelectSceneに遷移するようにしているので,タイトル出来たら変えて
+                {
                     PauseUi.SetActive(false);
-                    FadeController.FadeOut(0);
+                    FadeController.FadeOut("SelectScene");
                 }
                 break;
         }

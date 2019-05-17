@@ -98,7 +98,7 @@ public class FadeController : MonoBehaviour
     /// </summary>
     public static void FadeIn()
     {
-        if (IsFadeIn) return;
+        if (IsFadeIn || IsFadeOut) return;
         IsFadeIn = true;
         Alpha = 1.0f;
         if (FadeImage == null)
@@ -126,7 +126,7 @@ public class FadeController : MonoBehaviour
     /// <param name="n"></param>
     public static void FadeOut(string n)
     {
-        if (IsFadeOut) return;
+        if (IsFadeIn || IsFadeOut) return;
         FadeOutImpl();
         NextSceneName = n;
         NumberFlg = false;
@@ -138,7 +138,7 @@ public class FadeController : MonoBehaviour
     /// <param name="n"></param>
     public static void FadeOut(int n)
     {
-        if (IsFadeOut) return;
+        if (IsFadeIn || IsFadeOut) return;
         FadeOutImpl();
         NextSceneNumber = n;
         NumberFlg = true;
