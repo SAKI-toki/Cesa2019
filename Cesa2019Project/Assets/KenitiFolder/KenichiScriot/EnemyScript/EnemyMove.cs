@@ -48,14 +48,18 @@ public class EnemyMove : MonoBehaviour
         if (Enemy.ReceivedDamage == false && Enemy.AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
         {
             Move();
-            Following();
+            if (Player.PlayerStatus.CurrentHp > 0)
+            {
+                Following();
+            }
             DrectionChange();
         }
 
         if (Enemy.PlayerRangeDifference <= Enemy.AttackDecision
            && AttackOn == false
            && !Enemy.NonDirectAttack
-           && Enemy.ReceivedDamage == false)
+           && Enemy.ReceivedDamage == false
+           && Player.PlayerStatus.CurrentHp > 0)
         { AttackOn = true; }//攻撃中
 
         if (AttackOn == true) { Attack(); }

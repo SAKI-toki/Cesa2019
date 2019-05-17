@@ -85,7 +85,6 @@ public class Enemy : MonoBehaviour
     int GreenStarCount = 0;
     int StatusUpNum = 1;
     float StatusTime = 0;
-    bool DethFirst = false;
 
     [SerializeField]
     public bool DamageFlag = false;//ダメージを受けたか
