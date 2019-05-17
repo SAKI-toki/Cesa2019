@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour
     int GreenStarCount = 0;
     int StatusUpNum = 1;
     float StatusTime = 0;
-    bool DethFirst = false;
+    //bool DethFirst = false;
 
 
     [SerializeField]
