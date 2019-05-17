@@ -84,7 +84,7 @@ public class Enemy : MonoBehaviour
     int BlueStarCount = 0;
     int GreenStarCount = 0;
     int StatusUpNum = 1;
-
+    bool DethFirst = false;
 
     [SerializeField]
     public bool DamageFlag = false;//ダメージを受けたか
@@ -181,13 +181,20 @@ public class Enemy : MonoBehaviour
             ReceivedDamage = true;
             ++ClearManager.EnemyDownNum;
             Animator.SetTrigger("EnemyDown");
-            if (Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("death"))
             {
-                if (!BossEnemy) { EnemyStar(); }
-                else { BossEnemyStar(); }
-                DestroyFlag = true;
-                Destroy(this.gameObject);//敵の消滅
+                if (Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+                {
+                    if (!BossEnemy) { EnemyStar(); }
+                    else { BossEnemyStar(); }
+                    DestroyFlag = true;
+                    Destroy(this.gameObject);//敵の消滅
+                }
             }
+
+
+
         }
 
         if (ReceivedDamage == true)//硬直時間の解除
