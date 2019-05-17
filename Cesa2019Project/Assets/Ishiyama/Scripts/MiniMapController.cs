@@ -14,7 +14,9 @@ public class MiniMapController : MonoBehaviour
     Vector3 UiPosition = new Vector3();
     [SerializeField, Header("プレイヤーTransform")]
     Transform PlayerTransform = null;
-    [SerializeField, Header("星リスト")]
+    [SerializeField, Header("星の管理オブジェクト")]
+    GameObject StarParentObject = null;
+    //星リスト
     List<StarPlace> StarPlaces = new List<StarPlace>();
     [SerializeField, Header("プレイヤーImageのRectTransform")]
     RectTransform PlayerImageRectTransform = null;
@@ -32,6 +34,10 @@ public class MiniMapController : MonoBehaviour
     void Start()
     {
         ImageParentObject.transform.localPosition = UiPosition;
+        for (int i = 0; i < StarParentObject.transform.childCount; ++i)
+        {
+            StarPlaces.Add(StarParentObject.transform.GetChild(i).GetComponent<StarPlace>());
+        }
         foreach (var star in StarPlaces)
         {
             GameObject starObj = Instantiate(StarImage);
