@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour
     HitStopManager HitStop = null;
 
     int StarRandom = 0;
-    int StarCount = 5;
+    int StarCount = 20;
     int AttackCount = 0;
     int StatusUpCount = 1;
     int RedStarCount = 0;
@@ -174,7 +174,8 @@ public class Enemy : MonoBehaviour
         //敵とプレイヤーの距離差
         PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
 
-        if (EnemyStatus.CurrentHp <= 0 || EnemyHp <= 0)
+
+        if (EnemyStatus.CurrentHp <= 0 || EnemyHp <= 0)///HPが0になった時
         {
             MoveSwitch = false;
             ReceivedDamage = true;
@@ -182,12 +183,11 @@ public class Enemy : MonoBehaviour
             Animator.SetTrigger("EnemyDown");
             if (Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
-                if (BossEnemy == false) { EnemyStar(); }
-                if (BossEnemy) { BossEnemyStar(); }
+                if (!BossEnemy) { EnemyStar(); }
+                else { BossEnemyStar(); }
                 DestroyFlag = true;
                 Destroy(this.gameObject);//敵の消滅
             }
-
         }
 
         if (ReceivedDamage == true)//硬直時間の解除
