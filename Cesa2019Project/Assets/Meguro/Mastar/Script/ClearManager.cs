@@ -76,6 +76,7 @@ public class ClearManager : MonoBehaviour
         TextAlphaZero(EnemyText);
         TextAlphaZero(EnemyNumText);
         TextAlphaZero(EvaluationText);
+        Player = PlayerObj.GetComponent<Player>();
     }
 
     private void Start()
@@ -99,9 +100,14 @@ public class ClearManager : MonoBehaviour
                 CameraScript.ClearMoveInit();
                 CameraScript.ClearMove();
                 Vector3 dir = ClearPos.position - Player.transform.position;
-                //PlayerObj.GetComponent<Player>().Move(dir, 30);
+                Player.Move(dir, 30);
                 float dis = Vector3.Distance(Player.transform.position, ClearPos.position);
-                if (dis < 1.0f) { ClearMoveFlg = true; }
+                if (dis < 1.0f)
+                {
+                    Player.PlayerAnimator.SetBool("DashFlg", false);
+                    Player.PlayerAnimator.SetBool("WinFlg", true);
+                    ClearMoveFlg = true;
+                }
             }
             if (ClearMoveFlg && !ClearTextFlg)
             {
@@ -137,12 +143,13 @@ public class ClearManager : MonoBehaviour
                 {
                     Vector3 dir = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
                     dir = dir * -0.4f + Camera.main.transform.right * -1.0f;
-                    //Player.GetComponent<Player>().Move(dir, 25);
+                    Player.Move(dir, 25);
                 }
                 else
                 {
+                    Player.PlayerAnimator.SetBool("DashFlg", false);
                     Vector3 dir = Camera.main.transform.position - Player.transform.position;
-                    //Player.GetComponent<Player>().Look(dir);
+                    Player.Look(dir);
                     if (Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized == Player.transform.forward)
                     {
                         ResultMoveFlg = true;

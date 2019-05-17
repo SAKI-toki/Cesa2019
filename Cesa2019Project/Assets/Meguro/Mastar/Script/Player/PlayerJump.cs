@@ -13,7 +13,6 @@ public class PlayerJump : IPlayerState
 
     IPlayerState IPlayerState.Update(Player player)
     {
-        JumpMove(player);
         // Death
         if (Player.PlayerStatus.CurrentHp <= 0)
         {
@@ -28,6 +27,7 @@ public class PlayerJump : IPlayerState
         {
             return new PlayerIdle();
         }
+        JumpMove(player);
         return this;
     }
 

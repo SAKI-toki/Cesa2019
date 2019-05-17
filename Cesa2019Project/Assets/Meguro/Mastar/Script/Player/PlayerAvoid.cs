@@ -54,6 +54,7 @@ public class PlayerAvoid : IPlayerState
             }
             Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
             Vector3 moveForward = cameraForward * player.Controller.LeftStickV + Camera.main.transform.right * player.Controller.LeftStickH;
+            moveForward = moveForward.normalized;
             player.PlayerRigidbody.AddForce(moveForward * player.PlayerStatusData.AvoidSpeed * player.ContactNormalY,ForceMode.VelocityChange);
         }
         else

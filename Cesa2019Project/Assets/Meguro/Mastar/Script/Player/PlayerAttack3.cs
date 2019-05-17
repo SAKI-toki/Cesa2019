@@ -9,36 +9,36 @@ public class PlayerAttack3 : IPlayerState
 
     void IPlayerState.Init(Player player)
     {
-        player.PlayerLastAttack.Init();
+        //player.PlayerLastAttack.Init();
+        Player.PlayerStatus.CurrentAttack = Player.PlayerStatus.Attack + 20;
         AnimationTime = 0;
         player.PlayerAnimator.SetBool("Attack3", true);
     }
 
     IPlayerState IPlayerState.Update(Player player)
     {
-        Player.PlayerStatus.CurrentAttack = Player.PlayerStatus.Attack + 20;
-        AnimationTime += Time.deltaTime;
-        player.PlayerLastAttack.LastAttackUpdate();
-        AttackMove(player);
         // Death
         if (Player.PlayerStatus.CurrentHp <= 0)
         {
-            player.PlayerLastAttack.UIHidden();
+            //player.PlayerLastAttack.UIHidden();
             return new PlayerDeath();
         }
         // Dameg
         if (player.DamegFlg)
         {
-            player.PlayerLastAttack.UIHidden();
+            //player.PlayerLastAttack.UIHidden();
             return new PlayerDameg();
         }
         // 連続攻撃なし
         // アニメーション戻り 1:10 1 + 10/24 = 1.416...sec
         if (AnimationTime > 1.416f)
         {
-            player.PlayerLastAttack.UIHidden();
+            //player.PlayerLastAttack.UIHidden();
             return new PlayerIdle();
         }
+        AnimationTime += Time.deltaTime;
+        //player.PlayerLastAttack.LastAttackUpdate();
+        AttackMove(player);
         return this;
     }
 

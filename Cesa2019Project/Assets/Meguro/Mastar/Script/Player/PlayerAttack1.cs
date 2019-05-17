@@ -20,8 +20,6 @@ public class PlayerAttack1 : IPlayerState
 
     IPlayerState IPlayerState.Update(Player player)
     {
-        AnimationTime += Time.deltaTime;
-        AttackMove(player);
         // Death
         if (Player.PlayerStatus.CurrentHp <= 0)
         {
@@ -47,6 +45,8 @@ public class PlayerAttack1 : IPlayerState
         {
             return new PlayerIdle();
         }
+        AnimationTime += Time.deltaTime;
+        AttackMove(player);
         return this;
     }
 

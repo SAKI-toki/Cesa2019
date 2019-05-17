@@ -14,7 +14,6 @@ public class PlayerDash : IPlayerState
 
     IPlayerState IPlayerState.Update(Player player)
     {
-        PlayerMove(player);
         // Idle
         if (player.Controller.LeftStickH == 0 && player.Controller.LeftStickV == 0)
         {
@@ -45,6 +44,7 @@ public class PlayerDash : IPlayerState
         {
             return new PlayerDameg();
         }
+        PlayerMove(player);
         return this;
     }
 

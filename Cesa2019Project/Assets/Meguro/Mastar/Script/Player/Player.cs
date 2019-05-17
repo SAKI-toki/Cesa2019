@@ -18,8 +18,8 @@ public class Player : MonoBehaviour
     public Animator PlayerAnimator;
     [System.NonSerialized]
     public AnimatorStateInfo PlayerAnimatorStateInfo;
-    [System.NonSerialized]
-    public PlayerLastAttack PlayerLastAttack;
+    //[System.NonSerialized]
+    //public PlayerLastAttack PlayerLastAttack;
     [System.NonSerialized]
     public PlayerCombo PlayerCombo;
     [System.NonSerialized]
@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
     {
         PlayerRigidbody = GetComponent<Rigidbody>();
         PlayerAnimator = GetComponent<Animator>();
-        PlayerLastAttack = GetComponent<PlayerLastAttack>();
+        //PlayerLastAttack = GetComponent<PlayerLastAttack>();
         PlayerCombo = GetComponent<PlayerCombo>();
         PlayerStatus.InitStatus(
             PlayerStatusData.Hp,
@@ -54,6 +54,10 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) < 1)
+        {
+            HaveStarManager.AddBigStar(HaveStarManager.StarColorEnum.Red);
+        }
         Controller.Update();
         PlayerAnimatorStateInfo = PlayerAnimator.GetCurrentAnimatorStateInfo(0);
         PlayerAvoid.StaminaRecovering(PlayerStatusData);
@@ -110,5 +114,21 @@ public class Player : MonoBehaviour
             Vector3 force = this.transform.forward * -PlayerStatusData.Zforword;
             PlayerRigidbody.AddForce(force, ForceMode.Impulse);
         }
+    }
+
+    public void Move(Vector3 dir, float speed)
+    {
+        PlayerAnimator.SetBool("DashFlg", true);
+        dir = Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized;
+        Quaternion playerRotation = Quaternion.LookRotation(dir);
+        PlayerRigidbody.AddForce(dir * speed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, playerRotation, PlayerStatusData.RoteVal);
+    }
+
+    public void Look(Vector3 dir)
+    {
+        dir = Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized;
+        Quaternion playerRotation = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, playerRotation, PlayerStatusData.RoteVal);
     }
 }
