@@ -72,7 +72,7 @@ public class ClabEnemy : MonoBehaviour
 
         if (AttackOn == true) { Attack(); }
 
-        if (MoveChange == 1) { transform.position += transform.right * Enemy.ZMove * Time.deltaTime; }
+        if (MoveChange == 1 && !Enemy.ReceivedDamage) { transform.position += transform.right * Enemy.ZMove * Time.deltaTime; }
         else { transform.position -= transform.right * Enemy.ZMove * Time.deltaTime; }
 
         if (Enemy.ReceivedDamage == false && Enemy.AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない

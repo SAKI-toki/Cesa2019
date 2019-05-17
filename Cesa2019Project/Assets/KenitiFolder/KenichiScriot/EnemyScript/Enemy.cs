@@ -84,6 +84,7 @@ public class Enemy : MonoBehaviour
     int BlueStarCount = 0;
     int GreenStarCount = 0;
     int StatusUpNum = 1;
+    float StatusTime = 0;
     bool DethFirst = false;
 
 
@@ -126,6 +127,7 @@ public class Enemy : MonoBehaviour
     public Player Player;
     StarMove StarMove = null;
     Rigidbody GetRigidbody = null;
+    Collider Collider = null;
 
     /// <summary>
     /// 数値初期化
@@ -150,6 +152,7 @@ public class Enemy : MonoBehaviour
         StarPlaceManager = StarPlace.GetComponent<StarPlaceManager>();
         EnemyAbnormalState.Init(5, 10, 1, 5);
         HitStop = GameObject.Find("HitStopManager").GetComponent<HitStopManager>();
+        Collider = GetComponent<BoxCollider>();
     }
 
     // Update is called once per frame
@@ -170,6 +173,7 @@ public class Enemy : MonoBehaviour
             return;
         }
         EnemyAbnormalState.Abnormal(ref EnemyStatus.CurrentHp);
+        StatusTime += Time.deltaTime;
         EnemyTime += Time.deltaTime;
         BossTime += Time.deltaTime;
         //敵とプレイヤーの距離差
@@ -180,6 +184,8 @@ public class Enemy : MonoBehaviour
         {
             MoveSwitch = false;
             ReceivedDamage = true;
+            Collider.enabled = false;
+            GetRigidbody.isKinematic = true;
             ++ClearManager.EnemyDownNum;
             Animator.SetTrigger("EnemyDown");
             AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
@@ -193,9 +199,6 @@ public class Enemy : MonoBehaviour
                     Destroy(this.gameObject);//敵の消滅
                 }
             }
-
-
-
         }
 
         if (ReceivedDamage == true)//硬直時間の解除
@@ -210,12 +213,13 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        /*
-         * 毎フレーム実行しているためコメントアウト
-         * by 石山
-         */
-        //StatusUp();//ステータスアップ
-        //StatusDown();//ステータスダウン
+        if (StatusTime >= 0.5)
+        {
+            StatusUp();//ステータスアップ
+            StatusDown();//ステータスダウン
+            StatusTime = 0;
+        }
+
     }
 
     /// <summary>
