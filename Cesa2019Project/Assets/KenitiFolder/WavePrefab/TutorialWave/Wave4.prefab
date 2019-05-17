@@ -29,14 +29,14 @@ Transform:
   m_Children:
   - {fileID: 4346842114419302035}
   - {fileID: 7128231899172789255}
-  - {fileID: 8335771872085532351}
-  - {fileID: 4962977489718176300}
-  - {fileID: 137661445646358693}
   - {fileID: 1436571020716146489}
   - {fileID: 5306074000206155699}
   - {fileID: 214426047487869278}
   - {fileID: 8807127272521270049}
   - {fileID: 5957171020920216567}
+  - {fileID: 8335771872085532351}
+  - {fileID: 4962977489718176300}
+  - {fileID: 137661445646358693}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -115,7 +115,7 @@ PrefabInstance:
     - target: {fileID: 4081583563110409491, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
       propertyPath: OutPutAttackDecision
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4081583563110409491, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
@@ -185,11 +185,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7400363392785530326}
     m_Modifications:
-    - target: {fileID: 5606006049320481678, guid: 9be4f7a19384388438ca6ff988cdebab,
-        type: 3}
-      propertyPath: m_Name
-      value: ShootEnemy (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 5604438963204945732, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -228,7 +223,7 @@ PrefabInstance:
     - target: {fileID: 5604438963204945732, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5604438963204945732, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
@@ -245,10 +240,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5606006049320481677, guid: 9be4f7a19384388438ca6ff988cdebab,
+    - target: {fileID: 5606006049320481678, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
-      propertyPath: BulletGenelateTime
-      value: 5
+      propertyPath: m_Name
+      value: ShootEnemy (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5606006049320481679, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
@@ -286,6 +281,11 @@ PrefabInstance:
         type: 3}
       propertyPath: EnemyDefence
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5606006049320481677, guid: 9be4f7a19384388438ca6ff988cdebab,
+        type: 3}
+      propertyPath: BulletGenelateTime
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5791514611522525712, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
@@ -350,7 +350,7 @@ PrefabInstance:
     - target: {fileID: 4084249368702385986, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4084249368702385986, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
@@ -375,7 +375,7 @@ PrefabInstance:
     - target: {fileID: 4081583563110409491, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
       propertyPath: OutPutAttackDecision
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4081583563110409491, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
@@ -488,7 +488,7 @@ PrefabInstance:
     - target: {fileID: 4084249368702385986, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4084249368702385986, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
@@ -513,7 +513,7 @@ PrefabInstance:
     - target: {fileID: 4081583563110409491, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
       propertyPath: OutPutAttackDecision
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4081583563110409491, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
@@ -583,11 +583,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7400363392785530326}
     m_Modifications:
-    - target: {fileID: 5606006049320481678, guid: 9be4f7a19384388438ca6ff988cdebab,
-        type: 3}
-      propertyPath: m_Name
-      value: ShootEnemy
-      objectReference: {fileID: 0}
     - target: {fileID: 5604438963204945732, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -626,7 +621,7 @@ PrefabInstance:
     - target: {fileID: 5604438963204945732, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5604438963204945732, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
@@ -643,10 +638,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5606006049320481677, guid: 9be4f7a19384388438ca6ff988cdebab,
+    - target: {fileID: 5606006049320481678, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
-      propertyPath: BulletGenelateTime
-      value: 5
+      propertyPath: m_Name
+      value: ShootEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 5606006049320481679, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
@@ -684,6 +679,11 @@ PrefabInstance:
         type: 3}
       propertyPath: EnemyDefence
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5606006049320481677, guid: 9be4f7a19384388438ca6ff988cdebab,
+        type: 3}
+      propertyPath: BulletGenelateTime
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5791514611522525712, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
@@ -748,7 +748,7 @@ PrefabInstance:
     - target: {fileID: 4084249368702385986, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4084249368702385986, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
@@ -773,7 +773,7 @@ PrefabInstance:
     - target: {fileID: 4081583563110409491, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
       propertyPath: OutPutAttackDecision
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4081583563110409491, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
@@ -843,11 +843,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7400363392785530326}
     m_Modifications:
-    - target: {fileID: 5606006049320481678, guid: 9be4f7a19384388438ca6ff988cdebab,
-        type: 3}
-      propertyPath: m_Name
-      value: ShootEnemy (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 5604438963204945732, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -886,7 +881,7 @@ PrefabInstance:
     - target: {fileID: 5604438963204945732, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5604438963204945732, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
@@ -903,10 +898,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5606006049320481677, guid: 9be4f7a19384388438ca6ff988cdebab,
+    - target: {fileID: 5606006049320481678, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
-      propertyPath: BulletGenelateTime
-      value: 5
+      propertyPath: m_Name
+      value: ShootEnemy (2)
       objectReference: {fileID: 0}
     - target: {fileID: 5606006049320481679, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
@@ -944,6 +939,11 @@ PrefabInstance:
         type: 3}
       propertyPath: EnemyDefence
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5606006049320481677, guid: 9be4f7a19384388438ca6ff988cdebab,
+        type: 3}
+      propertyPath: BulletGenelateTime
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5791514611522525712, guid: 9be4f7a19384388438ca6ff988cdebab,
         type: 3}
@@ -1033,7 +1033,7 @@ PrefabInstance:
     - target: {fileID: 4081583563110409491, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
       propertyPath: OutPutAttackDecision
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4081583563110409491, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
@@ -1146,7 +1146,7 @@ PrefabInstance:
     - target: {fileID: 4084249368702385986, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4084249368702385986, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
@@ -1171,7 +1171,7 @@ PrefabInstance:
     - target: {fileID: 4081583563110409491, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
       propertyPath: OutPutAttackDecision
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4081583563110409491, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
@@ -1284,7 +1284,7 @@ PrefabInstance:
     - target: {fileID: 4084249368702385986, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4084249368702385986, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
@@ -1309,7 +1309,7 @@ PrefabInstance:
     - target: {fileID: 4081583563110409491, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}
       propertyPath: OutPutAttackDecision
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4081583563110409491, guid: 5d697653a9deb794baa17f4bf9ace1d4,
         type: 3}

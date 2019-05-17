@@ -84,6 +84,7 @@ public class Enemy : MonoBehaviour
     int BlueStarCount = 0;
     int GreenStarCount = 0;
     int StatusUpNum = 1;
+    bool DethFirst = false;
 
 
     [SerializeField]
@@ -174,13 +175,27 @@ public class Enemy : MonoBehaviour
         //敵とプレイヤーの距離差
         PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
 
-        if (EnemyStatus.CurrentHp <= 0 || EnemyHp <= 0)
+
+        if (EnemyStatus.CurrentHp <= 0 || EnemyHp <= 0)///HPが0になった時
         {
+            MoveSwitch = false;
+            ReceivedDamage = true;
             ++ClearManager.EnemyDownNum;
-            if (BossEnemy == false) { EnemyStar(); }
-            if (BossEnemy) { BossEnemyStar(); }
-            DestroyFlag = true;
-            Destroy(this.gameObject);//敵の消滅
+            Animator.SetTrigger("EnemyDown");
+            AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("death"))
+            {
+                if (Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+                {
+                    if (!BossEnemy) { EnemyStar(); }
+                    else { BossEnemyStar(); }
+                    DestroyFlag = true;
+                    Destroy(this.gameObject);//敵の消滅
+                }
+            }
+
+
+
         }
 
         if (ReceivedDamage == true)//硬直時間の解除
@@ -241,7 +256,6 @@ public class Enemy : MonoBehaviour
 
             if (BossEnemy && AttackCount >= DamageCount && ReceivedDamage == false)
             {
-
                 DamageFlag = true;
                 EnemyTime = 0;
                 ReceivedDamage = true;/*敵を硬直させる*/

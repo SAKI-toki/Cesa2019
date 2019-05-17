@@ -59,7 +59,7 @@ public class ClabEnemy : MonoBehaviour
 
         if (First)
         {
-            transform.Translate(0, 0, -5 * Time.deltaTime);
+            transform.Translate(0, 0, -Enemy.ZMove * Time.deltaTime);
             if (ClabTime >= 5) { First = false; ClabTime = 0; }
         }
 

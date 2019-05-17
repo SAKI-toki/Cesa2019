@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BGM : MonoBehaviour
 {
-     [SerializeField]
-     AudioSource Audios=null;
     [SerializeField]
-     AudioClip[] Audio = null;
+    AudioSource Audios = null;
+    [SerializeField]
+    AudioClip[] Audio = null;
 
 
     /// <summary>
@@ -17,11 +17,6 @@ public class BGM : MonoBehaviour
     {
         Audios.clip = Audio[0];
         Audios.Play();
-    }
-
-    private void Update()
-    {
-
     }
 
     /// <summary>
