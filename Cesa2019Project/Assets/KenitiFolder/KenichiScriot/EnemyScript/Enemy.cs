@@ -176,11 +176,18 @@ public class Enemy : MonoBehaviour
 
         if (EnemyStatus.CurrentHp <= 0 || EnemyHp <= 0)
         {
+            MoveSwitch = false;
+            ReceivedDamage = true;
             ++ClearManager.EnemyDownNum;
-            if (BossEnemy == false) { EnemyStar(); }
-            if (BossEnemy) { BossEnemyStar(); }
-            DestroyFlag = true;
-            Destroy(this.gameObject);//敵の消滅
+            Animator.SetTrigger("EnemyDown");
+            if (Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                if (BossEnemy == false) { EnemyStar(); }
+                if (BossEnemy) { BossEnemyStar(); }
+                DestroyFlag = true;
+                Destroy(this.gameObject);//敵の消滅
+            }
+
         }
 
         if (ReceivedDamage == true)//硬直時間の解除
@@ -241,7 +248,6 @@ public class Enemy : MonoBehaviour
 
             if (BossEnemy && AttackCount >= DamageCount && ReceivedDamage == false)
             {
-
                 DamageFlag = true;
                 EnemyTime = 0;
                 ReceivedDamage = true;/*敵を硬直させる*/
