@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
     bool MoveJump = false;                      // ジャンプのフラグ
     bool MoveAvoid = false;                     // 回避のフラグ
     [System.NonSerialized]
-    public bool DeathFlg = false;                      // 死亡フラグ
+    public bool DeathFlg = false;               // 死亡フラグ
     // debug用
     [SerializeField, Header("プレイヤーステータスデバッグUI")]
     GameObject PlayerStatusDebugUI = null;
@@ -337,7 +337,7 @@ public class PlayerController : MonoBehaviour
     void Death()
     {
         DeathFlg = true;
-        //PlayerAnimator.SetBool("Deathflg", true);
+        PlayerAnimator.SetBool("Deathflg", true);
         LeftStickH = 0;
         LeftStickV = 0;
         ComboController.ComboUIHidden(ComboText);
@@ -379,6 +379,7 @@ public class PlayerController : MonoBehaviour
         // 非表示
         else if (PlayerStatusDebugUI.activeInHierarchy == true) { PlayerStatusDebugUI.SetActive(false); }
     }
+
 
     /// <summary>
     /// デバッグ用Textの更新
