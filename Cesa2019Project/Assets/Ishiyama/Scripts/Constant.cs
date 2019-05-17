@@ -9,7 +9,7 @@ namespace Constant
     static public class ConstNumber
     {
         //星の換算
-        public const int StarConversion = 5;
+        public const int StarConversion = 15;
     }
     /// <summary>
     /// シーンの名前

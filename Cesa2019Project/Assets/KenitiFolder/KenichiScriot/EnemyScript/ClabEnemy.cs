@@ -10,6 +10,8 @@ public class ClabEnemy : MonoBehaviour
     bool CrabFirst = true;//移動速度を一度だけ上げる
     int MoveDouble = 3;
     float MoveChange = 1;
+    float ClabTime = 0;
+    float CoolTime = 3;//離脱用
 
     float AttackTime = 0;//攻撃の時間
     bool AttackOn = false;//攻撃中か
@@ -17,7 +19,7 @@ public class ClabEnemy : MonoBehaviour
     bool AttackMotionFirst = false;//攻撃モーションを一度だけ実行
     GameObject AttackObject = null;
 
-
+    bool First = false;
 
     [SerializeField]
     Enemy Enemy = null;
@@ -32,6 +34,7 @@ public class ClabEnemy : MonoBehaviour
     /// </summary>
     void Update()
     {
+        ClabTime += Time.deltaTime;
         Following();
 
         //蟹座のボスの時HPが１/３になったら移動速度三倍
@@ -46,11 +49,25 @@ public class ClabEnemy : MonoBehaviour
             MoveChange = Random.Range(1, 3);
             Enemy.BossTime = 0;
         }
+        ///離脱用
+        if (Enemy.PlayerRangeDifference <= Enemy.AttackDecision &&
+            ClabTime >= CoolTime &&
+            !First)
+        {
+            First = true; ClabTime = 0;
+        }
 
-        if (Enemy.PlayerRangeDifference <= Enemy.AttackDecision
-          && AttackOn == false
-          && !Enemy.NonDirectAttack
-          && Enemy.ReceivedDamage == false)
+        if (First)
+        {
+            transform.Translate(0, 0, -5 * Time.deltaTime);
+            if (ClabTime >= 5) { First = false; ClabTime = 0; }
+        }
+
+        ///攻撃用
+        if (Enemy.PlayerRangeDifference <= Enemy.AttackDecision &&
+            AttackOn == false &&
+            !Enemy.NonDirectAttack &&
+            Enemy.ReceivedDamage == false)
         { AttackOn = true; }//攻撃中
 
         if (AttackOn == true) { Attack(); }
@@ -58,7 +75,16 @@ public class ClabEnemy : MonoBehaviour
         if (MoveChange == 1) { transform.position += transform.right * Enemy.ZMove * Time.deltaTime; }
         else { transform.position -= transform.right * Enemy.ZMove * Time.deltaTime; }
 
-        transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime / 10);
+        if (Enemy.ReceivedDamage == false && Enemy.AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
+        {
+            Enemy.Animator.SetBool("EnemyWalk", true);
+            transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime / 10);
+        }
+        else
+        {
+            Enemy.Animator.SetBool("EnemyWalk", false);
+        }
+
     }
 
     /// <summary>
@@ -93,7 +119,7 @@ public class ClabEnemy : MonoBehaviour
         Enemy.Animator.SetBool("EnemyWalk", false);
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
-            Enemy.Animator.SetTrigger("EnemyAttack");
+            Enemy.Animator.SetTrigger("EnemyAttack2");
             Enemy.EnemySe.AttackSES();
             AttackMotionFirst = true;
         }
@@ -108,8 +134,6 @@ public class ClabEnemy : MonoBehaviour
             Destroy(AttackObject, 0.1f);
             AttackFirst = true;
         }
-
-        if (AttackFirst) { transform.Translate(0,0,-Enemy.ZMove*Time.deltaTime); }
 
         if (AttackTime >= Enemy.AttackWait || Enemy.DamageFlag == true)
         {

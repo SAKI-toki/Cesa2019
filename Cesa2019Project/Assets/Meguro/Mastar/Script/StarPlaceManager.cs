@@ -29,8 +29,6 @@ public class StarPlaceManager : MonoBehaviour
     List<Line> LineList = new List<Line>();
     HaveStarManager.StarColorEnum[] StarPutMemory = new HaveStarManager.StarColorEnum[3] { HaveStarManager.StarColorEnum.None, HaveStarManager.StarColorEnum.None, HaveStarManager.StarColorEnum.None };
     List<StarPlace> StarPlaceList = new List<StarPlace>();      // 星を置く場所のリスト
-    [SerializeField, Header("WaveController")]
-    WaveController EnemyWave = null;
     [SerializeField, Header("麻痺範囲")]
     float ParalysisDis = 0;
     [SerializeField, Header("星が置けるようになる距離")]
@@ -51,6 +49,10 @@ public class StarPlaceManager : MonoBehaviour
     Pause Pause = null;
     [SerializeField]
     WaveController GetWaveController = null;
+    [SerializeField, Header("線のマテリアル")]
+    Material LineMaterial = null;
+    //線の幅
+    const float LineWidth = 0.3f;
 
     [System.NonSerialized]
     public int RedStarNum = 0;
@@ -82,7 +84,7 @@ public class StarPlaceManager : MonoBehaviour
                             Player.PlayerStatus.HpUp(1);
                             Player.PlayerStatus.AttackUp(5);
                             StarPlaceList[num].Star = Instantiate(RedStar,
-                                child.transform.position + new Vector3(0, 1, 0),
+                                child.transform.position + new Vector3(0, 0, 0),
                                 Quaternion.identity);
                             break;
                         case HaveStarManager.StarColorEnum.Blue:
@@ -90,7 +92,7 @@ public class StarPlaceManager : MonoBehaviour
                             Player.PlayerStatus.HpUp(1);
                             Player.PlayerStatus.DefenseUp(5);
                             StarPlaceList[num].Star = Instantiate(BlueStar,
-                                child.transform.position + new Vector3(0, 1, 0),
+                                child.transform.position + new Vector3(0, 0, 0),
                                 Quaternion.identity);
                             break;
                         case HaveStarManager.StarColorEnum.Green:
@@ -98,12 +100,12 @@ public class StarPlaceManager : MonoBehaviour
                             Player.PlayerStatus.HpUp(1);
                             Player.PlayerStatus.SpeedUp(2);
                             StarPlaceList[num].Star = Instantiate(GreenStar,
-                                child.transform.position + new Vector3(0, 1, 0),
+                                child.transform.position + new Vector3(0, 0, 0),
                                 Quaternion.identity);
                             break;
                         default:
                             StarPlaceList[num].Star = Instantiate(Star,
-                                child.transform.position + new Vector3(0, 1, 0),
+                                child.transform.position + new Vector3(0, 0, 0),
                                 Quaternion.identity);
                             break;
                     }
@@ -143,7 +145,6 @@ public class StarPlaceManager : MonoBehaviour
                             // 星を持っていない
                             else
                             {
-                                //Debug.Log("====星が無いよ====");
                             }
                         }
                         else if (distance > ActiveDistance)
@@ -156,11 +157,13 @@ public class StarPlaceManager : MonoBehaviour
                         {
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {
-                                Debug.Log(GetWaveController.EnemyZero);
                                 if (GetWaveController.EnemyZero)
                                 {
-                                    StarSelectPlaceNum = i;
-                                    StarSelectActive();
+                                    if (!StarSelectController.GetSelectFlg())
+                                    {
+                                        StarSelectPlaceNum = i;
+                                        StarSelectActive();
+                                    }
                                 }
                             }
                         }
@@ -168,8 +171,11 @@ public class StarPlaceManager : MonoBehaviour
                         {
                             if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
                             {
-                                StarSelectPlaceNum = i;
-                                StarSelectActive();
+                                if (!StarSelectController.GetSelectFlg())
+                                {
+                                    StarSelectPlaceNum = i;
+                                    StarSelectActive();
+                                }
                             }
                         }
                     }
@@ -188,6 +194,13 @@ public class StarPlaceManager : MonoBehaviour
                     PoisonBonus();
                 }
                 /* ============================================================= */
+            }
+            else
+            {
+                if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
+                {
+                    StarSelectController.DeleteSelect();
+                }
             }
         }
     }
@@ -261,7 +274,7 @@ public class StarPlaceManager : MonoBehaviour
         StarPlaceList[n].Star =
             Instantiate((starColor == HaveStarManager.StarColorEnum.Red ? RedStar :
             starColor == HaveStarManager.StarColorEnum.Green ? GreenStar : BlueStar),
-            StarPlaceList[n].gameObject.transform.position + new Vector3(0, 1, 0),
+            StarPlaceList[n].gameObject.transform.position + new Vector3(0, 0, 0),
             Quaternion.identity);
         var colliderList = StarPlaceList[n].GetComponents<SphereCollider>();
         foreach (var collider in colliderList)
@@ -300,13 +313,15 @@ public class StarPlaceManager : MonoBehaviour
             }
         }
     }
-
     void DorwLine(Line line)
     {
         if (line.StarPlace1.GetComponent<StarPlace>().isSet &&
             line.StarPlace2.GetComponent<StarPlace>().isSet)
         {
             LineRenderer lineRendererStarPlace1 = line.StarPlace1.GetComponent<LineRenderer>();
+            lineRendererStarPlace1.material = LineMaterial;
+            lineRendererStarPlace1.startWidth = LineWidth;
+            lineRendererStarPlace1.endWidth = LineWidth;
             lineRendererStarPlace1.positionCount = lineRendererStarPlace1.positionCount + 2;
 
             lineRendererStarPlace1.SetPosition(
@@ -355,7 +370,7 @@ public class StarPlaceManager : MonoBehaviour
             if (StarPutMemory[0] != StarPutMemory[StarPutMemory.Length - 1])
             {
                 // 敵がいないときはボーナスなし
-                if (EnemyWave.Wave.transform.childCount > 0)
+                if (GetWaveController.Wave.transform.childCount > 0)
                 {
                     if (Random.Range(0, 2) == 0)
                     {
@@ -377,8 +392,7 @@ public class StarPlaceManager : MonoBehaviour
     /// </summary>
     void ParalysisBonus()
     {
-        Debug.Log("麻痺");
-        foreach (Transform child in EnemyWave.Wave.transform)
+        foreach (Transform child in GetWaveController.Wave.transform)
         {
             float dis = Vector3.Distance(PlayerPos, child.transform.position);
 
@@ -402,8 +416,7 @@ public class StarPlaceManager : MonoBehaviour
     /// </summary>
     void PoisonBonus()
     {
-        Debug.Log("毒");
-        foreach (Transform child in EnemyWave.Wave.transform)
+        foreach (Transform child in GetWaveController.Wave.transform)
         {
             child.GetComponent<Enemy>().EnemyAbnormalState.PoisonStart();
         }

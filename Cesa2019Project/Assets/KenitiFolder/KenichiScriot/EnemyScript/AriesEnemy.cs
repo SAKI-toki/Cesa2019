@@ -6,7 +6,6 @@ public class AriesEnemy : MonoBehaviour
 {
     float MoveSave = 0;
     float AriesTime = 0;
-    float Yforword = 30;
     bool AssaultFlag = false;
     float AttackTime = 0;//攻撃の時間
     bool AttackOn = false;//攻撃中か
@@ -15,7 +14,6 @@ public class AriesEnemy : MonoBehaviour
     GameObject AttackObject = null;
 
     Rigidbody Rigidbody = null;
-
 
     [SerializeField]
     GameObject EffectRush = null;
@@ -97,10 +95,11 @@ public class AriesEnemy : MonoBehaviour
         //前に進む
         if (Enemy.MoveSwitch)
         {
+            Enemy.Animator.SetBool("EenmyWalk", true);
             transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime);
             EffectRush.SetActive(true);
         }
-        else { EffectRush.SetActive(false); }
+        else { EffectRush.SetActive(false); Enemy.Animator.SetBool("EenmyWalk", false); }
     }
 
     /// <summary>
@@ -110,11 +109,11 @@ public class AriesEnemy : MonoBehaviour
     {
         AttackTime += Time.deltaTime;
         Enemy.AttackEnemy = true;
-        //Enemy.Animator.SetBool("EnemyWalk", false);
+        Enemy.Animator.SetBool("EnemyWalk", false);
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
             EffectRush.SetActive(false);
-            Enemy.Animator.SetTrigger("EnemyAttack");
+            Enemy.Animator.SetTrigger("EnemyAttack1");
             Enemy.EnemySe.AttackSES();
             AttackMotionFirst = true;
         }

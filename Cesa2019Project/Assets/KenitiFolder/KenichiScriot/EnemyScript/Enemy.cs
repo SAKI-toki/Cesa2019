@@ -122,7 +122,6 @@ public class Enemy : MonoBehaviour
 
     GameObject StarPlace = null;
     StarPlaceManager StarPlaceManager = null;
-    NavMeshAgent Agent = null;
     public Player Player;
     StarMove StarMove = null;
     Rigidbody GetRigidbody = null;
@@ -144,7 +143,6 @@ public class Enemy : MonoBehaviour
         MoveDown = 1 - (MoveDown * 0.01f);
         Animator = this.GetComponent<Animator>();
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
-        Agent = GetComponent<NavMeshAgent>();
         EnemySe = this.GetComponent<EnemySe>();
         GetRigidbody = GetComponent<Rigidbody>();
         StarPlace = GameObject.Find("StarPlaceManager");
@@ -300,7 +298,6 @@ public class Enemy : MonoBehaviour
             Star = RedStar;//赤の星を生成させる 
             GameObject item = Instantiate(Star) as GameObject;//星の生成
             StarMove = item.GetComponent<StarMove>();
-            StarMove.BossStar = true;
             item.transform.position = transform.position;
             item.transform.Rotate(0, Random.Range(-180, 180), 0);
         }
@@ -310,7 +307,6 @@ public class Enemy : MonoBehaviour
             Star = BlueStar;//青の星を生成させる
             GameObject item = Instantiate(Star) as GameObject;//星の生成
             StarMove = item.GetComponent<StarMove>();
-            StarMove.BossStar = true;
             item.transform.position = transform.position;
             item.transform.Rotate(0, Random.Range(-180, 180), 0);
         }
@@ -320,7 +316,6 @@ public class Enemy : MonoBehaviour
             Star = YellowStar;//黄の星を生成させる
             GameObject item = Instantiate(Star) as GameObject;//星の生成
             StarMove = item.GetComponent<StarMove>();
-            StarMove.BossStar = true;
             item.transform.position = transform.position;
             item.transform.Rotate(0, Random.Range(-180, 180), 0);
         }

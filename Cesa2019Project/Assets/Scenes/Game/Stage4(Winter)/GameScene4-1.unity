@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -194,6 +194,11 @@ PrefabInstance:
       propertyPath: Pause
       value: 
       objectReference: {fileID: 854251406}
+    - target: {fileID: 1224567152983328941, guid: 6b64d71924b9f544483d14e1a014082a,
+        type: 3}
+      propertyPath: GetWaveController
+      value: 
+      objectReference: {fileID: 594267271}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b64d71924b9f544483d14e1a014082a, type: 3}
 --- !u!114 &594267266 stripped
@@ -256,6 +261,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd991730faedfb4380a6bb318f85774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &594267271 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6861334534320498994, guid: 6b64d71924b9f544483d14e1a014082a,
+    type: 3}
+  m_PrefabInstance: {fileID: 594267265}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 975a17e3ef8046445beb9865b3601859, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &854251405
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -268,6 +285,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CommonGameObject
       objectReference: {fileID: 0}
+    - target: {fileID: 4517209733558218721, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: StarPlaceController
+      value: 
+      objectReference: {fileID: 594267270}
     - target: {fileID: 3688123995375410246, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -322,21 +344,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8595809267355691691, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.016210794
-      objectReference: {fileID: 0}
-    - target: {fileID: 1720495282124065008, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.044781208
-      objectReference: {fileID: 0}
-    - target: {fileID: 6064771358159177798, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: StarPlaceController
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2743556551248644138, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
@@ -433,6 +440,21 @@ PrefabInstance:
       propertyPath: StarPlaces.Array.data[17]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8595809267355691691, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.016210794
+      objectReference: {fileID: 0}
+    - target: {fileID: 1720495282124065008, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.044781208
+      objectReference: {fileID: 0}
+    - target: {fileID: 6064771358159177798, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: StarPlaceController
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2652824493641650228, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: StarPlaceManager
@@ -458,11 +480,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -10
       objectReference: {fileID: 0}
-    - target: {fileID: 4517209733558218721, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: StarPlaceController
-      value: 
-      objectReference: {fileID: 594267270}
     - target: {fileID: 8209686625573302862, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: field of view
@@ -472,7 +489,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: bfda9e26ba7460446ac41bcfb8396f45, type: 3}
 --- !u!114 &854251406 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4517209732821900294, guid: bfda9e26ba7460446ac41bcfb8396f45,
+  m_CorrespondingSourceObject: {fileID: 7653201728169284968, guid: bfda9e26ba7460446ac41bcfb8396f45,
     type: 3}
   m_PrefabInstance: {fileID: 854251405}
   m_PrefabAsset: {fileID: 0}
@@ -484,7 +501,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &854251407 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4517209733558218721, guid: bfda9e26ba7460446ac41bcfb8396f45,
+  m_CorrespondingSourceObject: {fileID: 7653201727258992600, guid: bfda9e26ba7460446ac41bcfb8396f45,
     type: 3}
   m_PrefabInstance: {fileID: 854251405}
   m_PrefabAsset: {fileID: 0}

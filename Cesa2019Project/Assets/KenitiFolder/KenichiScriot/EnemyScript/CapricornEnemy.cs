@@ -6,7 +6,6 @@ public class CapricornEnemy : MonoBehaviour
 {
     float MoveSave = 0;
     float CapricornTime = 0;
-    float Yforword = 30;
     bool AssaultFlag = false;
     float AttackTime = 0;//攻撃の時間
     bool AttackOn = false;//攻撃中か
@@ -98,10 +97,15 @@ public class CapricornEnemy : MonoBehaviour
         //前に進む
         if (Enemy.MoveSwitch)
         {
+            Enemy.Animator.SetBool("EenmyWalk", true);
             transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime);
             EffectRush.SetActive(true);
         }
-        else { EffectRush.SetActive(false); }
+        else
+        {
+            Enemy.Animator.SetBool("EnemyWalk", false);
+            EffectRush.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -116,7 +120,7 @@ public class CapricornEnemy : MonoBehaviour
         {
             EffectRush.SetActive(false);
             Debug.Log("ji");
-            Enemy.Animator.SetTrigger("EnemyAttack");
+            Enemy.Animator.SetTrigger("EnemyAttack1");
             Enemy.EnemySe.AttackSES();
             AttackMotionFirst = true;
         }

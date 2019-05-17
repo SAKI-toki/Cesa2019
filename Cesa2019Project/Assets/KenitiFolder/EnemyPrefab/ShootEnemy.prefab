@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5604438963204945732}
-  - component: {fileID: 5495133941986341346}
   - component: {fileID: 5606006049320481676}
   - component: {fileID: 5606006049320481679}
-  - component: {fileID: 125382861135539597}
+  - component: {fileID: 477946625193459649}
   - component: {fileID: 5606006049320481677}
   - component: {fileID: 5606006049320481715}
   - component: {fileID: 5606006049320481714}
@@ -43,25 +42,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &5495133941986341346
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5606006049320481678}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: a492cbabea1026348ab6b7956b4e782f, type: 3}
-  m_Animations:
-  - {fileID: 7400000, guid: a492cbabea1026348ab6b7956b4e782f, type: 3}
-  - {fileID: 7400000, guid: e8b4947a8d66a124cbab1176113a8d3c, type: 3}
-  - {fileID: 7400000, guid: 2f8434480efda344384bb993d849c261, type: 3}
-  - {fileID: 7400000, guid: 3e94babe2b0575c49a1ddde21035b445, type: 3}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 1
 --- !u!95 &5606006049320481676
 Animator:
   serializedVersion: 3
@@ -71,8 +51,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5606006049320481678}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: fbf29d58a43c1f84eb963dacd85d23bc, type: 3}
+  m_Controller: {fileID: 9100000, guid: 62459ff9314c4294d98223991c6a13c5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -93,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f766a04b988d44eb7ac2eb3976abb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NonAnimator: 1
+  NonAnimator: 0
   NonDirectAttack: 1
   BossEnemy: 0
   Bullet: 0
@@ -149,7 +129,7 @@ MonoBehaviour:
   EnemySe: {fileID: 0}
   NoDamage: 0
   PlayerController: {fileID: 0}
---- !u!114 &125382861135539597
+--- !u!114 &477946625193459649
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,7 +138,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5606006049320481678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b18e635ff02fee6419384940221a31d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 38c1bab8d44f3f44b9e27d0d4e3f39b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   RotationPlus: 5
@@ -193,8 +173,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9156722, y: 1.1917987, z: 0.5926266}
-  m_Center: {x: 0.0073617697, y: 0.5733893, z: -0.054398537}
+  m_Size: {x: 1.8058307, y: 2.6209164, z: 2.0479498}
+  m_Center: {x: -0.025508365, y: 1.2879481, z: -0.012722572}
 --- !u!54 &5606006049320481714
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -329,7 +309,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5606006049320481678}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5

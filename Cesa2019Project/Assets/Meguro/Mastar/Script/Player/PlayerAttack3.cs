@@ -17,6 +17,9 @@ public class PlayerAttack3 : IPlayerState
 
     IPlayerState IPlayerState.Update(Player player)
     {
+        AnimationTime += Time.deltaTime;
+        //player.PlayerLastAttack.LastAttackUpdate();
+        AttackMove(player);
         // Death
         if (Player.PlayerStatus.CurrentHp <= 0)
         {

@@ -12,24 +12,35 @@ public class StarSlect : MonoBehaviour
     GameObject SelectColor = null;
     [SerializeField, Header("赤")]
     GameObject SelectRed = null;
-    [SerializeField, Header("緑")]
-    GameObject SelectGreen = null;
     [SerializeField, Header("青")]
     GameObject SelectBlue = null;
+    [SerializeField, Header("緑")]
+    GameObject SelectGreen = null;
     [SerializeField]
     StarPlaceManager StarPlaceController = null;
-    private int Select;
 
+
+    private int Select;
+    private int SelectMax;
+    private int SelectMin;
+
+    //星の大きさ
     float StarScale = 1.0f;
     float v = 0.1f;
     float OriginalScale = 1.0f;
+
+    float LStick;
+    bool StickFlg = false;
+
     bool SelectFlg = false;
-    
+
     void Start()
     {
         Select = 0;
+        SelectMin = Select;
+        SelectMax = 2;
     }
-    
+
     void Update()
     {
         if (!SelectFlg) return;
@@ -48,7 +59,7 @@ public class StarSlect : MonoBehaviour
                         DeleteSelect();
                     }
                 }
-                    StarPlaceController.LineCheck();
+                StarPlaceController.LineCheck();
                 break;
             case 1:
                 StarSize(SelectBlue);
@@ -80,20 +91,67 @@ public class StarSlect : MonoBehaviour
                 break;
         }
 
+        //スティック入力
+        SelectStick();
+        //キーボード入力
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            AddSelect();
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            DecSelect();
+        }
+    }
 
-        //色の選択
-        if (Input.GetKeyDown("joystick button 5") || Input.GetKeyDown(KeyCode.RightArrow))
+    /// <summary>
+    /// スティック選択
+    /// </summary>
+    void SelectStick()
+    {
+        LStick = Input.GetAxis("L_Stick_H");
+        if (LStick == 0)
         {
-            Select++;
-            if (Select > 2)
-                Select = 0;
+            StickFlg = false;
+            return;
         }
-        if (Input.GetKeyDown("joystick button 4") || Input.GetKeyDown(KeyCode.LeftArrow))
+        if (StickFlg)
+            return;
+        StickFlg = true;
+        if (LStick > 0)
         {
-            Select--;
-            if (Select < 0)
-                Select = 2;
+            AddSelect();
         }
+        if (LStick < 0)
+        {
+            DecSelect();
+        }
+    }
+
+    /// <summary>
+    /// Select変数を加算
+    /// </summary>
+    void AddSelect()
+    {
+        //if (SelectFlg)
+        //{
+        ++Select;
+        if (Select > SelectMax)
+            Select = SelectMin;
+        //}
+    }
+
+    /// <summary>
+    /// Select変数を減算
+    /// </summary>
+    void DecSelect()
+    {
+        //if (SelectFlg)
+        //{
+        --Select;
+        if (Select < SelectMin)
+            Select = SelectMax;
+        //}
     }
 
     /// <summary>
@@ -101,10 +159,10 @@ public class StarSlect : MonoBehaviour
     /// </summary>
     public void DeleteSelect()
     {
-        Time.timeScale = 1;
-        SelectColor.SetActive(false);
-        StarPlaceController.StarSelectCancel();
         SelectFlg = false;
+        Time.timeScale = 1;
+        StarPlaceController.StarSelectCancel();
+        SelectColor.SetActive(false);
     }
 
     /// <summary>
@@ -112,10 +170,8 @@ public class StarSlect : MonoBehaviour
     /// </summary>
     public void StartSelect()
     {
-        Select = 0;
-        Time.timeScale = 0;
         SelectColor.SetActive(true);
-        //EventSystem.current.SetSelectedGameObject(SelectColor);
+        Time.timeScale = 0;
         SelectFlg = true;
     }
 
@@ -136,7 +192,7 @@ public class StarSlect : MonoBehaviour
     /// </summary>
     /// <param name="obj2"></param>
     /// <param name="obj3"></param>
-    void OriginalSize(GameObject obj2,GameObject obj3)
+    void OriginalSize(GameObject obj2, GameObject obj3)
     {
         obj2.GetComponent<RectTransform>().localScale = new Vector3(OriginalScale, OriginalScale, 1.0f);
         obj3.GetComponent<RectTransform>().localScale = new Vector3(OriginalScale, OriginalScale, 1.0f);
@@ -144,6 +200,6 @@ public class StarSlect : MonoBehaviour
 
     public bool GetSelectFlg()
     {
-         return SelectFlg; 
+        return SelectFlg;
     }
 }

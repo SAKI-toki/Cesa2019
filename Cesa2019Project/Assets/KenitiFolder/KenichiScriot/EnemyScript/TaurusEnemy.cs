@@ -6,7 +6,6 @@ public class TaurusEnemy : MonoBehaviour
 {
     float MoveSave = 0;
     float TaurusTime = 0;
-    float Yforword = 30;
     bool AssaultFlag = false;
     float AttackTime = 0;//攻撃の時間
     bool AttackOn = false;//攻撃中か
@@ -97,10 +96,11 @@ public class TaurusEnemy : MonoBehaviour
         //前に進む
         if (Enemy.MoveSwitch)
         {
+            Enemy.Animator.SetBool("EenmyWalk", true);
             transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime);
             EffectRush.SetActive(true);
         }
-        else { EffectRush.SetActive(false); }
+        else { EffectRush.SetActive(false); Enemy.Animator.SetBool("EenmyWalk", false); }
     }
 
     /// <summary>
@@ -114,8 +114,7 @@ public class TaurusEnemy : MonoBehaviour
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
             EffectRush.SetActive(false);
-            Debug.Log("ji");
-            Enemy.Animator.SetTrigger("EnemyAttack");
+            Enemy.Animator.SetTrigger("EnemyAttack2");
             Enemy.EnemySe.AttackSES();
             AttackMotionFirst = true;
         }
