@@ -24,7 +24,7 @@ public class AquariusEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GetEnemy.ReceivedDamage == false && GetEnemy.AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
+        if (GetEnemy.ReceivedDamage == false && GetEnemy.AttackEnemy == false && !GetEnemy.DestroyFlag)//ダメージを受けたら動かない,攻撃中も動かない
         {
             Following();
 
@@ -41,7 +41,7 @@ public class AquariusEnemy : MonoBehaviour
                 GetEnemy.EnemyTime = 0;
             }
 
-            if (GetEnemy.EnemyStatus.CurrentHp <= GetEnemy.EnemyHp / 4&&!HpFirst)
+            if (GetEnemy.EnemyStatus.CurrentHp <= GetEnemy.EnemyHp / 4 && !HpFirst)
             {
                 Destroy(CurrentWave);
                 GetEnemy.EnemyStatus.CurrentHp += GetEnemy.EnemyHp / 2;

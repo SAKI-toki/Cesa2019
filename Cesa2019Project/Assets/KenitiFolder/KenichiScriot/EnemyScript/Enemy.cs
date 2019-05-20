@@ -86,8 +86,8 @@ public class Enemy : MonoBehaviour
     int RedStarCount = 0;
     int BlueStarCount = 0;
     int GreenStarCount = 0;
-    int StatusUpNum = 1;
-    float Alpha = 0;
+    float Deth = 3;
+    float DethTime = 0;
     float StatusTime = 0;
 
     [SerializeField]
@@ -160,8 +160,9 @@ public class Enemy : MonoBehaviour
         GetRigidbody = GetComponent<Rigidbody>();
         EnemyAbnormalState.Init(5, 10, 1, 5);
         HitStop = GameObject.Find("HitStopManager").GetComponent<HitStopManager>();
+        if (!Bullet)
+        { Col = EnemySMR.material.color; }
         Collider = GetComponent<BoxCollider>();
-        Col = EnemySMR.material.color;
     }
 
     // Update is called once per frame
@@ -191,25 +192,32 @@ public class Enemy : MonoBehaviour
 
         if (EnemyStatus.CurrentHp <= 0 || EnemyHp <= 0)///HPが0になった時
         {
+            DestroyFlag = true;
             MoveSwitch = false;
             ReceivedDamage = true;
             Collider.enabled = false;
             GetRigidbody.isKinematic = true;
             ++ClearManager.EnemyDownNum;
             Animator.SetTrigger("EnemyDown");
-
             AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.IsName("death"))
             {
+                DethTime += Time.deltaTime;
                 Col.a = 1.0f - Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
                 EnemySMR.material.color = Col;
                 if (Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
                 {
                     if (!BossEnemy) { EnemyStar(); }
                     else { BossEnemyStar(); }
-                    DestroyFlag = true;
                     Destroy(this.gameObject);//敵の消滅
                 }
+            }
+
+            if (DethTime >= Deth)//アニメーションが不具合起こしたよう
+            {
+                if (!BossEnemy) { EnemyStar(); }
+                else { BossEnemyStar(); }
+                Destroy(this.gameObject);//敵の消滅
             }
         }
 
