@@ -106,6 +106,7 @@ MonoBehaviour:
   Offset: {x: 0, y: 1, z: 1.5}
   AttackPrefab: {fileID: 9027682551869182764, guid: 7115063cdc7c456419fba109e6139a06,
     type: 3}
+  EnemySMR: {fileID: 8621911355577884145}
   DamageFlag: 0
   ReceivedDamage: 0
   PlayerTracking: 0
@@ -610,12 +611,18 @@ PrefabInstance:
     - target: {fileID: 13700000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 335f9b2db573536448f17f67eb599b6d, type: 2}
+      objectReference: {fileID: 2100000, guid: 3b0fc0bc076a26a43872231c822f7b60, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
 --- !u!4 &8621911355591970001 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 7f069214c35182e4697d88ead254cd37,
+    type: 3}
+  m_PrefabInstance: {fileID: 8621911355591579217}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &8621911355577884145 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13700000, guid: 7f069214c35182e4697d88ead254cd37,
     type: 3}
   m_PrefabInstance: {fileID: 8621911355591579217}
   m_PrefabAsset: {fileID: 0}
