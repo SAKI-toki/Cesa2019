@@ -137,6 +137,13 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void Start()
     {
+        StarPlace = GameObject.Find("StarPlaceManager");
+        StarPlaceManager = StarPlace.GetComponent<StarPlaceManager>();
+        while (StatusUpCount <= StarPlaceManager.StarNum)
+        {
+            BuffHp();
+            StatusUpCount++;
+        }
         Player = GameObject.Find("Player").GetComponent<Player>();
         EnemyStatus.Hp = EnemyHp;
         EnemyStatus.CurrentHp = EnemyHp;
@@ -151,8 +158,6 @@ public class Enemy : MonoBehaviour
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
         EnemySe = this.GetComponent<EnemySe>();
         GetRigidbody = GetComponent<Rigidbody>();
-        StarPlace = GameObject.Find("StarPlaceManager");
-        StarPlaceManager = StarPlace.GetComponent<StarPlaceManager>();
         EnemyAbnormalState.Init(5, 10, 1, 5);
         HitStop = GameObject.Find("HitStopManager").GetComponent<HitStopManager>();
         Collider = GetComponent<BoxCollider>();
@@ -364,33 +369,18 @@ public class Enemy : MonoBehaviour
                 }
                 StatusUpCount++;
             }
-
-            while (StatusUpNum <= StarPlaceManager.StarNum)
-            {
-                BuffHp();
-                BuffDefence();
-                StatusUpNum++;
-            }
         }
         else
         {
             while (StatusUpCount <= StarPlaceManager.StarNum)
             {
                 BuffAttack();
-                BuffHp();
                 if (StatusUpCount % 2 == 0)
                 {
                     BuffDefence();
                     BuffMove();
                 }
                 StatusUpCount++;
-            }
-
-            while (StatusUpNum <= StarPlaceManager.StarNum)
-            {
-                BuffHp();
-                BuffAttack();
-                StatusUpNum++;
             }
         }
     }
@@ -468,6 +458,10 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void BuffMove()
     {
+        if (NonDirectAttack)
+        {
+            return;
+        }
         ZMove += MovePlus;
         if (ZMove >= MoveLimit) { ZMove = MoveLimit; }
     }
