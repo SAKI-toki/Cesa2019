@@ -71,7 +71,6 @@ public class DeathManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(CameraObject.localEulerAngles.x);
         //カメラの移動
         if (PlayerControll.DeathFlg)
         {
