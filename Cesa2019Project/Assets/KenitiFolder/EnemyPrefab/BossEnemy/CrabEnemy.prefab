@@ -105,6 +105,7 @@ MonoBehaviour:
   Offset: {x: 0, y: 2, z: 4}
   AttackPrefab: {fileID: 2581146734678819022, guid: 7cea68b2a0403ea45aee778ca5361c20,
     type: 3}
+  EnemySMR: {fileID: 4099250789124338600}
   DamageFlag: 0
   ReceivedDamage: 0
   PlayerTracking: 0
@@ -127,7 +128,7 @@ MonoBehaviour:
   JampFlag: 0
   EnemySe: {fileID: 0}
   NoDamage: 0
-  PlayerController: {fileID: 0}
+  Player: {fileID: 0}
 --- !u!114 &4814779544930098189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,11 +372,21 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: abdf4eca2e19fe74b9c7abf7dfdf55d6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4fb43e12660640649babb427b66aa98c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abdf4eca2e19fe74b9c7abf7dfdf55d6, type: 3}
 --- !u!4 &4099250789110375048 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: abdf4eca2e19fe74b9c7abf7dfdf55d6,
+    type: 3}
+  m_PrefabInstance: {fileID: 4099250789110773768}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &4099250789124338600 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13700000, guid: abdf4eca2e19fe74b9c7abf7dfdf55d6,
     type: 3}
   m_PrefabInstance: {fileID: 4099250789110773768}
   m_PrefabAsset: {fileID: 0}

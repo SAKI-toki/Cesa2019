@@ -74,6 +74,9 @@ public class Enemy : MonoBehaviour
     public Vector3 Offset = new Vector3();
     [SerializeField, Header("AttackPrefabを入れる")]
     public GameObject AttackPrefab = null;
+    [SerializeField]
+    SkinnedMeshRenderer EnemySMR = null;
+
     HitStopManager HitStop = null;
 
     int StarRandom = 0;
@@ -84,6 +87,7 @@ public class Enemy : MonoBehaviour
     int BlueStarCount = 0;
     int GreenStarCount = 0;
     int StatusUpNum = 1;
+    float Alpha = 0;
     float StatusTime = 0;
 
     [SerializeField]
@@ -126,6 +130,7 @@ public class Enemy : MonoBehaviour
     StarMove StarMove = null;
     Rigidbody GetRigidbody = null;
     Collider Collider = null;
+    Color Col;
 
     /// <summary>
     /// 数値初期化
@@ -151,6 +156,7 @@ public class Enemy : MonoBehaviour
         EnemyAbnormalState.Init(5, 10, 1, 5);
         HitStop = GameObject.Find("HitStopManager").GetComponent<HitStopManager>();
         Collider = GetComponent<BoxCollider>();
+        Col = EnemySMR.material.color;
     }
 
     // Update is called once per frame
@@ -186,9 +192,12 @@ public class Enemy : MonoBehaviour
             GetRigidbody.isKinematic = true;
             ++ClearManager.EnemyDownNum;
             Animator.SetTrigger("EnemyDown");
+
             AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.IsName("death"))
             {
+                Col.a = 1.0f - Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                EnemySMR.material.color = Col;
                 if (Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
                 {
                     if (!BossEnemy) { EnemyStar(); }
