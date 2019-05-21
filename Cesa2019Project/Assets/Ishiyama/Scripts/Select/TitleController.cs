@@ -49,6 +49,7 @@ public class TitleController : MonoBehaviour
         Statefunc = FadeState;
         UpdateTitleLogoAlpha();
         FadeController.FadeIn();
+        Time.timeScale = 1.0f;
     }
     void Update()
     {
