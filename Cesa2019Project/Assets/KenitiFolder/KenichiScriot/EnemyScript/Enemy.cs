@@ -74,8 +74,6 @@ public class Enemy : MonoBehaviour
     public Vector3 Offset = new Vector3();
     [SerializeField, Header("AttackPrefabを入れる")]
     public GameObject AttackPrefab = null;
-    [SerializeField]
-    SkinnedMeshRenderer EnemySMR = null;
 
     HitStopManager HitStop = null;
 
@@ -160,8 +158,6 @@ public class Enemy : MonoBehaviour
         GetRigidbody = GetComponent<Rigidbody>();
         EnemyAbnormalState.Init(5, 10, 1, 5);
         HitStop = GameObject.Find("HitStopManager").GetComponent<HitStopManager>();
-        if (!Bullet)
-        { Col = EnemySMR.material.color; }
         Collider = GetComponent<BoxCollider>();
     }
 
@@ -203,8 +199,6 @@ public class Enemy : MonoBehaviour
             if (stateInfo.IsName("death"))
             {
                 DethTime += Time.deltaTime;
-                Col.a = 1.0f - Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-                EnemySMR.material.color = Col;
                 if (Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
                 {
                     if (!BossEnemy) { EnemyStar(); }
