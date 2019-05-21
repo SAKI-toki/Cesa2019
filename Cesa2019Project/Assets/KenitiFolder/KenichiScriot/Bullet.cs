@@ -12,8 +12,6 @@ public class Bullet : MonoBehaviour
     float DestroyTime = 0;
     [SerializeField]
     bool NonDestroy = false;
-    [SerializeField]
-    AudioClip ShotSe = null;
 
     GameObject PlayerObj = null;
     float BulletTime = 0;
