@@ -344,6 +344,22 @@ public class ClearManager : MonoBehaviour
                     case "GameScene2-3":
                     case "GameScene3-3":
                     case "GameScene4-3":
+                        if (SceneName == "GameScene1-3")
+                        {
+                            SelectSceneObjectManager.SeasonUnlock[1] = true;
+                        }
+                        else if (SceneName == "GameScene2-3")
+                        {
+                            SelectSceneObjectManager.SeasonUnlock[2] = true;
+                        }
+                        else if (SceneName == "GameScene3-3")
+                        {
+                            SelectSceneObjectManager.SeasonUnlock[3] = true;
+                        }
+                        else if (SceneName == "GameScene4-3")
+                        {
+                            SelectSceneObjectManager.SeasonUnlock[4] = true;
+                        }
                         ImageFadeIn(StageSelectImage, 0.01f);
                         TextFadeIn(StageSelectText, 0.01f);
                         CarsorBlue.SetActive(true);
