@@ -14,8 +14,6 @@ public class Bullet : MonoBehaviour
     bool NonDestroy = false;
     [SerializeField]
     AudioClip ShotSe = null;
-    [SerializeField]
-    AudioSource AudioSource = null;
 
     GameObject PlayerObj = null;
     float BulletTime = 0;
@@ -25,7 +23,6 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioSource.PlayOneShot(ShotSe);
         PlayerObj = SearchTag(gameObject, "Player");
     }
 

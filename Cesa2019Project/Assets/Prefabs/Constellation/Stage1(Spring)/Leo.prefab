@@ -885,7 +885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd991730faedfb4380a6bb318f85774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  PlayerObj: {fileID: 0}
   Star: {fileID: 754100028705065500, guid: 8cdf0cfeb56f80c4a93115d864895ec7, type: 3}
   LineList:
   - StarPlace1: {fileID: 7799032790007536262}
@@ -2930,11 +2930,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaveGenerator
       objectReference: {fileID: 0}
-    - target: {fileID: 8605709199766989746, guid: 7feed771c738c5b458ac573d73d10fe4,
-        type: 3}
-      propertyPath: StarPlaceManager
-      value: 
-      objectReference: {fileID: 7799032789459757242}
     - target: {fileID: 8605709199766989747, guid: 7feed771c738c5b458ac573d73d10fe4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2988,6 +2983,21 @@ PrefabInstance:
     - target: {fileID: 8605709199766989747, guid: 7feed771c738c5b458ac573d73d10fe4,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605709199766989746, guid: 7feed771c738c5b458ac573d73d10fe4,
+        type: 3}
+      propertyPath: StarPlaceManager
+      value: 
+      objectReference: {fileID: 7799032789459757242}
+    - target: {fileID: 8605709199766989746, guid: 7feed771c738c5b458ac573d73d10fe4,
+        type: 3}
+      propertyPath: StarPut
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605709199766989746, guid: 7feed771c738c5b458ac573d73d10fe4,
+        type: 3}
+      propertyPath: Tutorial
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

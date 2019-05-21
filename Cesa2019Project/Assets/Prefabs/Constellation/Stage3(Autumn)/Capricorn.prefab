@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd991730faedfb4380a6bb318f85774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  PlayerObj: {fileID: 0}
   Star: {fileID: 754100028705065500, guid: 8cdf0cfeb56f80c4a93115d864895ec7, type: 3}
   LineList:
   - StarPlace1: {fileID: 5207050850938396705}
@@ -1717,38 +1717,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaveGenerator
       objectReference: {fileID: 0}
-    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
-      propertyPath: Waves.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
-      propertyPath: StarPut
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
-      propertyPath: Waves.Array.data[0]
-      value: 
-      objectReference: {fileID: 4606851849693845742, guid: 0ec3322803fb12949ac6745bc00c25e1,
-        type: 3}
-    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
-      propertyPath: Waves.Array.data[1]
-      value: 
-      objectReference: {fileID: 586382317089579703, guid: 25b420a01a74ab24493eeb1a62a01ac3,
-        type: 3}
-    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
-      propertyPath: Waves.Array.data[2]
-      value: 
-      objectReference: {fileID: 8566309222562175131, guid: b594137f5b24d1d4b9c949abbe11205f,
-        type: 3}
-    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
-      propertyPath: BossWave
-      value: 
-      objectReference: {fileID: 109627793131235519, guid: d3208143198ad2a4296a88a05103230c,
-        type: 3}
-    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
-      propertyPath: StarPlaceManager
-      value: 
-      objectReference: {fileID: 5207050850367402754}
     - target: {fileID: 1476946873, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1793,6 +1761,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: Waves.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: StarPut
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: Waves.Array.data[0]
+      value: 
+      objectReference: {fileID: 4606851849693845742, guid: 0ec3322803fb12949ac6745bc00c25e1,
+        type: 3}
+    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: Waves.Array.data[1]
+      value: 
+      objectReference: {fileID: 586382317089579703, guid: 25b420a01a74ab24493eeb1a62a01ac3,
+        type: 3}
+    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: Waves.Array.data[2]
+      value: 
+      objectReference: {fileID: 8566309222562175131, guid: b594137f5b24d1d4b9c949abbe11205f,
+        type: 3}
+    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: BossWave
+      value: 
+      objectReference: {fileID: 109627793131235519, guid: d3208143198ad2a4296a88a05103230c,
+        type: 3}
+    - target: {fileID: 1476946872, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
+      propertyPath: StarPlaceManager
+      value: 
+      objectReference: {fileID: 5207050850367402754}
     - target: {fileID: 1476946871, guid: cb0cb606c6b605b4a9edb25350ba02d0, type: 3}
       propertyPath: Audios
       value: 
