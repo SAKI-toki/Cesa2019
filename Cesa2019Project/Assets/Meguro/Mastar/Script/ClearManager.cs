@@ -205,10 +205,10 @@ public class ClearManager : MonoBehaviour
                     if (Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized == PlayerObj.transform.forward)
                     {
                         ResultMoveFlg = true;
-                        HpNumText.text = StartHp.ToString("00") + " > " + Player.PlayerStatus.Hp;
-                        AttackNumText.text = StartAttack.ToString("00") + " > " + Player.PlayerStatus.Attack;
-                        DefenseNumText.text = StartDefense.ToString("00") + " > " + Player.PlayerStatus.Defense;
-                        SpeedNumText.text = StartSpeed.ToString("00") + " > " + Player.PlayerStatus.Speed;
+                        HpNumText.text = StartHp + " > " + Player.PlayerStatus.Hp;
+                        AttackNumText.text = StartAttack + " > " + Player.PlayerStatus.Attack;
+                        DefenseNumText.text = StartDefense + " > " + Player.PlayerStatus.Defense;
+                        SpeedNumText.text = StartSpeed + " > " + Player.PlayerStatus.Speed;
                     }
                 }
             }
