@@ -25,7 +25,7 @@ public class PiscesEnemy : MonoBehaviour
 
     void PiscesMove()
     {
-        if (PisceBoss == null) { Debug.Log(""); return; }
+        if (PisceBoss == null) { return; }
         this.transform.position = PisceBoss.transform.position;
         this.transform.rotation = PisceBoss.transform.rotation;
     }

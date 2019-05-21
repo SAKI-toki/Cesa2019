@@ -42,6 +42,7 @@ public class LeoEnemy : MonoBehaviour
         if (Enemy.ReceivedDamage == false
             && Enemy.AttackEnemy == false
             && LeoGroundWave.Ground == false
+            && !Enemy.DestroyFlag
             )//ダメージを受けたら動かない,攻撃中も動かない,ジャンプ中も動かない
         {
             ReoMove();
@@ -92,12 +93,12 @@ public class LeoEnemy : MonoBehaviour
             {
                 Enemy.MoveSwitch = false;
                 ReoTime = 0;
-               
+
                 Enemy.BossTime = 0;
             }
             else
             {
-               AssaultFlag = false;
+                AssaultFlag = false;
             }
         }
     }

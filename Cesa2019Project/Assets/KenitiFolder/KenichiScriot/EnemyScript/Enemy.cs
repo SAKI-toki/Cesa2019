@@ -86,8 +86,8 @@ public class Enemy : MonoBehaviour
     int RedStarCount = 0;
     int BlueStarCount = 0;
     int GreenStarCount = 0;
-    int StatusUpNum = 1;
-    float Alpha = 0;
+    float Deth = 3;
+    float DethTime = 0;
     float StatusTime = 0;
 
     [SerializeField]
@@ -137,6 +137,13 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void Start()
     {
+        StarPlace = GameObject.Find("StarPlaceManager");
+        StarPlaceManager = StarPlace.GetComponent<StarPlaceManager>();
+        while (StatusUpCount <= StarPlaceManager.StarNum)
+        {
+            BuffHp();
+            StatusUpCount++;
+        }
         Player = GameObject.Find("Player").GetComponent<Player>();
         EnemyStatus.Hp = EnemyHp;
         EnemyStatus.CurrentHp = EnemyHp;
@@ -151,12 +158,11 @@ public class Enemy : MonoBehaviour
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
         EnemySe = this.GetComponent<EnemySe>();
         GetRigidbody = GetComponent<Rigidbody>();
-        StarPlace = GameObject.Find("StarPlaceManager");
-        StarPlaceManager = StarPlace.GetComponent<StarPlaceManager>();
         EnemyAbnormalState.Init(5, 10, 1, 5);
         HitStop = GameObject.Find("HitStopManager").GetComponent<HitStopManager>();
+        if (!Bullet)
+        { Col = EnemySMR.material.color; }
         Collider = GetComponent<BoxCollider>();
-        Col = EnemySMR.material.color;
     }
 
     // Update is called once per frame
@@ -186,25 +192,32 @@ public class Enemy : MonoBehaviour
 
         if (EnemyStatus.CurrentHp <= 0 || EnemyHp <= 0)///HPが0になった時
         {
+            DestroyFlag = true;
             MoveSwitch = false;
             ReceivedDamage = true;
             Collider.enabled = false;
             GetRigidbody.isKinematic = true;
             ++ClearManager.EnemyDownNum;
             Animator.SetTrigger("EnemyDown");
-
             AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.IsName("death"))
             {
+                DethTime += Time.deltaTime;
                 Col.a = 1.0f - Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
                 EnemySMR.material.color = Col;
                 if (Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
                 {
                     if (!BossEnemy) { EnemyStar(); }
                     else { BossEnemyStar(); }
-                    DestroyFlag = true;
                     Destroy(this.gameObject);//敵の消滅
                 }
+            }
+
+            if (DethTime >= Deth)//アニメーションが不具合起こしたよう
+            {
+                if (!BossEnemy) { EnemyStar(); }
+                else { BossEnemyStar(); }
+                Destroy(this.gameObject);//敵の消滅
             }
         }
 
@@ -364,33 +377,18 @@ public class Enemy : MonoBehaviour
                 }
                 StatusUpCount++;
             }
-
-            while (StatusUpNum <= StarPlaceManager.StarNum)
-            {
-                BuffHp();
-                BuffDefence();
-                StatusUpNum++;
-            }
         }
         else
         {
             while (StatusUpCount <= StarPlaceManager.StarNum)
             {
                 BuffAttack();
-                BuffHp();
                 if (StatusUpCount % 2 == 0)
                 {
                     BuffDefence();
                     BuffMove();
                 }
                 StatusUpCount++;
-            }
-
-            while (StatusUpNum <= StarPlaceManager.StarNum)
-            {
-                BuffHp();
-                BuffAttack();
-                StatusUpNum++;
             }
         }
     }
@@ -468,6 +466,10 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void BuffMove()
     {
+        if (NonDirectAttack)
+        {
+            return;
+        }
         ZMove += MovePlus;
         if (ZMove >= MoveLimit) { ZMove = MoveLimit; }
     }
