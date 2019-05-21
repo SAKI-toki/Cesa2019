@@ -74,6 +74,7 @@ public class EnemyMove : MonoBehaviour
         if (Enemy.MoveSwitch)
         {
             Enemy.Animator.SetBool("EnemyWalk", true);
+            Enemy.EnemySe.WalkSES();
             transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime);
         }
         else
