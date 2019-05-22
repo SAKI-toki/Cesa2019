@@ -347,7 +347,7 @@ public class ClearManager : MonoBehaviour
                         TextFadeIn(StageSelectText, 0.01f);
                         CarsorBlue.SetActive(true);
                         StageSelectImage.GetComponent<RectTransform>().localPosition = new Vector3(PosX, PosY1, 0);
-                        if (Input.GetKeyDown("joystick button 1"))
+                        if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                         {
                             /*=================================================*/
                             //遷移
@@ -371,7 +371,7 @@ public class ClearManager : MonoBehaviour
                         {
                             CarsorRed.SetActive(true);
                             CarsorBlue.SetActive(false);
-                            if (Input.GetKeyDown("joystick button 1"))
+                            if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                             {
                                 /*=================================================*/
                                 //遷移

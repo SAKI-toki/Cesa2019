@@ -137,7 +137,7 @@ public class DeathManager : MonoBehaviour
                     case ReStart:
                         CarsorRed.SetActive(true);
                         CarsorBlue.SetActive(false);
-                        if (Input.GetKeyDown("joystick button 1"))
+                        if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                         {
                             /*=================================================*/
                             //遷移
@@ -151,7 +151,7 @@ public class DeathManager : MonoBehaviour
                     case StageSelect:
                         CarsorRed.SetActive(false);
                         CarsorBlue.SetActive(true);
-                        if (Input.GetKeyDown("joystick button 1"))
+                        if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                         {
                             /*=================================================*/
                             //遷移
