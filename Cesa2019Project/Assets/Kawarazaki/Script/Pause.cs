@@ -63,31 +63,34 @@ public class Pause : MonoBehaviour
                 ActiveChange();
             }
         }
-
-        switch (Clear.GetCarsor())
+        if (GetPauseFlg())
         {
-            //「戻る」
-            case Back:
-                CarsorRed.SetActive(true);
-                CarsorBlue.SetActive(false);
-                if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
-                {
-                    PauseUi.SetActive(false);
-                    //通常に戻す
-                    ActiveChange();
-                }
-                break;
-            //「ステージ」
-            case StageSelect:
-                CarsorBlue.SetActive(true);
-                CarsorRed.SetActive(false);
-                if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
-                {
-                    PauseUi.SetActive(false);
-                    FadeController.FadeOut("SelectScene");
-                }
-                break;
+            switch (Clear.GetCarsor())
+            {
+                //「戻る」
+                case Back:
+                    CarsorRed.SetActive(true);
+                    CarsorBlue.SetActive(false);
+                    if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
+                    {
+                        PauseUi.SetActive(false);
+                        //通常に戻す
+                        ActiveChange();
+                    }
+                    break;
+                //「ステージ」
+                case StageSelect:
+                    CarsorBlue.SetActive(true);
+                    CarsorRed.SetActive(false);
+                    if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
+                    {
+                        PauseUi.SetActive(false);
+                        FadeController.FadeOut("SelectScene");
+                    }
+                    break;
+            }
         }
+
         Clear.SelectStick(Back, StageSelect);
         Clear.SelectKeyInput(Back, StageSelect);
 

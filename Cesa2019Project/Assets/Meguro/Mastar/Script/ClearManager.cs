@@ -388,7 +388,7 @@ public class ClearManager : MonoBehaviour
                         {
                             CarsorRed.SetActive(false);
                             CarsorBlue.SetActive(true);
-                            if (Input.GetKeyDown("joystick button 1"))
+                            if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                             {
                                 /*=================================================*/
                                 //遷移
