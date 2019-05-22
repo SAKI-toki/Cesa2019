@@ -83,7 +83,7 @@ MonoBehaviour:
     type: 3}
   ZMove: 5
   KnockBackMove: 0
-  EnemyHp: 90
+  EnemyHp: 300
   EnemyAttackPoint: 15
   EnemyDefence: 10
   HpPlus: 2
@@ -106,7 +106,6 @@ MonoBehaviour:
   Offset: {x: 0, y: 2, z: 4}
   AttackPrefab: {fileID: 2581146734678819022, guid: 7cea68b2a0403ea45aee778ca5361c20,
     type: 3}
-  EnemySMR: {fileID: 5726555380016186015}
   DamageFlag: 0
   ReceivedDamage: 0
   PlayerTracking: 0
@@ -209,7 +208,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackSE: {fileID: 8300000, guid: 5ab719a2cef7a70478ec258a35febe7e, type: 3}
   DamageSE: {fileID: 8300000, guid: b83a6e37d04778c4292596edf4a3425f, type: 3}
-  DestroySE: {fileID: 0}
+  WalkSE: {fileID: 0}
+  AudioSource: {fileID: 0}
 --- !u!82 &4533557629485257521
 AudioSource:
   m_ObjectHideFlags: 0
@@ -463,12 +463,6 @@ PrefabInstance:
 --- !u!4 &5726555380018877363 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400012, guid: b9a280ffcd8f6aa4e9713fcc1819d75a,
-    type: 3}
-  m_PrefabInstance: {fileID: 5726555380019267903}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &5726555380016186015 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 13700000, guid: b9a280ffcd8f6aa4e9713fcc1819d75a,
     type: 3}
   m_PrefabInstance: {fileID: 5726555380019267903}
   m_PrefabAsset: {fileID: 0}
