@@ -176,6 +176,7 @@ public class Enemy : MonoBehaviour
 
         if (Time.timeScale == 0 || Bullet == true)
         {
+            EnemySe.Stop();
             return;
         }
         EnemyAbnormalState.Abnormal(ref EnemyStatus.CurrentHp);
