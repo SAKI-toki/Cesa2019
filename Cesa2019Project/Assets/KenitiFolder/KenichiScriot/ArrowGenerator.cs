@@ -8,6 +8,10 @@ public class ArrowGenerator : MonoBehaviour
     int BulletCount = 0;
     [SerializeField]
     GameObject Bullet = null;
+    [SerializeField]
+    AudioClip AttackSE = null;
+    [HideInInspector]
+    public AudioSource AudioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +26,7 @@ public class ArrowGenerator : MonoBehaviour
         BulletTime += Time.deltaTime;
         if (BulletTime >= 1)
         {
+            AudioSource.PlayOneShot(AttackSE);
             GameObject bullet = Instantiate(Bullet) as GameObject;//弾を生成
             bullet.transform.position = transform.position;//指定した位置に移動
             bullet.transform.Rotate(90, 0, 0);//弾の向きを発射方向に

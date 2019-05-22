@@ -122,7 +122,6 @@ public class ShortDistanceGeminiEnemy : MonoBehaviour
 
     void ShotBarrierState()
     {
-        Debug.Log("shot");
         ShotBarrierFlg = true;
         Instantiate(BarrierBullet, transform.position + new Vector3(0, 2, 0), transform.rotation).
             GetComponent<GeminiBarrierBullet>().GeminiBarrierBulletInit(

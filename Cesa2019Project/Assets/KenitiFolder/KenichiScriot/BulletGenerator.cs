@@ -48,7 +48,6 @@ public class BulletGenerator : MonoBehaviour
             if (BulletTime >= BulletGenelateTime)
             {
                 Animator.SetTrigger("EnemyAttack");
-
                 Drection = this.GetComponent<Transform>().localEulerAngles.y;
                 BulletDrection = this.GetComponent<Transform>().localEulerAngles.y;
                 if (BulletTime >= BulletGenelateTime + 0.5f) { Enemy.EnemySe.AttackSES(); Way3(); }
