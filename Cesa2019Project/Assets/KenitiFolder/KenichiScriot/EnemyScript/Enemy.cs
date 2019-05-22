@@ -181,7 +181,8 @@ public class Enemy : MonoBehaviour
 
         if (Time.timeScale == 0 || Bullet == true)
         {
-            EnemySe.Stop();
+            if (EnemySe)
+                EnemySe.Stop();
             return;
         }
         EnemyAbnormalState.Abnormal(ref EnemyStatus.CurrentHp);
@@ -269,7 +270,8 @@ public class Enemy : MonoBehaviour
                 ++Player.PlayerCombo.CurrentComboNum;
                 EnemyStatus.CurrentHp -= Status.Damage(Player.PlayerStatus.CurrentAttack, EnemyStatus.CurrentDefense);//HPを減らす
                 AttackCount++;
-                EnemySe.DamageSES();
+                if (EnemySe)
+                    EnemySe.DamageSES();
                 transform.Translate(0, 0, -KnockBackMove);
             }
 
