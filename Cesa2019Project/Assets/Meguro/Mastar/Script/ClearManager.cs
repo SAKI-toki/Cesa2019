@@ -11,6 +11,7 @@ public class ClearManager : MonoBehaviour
     float StartAttack = 0;
     float StartDefense = 0;
     float StartSpeed = 0;
+    float AnimationTime = 0;
     public static int EnemyDownNum = 0;
     [SerializeField, Header("チュートリアルならチェック")]
     bool TutorialFlg = false;
@@ -73,6 +74,8 @@ public class ClearManager : MonoBehaviour
     [SerializeField]
     Transform ClearPos = null;
     bool ClearInitFlg = false;
+    bool ClearEffectFlg = false;
+    bool ClearAnimationFlg = false;
     bool ClearMoveFlg = false;
     bool ResultMoveFlg = false;
     bool ClearTextFlg = false;
@@ -80,6 +83,12 @@ public class ClearManager : MonoBehaviour
     bool TextFadeOutFlg = false;
     bool TransitionFlg = false;
 
+    float ClearEffectTime = 8;
+    float CurrentClearEffectTime = 0;
+    float CurrentTime;
+
+    [SerializeField]
+    GameObject ClearEffect;
 
     bool StickFlg;
     float LStick;
@@ -128,6 +137,7 @@ public class ClearManager : MonoBehaviour
         PosX = 120.0f;
         PosY1 = 0.0f;
         PosY2 = -70.0f;
+        CurrentTime = 0;
     }
     void Update()
     {
@@ -147,51 +157,80 @@ public class ClearManager : MonoBehaviour
                 CameraScript.ClearMoveInit();
                 CameraScript.ClearMove();
                 Vector3 dir = ClearPos.position - Player.transform.position;
-                //Player.GetComponent<Player>().Move(dir, 30);
+                Player.Move(dir, 30);
                 float dis = Vector3.Distance(Player.transform.position, ClearPos.position);
-                if (dis < 1.0f) { ClearMoveFlg = true; }
+                if (dis < 1.0f)
+                {
+                    Player.PlayerAnimator.SetBool("DashFlg", false);
+                    ClearMoveFlg = true;
+                    Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward.normalized, new Vector3(1, 0, 1));
+
+                    Instantiate(ClearEffect, Camera.main.transform.position + cameraForward * 30 + new Vector3(0, 9, 0), ClearEffect.transform.rotation);
+                }
             }
-            if (ClearMoveFlg && !ClearTextFlg)
+            if (ClearMoveFlg && !ClearEffectFlg)
+            {
+                CurrentClearEffectTime += Time.deltaTime;
+                if (CurrentClearEffectTime > ClearEffectTime)
+                {
+                    Player.PlayerAnimator.SetBool("WinFlg", true);
+                    ClearEffectFlg = true;
+                }
+            }
+            if (ClearEffectFlg && !ClearAnimationFlg)
+            {
+                AnimationTime += Time.deltaTime;
+                // 2:13 2 + 13/24 = 2.5416...sec
+                if (AnimationTime > 2.541)
+                {
+                    Player.PlayerAnimator.SetBool("WinFlg", false);
+                }
+                if (ClearText.color.a < 1)
+                {
+                    TextFadeIn(ClearText, 0.01f);
+                }
+                if (ClearText.rectTransform.localPosition.y > 0)
+                {
+                    ClearText.rectTransform.localPosition += new Vector3(0, -5, 0);
+                }
+
+                if (AnimationTime > 2.541 && ClearText.color.a >= 1 && ClearText.rectTransform.localPosition.y <= 0)
+                {
+                    ClearAnimationFlg = true;
+                }
+            }
+            if (ClearAnimationFlg && !ClearTextFlg)
             {
                 if (CameraScript.Distance > 9)
                 {
                     CameraScript.ZoomIn(0.1f);
                 }
-                else
+                if (ClearText.color.a > 0)
                 {
-                    if (ClearText.color.a < 1)
-                    {
-                        TextFadeIn(ClearText, 0.01f);
-                    }
-                    if (ClearText.rectTransform.localPosition.y > 0)
-                    {
-                        ClearText.rectTransform.localPosition += new Vector3(0, -5, 0);
-                    }
-
-                    if (ClearText.color.a >= 1 && ClearText.rectTransform.localPosition.y <= 0)
-                    {
-                        ClearTextFlg = true;
-                    }
+                    TextFadeOut(ClearText, 0.02f);
+                }
+                if (CameraScript.Distance <= 9 && ClearText.color.a <= 0)
+                {
+                    ClearTextFlg = true;
                 }
             }
             if (ClearTextFlg && !ResultMoveFlg)
             {
-                if (ClearTextFlg)
-                {
-                    TextFadeOut(ClearText, 0.01f);
-                }
+
                 float dis = Vector3.Distance(Player.transform.position, ClearPos.position);
                 if (dis < 3.5f)
                 {
                     Vector3 dir = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
                     dir = dir * -0.4f + Camera.main.transform.right * -1.0f;
-                    //Player.GetComponent<Player>().Move(dir, 25);
+                    Player.Move(dir, 25);
                 }
                 else
                 {
+                    Player.PlayerAnimator.SetBool("DashFlg", false);
                     Vector3 dir = Camera.main.transform.position - Player.transform.position;
-                    //Player.GetComponent<Player>().Look(dir);
-                    if (Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized == Player.transform.forward)
+                    Player.Look(dir);
+                    CurrentTime += Time.deltaTime;
+                    if (CurrentTime > 2)
                     {
                         ResultMoveFlg = true;
                         HpNumText.text = StartHp.ToString("00") + " > " + Player.PlayerStatus.CurrentHp;

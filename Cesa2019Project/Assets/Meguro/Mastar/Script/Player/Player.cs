@@ -27,6 +27,13 @@ public class Player : MonoBehaviour
     public PlayerStatusData PlayerStatusData;
     public static Status PlayerStatus = new Status();
     public CameraController CameraController;
+    [System.NonSerialized]
+    public FaceAnimationController FaceAnimationController;
+    public GameObject AttackEffect;
+    [System.NonSerialized]
+    public PlayerAudio PlayerAudio;
+    [SerializeField]
+    Pause Pause;
 
     [System.NonSerialized]
     public float ContactNormalY;// 着地時の接地面の法線ベクトル
@@ -43,6 +50,8 @@ public class Player : MonoBehaviour
         PlayerAnimator = GetComponent<Animator>();
         //PlayerLastAttack = GetComponent<PlayerLastAttack>();
         PlayerCombo = GetComponent<PlayerCombo>();
+        FaceAnimationController = GetComponent<FaceAnimationController>();
+        PlayerAudio = GetComponent<PlayerAudio>();
         PlayerStatus.InitStatus(
             PlayerStatusData.Hp,
             PlayerStatusData.Attack,
@@ -52,8 +61,15 @@ public class Player : MonoBehaviour
         CurrentState.Init(this);
     }
 
+    private void Start()
+    {
+        FaceAnimationController.FaceChange(FaceAnimationController.FaceTypes.Defalut);
+    }
+
     void Update()
     {
+        if (StarPlaceManager.StarSelect) { return; }
+        if (Pause.GetPauseFlg()) { return; }
         if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) < 1)
         {
             HaveStarManager.AddBigStar(HaveStarManager.StarColorEnum.Red);
@@ -114,6 +130,14 @@ public class Player : MonoBehaviour
             Vector3 force = this.transform.forward * -PlayerStatusData.Zforword;
             PlayerRigidbody.AddForce(force, ForceMode.Impulse);
         }
+    }
+
+    public void GenerateAttackEffect()
+    {
+        float eulerAngleY = transform.eulerAngles.y;
+        eulerAngleY *= Mathf.Deg2Rad;
+        Vector3 dir = new Vector3(Mathf.Sin(eulerAngleY), 0, Mathf.Cos(eulerAngleY));
+        Instantiate(AttackEffect, transform.position + dir * 3 + Vector3.up, transform.rotation);
     }
 
     public void Move(Vector3 dir, float speed)

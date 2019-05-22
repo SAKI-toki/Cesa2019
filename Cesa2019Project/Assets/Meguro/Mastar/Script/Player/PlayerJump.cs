@@ -9,6 +9,7 @@ public class PlayerJump : IPlayerState
         player.PlayerAnimator.SetBool("JumpFlg", true);
         player.PlayerRigidbody.AddForce(player.PlayerStatusData.JumpVal * Vector3.up, ForceMode.Impulse);
         player.MoveJump = true;
+        player.PlayerAudio.AudioPlay(player.PlayerAudio.JumpAudio);
     }
 
     IPlayerState IPlayerState.Update(Player player)
@@ -22,6 +23,11 @@ public class PlayerJump : IPlayerState
         if (player.DamegFlg)
         {
             return new PlayerDameg();
+        }
+        // Clear
+        if (StarPlaceManager.AllPlaceSet)
+        {
+            return new PlayerClear();
         }
         if (!player.MoveJump)
         {
@@ -38,7 +44,7 @@ public class PlayerJump : IPlayerState
 
     void JumpMove(Player player)
     {
-        player.PlayerRigidbody.AddForce(Vector3.down * player.PlayerStatusData.ForceGravity, ForceMode.Acceleration);
+        player.PlayerRigidbody.AddForce(Vector3.down * player.PlayerStatusData.ForceGravity);
         if (player.Controller.LeftStickH != 0 || player.Controller.LeftStickV != 0)
         {
             Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;

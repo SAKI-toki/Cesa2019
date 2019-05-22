@@ -44,6 +44,11 @@ public class PlayerIdle : IPlayerState
         {
             return new PlayerDameg();
         }
+        // Clear
+        if (StarPlaceManager.AllPlaceSet)
+        {
+            return new PlayerClear();
+        }
         return this;
     }
 

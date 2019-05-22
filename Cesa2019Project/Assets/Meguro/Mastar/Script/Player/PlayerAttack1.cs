@@ -8,18 +8,35 @@ using UnityEngine;
 public class PlayerAttack1 : IPlayerState
 {
     // animation frame 24
-    float NextAttackStartTime = 0.416f; // 攻撃判定 0:09～0:10 10/24 = 0.416...sec
+    float NextAttackStartTime = 0.458f; // 攻撃判定 0:09～0:10 11/24 = 0.4583...sec
     float NextAttackEndTime = 0.75f;    // 戻り 0:18 18/24 = 0.75sec
     float AnimationTime;
+    bool IsAttackEffect;
 
     void IPlayerState.Init(Player player)
     {
         AnimationTime = 0;
         player.PlayerAnimator.SetBool("Attack1", true);
+        IsAttackEffect = false;
+        player.PlayerAudio.AudioPlay(player.PlayerAudio.Attack1Audio);
     }
 
     IPlayerState IPlayerState.Update(Player player)
     {
+        // AttackEffect
+        if (AnimationTime > NextAttackStartTime && !IsAttackEffect)
+        {
+            IsAttackEffect = true;
+            player.GenerateAttackEffect();
+        }
+        if(AnimationTime > NextAttackStartTime)
+        {
+            // Avoid
+            if (player.Controller.TriggerButtonDown() && Player.PlayerStatus.CurrentStamina > 0)
+            {
+                return new PlayerAvoid();
+            }
+        }
         // Death
         if (Player.PlayerStatus.CurrentHp <= 0)
         {
@@ -29,6 +46,11 @@ public class PlayerAttack1 : IPlayerState
         if (player.DamegFlg)
         {
             return new PlayerDameg();
+        }
+        // Clear
+        if (StarPlaceManager.AllPlaceSet)
+        {
+            return new PlayerClear();
         }
         // Attack2
         if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
@@ -57,6 +79,7 @@ public class PlayerAttack1 : IPlayerState
 
     void AttackMove(Player player)
     {
+        player.PlayerRigidbody.AddForce(Vector3.down * player.PlayerStatusData.ForceGravity);
         if (player.Controller.LeftStickH != 0 || player.Controller.LeftStickV != 0)
         {
             Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
