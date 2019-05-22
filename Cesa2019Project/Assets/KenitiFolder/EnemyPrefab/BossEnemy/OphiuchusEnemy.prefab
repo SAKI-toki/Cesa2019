@@ -92,18 +92,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GetEnemy: {fileID: 1190374402115664278}
   Waves:
-  - {fileID: 3170667440961557335, guid: c8f0065386d7cbb4bbda9bf0af4961b3, type: 3}
-  - {fileID: 5107383358482153157, guid: 4288878d00d17554395c51189b245561, type: 3}
-  - {fileID: 6120904454848099455, guid: 84a3beddc60065a448767f38e9962d85, type: 3}
-  - {fileID: 1036036952261940262, guid: 23d03dd433c9bed4f8905892b1378b1d, type: 3}
-  - {fileID: 3069386248606623149, guid: 96c7ef66529ff58448cbfbb452c6de96, type: 3}
-  - {fileID: 3616288660749757085, guid: dd28f84c7d99fa64ba2558ba2046185c, type: 3}
-  - {fileID: 109627793131235519, guid: d3208143198ad2a4296a88a05103230c, type: 3}
-  - {fileID: 442392750736337530, guid: c7b6fa763416480438b8e1c90951dbb8, type: 3}
-  - {fileID: 4466503373118191211, guid: 22c1784ea5f6bc74f8d53659f180b41c, type: 3}
-  - {fileID: 6136285101076879615, guid: f0980ddb20fcd1845be0df40059873f3, type: 3}
-  - {fileID: 3675373506728899494, guid: b486def253ea8654c9d42aa898e33b15, type: 3}
-  - {fileID: 5326306146909449984, guid: c8da7d274e4da4b44bd741f28f30ddc1, type: 3}
+  - {fileID: 2929836790468196123, guid: 321a414153e00b54e86fca62a8f8bc68, type: 3}
+  - {fileID: 6255328499496249929, guid: 77638a37cd8389141837aa75040f7d76, type: 3}
+  - {fileID: 8271932273787080389, guid: e31106cddbc43e743955e54786a9013f, type: 3}
+  - {fileID: 5554955354375141357, guid: f4433178f320cfe43a49ba0676b0aa02, type: 3}
+  - {fileID: 7462739021052846940, guid: d2e6538bb2da9264d8f3b3eeb1e78013, type: 3}
+  - {fileID: 2619844563495357496, guid: 7c042c8f6777db441a40248493f33d88, type: 3}
 --- !u!114 &1190374402115664278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +143,6 @@ MonoBehaviour:
   MaxStarCount: 3
   Offset: {x: 0, y: 0, z: 0}
   AttackPrefab: {fileID: 0}
-  EnemySMR: {fileID: 6340384526151396678}
   DamageFlag: 0
   ReceivedDamage: 0
   PlayerTracking: 0
@@ -187,7 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackSE: {fileID: 8300000, guid: 5ab719a2cef7a70478ec258a35febe7e, type: 3}
   DamageSE: {fileID: 8300000, guid: b83a6e37d04778c4292596edf4a3425f, type: 3}
-  DestroySE: {fileID: 8300000, guid: 99e96809fac44e74cad4a60c8b717cdc, type: 3}
+  WalkSE: {fileID: 0}
 --- !u!65 &1190374402115664298
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -320,11 +313,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1193296060912647517}
     m_Modifications:
-    - target: {fileID: 7367838290631514693, guid: 4d115fd54cf301c40b6eab61c5bb607b,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyHpGauge
-      objectReference: {fileID: 0}
     - target: {fileID: 6494990068306519513, guid: 4d115fd54cf301c40b6eab61c5bb607b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -440,6 +428,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.008
       objectReference: {fileID: 0}
+    - target: {fileID: 7367838290631514693, guid: 4d115fd54cf301c40b6eab61c5bb607b,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyHpGauge
+      objectReference: {fileID: 0}
     - target: {fileID: 4406562756855210368, guid: 4d115fd54cf301c40b6eab61c5bb607b,
         type: 3}
       propertyPath: HpEnemy
@@ -529,12 +522,6 @@ PrefabInstance:
 --- !u!4 &6340384526148320358 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: bcaa8902687622f408b7a42ae924fc59,
-    type: 3}
-  m_PrefabInstance: {fileID: 6340384526148183782}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &6340384526151396678 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 13700000, guid: bcaa8902687622f408b7a42ae924fc59,
     type: 3}
   m_PrefabInstance: {fileID: 6340384526148183782}
   m_PrefabAsset: {fileID: 0}

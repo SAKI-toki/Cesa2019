@@ -6,7 +6,7 @@ public class BulletGenerator : MonoBehaviour
 {
     Animator Animator = null;
     [SerializeField]
-    Enemy Enemy=null;
+    Enemy Enemy = null;
     [SerializeField]
     GameObject Bullet = null;
     [SerializeField, Header("発射間隔")]
@@ -39,7 +39,7 @@ public class BulletGenerator : MonoBehaviour
     {
         if (Enemy.ReceivedDamage) { BulletTime = 0; }
 
-        if (Time.timeScale >= 0 && Enemy.ReceivedDamage==false)
+        if (Time.timeScale >= 0 && Enemy.ReceivedDamage == false)
         {
             PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
 
@@ -48,9 +48,10 @@ public class BulletGenerator : MonoBehaviour
             if (BulletTime >= BulletGenelateTime)
             {
                 Animator.SetTrigger("EnemyAttack");
+                Enemy.EnemySe.AttackSES();
                 Drection = this.GetComponent<Transform>().localEulerAngles.y;
                 BulletDrection = this.GetComponent<Transform>().localEulerAngles.y;
-                if (BulletTime >= BulletGenelateTime+0.5f) { Way3();}
+                if (BulletTime >= BulletGenelateTime + 0.5f) { Way3(); }
             }
         }
     }

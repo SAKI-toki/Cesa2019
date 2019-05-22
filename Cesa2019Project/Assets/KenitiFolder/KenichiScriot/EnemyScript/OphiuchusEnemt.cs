@@ -23,12 +23,12 @@ public class OphiuchusEnemt : MonoBehaviour
     void Update()
     {
 
-        if(!WaveStop)
+        if (!WaveStop)
         {
             WaveGenerat();
         }
 
-        if(Wave.transform.childCount==0)
+        if (Wave.transform.childCount == 0)
         {
             GetEnemy.EnemyStatus.CurrentHp -= GetEnemy.EnemyHp / 6;
             WaveStop = false;
@@ -40,12 +40,12 @@ public class OphiuchusEnemt : MonoBehaviour
     /// </summary>
     void WaveGenerat()
     {
-        
+
         // Waveを作成する
         Wave = (GameObject)Instantiate(Waves[CurrentWave], transform.position, Quaternion.identity);
         CurrentWave++;
-        Wave2 = (GameObject)Instantiate(Waves[CurrentWave], transform.position, Quaternion.identity);
-        CurrentWave++;
+        //Wave2 = (GameObject)Instantiate(Waves[CurrentWave], transform.position, Quaternion.identity);
+        //CurrentWave++;
         WaveStop = true;
     }
 }

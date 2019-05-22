@@ -9,7 +9,7 @@ public class EnemySe : MonoBehaviour
     [SerializeField]
     AudioClip DamageSE = null;
     [SerializeField]
-    AudioClip DestroySE = null;
+    AudioClip WalkSE = null;
 
     AudioSource AudioSource;
 
@@ -35,8 +35,8 @@ public class EnemySe : MonoBehaviour
         AudioSource.PlayOneShot(DamageSE);
     }
 
-    public void DestroySES()
+    public void WalkSES()
     {
-        AudioSource.PlayOneShot(DestroySE);
+        AudioSource.PlayOneShot(WalkSE);
     }
 }
