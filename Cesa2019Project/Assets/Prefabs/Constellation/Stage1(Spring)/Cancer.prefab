@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd991730faedfb4380a6bb318f85774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  PlayerObj: {fileID: 0}
   Star: {fileID: 754100028705065500, guid: 8cdf0cfeb56f80c4a93115d864895ec7, type: 3}
   LineList:
   - StarPlace1: {fileID: 4237946308746338938}
@@ -1105,7 +1105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9514241785ada4e4f80f30f108d9fe21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsAwakeSet: 0
+  IsAwakeSet: 1
 --- !u!1 &8691047849672081449
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,7 +1304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9514241785ada4e4f80f30f108d9fe21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsAwakeSet: 1
+  IsAwakeSet: 0
 --- !u!1 &8691047849889483123
 GameObject:
   m_ObjectHideFlags: 0
@@ -1516,11 +1516,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaveGenerator
       objectReference: {fileID: 0}
-    - target: {fileID: 6451682753358739196, guid: 233c1ec9177b60344bec29f55fe1e2cf,
-        type: 3}
-      propertyPath: StarPlaceManager
-      value: 
-      objectReference: {fileID: 8691047848689972817}
     - target: {fileID: 4969044347415548401, guid: 233c1ec9177b60344bec29f55fe1e2cf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1576,6 +1571,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 139254400977643696, guid: 233c1ec9177b60344bec29f55fe1e2cf,
+        type: 3}
+      propertyPath: Audios
+      value: 
+      objectReference: {fileID: 8651132786747373278}
+    - target: {fileID: 6451682753358739196, guid: 233c1ec9177b60344bec29f55fe1e2cf,
+        type: 3}
+      propertyPath: StarPlaceManager
+      value: 
+      objectReference: {fileID: 8691047848689972817}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 233c1ec9177b60344bec29f55fe1e2cf, type: 3}
 --- !u!4 &3988135022958886762 stripped
@@ -1596,3 +1601,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 975a17e3ef8046445beb9865b3601859, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &8651132786747373278 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 838755034514593861, guid: 233c1ec9177b60344bec29f55fe1e2cf,
+    type: 3}
+  m_PrefabInstance: {fileID: 8335358263694454427}
+  m_PrefabAsset: {fileID: 0}

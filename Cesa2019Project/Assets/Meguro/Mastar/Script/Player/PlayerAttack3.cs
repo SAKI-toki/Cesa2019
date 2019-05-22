@@ -5,21 +5,36 @@ using UnityEngine;
 public class PlayerAttack3 : IPlayerState
 {
     // animation frame 24
+    float NextAttackStartTime = 0.708f;// 攻撃判定 0:15～0:16 17/24 = 0.7083...sec
     float AnimationTime;
+    bool IsAttackEffect;
 
     void IPlayerState.Init(Player player)
     {
         //player.PlayerLastAttack.Init();
+        Player.PlayerStatus.CurrentAttack = Player.PlayerStatus.Attack + 20;
         AnimationTime = 0;
         player.PlayerAnimator.SetBool("Attack3", true);
+        IsAttackEffect = false;
+        player.PlayerAudio.AudioPlay(player.PlayerAudio.Attack3Audio);
     }
 
     IPlayerState IPlayerState.Update(Player player)
     {
-        Player.PlayerStatus.CurrentAttack = Player.PlayerStatus.Attack + 20;
-        AnimationTime += Time.deltaTime;
-        //player.PlayerLastAttack.LastAttackUpdate();
-        AttackMove(player);
+        // AttackEffect
+        if (AnimationTime > NextAttackStartTime && !IsAttackEffect)
+        {
+            IsAttackEffect = true;
+            player.GenerateAttackEffect();
+        }
+        if (AnimationTime > NextAttackStartTime)
+        {
+            // Avoid
+            if (player.Controller.TriggerButtonDown() && Player.PlayerStatus.CurrentStamina > 0)
+            {
+                return new PlayerAvoid();
+            }
+        }
         // Death
         if (Player.PlayerStatus.CurrentHp <= 0)
         {
@@ -32,6 +47,11 @@ public class PlayerAttack3 : IPlayerState
             //player.PlayerLastAttack.UIHidden();
             return new PlayerDameg();
         }
+        // Clear
+        if (StarPlaceManager.AllPlaceSet)
+        {
+            return new PlayerClear();
+        }
         // 連続攻撃なし
         // アニメーション戻り 1:10 1 + 10/24 = 1.416...sec
         if (AnimationTime > 1.416f)
@@ -39,6 +59,9 @@ public class PlayerAttack3 : IPlayerState
             //player.PlayerLastAttack.UIHidden();
             return new PlayerIdle();
         }
+        AnimationTime += Time.deltaTime;
+        //player.PlayerLastAttack.LastAttackUpdate();
+        AttackMove(player);
         return this;
     }
 
@@ -49,6 +72,7 @@ public class PlayerAttack3 : IPlayerState
 
     void AttackMove(Player player)
     {
+        player.PlayerRigidbody.AddForce(Vector3.down * player.PlayerStatusData.ForceGravity);
         if (player.Controller.LeftStickH != 0 || player.Controller.LeftStickV != 0)
         {
             Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;

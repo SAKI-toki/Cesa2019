@@ -27,6 +27,13 @@ public class Player : MonoBehaviour
     public PlayerStatusData PlayerStatusData;
     public static Status PlayerStatus = new Status();
     public CameraController CameraController;
+    [System.NonSerialized]
+    public FaceAnimationController FaceAnimationController;
+    public GameObject AttackEffect;
+    [System.NonSerialized]
+    public PlayerAudio PlayerAudio;
+    [SerializeField]
+    Pause Pause;
 
     [System.NonSerialized]
     public float ContactNormalY;// 着地時の接地面の法線ベクトル
@@ -43,6 +50,8 @@ public class Player : MonoBehaviour
         PlayerAnimator = GetComponent<Animator>();
         //PlayerLastAttack = GetComponent<PlayerLastAttack>();
         PlayerCombo = GetComponent<PlayerCombo>();
+        FaceAnimationController = GetComponent<FaceAnimationController>();
+        PlayerAudio = GetComponent<PlayerAudio>();
         PlayerStatus.InitStatus(
             PlayerStatusData.Hp,
             PlayerStatusData.Attack,
@@ -52,8 +61,19 @@ public class Player : MonoBehaviour
         CurrentState.Init(this);
     }
 
+    private void Start()
+    {
+        FaceAnimationController.FaceChange(FaceAnimationController.FaceTypes.Defalut);
+    }
+
     void Update()
     {
+        if (StarPlaceManager.StarSelect) { return; }
+        if (Pause.GetPauseFlg()) { return; }
+        if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) < 1)
+        {
+            HaveStarManager.AddBigStar(HaveStarManager.StarColorEnum.Red);
+        }
         Controller.Update();
         PlayerAnimatorStateInfo = PlayerAnimator.GetCurrentAnimatorStateInfo(0);
         PlayerAvoid.StaminaRecovering(PlayerStatusData);
@@ -110,5 +130,29 @@ public class Player : MonoBehaviour
             Vector3 force = this.transform.forward * -PlayerStatusData.Zforword;
             PlayerRigidbody.AddForce(force, ForceMode.Impulse);
         }
+    }
+
+    public void GenerateAttackEffect()
+    {
+        float eulerAngleY = transform.eulerAngles.y;
+        eulerAngleY *= Mathf.Deg2Rad;
+        Vector3 dir = new Vector3(Mathf.Sin(eulerAngleY), 0, Mathf.Cos(eulerAngleY));
+        Instantiate(AttackEffect, transform.position + dir * 3 + Vector3.up, transform.rotation);
+    }
+
+    public void Move(Vector3 dir, float speed)
+    {
+        PlayerAnimator.SetBool("DashFlg", true);
+        dir = Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized;
+        Quaternion playerRotation = Quaternion.LookRotation(dir);
+        PlayerRigidbody.AddForce(dir * speed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, playerRotation, PlayerStatusData.RoteVal);
+    }
+
+    public void Look(Vector3 dir)
+    {
+        dir = Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized;
+        Quaternion playerRotation = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, playerRotation, PlayerStatusData.RoteVal);
     }
 }

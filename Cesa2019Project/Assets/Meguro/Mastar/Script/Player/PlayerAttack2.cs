@@ -5,21 +5,36 @@ using UnityEngine;
 public class PlayerAttack2 : IPlayerState
 {
     // animation frame 24
-    float NextAttackStartTime = 0.333f;// 攻撃判定 0:07～0:08 8/24 = 0.3...sec
+    float NextAttackStartTime = 0.375f;// 攻撃判定 0:07～0:08 9/24 = 0.375sec
     float NextAttackEndTime = 0.791f;// 戻り 0:19 19/24 = 0.7916...sec
     float AnimationTime;
+    bool IsAttackEffect;
 
     void IPlayerState.Init(Player player)
     {
         Player.PlayerStatus.CurrentAttack = Player.PlayerStatus.Attack + 10;
         AnimationTime = 0;
         player.PlayerAnimator.SetBool("Attack2", true);
+        IsAttackEffect = false;
+        player.PlayerAudio.AudioPlay(player.PlayerAudio.Attack2Audio);
     }
 
     IPlayerState IPlayerState.Update(Player player)
     {
-        AnimationTime += Time.deltaTime;
-        AttackMove(player);
+        // AttackEffect
+        if (AnimationTime > NextAttackStartTime && !IsAttackEffect)
+        {
+            IsAttackEffect = true;
+            player.GenerateAttackEffect();
+        }
+        if (AnimationTime > NextAttackStartTime)
+        {
+            // Avoid
+            if (player.Controller.TriggerButtonDown() && Player.PlayerStatus.CurrentStamina > 0)
+            {
+                return new PlayerAvoid();
+            }
+        }
         // Death
         if (Player.PlayerStatus.CurrentHp <= 0)
         {
@@ -29,6 +44,11 @@ public class PlayerAttack2 : IPlayerState
         if (player.DamegFlg)
         {
             return new PlayerDameg();
+        }
+        // Clear
+        if (StarPlaceManager.AllPlaceSet)
+        {
+            return new PlayerClear();
         }
         // Attack3
         if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
@@ -44,6 +64,8 @@ public class PlayerAttack2 : IPlayerState
         {
             return new PlayerIdle();
         }
+        AnimationTime += Time.deltaTime;
+        AttackMove(player);
         return this;
     }
 
@@ -54,6 +76,7 @@ public class PlayerAttack2 : IPlayerState
 
     void AttackMove(Player player)
     {
+        player.PlayerRigidbody.AddForce(Vector3.down * player.PlayerStatusData.ForceGravity);
         if (player.Controller.LeftStickH != 0 || player.Controller.LeftStickV != 0)
         {
             Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;

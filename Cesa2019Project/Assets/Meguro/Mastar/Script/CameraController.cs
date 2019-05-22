@@ -134,7 +134,7 @@ public class CameraController : MonoBehaviour
     {
         InitQuaternion = this.transform.rotation;
         Quaternion quat = new Quaternion();
-        quat.eulerAngles = new Vector3(-5, 180, 0);
+        quat.eulerAngles = new Vector3(-10, 180, 0);
         PlayerQuaternion = Player.rotation * quat;
     }
 
