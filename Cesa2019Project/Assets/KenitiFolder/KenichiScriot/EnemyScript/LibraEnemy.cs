@@ -41,6 +41,7 @@ public class LibraEnemy : MonoBehaviour
                 BulletTime2 += Time.deltaTime;
                 if (BulletTime2 >= 1.5)
                 {
+                    GetEnemy.EnemySe.AttackSES();
                     BulletGenerate();
                     BulletCount++;
                     if (BulletCount >= 3) { BulletTime = 0; BulletTime2 = 0; };

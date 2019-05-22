@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 2654604567546249014}
   - component: {fileID: 548531673414085480}
   - component: {fileID: 4814779544930098189}
+  - component: {fileID: 7853086108626903496}
   - component: {fileID: 2654604567536841819}
   - component: {fileID: 2654604567536841816}
   - component: {fileID: 5653200251919734658}
-  - component: {fileID: 7853086108626903496}
   - component: {fileID: 516031187223073234}
   m_Layer: 0
   m_Name: CrabEnemy
@@ -105,7 +105,6 @@ MonoBehaviour:
   Offset: {x: 0, y: 2, z: 4}
   AttackPrefab: {fileID: 2581146734678819022, guid: 7cea68b2a0403ea45aee778ca5361c20,
     type: 3}
-  EnemySMR: {fileID: 4099250789124338600}
   DamageFlag: 0
   ReceivedDamage: 0
   PlayerTracking: 0
@@ -143,6 +142,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CrabMoveChange: 5
   Enemy: {fileID: 548531673414085480}
+--- !u!114 &7853086108626903496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2654604567536841822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4782f6154531d4e9f3131c6b943ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackSE: {fileID: 8300000, guid: 5ab719a2cef7a70478ec258a35febe7e, type: 3}
+  DamageSE: {fileID: 8300000, guid: b83a6e37d04778c4292596edf4a3425f, type: 3}
+  WalkSE: {fileID: 0}
+  AudioSource: {fileID: 0}
 --- !u!65 &2654604567536841819
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -194,21 +209,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7853086108626903496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2654604567536841822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc4782f6154531d4e9f3131c6b943ddc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AttackSE: {fileID: 8300000, guid: 5ab719a2cef7a70478ec258a35febe7e, type: 3}
-  DamageSE: {fileID: 8300000, guid: b83a6e37d04778c4292596edf4a3425f, type: 3}
-  DestroySE: {fileID: 0}
 --- !u!82 &516031187223073234
 AudioSource:
   m_ObjectHideFlags: 0
@@ -381,12 +381,6 @@ PrefabInstance:
 --- !u!4 &4099250789110375048 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: abdf4eca2e19fe74b9c7abf7dfdf55d6,
-    type: 3}
-  m_PrefabInstance: {fileID: 4099250789110773768}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &4099250789124338600 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 13700000, guid: abdf4eca2e19fe74b9c7abf7dfdf55d6,
     type: 3}
   m_PrefabInstance: {fileID: 4099250789110773768}
   m_PrefabAsset: {fileID: 0}

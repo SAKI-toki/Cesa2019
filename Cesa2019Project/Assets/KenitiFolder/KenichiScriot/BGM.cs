@@ -35,5 +35,6 @@ public class BGM : MonoBehaviour
     {
         Audios.clip = Audio[2];
         Audios.Play();
+        Audios.loop = false;
     }
 }

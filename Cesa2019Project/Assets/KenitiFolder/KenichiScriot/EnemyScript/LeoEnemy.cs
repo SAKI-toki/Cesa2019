@@ -129,12 +129,12 @@ public class LeoEnemy : MonoBehaviour
         {
             EffectRush.SetActive(false);
             Enemy.Animator.SetTrigger("EnemyAttack");
-            Enemy.EnemySe.AttackSES();
             AttackMotionFirst = true;
         }
 
         if (AttackFirst == false && AttackTime >= Enemy.OutPutAttackDecision && Enemy.DamageFlag == false)
         {//敵の前にオブジェクト生成
+            Enemy.EnemySe.AttackSES();
             Vector3 position = transform.position + transform.up * Enemy.Offset.y +
             transform.right * Enemy.Offset.x +
             transform.forward * Enemy.Offset.z;

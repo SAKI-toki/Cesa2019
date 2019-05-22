@@ -116,12 +116,13 @@ public class TaurusEnemy : MonoBehaviour
         {
             EffectRush.SetActive(false);
             Enemy.Animator.SetTrigger("EnemyAttack2");
-            Enemy.EnemySe.AttackSES();
+
             AttackMotionFirst = true;
         }
 
         if (AttackFirst == false && AttackTime >= Enemy.OutPutAttackDecision && Enemy.DamageFlag == false)
         {//敵の前にオブジェクト生成
+            Enemy.EnemySe.AttackSES();
             Vector3 position = transform.position + transform.up * Enemy.Offset.y +
             transform.right * Enemy.Offset.x +
             transform.forward * Enemy.Offset.z;

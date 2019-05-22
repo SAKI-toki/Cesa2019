@@ -106,12 +106,13 @@ public class PisceBoss : MonoBehaviour
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
             GetEnemy.Animator.SetTrigger("EnemyAttack1");
-            GetEnemy.EnemySe.AttackSES();
+
             AttackMotionFirst = true;
         }
 
         if (AttackFirst == false && AttackTime >= GetEnemy.OutPutAttackDecision && GetEnemy.DamageFlag == false)
         {//敵の前にオブジェクト生成
+            GetEnemy.EnemySe.AttackSES();
             Vector3 position = transform.position + transform.up * GetEnemy.Offset.y +
             transform.right * GetEnemy.Offset.x +
             transform.forward * GetEnemy.Offset.z;

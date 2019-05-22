@@ -123,7 +123,7 @@ public class ScorpionEnemy : MonoBehaviour
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
             Enemy.Animator.SetTrigger("EnemyAttack");
-            Enemy.EnemySe.AttackSES();
+
             if (Enemy.EnemyStatus.CurrentHp < SecondPoisonHp && PoisonCount <= 3)
             {
                 SecondPoisonSwamp();
@@ -139,6 +139,7 @@ public class ScorpionEnemy : MonoBehaviour
 
         if (AttackFirst == false && AttackTime >= Enemy.OutPutAttackDecision && Enemy.DamageFlag == false)
         {//敵の前にオブジェクト生成
+            Enemy.EnemySe.AttackSES();
             Vector3 position = transform.position + transform.up * Enemy.Offset.y +
             transform.right * Enemy.Offset.x +
             transform.forward * Enemy.Offset.z;
