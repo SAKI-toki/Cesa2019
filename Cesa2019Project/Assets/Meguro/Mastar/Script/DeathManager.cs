@@ -15,6 +15,8 @@ public class DeathManager : MonoBehaviour
     Player PlayerControll = null;
     [SerializeField]
     ClearManager Clear = null;
+    [SerializeField]
+    SelectSE SE = null;
 
     //UICanvas
     [SerializeField]
@@ -139,6 +141,7 @@ public class DeathManager : MonoBehaviour
                         CarsorBlue.SetActive(false);
                         if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                         {
+                            SE.Dec();
                             /*=================================================*/
                             //遷移
                             /*=================================================*/
@@ -153,6 +156,7 @@ public class DeathManager : MonoBehaviour
                         CarsorBlue.SetActive(true);
                         if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                         {
+                            SE.Dec();
                             /*=================================================*/
                             //遷移
                             /*=================================================*/

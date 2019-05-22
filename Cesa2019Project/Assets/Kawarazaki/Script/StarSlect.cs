@@ -18,7 +18,8 @@ public class StarSlect : MonoBehaviour
     GameObject SelectGreen = null;
     [SerializeField]
     StarPlaceManager StarPlaceController = null;
-
+    [SerializeField]
+    SelectSE SE = null;
 
     private int Select;
     const int SelectMax = 2;
@@ -34,9 +35,11 @@ public class StarSlect : MonoBehaviour
 
     bool SelectFlg = false;
 
+
     void Start()
     {
         Select = SelectMin;
+
     }
 
     void Update()
@@ -50,6 +53,7 @@ public class StarSlect : MonoBehaviour
                 OriginalSize(SelectBlue, SelectGreen);
                 if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
+                    SE.Star();
                     if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) >= 1)
                     {
                         HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Red);
@@ -66,6 +70,7 @@ public class StarSlect : MonoBehaviour
                 {
                     if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue) >= 1)
                     {
+                        SE.Star();
                         HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Blue);
                         StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Blue);
                         DeleteSelect();
@@ -80,6 +85,7 @@ public class StarSlect : MonoBehaviour
                 {
                     if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Green) >= 1)
                     {
+                        SE.Star();
                         HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Green);
                         StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Green);
                         DeleteSelect();
@@ -92,14 +98,7 @@ public class StarSlect : MonoBehaviour
         //スティック入力
         SelectStick();
         //キーボード入力
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            AddSelect();
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            DecSelect();
-        }
+        SelectKeyInput();
     }
 
     /// <summary>
@@ -127,10 +126,25 @@ public class StarSlect : MonoBehaviour
     }
 
     /// <summary>
+    /// キーボード選択
+    /// </summary>
+    void SelectKeyInput()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            AddSelect();
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            DecSelect();
+        }
+    }
+    /// <summary>
     /// Select変数を加算
     /// </summary>
     void AddSelect()
     {
+        SE.Sel();
         ++Select;
         if (Select > SelectMax)
             Select = SelectMin;
@@ -141,6 +155,7 @@ public class StarSlect : MonoBehaviour
     /// </summary>
     void DecSelect()
     {
+        SE.Sel();
         --Select;
         if (Select < SelectMin)
             Select = SelectMax;
