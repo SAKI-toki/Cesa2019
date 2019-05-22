@@ -11,7 +11,8 @@ public class EnemySe : MonoBehaviour
     [SerializeField]
     AudioClip WalkSE = null;
 
-    AudioSource AudioSource;
+    [HideInInspector]
+    public AudioSource AudioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +38,7 @@ public class EnemySe : MonoBehaviour
 
     public void WalkSES()
     {
-        AudioSource.PlayOneShot(WalkSE);
+        AudioSource.clip = WalkSE;
+        AudioSource.Play();
     }
 }

@@ -20,6 +20,8 @@ public class PisceBoss : MonoBehaviour
     bool AttackMotionFirst = false;//攻撃モーションを一度だけ実行
     GameObject AttackObject = null;
 
+    Vector3 Gene = new Vector3(0, 0, 0);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -132,9 +134,9 @@ public class PisceBoss : MonoBehaviour
 
     void FlockGenerate()
     {
-        Vector3 position = transform.position + transform.up * GetEnemy.Offset.y +
-                transform.right * GetEnemy.Offset.x +
-                transform.forward * GetEnemy.Offset.z;
+        Vector3 position = transform.position + transform.up * Gene.y +
+                transform.right * Gene.x +
+                transform.forward * Gene.z;
         FlockObj = (GameObject)Instantiate(Flock, position, transform.rotation);
     }
 
@@ -146,12 +148,12 @@ public class PisceBoss : MonoBehaviour
         //前に進む
         if (GetEnemy.MoveSwitch)
         {
-            GetEnemy.Animator.SetBool("EenmyWalk", true);
+            GetEnemy.Animator.SetBool("EnemyWalk", true);
             transform.Translate(0, 0, GetEnemy.ZMove * Time.deltaTime);
         }
         else
         {
-            GetEnemy.Animator.SetBool("EenmyWalk", true);
+            GetEnemy.Animator.SetBool("EnemyWalk", true);
         }
     }
 }

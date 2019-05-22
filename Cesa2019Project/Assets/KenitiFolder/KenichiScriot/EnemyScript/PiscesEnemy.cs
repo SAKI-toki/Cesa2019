@@ -8,6 +8,7 @@ public class PiscesEnemy : MonoBehaviour
     GameObject PisceBoss = null;
     Player Player;
     Status EnemyStatus = new Status();
+    Vector3 Flock = new Vector3(0, 2.5f, -2);
 
     // Start is called before the first frame update
     void Start()
