@@ -168,6 +168,7 @@ public class ClearManager : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log(true);
                     if (ClearText.color.a < 1)
                     {
                         TextFadeIn(ClearText, 0.01f);
