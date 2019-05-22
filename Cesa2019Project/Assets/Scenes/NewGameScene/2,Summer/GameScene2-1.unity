@@ -124,16 +124,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CommonGameObject
       objectReference: {fileID: 0}
-    - target: {fileID: 7289034513233265081, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: StarPlaceController
-      value: 
-      objectReference: {fileID: 1881654229}
-    - target: {fileID: 7653201727258992600, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: StarPlaceController
-      value: 
-      objectReference: {fileID: 1881654229}
     - target: {fileID: 3688123995375410246, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -229,6 +219,21 @@ PrefabInstance:
       propertyPath: StarParentObject
       value: 
       objectReference: {fileID: 1881654236}
+    - target: {fileID: 7289034513233265081, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: StarPlaceController
+      value: 
+      objectReference: {fileID: 1881654229}
+    - target: {fileID: 7653201727258992600, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: StarPlaceController
+      value: 
+      objectReference: {fileID: 1881654229}
+    - target: {fileID: 1552931849872403291, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7247137946456851678, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_havePropertiesChanged
@@ -364,11 +369,6 @@ PrefabInstance:
       propertyPath: StarPlaceController
       value: 
       objectReference: {fileID: 1881654229}
-    - target: {fileID: 1552931849872403291, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4517209734473080035, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_fontAsset
@@ -853,6 +853,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4074731834745449359, guid: 12992ddbaa7d27f438e9ebb765aaa752,
+        type: 3}
+      propertyPath: Audio.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: a716d250f43a6804abe92334fc1b4713, type: 3}
+    - target: {fileID: 4074731834745449359, guid: 12992ddbaa7d27f438e9ebb765aaa752,
+        type: 3}
+      propertyPath: Audio.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: a7da56a62d4bf4045a6ee9da2a216704, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12992ddbaa7d27f438e9ebb765aaa752, type: 3}
 --- !u!114 &1881654229 stripped

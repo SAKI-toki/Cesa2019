@@ -84,7 +84,7 @@ public class Enemy : MonoBehaviour
     int RedStarCount = 0;
     int BlueStarCount = 0;
     int GreenStarCount = 0;
-    float Deth = 3;
+    float Deth = 5;
     float DethTime = 0;
     float StatusTime = 0;
 
@@ -200,7 +200,7 @@ public class Enemy : MonoBehaviour
                 AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
                 if (stateInfo.IsName("death"))
                 {
-                    DethTime += Time.deltaTime;
+
                     if (Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
                     {
                         if (!BossEnemy) { EnemyStar(); }
@@ -210,7 +210,13 @@ public class Enemy : MonoBehaviour
                 }
             }
 
+            DethTime += Time.deltaTime;
             if (NonAnimator)//アニメーションが不具合起こしたよう
+            {
+
+            }
+
+            if (DethTime >= Deth)
             {
                 if (!BossEnemy) { EnemyStar(); }
                 else { BossEnemyStar(); }
