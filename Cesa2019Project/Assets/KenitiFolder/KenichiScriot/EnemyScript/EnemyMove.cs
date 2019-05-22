@@ -10,7 +10,7 @@ public class EnemyMove : MonoBehaviour
     float RotateHours = 0.1f;
 
     bool First = false;//一度だけ実行させる
-
+    bool WalkFlag = false;
 
     int RandomNumber = 0;//ランダムな数値を入れる
     int DerectionLow = 1;//ランダムの低値
@@ -74,10 +74,14 @@ public class EnemyMove : MonoBehaviour
         if (Enemy.MoveSwitch)
         {
             Enemy.Animator.SetBool("EnemyWalk", true);
+            Enemy.EnemySe.AudioSource.loop = true;
+            if (!WalkFlag) { Enemy.EnemySe.WalkSES(); WalkFlag = true; }
             transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime);
         }
         else
         {
+            Enemy.EnemySe.AudioSource.loop = false;
+            WalkFlag = false;
             Enemy.Animator.SetBool("EnemyWalk", false);
         }
     }
@@ -170,12 +174,12 @@ public class EnemyMove : MonoBehaviour
         if (AttackMotionFirst == false)//攻撃モーションを一度だけ実行
         {
             Enemy.Animator.SetTrigger("EnemyAttack");
-            Enemy.EnemySe.AttackSES();
             AttackMotionFirst = true;
         }
 
         if (AttackFirst == false && AttackTime >= Enemy.OutPutAttackDecision && Enemy.DamageFlag == false)
         {//敵の前にオブジェクト生成
+            Enemy.EnemySe.AttackSES();
             Vector3 position = transform.position + transform.up * Enemy.Offset.y +
             transform.right * Enemy.Offset.x +
             transform.forward * Enemy.Offset.z;

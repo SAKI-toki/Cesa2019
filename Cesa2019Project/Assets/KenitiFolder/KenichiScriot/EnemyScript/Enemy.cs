@@ -194,20 +194,23 @@ public class Enemy : MonoBehaviour
             Collider.enabled = false;
             GetRigidbody.isKinematic = true;
             ++ClearManager.EnemyDownNum;
-            Animator.SetTrigger("EnemyDown");
-            AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
-            if (stateInfo.IsName("death"))
+            if (!NonAnimator)
             {
-                DethTime += Time.deltaTime;
-                if (Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+                Animator.SetTrigger("EnemyDown");
+                AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
+                if (stateInfo.IsName("death"))
                 {
-                    if (!BossEnemy) { EnemyStar(); }
-                    else { BossEnemyStar(); }
-                    Destroy(this.gameObject);//敵の消滅
+                    DethTime += Time.deltaTime;
+                    if (Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+                    {
+                        if (!BossEnemy) { EnemyStar(); }
+                        else { BossEnemyStar(); }
+                        Destroy(this.gameObject);//敵の消滅
+                    }
                 }
             }
 
-            if (DethTime >= Deth)//アニメーションが不具合起こしたよう
+            if (NonAnimator)//アニメーションが不具合起こしたよう
             {
                 if (!BossEnemy) { EnemyStar(); }
                 else { BossEnemyStar(); }

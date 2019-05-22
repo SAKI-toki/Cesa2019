@@ -111,7 +111,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: e5e26bff2c9675e4d8b916d716e749cd, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 36fc85d0c288f574d8871b6d8aa03c6f, type: 2}
 --- !u!1001 &19139989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -201,12 +201,12 @@ PrefabInstance:
     - target: {fileID: 227150470267684083, guid: 92209a435e2864f49be1df6af3ffc677,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 227150470267684083, guid: 92209a435e2864f49be1df6af3ffc677,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 227150470267684083, guid: 92209a435e2864f49be1df6af3ffc677,
         type: 3}
@@ -341,11 +341,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CommonGameObject
       objectReference: {fileID: 0}
-    - target: {fileID: 7289034513233265081, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: StarPlaceController
-      value: 
-      objectReference: {fileID: 7716171567595150785}
     - target: {fileID: 3688123995375410246, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -431,6 +426,11 @@ PrefabInstance:
       propertyPath: StarParentObject
       value: 
       objectReference: {fileID: 3571316529622452973}
+    - target: {fileID: 7289034513233265081, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: StarPlaceController
+      value: 
+      objectReference: {fileID: 7716171567595150785}
     - target: {fileID: 7653201727258992600, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: StarPlaceController
@@ -651,6 +651,46 @@ PrefabInstance:
       propertyPath: IsAwakeSet
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7428414709695803034, guid: 61027acec9fd44f48b87efdade749d84,
+        type: 3}
+      propertyPath: Waves.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7428414709695803034, guid: 61027acec9fd44f48b87efdade749d84,
+        type: 3}
+      propertyPath: BossWave
+      value: 
+      objectReference: {fileID: 4949537440814294914, guid: 25a4ad64cbec7f440b59e5e83e0d7545,
+        type: 3}
+    - target: {fileID: 7428414709695803034, guid: 61027acec9fd44f48b87efdade749d84,
+        type: 3}
+      propertyPath: Waves.Array.data[0]
+      value: 
+      objectReference: {fileID: 9081971645026120712, guid: 4b3602471935215488e86168a8e5dc5b,
+        type: 3}
+    - target: {fileID: 7428414709695803034, guid: 61027acec9fd44f48b87efdade749d84,
+        type: 3}
+      propertyPath: Waves.Array.data[1]
+      value: 
+      objectReference: {fileID: 8924464621905255390, guid: 934a36549aaf48f4ab5d68a16a63aac9,
+        type: 3}
+    - target: {fileID: 7428414709695803034, guid: 61027acec9fd44f48b87efdade749d84,
+        type: 3}
+      propertyPath: Waves.Array.data[2]
+      value: 
+      objectReference: {fileID: 5094092717097367906, guid: cf11027aa7c8ad7459b46d75aed45db5,
+        type: 3}
+    - target: {fileID: 7428414709695803034, guid: 61027acec9fd44f48b87efdade749d84,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7428414709695803034, guid: 61027acec9fd44f48b87efdade749d84,
+        type: 3}
+      propertyPath: Waves.Array.data[3]
+      value: 
+      objectReference: {fileID: 5568719309261260098, guid: d0f426a6de57bef4a8032e779c333fdb,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61027acec9fd44f48b87efdade749d84, type: 3}
 --- !u!114 &7716171567595150785 stripped

@@ -12,7 +12,6 @@ public class OphiuchusEnemt : MonoBehaviour
     bool WaveStop = false;
     int CurrentWave = 0;
     GameObject Wave = null;
-    GameObject Wave2 = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,8 +43,6 @@ public class OphiuchusEnemt : MonoBehaviour
         // Waveを作成する
         Wave = (GameObject)Instantiate(Waves[CurrentWave], transform.position, Quaternion.identity);
         CurrentWave++;
-        //Wave2 = (GameObject)Instantiate(Waves[CurrentWave], transform.position, Quaternion.identity);
-        //CurrentWave++;
         WaveStop = true;
     }
 }
