@@ -200,7 +200,6 @@ public class Enemy : MonoBehaviour
             ReceivedDamage = true;
             Collider.enabled = false;
             GetRigidbody.isKinematic = true;
-            ++ClearManager.EnemyDownNum;
             if (!NonAnimator)
             {
                 Animator.SetTrigger("EnemyDown");
@@ -212,6 +211,7 @@ public class Enemy : MonoBehaviour
                     {
                         if (!BossEnemy) { EnemyStar(); }
                         else { BossEnemyStar(); }
+                        ++ClearManager.EnemyDownNum;
                         Destroy(this.gameObject);//敵の消滅
                     }
                 }
@@ -220,13 +220,17 @@ public class Enemy : MonoBehaviour
             DethTime += Time.deltaTime;
             if (NonAnimator)//アニメーションが不具合起こしたよう
             {
-
+                if (!BossEnemy) { EnemyStar(); }
+                else { BossEnemyStar(); }
+                ++ClearManager.EnemyDownNum;
+                Destroy(this.gameObject);//敵の消滅
             }
 
             if (DethTime >= Deth)
             {
                 if (!BossEnemy) { EnemyStar(); }
                 else { BossEnemyStar(); }
+                ++ClearManager.EnemyDownNum;
                 Destroy(this.gameObject);//敵の消滅
             }
         }
