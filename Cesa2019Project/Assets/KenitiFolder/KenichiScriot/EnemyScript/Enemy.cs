@@ -169,7 +169,12 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (this.transform.childCount == 0)
+        if (StarPlaceManager.AllPlaceSet)
+        {
+            Destroy(this.gameObject);
+        }
+
+        if (this.transform.childCount == 0 || this.transform.position.y <= -5)
         {
             Destroy(this.gameObject);
         }
