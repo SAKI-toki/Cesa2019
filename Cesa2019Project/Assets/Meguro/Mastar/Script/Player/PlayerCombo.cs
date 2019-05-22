@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// プレイヤーコンボの処理
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 public class PlayerCombo : MonoBehaviour
 {
     [SerializeField]
-    Text ComboText = null;             // コンボ数を表示するテキスト
+    TextMeshProUGUI ComboText = null;             // コンボ数を表示するテキスト
     [SerializeField, Header("コンボが途切れる時間")]
     float ComboTime = 4;
     float CurrentComboTime;     // 攻撃が当たってからの時間

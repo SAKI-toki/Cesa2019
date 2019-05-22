@@ -89,10 +89,10 @@ public class Pause : MonoBehaviour
                     }
                     break;
             }
-        }
 
-        Clear.SelectStick(Back, StageSelect);
-        Clear.SelectKeyInput(Back, StageSelect);
+            Clear.SelectStick(Back, StageSelect);
+            Clear.SelectKeyInput(Back, StageSelect);
+        }
 
         //ステータステキスト
         HpText.text = "HP:" + Player.PlayerStatus.CurrentHp;
