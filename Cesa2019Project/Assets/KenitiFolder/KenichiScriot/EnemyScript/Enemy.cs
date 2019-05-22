@@ -173,15 +173,15 @@ public class Enemy : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        if (this.transform.childCount == 0)
+
+        if (this.transform.childCount == 0 || this.transform.position.y <= -5)
         {
             Destroy(this.gameObject);
         }
 
         if (Time.timeScale == 0 || Bullet == true)
         {
-            if (EnemySe)
-                EnemySe.Stop();
+            EnemySe.Stop();
             return;
         }
         EnemyAbnormalState.Abnormal(ref EnemyStatus.CurrentHp);
@@ -199,6 +199,7 @@ public class Enemy : MonoBehaviour
             ReceivedDamage = true;
             Collider.enabled = false;
             GetRigidbody.isKinematic = true;
+            ++ClearManager.EnemyDownNum;
             if (!NonAnimator)
             {
                 Animator.SetTrigger("EnemyDown");
@@ -210,7 +211,6 @@ public class Enemy : MonoBehaviour
                     {
                         if (!BossEnemy) { EnemyStar(); }
                         else { BossEnemyStar(); }
-                        ++ClearManager.EnemyDownNum;
                         Destroy(this.gameObject);//敵の消滅
                     }
                 }
@@ -269,8 +269,7 @@ public class Enemy : MonoBehaviour
                 ++Player.PlayerCombo.CurrentComboNum;
                 EnemyStatus.CurrentHp -= Status.Damage(Player.PlayerStatus.CurrentAttack, EnemyStatus.CurrentDefense);//HPを減らす
                 AttackCount++;
-                if (EnemySe)
-                    EnemySe.DamageSES();
+                EnemySe.DamageSES();
                 transform.Translate(0, 0, -KnockBackMove);
             }
 
