@@ -11,7 +11,7 @@ public class PlayerDash : IPlayerState
     {
         player.PlayerAnimator.SetBool("DashFlg", true);
         player.PlayerAudio.AudioPlay(player.PlayerAudio.DashAudio);
-        player.PlayerAudio.PlayerAudioSource.loop = true;
+        player.PlayerAudio.AudioLoop(true);
     }
 
     IPlayerState IPlayerState.Update(Player player)
@@ -58,7 +58,7 @@ public class PlayerDash : IPlayerState
     void IPlayerState.Destroy(Player player)
     {
         player.PlayerAnimator.SetBool("DashFlg", false);
-        player.PlayerAudio.PlayerAudioSource.loop = false;
+        player.PlayerAudio.AudioLoop(false);
     }
 
     void PlayerMove(Player player)

@@ -5,7 +5,7 @@ using UnityEngine;
 public class StickInput : MonoBehaviour
 {
     static float LStick;
-    static bool StickFlg = false;
+    //static bool StickFlg = false;
 
     /// <summary>
     /// スティック選択

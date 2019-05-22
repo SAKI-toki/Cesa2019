@@ -30,20 +30,20 @@ public class LibraEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GetEnemy.ReceivedDamage == false && GetEnemy.AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
+        if (GetEnemy.ReceivedDamage == false && GetEnemy.AttackEnemy == false && !GetEnemy.DestroyFlag)//ダメージを受けたら動かない,攻撃中も動かない
         {
             Following();
 
             LiblaMove();
             BulletTime += Time.deltaTime;
-            if(BulletTime>=2)
+            if (BulletTime >= 2)
             {
                 BulletTime2 += Time.deltaTime;
-                if(BulletTime2>=1.5)
+                if (BulletTime2 >= 1.5)
                 {
                     BulletGenerate();
                     BulletCount++;
-                    if (BulletCount >= 3) { BulletTime = 0;BulletTime2 = 0; };
+                    if (BulletCount >= 3) { BulletTime = 0; BulletTime2 = 0; };
                     BulletTime2 = 0;
                 }
             }

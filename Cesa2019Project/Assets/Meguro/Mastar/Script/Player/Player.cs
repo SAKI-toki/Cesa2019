@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     [System.NonSerialized]
     public PlayerAudio PlayerAudio;
     [SerializeField]
-    Pause Pause;
+    Pause Pause = null;
 
     [System.NonSerialized]
     public float ContactNormalY;// 着地時の接地面の法線ベクトル
@@ -43,6 +43,8 @@ public class Player : MonoBehaviour
     public bool DamegFlg;
     [System.NonSerialized]
     public bool DeathFlg;
+    int StopTime;
+    bool StopFlg;
 
     void Awake()
     {
@@ -59,6 +61,8 @@ public class Player : MonoBehaviour
             PlayerStatusData.Speed,
             PlayerStatusData.Stamina);
         CurrentState.Init(this);
+        StopTime = 0;
+        StopFlg = false;
     }
 
     private void Start()
@@ -68,11 +72,21 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (StarPlaceManager.StarSelect) { return; }
-        if (Pause.GetPauseFlg()) { return; }
-        if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) < 1)
+        if (StarPlaceManager.StarSelect) { PlayerStop(); return; }
+        if (Pause.GetPauseFlg()) { PlayerStop(); return; }
+        if (StopFlg)
         {
-            HaveStarManager.AddBigStar(HaveStarManager.StarColorEnum.Red);
+            if (StopTime < 1)
+            {
+                ++StopTime;
+                return;
+            }
+            else
+            {
+                StopTime = 0;
+                StopFlg = false;
+                PlayerAudio.AudioPauseStart();
+            }
         }
         Controller.Update();
         PlayerAnimatorStateInfo = PlayerAnimator.GetCurrentAnimatorStateInfo(0);
@@ -91,7 +105,8 @@ public class Player : MonoBehaviour
     {
         foreach (ContactPoint contact in collision.contacts)
         {
-            if (contact.normal.y > 0.1f && contact.normal.y <= 1)
+            Debug.Log(contact.normal.y);
+            if (contact.normal.y > 0.3f && contact.normal.y <= 1.1f)
             {
                 MoveJump = false;
             }
@@ -154,5 +169,14 @@ public class Player : MonoBehaviour
         dir = Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized;
         Quaternion playerRotation = Quaternion.LookRotation(dir);
         transform.rotation = Quaternion.Slerp(transform.rotation, playerRotation, PlayerStatusData.RoteVal);
+    }
+
+    void PlayerStop()
+    {
+        if (!StopFlg)
+        {
+            PlayerAudio.AudioPause();
+            StopFlg = true;
+        }
     }
 }

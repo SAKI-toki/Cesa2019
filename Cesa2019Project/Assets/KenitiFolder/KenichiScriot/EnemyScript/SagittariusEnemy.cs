@@ -39,7 +39,7 @@ public class SagittariusEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GetEnemy.ReceivedDamage == false && GetEnemy.AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
+        if (GetEnemy.ReceivedDamage == false && GetEnemy.AttackEnemy == false && !GetEnemy.DestroyFlag)//ダメージを受けたら動かない,攻撃中も動かない
         {
             Following();
             Attack();

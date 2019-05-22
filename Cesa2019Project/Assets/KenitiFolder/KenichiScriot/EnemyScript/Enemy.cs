@@ -74,17 +74,19 @@ public class Enemy : MonoBehaviour
     public Vector3 Offset = new Vector3();
     [SerializeField, Header("AttackPrefabを入れる")]
     public GameObject AttackPrefab = null;
+
     HitStopManager HitStop = null;
 
     int StarRandom = 0;
-    int StarCount = 5;
+    int StarCount = 20;
     int AttackCount = 0;
     int StatusUpCount = 1;
     int RedStarCount = 0;
     int BlueStarCount = 0;
     int GreenStarCount = 0;
-    int StatusUpNum = 1;
-
+    float Deth = 3;
+    float DethTime = 0;
+    float StatusTime = 0;
 
     [SerializeField]
     public bool DamageFlag = false;//ダメージを受けたか
@@ -125,12 +127,21 @@ public class Enemy : MonoBehaviour
     public Player Player;
     StarMove StarMove = null;
     Rigidbody GetRigidbody = null;
+    Collider Collider = null;
+    Color Col;
 
     /// <summary>
     /// 数値初期化
     /// </summary>
     void Start()
     {
+        StarPlace = GameObject.Find("StarPlaceManager");
+        StarPlaceManager = StarPlace.GetComponent<StarPlaceManager>();
+        while (StatusUpCount <= StarPlaceManager.StarNum)
+        {
+            BuffHp();
+            StatusUpCount++;
+        }
         Player = GameObject.Find("Player").GetComponent<Player>();
         EnemyStatus.Hp = EnemyHp;
         EnemyStatus.CurrentHp = EnemyHp;
@@ -145,10 +156,9 @@ public class Enemy : MonoBehaviour
         NearObj = SearchTag(gameObject, "Player");//プレイヤーのオブジェクトを取得  
         EnemySe = this.GetComponent<EnemySe>();
         GetRigidbody = GetComponent<Rigidbody>();
-        StarPlace = GameObject.Find("StarPlaceManager");
-        StarPlaceManager = StarPlace.GetComponent<StarPlaceManager>();
         EnemyAbnormalState.Init(5, 10, 1, 5);
         HitStop = GameObject.Find("HitStopManager").GetComponent<HitStopManager>();
+        Collider = GetComponent<BoxCollider>();
     }
 
     // Update is called once per frame
@@ -169,18 +179,40 @@ public class Enemy : MonoBehaviour
             return;
         }
         EnemyAbnormalState.Abnormal(ref EnemyStatus.CurrentHp);
+        StatusTime += Time.deltaTime;
         EnemyTime += Time.deltaTime;
         BossTime += Time.deltaTime;
         //敵とプレイヤーの距離差
         PlayerRangeDifference = Vector3.Distance(NearObj.transform.position, this.transform.position);
 
-        if (EnemyStatus.CurrentHp <= 0 || EnemyHp <= 0)
+
+        if (EnemyStatus.CurrentHp <= 0 || EnemyHp <= 0)///HPが0になった時
         {
-            ++ClearManager.EnemyDownNum;
-            if (BossEnemy == false) { EnemyStar(); }
-            if (BossEnemy) { BossEnemyStar(); }
             DestroyFlag = true;
-            Destroy(this.gameObject);//敵の消滅
+            MoveSwitch = false;
+            ReceivedDamage = true;
+            Collider.enabled = false;
+            GetRigidbody.isKinematic = true;
+            ++ClearManager.EnemyDownNum;
+            Animator.SetTrigger("EnemyDown");
+            AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("death"))
+            {
+                DethTime += Time.deltaTime;
+                if (Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+                {
+                    if (!BossEnemy) { EnemyStar(); }
+                    else { BossEnemyStar(); }
+                    Destroy(this.gameObject);//敵の消滅
+                }
+            }
+
+            if (DethTime >= Deth)//アニメーションが不具合起こしたよう
+            {
+                if (!BossEnemy) { EnemyStar(); }
+                else { BossEnemyStar(); }
+                Destroy(this.gameObject);//敵の消滅
+            }
         }
 
         if (ReceivedDamage == true)//硬直時間の解除
@@ -195,12 +227,13 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        /*
-         * 毎フレーム実行しているためコメントアウト
-         * by 石山
-         */
-        //StatusUp();//ステータスアップ
-        //StatusDown();//ステータスダウン
+        if (StatusTime >= 0.5)
+        {
+            StatusUp();//ステータスアップ
+            StatusDown();//ステータスダウン
+            StatusTime = 0;
+        }
+
     }
 
     /// <summary>
@@ -241,7 +274,6 @@ public class Enemy : MonoBehaviour
 
             if (BossEnemy && AttackCount >= DamageCount && ReceivedDamage == false)
             {
-
                 DamageFlag = true;
                 EnemyTime = 0;
                 ReceivedDamage = true;/*敵を硬直させる*/
@@ -339,33 +371,18 @@ public class Enemy : MonoBehaviour
                 }
                 StatusUpCount++;
             }
-
-            while (StatusUpNum <= StarPlaceManager.StarNum)
-            {
-                BuffHp();
-                BuffDefence();
-                StatusUpNum++;
-            }
         }
         else
         {
             while (StatusUpCount <= StarPlaceManager.StarNum)
             {
                 BuffAttack();
-                BuffHp();
                 if (StatusUpCount % 2 == 0)
                 {
                     BuffDefence();
                     BuffMove();
                 }
                 StatusUpCount++;
-            }
-
-            while (StatusUpNum <= StarPlaceManager.StarNum)
-            {
-                BuffHp();
-                BuffAttack();
-                StatusUpNum++;
             }
         }
     }
@@ -443,6 +460,10 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void BuffMove()
     {
+        if (NonDirectAttack)
+        {
+            return;
+        }
         ZMove += MovePlus;
         if (ZMove >= MoveLimit) { ZMove = MoveLimit; }
     }

@@ -5,8 +5,6 @@
 /// </summary>
 public class TitleController : MonoBehaviour
 {
-    //二回目以降はタイトル画面を表示しないようにするためのフラグ
-    static bool AlreadyStart = false;
     [SerializeField, Header("カメラの制御")]
     CameraController SelectCameraController = null;
     [SerializeField, Header("セレクト用のカメラ")]
@@ -51,6 +49,7 @@ public class TitleController : MonoBehaviour
         Statefunc = FadeState;
         UpdateTitleLogoAlpha();
         FadeController.FadeIn();
+        Time.timeScale = 1.0f;
     }
     void Update()
     {
@@ -65,15 +64,7 @@ public class TitleController : MonoBehaviour
         //フェードが終了したらステート遷移
         if (!FadeController.IsFadeIn)
         {
-            if (AlreadyStart)
-            {
-                Statefunc = TranslationState;
-                TitleTextObject.SetActive(false);
-            }
-            else
-            {
-                Statefunc = TitleState;
-            }
+            Statefunc = TitleState;
         }
     }
 
@@ -85,7 +76,6 @@ public class TitleController : MonoBehaviour
         if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
         {
             Statefunc = TitleLogoFade;
-            AlreadyStart = true;
         }
     }
 

@@ -8,7 +8,7 @@ public class ClabEnemy : MonoBehaviour
     float CrabMoveChange = 5;
 
     bool CrabFirst = true;//移動速度を一度だけ上げる
-    int MoveDouble = 3;
+    int MoveDouble = 2;
     float MoveChange = 1;
     float ClabTime = 0;
     float CoolTime = 3;//離脱用
@@ -57,9 +57,9 @@ public class ClabEnemy : MonoBehaviour
             First = true; ClabTime = 0;
         }
 
-        if (First)
+        if (First && !Enemy.DestroyFlag)
         {
-            transform.Translate(0, 0, -5 * Time.deltaTime);
+            transform.Translate(0, 0, -Enemy.ZMove * Time.deltaTime / 5);
             if (ClabTime >= 5) { First = false; ClabTime = 0; }
         }
 
@@ -72,10 +72,13 @@ public class ClabEnemy : MonoBehaviour
 
         if (AttackOn == true) { Attack(); }
 
-        if (MoveChange == 1) { transform.position += transform.right * Enemy.ZMove * Time.deltaTime; }
-        else { transform.position -= transform.right * Enemy.ZMove * Time.deltaTime; }
+        if (MoveChange == 1 && !Enemy.ReceivedDamage && !Enemy.DestroyFlag)
+        { transform.position += transform.right * Enemy.ZMove * Time.deltaTime; }
+        else if (MoveChange == 2 && !Enemy.ReceivedDamage && !Enemy.DestroyFlag)
+        { transform.position -= transform.right * Enemy.ZMove * Time.deltaTime; }
+        else { }
 
-        if (Enemy.ReceivedDamage == false && Enemy.AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
+        if (Enemy.ReceivedDamage == false && Enemy.AttackEnemy == false && !Enemy.DestroyFlag)//ダメージを受けたら動かない,攻撃中も動かない
         {
             Enemy.Animator.SetBool("EnemyWalk", true);
             transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime / 10);

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 84609560274896326}
   - component: {fileID: 4804132836415684183}
   - component: {fileID: 5368296815864783221}
+  - component: {fileID: 6607268321511862389}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -106,6 +107,7 @@ MonoBehaviour:
   Offset: {x: 0, y: 1, z: 1.5}
   AttackPrefab: {fileID: 9027682551869182764, guid: 7115063cdc7c456419fba109e6139a06,
     type: 3}
+  EnemySMR: {fileID: 8621911355577884145}
   DamageFlag: 0
   ReceivedDamage: 0
   PlayerTracking: 0
@@ -128,7 +130,7 @@ MonoBehaviour:
   JampFlag: 0
   EnemySe: {fileID: 0}
   NoDamage: 0
-  PlayerController: {fileID: 690230701, guid: 93fd8a456c3e4ad44901bcde90d87ed2, type: 3}
+  Player: {fileID: 0}
 --- !u!114 &8296412475434932134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,6 +308,17 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!210 &6607268321511862389
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4081583563110409488}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 2
 --- !u!1001 &1165877952183469733
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -539,6 +552,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: zako
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
+      propertyPath: m_Bones.Array.data[0]
+      value: 
+      objectReference: {fileID: 8621911355591970005}
+    - target: {fileID: 13700000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
+      propertyPath: m_Bones.Array.data[1]
+      value: 
+      objectReference: {fileID: 8621911355591970007}
+    - target: {fileID: 13700000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
+      propertyPath: m_RootBone
+      value: 
+      objectReference: {fileID: 8621911355591970005}
+    - target: {fileID: 13700000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3b0fc0bc076a26a43872231c822f7b60, type: 2}
     - target: {fileID: 400000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -595,23 +624,17 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 13700000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
-      propertyPath: m_Bones.Array.data[0]
-      value: 
-      objectReference: {fileID: 8621911355591970005}
-    - target: {fileID: 13700000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
-      propertyPath: m_Bones.Array.data[1]
-      value: 
-      objectReference: {fileID: 8621911355591970007}
-    - target: {fileID: 13700000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
-      propertyPath: m_RootBone
-      value: 
-      objectReference: {fileID: 8621911355591970005}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
 --- !u!4 &8621911355591970001 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 7f069214c35182e4697d88ead254cd37,
+    type: 3}
+  m_PrefabInstance: {fileID: 8621911355591579217}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &8621911355577884145 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13700000, guid: 7f069214c35182e4697d88ead254cd37,
     type: 3}
   m_PrefabInstance: {fileID: 8621911355591579217}
   m_PrefabAsset: {fileID: 0}

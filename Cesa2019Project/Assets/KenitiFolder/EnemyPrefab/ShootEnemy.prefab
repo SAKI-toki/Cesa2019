@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 5791514611522525712}
   - component: {fileID: 6025604451393318367}
   - component: {fileID: 850104169620976972}
+  - component: {fileID: 8630041652895895640}
   m_Layer: 0
   m_Name: ShootEnemy
   m_TagString: Untagged
@@ -128,7 +129,7 @@ MonoBehaviour:
   JampFlag: 0
   EnemySe: {fileID: 0}
   NoDamage: 0
-  PlayerController: {fileID: 0}
+  Player: {fileID: 0}
 --- !u!114 &477946625193459649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,10 +159,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemy: {fileID: 5606006049320481679}
   Bullet: {fileID: 8007724781779347628, guid: 33dce22f8f3bfdb49bd26b6dbe43fd74, type: 3}
-  BulletGenelateTime: 5
-  HighPlus: {x: 0.5, y: 1.2, z: 0}
+  BulletGenelateTime: 10
+  HighPlus: {x: 0, y: 1.2, z: 0}
   WayBullet: 1
-  BulletInterval: 10
+  BulletInterval: 30
 --- !u!65 &5606006049320481715
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -324,6 +325,17 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!210 &8630041652895895640
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5606006049320481678}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 2
 --- !u!1001 &86866218894624717
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -466,6 +478,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3b0fc0bc076a26a43872231c822f7b60, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
 --- !u!4 &4672365755303433491 stripped

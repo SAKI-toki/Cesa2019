@@ -11,7 +11,6 @@ public class ClearManager : MonoBehaviour
     float StartAttack = 0;
     float StartDefense = 0;
     float StartSpeed = 0;
-    float AnimationTime = 0;
     public static int EnemyDownNum = 0;
     [SerializeField, Header("チュートリアルならチェック")]
     bool TutorialFlg = false;
@@ -48,6 +47,8 @@ public class ClearManager : MonoBehaviour
     TextMeshProUGUI EvaluationText = null;
     [SerializeField]
     TextMeshProUGUI NextStageText = null;
+    [SerializeField]
+    TextMeshProUGUI StageSelectText = null;
     //次ステージUI
     [SerializeField]
     Image NextButton = null;
@@ -83,18 +84,19 @@ public class ClearManager : MonoBehaviour
     bool TextFadeOutFlg = false;
     bool TransitionFlg = false;
 
+    bool StickFlg;
+    float LStick;
+    int NextStage;
+    int StageSelect;
+    int Carsor;
+
     float ClearEffectTime = 8;
     float CurrentClearEffectTime = 0;
     float CurrentTime;
+    float AnimationTime = 0;
 
     [SerializeField]
     GameObject ClearEffect;
-
-    bool StickFlg;
-    float LStick;
-    int Carsor;
-    int NextStage;
-    int StageSelect;
 
     int SceneNumber;
     string SceneName;
@@ -137,7 +139,6 @@ public class ClearManager : MonoBehaviour
         PosX = 120.0f;
         PosY1 = 0.0f;
         PosY2 = -70.0f;
-        CurrentTime = 0;
     }
     void Update()
     {
@@ -165,7 +166,7 @@ public class ClearManager : MonoBehaviour
                     ClearMoveFlg = true;
                     Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward.normalized, new Vector3(1, 0, 1));
 
-                    Instantiate(ClearEffect, Camera.main.transform.position + cameraForward * 30 + new Vector3(0, 9, 0), ClearEffect.transform.rotation);
+                    Instantiate(ClearEffect, Camera.main.transform.position + cameraForward * 35 + new Vector3(0, 9, 0), ClearEffect.transform.rotation);
                 }
             }
             if (ClearMoveFlg && !ClearEffectFlg)
@@ -407,7 +408,7 @@ public class ClearManager : MonoBehaviour
     /// <summary>
     /// スティック選択
     /// </summary>
-    void SelectStick()
+    public void SelectStick()
     {
         LStick = Input.GetAxis("L_Stick_V");
         if (LStick == 0)
@@ -436,33 +437,38 @@ public class ClearManager : MonoBehaviour
         }
     }
 
-    void TextAlphaZero(TextMeshProUGUI text)
+    public void TextAlphaZero(TextMeshProUGUI text)
     {
         text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
     }
 
-    void ImageAlphaZero(Image image)
+    public void ImageAlphaZero(Image image)
     {
         image.color = new Color(image.color.r, image.color.g, image.color.b, 0);
     }
 
-    void TextFadeIn(TextMeshProUGUI text, float speed)
+    public void TextFadeIn(TextMeshProUGUI text, float speed)
     {
         text.color = new Color(text.color.r, text.color.g, text.color.b, text.color.a + speed);
     }
 
-    void TextFadeOut(TextMeshProUGUI text, float speed)
+    public void TextFadeOut(TextMeshProUGUI text, float speed)
     {
         text.color = new Color(text.color.r, text.color.g, text.color.b, text.color.a - speed);
     }
 
-    void ImageFadeIn(Image image, float speed)
+    public void ImageFadeIn(Image image, float speed)
     {
         image.color = new Color(image.color.r, image.color.g, image.color.b, image.color.a + speed);
     }
 
-    void ImageFadeOut(Image image, float speed)
+    public void ImageFadeOut(Image image, float speed)
     {
         image.color = new Color(image.color.r, image.color.g, image.color.b, image.color.a - speed);
+    }
+
+    public int GetCarsor()
+    {
+        return Carsor;
     }
 }

@@ -22,6 +22,7 @@ public class SelectPlayerCollisionController : MonoBehaviour
         if (Time.timeScale == 0.0f) return;
         //テキストが表示され、決定ボタンを押したらシーン遷移
         if (SeasonText.enabled &&
+        SelectSceneObjectManager.SeasonUnlock[(int)CurrentCollisionSeason] &&
          (Input.GetKeyDown("joystick button 1") ||
           Input.GetKeyDown(KeyCode.Return)))
         {
@@ -58,23 +59,27 @@ public class SelectPlayerCollisionController : MonoBehaviour
             SeasonText.enabled = true;
             CurrentCollisionSeason = seasonComponent.ThisSeason;
             string seasonName = "???";
-            switch (seasonComponent.ThisSeason)
+            if (SelectSceneObjectManager.SeasonUnlock[(int)CurrentCollisionSeason])
             {
-                case SelectSeasonInfo.Season.Spring:
-                    seasonName = "春";
-                    break;
-                case SelectSeasonInfo.Season.Summer:
-                    seasonName = "夏";
-                    break;
-                case SelectSeasonInfo.Season.Autumn:
-                    seasonName = "秋";
-                    break;
-                case SelectSeasonInfo.Season.Winter:
-                    seasonName = "冬";
-                    break;
-                case SelectSeasonInfo.Season.Extra:
-                    seasonName = "エクストラ";
-                    break;
+                switch (seasonComponent.ThisSeason)
+                {
+                    case SelectSeasonInfo.Season.Spring:
+                        seasonName = "春";
+                        break;
+                    case SelectSeasonInfo.Season.Summer:
+                        seasonName = "夏";
+                        break;
+                    case SelectSeasonInfo.Season.Autumn:
+                        seasonName = "秋";
+                        break;
+                    case SelectSeasonInfo.Season.Winter:
+                        seasonName = "冬";
+                        break;
+                    case SelectSeasonInfo.Season.Extra:
+                        seasonName = "エクストラ";
+                        break;
+                }
+
             }
             SeasonText.text = seasonName;
         }

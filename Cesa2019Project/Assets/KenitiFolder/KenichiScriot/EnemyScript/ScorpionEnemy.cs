@@ -41,6 +41,7 @@ public class ScorpionEnemy : MonoBehaviour
     {
         if (Enemy.ReceivedDamage == false
             && Enemy.AttackEnemy == false
+            && !Enemy.DestroyFlag
             )//ダメージを受けたら動かない,攻撃中も動かない,ジャンプ中も動かない
         {
             ScorpionMove();

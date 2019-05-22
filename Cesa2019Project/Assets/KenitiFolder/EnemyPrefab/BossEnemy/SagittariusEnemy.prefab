@@ -68,8 +68,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3297078937863699129}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 751c3e6ca01453d4085a136a21cc0ad9, type: 3}
+  m_Controller: {fileID: 9100000, guid: 031c6ce0044316943838ae55300f223e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -123,6 +123,7 @@ MonoBehaviour:
   MaxStarCount: 3
   Offset: {x: 0, y: 0, z: 0}
   AttackPrefab: {fileID: 0}
+  EnemySMR: {fileID: 1279564398933365944}
   DamageFlag: 0
   ReceivedDamage: 0
   PlayerTracking: 0
@@ -145,7 +146,7 @@ MonoBehaviour:
   JampFlag: 0
   EnemySe: {fileID: 7591194004831941478}
   NoDamage: 0
-  PlayerController: {fileID: 0}
+  Player: {fileID: 0}
 --- !u!114 &3297078937863699130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,6 +374,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 5a9e27516e10e364bb4ca557bd12014d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a731d7cb13fedc84384aad7101b98f63, type: 2}
     - target: {fileID: 13700002, guid: 5a9e27516e10e364bb4ca557bd12014d, type: 3}
       propertyPath: m_DynamicOccludee
       value: 1
@@ -386,6 +391,12 @@ PrefabInstance:
 --- !u!4 &1279564398930675096 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 5a9e27516e10e364bb4ca557bd12014d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1279564398930288408}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &1279564398933365944 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13700000, guid: 5a9e27516e10e364bb4ca557bd12014d,
     type: 3}
   m_PrefabInstance: {fileID: 1279564398930288408}
   m_PrefabAsset: {fileID: 0}

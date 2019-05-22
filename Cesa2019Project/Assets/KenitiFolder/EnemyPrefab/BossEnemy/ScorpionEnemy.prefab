@@ -123,8 +123,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3653071103684128264}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: c237153f6d7c38c4ab2b9dcff68da089, type: 3}
-  m_Controller: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 751c3e6ca01453d4085a136a21cc0ad9, type: 3}
+  m_Controller: {fileID: 9100000, guid: 031c6ce0044316943838ae55300f223e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -179,6 +179,7 @@ MonoBehaviour:
   Offset: {x: 0, y: 2, z: 4}
   AttackPrefab: {fileID: 2581146734678819022, guid: 7cea68b2a0403ea45aee778ca5361c20,
     type: 3}
+  EnemySMR: {fileID: 5899716793371511593}
   DamageFlag: 0
   ReceivedDamage: 0
   PlayerTracking: 0
@@ -201,7 +202,7 @@ MonoBehaviour:
   JampFlag: 0
   EnemySe: {fileID: 3653071103684128279}
   NoDamage: 0
-  PlayerController: {fileID: 0}
+  Player: {fileID: 0}
 --- !u!114 &3653071103684128278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,6 +507,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: sasori
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 4e717ac1bf597d84781758b4c47a0d33, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 920e21f8f62ed1f41a3758da6441bcf2, type: 2}
     - target: {fileID: 400016, guid: 4e717ac1bf597d84781758b4c47a0d33, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -567,6 +572,12 @@ PrefabInstance:
 --- !u!4 &5899716793375119897 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400016, guid: 4e717ac1bf597d84781758b4c47a0d33,
+    type: 3}
+  m_PrefabInstance: {fileID: 5899716793374720137}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &5899716793371511593 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13700000, guid: 4e717ac1bf597d84781758b4c47a0d33,
     type: 3}
   m_PrefabInstance: {fileID: 5899716793374720137}
   m_PrefabAsset: {fileID: 0}
