@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     [System.NonSerialized]
     public PlayerAudio PlayerAudio;
     [SerializeField]
-    Pause Pause;
+    Pause Pause = null;
 
     [System.NonSerialized]
     public float ContactNormalY;// 着地時の接地面の法線ベクトル

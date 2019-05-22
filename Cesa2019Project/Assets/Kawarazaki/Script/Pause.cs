@@ -38,8 +38,6 @@ public class Pause : MonoBehaviour
     const int StageSelect = 1;
     //スティック変数
     float LStick;
-    //スティックフラグ
-    bool StickFlg = false;
 
     bool PauseFlg = false;
 

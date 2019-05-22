@@ -88,7 +88,7 @@ public class ClearManager : MonoBehaviour
     float CurrentTime;
 
     [SerializeField]
-    GameObject ClearEffect;
+    GameObject ClearEffect = null;
 
     bool StickFlg;
     float LStick;
