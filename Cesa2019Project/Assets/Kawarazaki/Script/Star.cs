@@ -9,30 +9,6 @@ using TMPro;
 /// </summary>
 public class Star : MonoBehaviour
 {
-    ////小さい星のテキスト(緑)
-    //[SerializeField]
-    //private TextMeshProUGUI LittleStarGreenText = null;
-    ////大きい星のテキスト(緑)
-    //[SerializeField]
-    //private TextMeshProUGUI BigStarGreenText = null;
-
-    ////小さい星のテキスト(赤)
-    //[SerializeField]
-    //private TextMeshProUGUI LittleStarRedText = null;
-    ////大きい星のテキスト(赤)
-    //[SerializeField]
-    //private TextMeshProUGUI BigStarRedText = null;
-
-    ////小さい星のテキスト(青)
-    //[SerializeField]
-    //private TextMeshProUGUI LittleStarBlueText = null;
-    ////大きい星のテキスト(青)
-    //[SerializeField]
-    //private TextMeshProUGUI BigStarBlueText = null;
-
-    //const string LittleString = "Little:";
-    //const string BigString = "Big:";
-
     //座標(Big)
     //X
     [SerializeField]
@@ -69,14 +45,6 @@ public class Star : MonoBehaviour
     List<GameObject> BlueStarList = new List<GameObject>();
     List<GameObject> GreenStarList = new List<GameObject>();
 
-    ////星（Little）
-    //[SerializeField]
-    //GameObject[] RedLittleStar = new GameObject[5];
-    //[SerializeField]
-    //GameObject[] BlueLittleStar = new GameObject[5];
-    //[SerializeField]
-    //GameObject[] GreenLittleStar = new GameObject[5];
-
     //1フレーム前の星の数を格納(BIG)
     int[] PrevStarBigNum = new int[(int)(HaveStarManager.StarColorEnum.None)];
 
@@ -95,8 +63,9 @@ public class Star : MonoBehaviour
 
     void Update()
     {
+        //デバッグ
 #if UNITY_EDITOR
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             HaveStarManager.AddLittleStar(HaveStarManager.StarColorEnum.Red);
         }
@@ -112,25 +81,6 @@ public class Star : MonoBehaviour
         UpdatePrevStarLittle();
         UpdatePrevStarBig();
     }
-
-    //void FixedUpdate()
-    //{
-    //    LittleStarGreenText.text = LittleString +
-    //        HaveStarManager.GetLittleStar(HaveStarManager.StarColorEnum.Green).ToString("00");
-    //    BigStarGreenText.text = BigString +
-    //        HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Green).ToString("00");
-
-    //    LittleStarRedText.text = LittleString +
-    //        HaveStarManager.GetLittleStar(HaveStarManager.StarColorEnum.Red).ToString("00");
-    //    BigStarRedText.text = BigString +
-    //        HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red).ToString("00");
-
-    //    LittleStarBlueText.text = LittleString +
-    //        HaveStarManager.GetLittleStar(HaveStarManager.StarColorEnum.Blue).ToString("00");
-    //    BigStarBlueText.text = BigString +
-    //        HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue).ToString("00");
-    //}
-
     /// <summary>
     /// 小さい星の増加
     /// </summary>
@@ -151,22 +101,22 @@ public class Star : MonoBehaviour
                 break;
         }
     }
-        //小さい星の換算
-        public void ConversionLittleStarUi(HaveStarManager.StarColorEnum starColor)
+    //小さい星の換算
+    public void ConversionLittleStarUi(HaveStarManager.StarColorEnum starColor)
+    {
+        switch (starColor)
         {
-            switch (starColor)
-            {
-                case HaveStarManager.StarColorEnum.Red:
-                    RedLittleStar.fillAmount = 0.0f;
-                    break;
-                case HaveStarManager.StarColorEnum.Blue:
-                    BlueLittleStar.fillAmount = 0.0f;
-                    break;
-                case HaveStarManager.StarColorEnum.Green:
-                    GreenLittleStar.fillAmount = 0.0f;
-                    break;
-            }
+            case HaveStarManager.StarColorEnum.Red:
+                RedLittleStar.fillAmount = 0.0f;
+                break;
+            case HaveStarManager.StarColorEnum.Blue:
+                BlueLittleStar.fillAmount = 0.0f;
+                break;
+            case HaveStarManager.StarColorEnum.Green:
+                GreenLittleStar.fillAmount = 0.0f;
+                break;
         }
+    }
 
     /// <summary>
     /// 大きい星の増加
@@ -239,11 +189,11 @@ public class Star : MonoBehaviour
             //数が違う場合
             if (PrevStarLittleNum[i] != currentStarNum)
             {
-                if(PrevStarLittleNum[i] < currentStarNum)
+                if (PrevStarLittleNum[i] < currentStarNum)
                 {
                     AddLittleStarUi((HaveStarManager.StarColorEnum)i);
                 }
-                
+
                 PrevStarLittleNum[i] = currentStarNum;
             }
 

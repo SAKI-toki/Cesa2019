@@ -71,9 +71,9 @@ public class Pause : MonoBehaviour
                     CarsorBlue.SetActive(false);
                     if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                     {
-                        PauseUi.SetActive(false);
                         //通常に戻す
                         ActiveChange();
+                        PauseUi.SetActive(false);
                     }
                     break;
                 //「ステージ」

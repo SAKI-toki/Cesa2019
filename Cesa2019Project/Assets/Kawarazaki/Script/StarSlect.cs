@@ -21,8 +21,8 @@ public class StarSlect : MonoBehaviour
 
 
     private int Select;
-    private int SelectMax;
-    private int SelectMin;
+    const int SelectMax = 2;
+    const int SelectMin = 0;
 
     //星の大きさ
     float StarScale = 1.0f;
@@ -36,9 +36,7 @@ public class StarSlect : MonoBehaviour
 
     void Start()
     {
-        Select = 0;
-        SelectMin = Select;
-        SelectMax = 2;
+        Select = SelectMin;
     }
 
     void Update()
@@ -133,12 +131,9 @@ public class StarSlect : MonoBehaviour
     /// </summary>
     void AddSelect()
     {
-        //if (SelectFlg)
-        //{
         ++Select;
         if (Select > SelectMax)
             Select = SelectMin;
-        //}
     }
 
     /// <summary>
@@ -146,12 +141,9 @@ public class StarSlect : MonoBehaviour
     /// </summary>
     void DecSelect()
     {
-        //if (SelectFlg)
-        //{
         --Select;
         if (Select < SelectMin)
             Select = SelectMax;
-        //}
     }
 
     /// <summary>
