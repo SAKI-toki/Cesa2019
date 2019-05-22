@@ -8,19 +8,20 @@ using TMPro;
 public class Pause : MonoBehaviour
 {
     [SerializeField]
+    ClearManager Clear = null;
+    [SerializeField]
+    private StarSlect Slect = null;
+    [SerializeField]
+    Player PlayerControll = null;
+
+    [SerializeField]
     private GameObject PauseUi = null;
     //カーソル
     [SerializeField]
     private GameObject CarsorRed = null;
     [SerializeField]
     private GameObject CarsorBlue = null;
-    [SerializeField]
-    private GameObject CarsorGreen = null;
 
-    [SerializeField]
-    private StarSlect Slect = null;
-    [SerializeField]
-    Player PlayerControll = null;
     //プレイヤーステータステキスト
     [SerializeField]
     TextMeshProUGUI HpText = null;
@@ -32,21 +33,15 @@ public class Pause : MonoBehaviour
     TextMeshProUGUI SpeedText = null;
 
     //変動するSelect変数　最大値、最小値
-    int Select, SelectMax, SelectMin;
+    //int Select;
+    const int Back = 0;
+    const int StageSelect = 1;
     //スティック変数
     float LStick;
     //スティックフラグ
     bool StickFlg = false;
 
     bool PauseFlg = false;
-
-
-    void Start()
-    {
-        Select = 0;
-        SelectMin = Select;
-        SelectMax = 2;
-    }
 
     void Update()
     {
@@ -69,12 +64,12 @@ public class Pause : MonoBehaviour
             }
         }
 
-        switch (Select)
+        switch (Clear.GetCarsor())
         {
             //「戻る」
-            case 0:
+            case Back:
                 CarsorRed.SetActive(true);
-                CarsorFalse(CarsorBlue, CarsorGreen);
+                CarsorBlue.SetActive(false);
                 if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
                     PauseUi.SetActive(false);
@@ -83,19 +78,9 @@ public class Pause : MonoBehaviour
                 }
                 break;
             //「ステージ」
-            case 1:
+            case StageSelect:
                 CarsorBlue.SetActive(true);
-                CarsorFalse(CarsorRed, CarsorGreen);
-                if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
-                {
-                    PauseUi.SetActive(false);
-                    FadeController.FadeOut("SelectScene");
-                }
-                break;
-            //「タイトル」
-            case 2:
-                CarsorGreen.SetActive(true);
-                CarsorFalse(CarsorBlue, CarsorRed);
+                CarsorRed.SetActive(false);
                 if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
                     PauseUi.SetActive(false);
@@ -103,74 +88,14 @@ public class Pause : MonoBehaviour
                 }
                 break;
         }
-        SelectStick();
-        //カーソルのポジション設定
-        //SelectCarsor.GetComponent<RectTransform>().localPosition = new Vector3(CarsorPosX, CarsorPosY, 1.0f);
+        Clear.SelectStick(Back, StageSelect);
+        Clear.SelectKeyInput(Back, StageSelect);
 
         //ステータステキスト
         HpText.text = "HP:" + Player.PlayerStatus.CurrentHp;
         AttackText.text = "ATTACK:" + Player.PlayerStatus.CurrentAttack;
         DefenseText.text = "DEFENCE:" + Player.PlayerStatus.CurrentDefense;
         SpeedText.text = "SPEED:" + Player.PlayerStatus.CurrentSpeed;
-    }
-    /// <summary>
-    /// スティック選択
-    /// </summary>
-    void SelectStick()
-    {
-        LStick = Input.GetAxis("L_Stick_V");
-        if (LStick == 0)
-        {
-            StickFlg = false;
-            return;
-        }
-        if (StickFlg)
-            return;
-        StickFlg = true;
-        //スティックを上に倒す処理
-        if (LStick > 0)
-        {
-            DecSelect();
-        }
-        //スティックを下に倒す処理
-        if (LStick < 0)
-        {
-            AddSelect();
-        }
-    }
-
-    /// <summary>
-    /// Select変数を加算
-    /// </summary>
-    void AddSelect()
-    {
-        if (PauseFlg) //ポーズを開いたときにSelect変数が加算される
-        {
-            ++Select;
-            if (Select > SelectMax)
-                Select = SelectMin;
-        }
-    }
-
-    /// <summary>
-    /// Select変数を減算
-    /// </summary>
-    void DecSelect()
-    {
-        if (PauseFlg)//ポーズを開いたときにSelect変数が減算される
-        {
-            {
-                --Select;
-                if (Select < SelectMin)
-                    Select = SelectMax;
-            }
-        }
-    }
-
-    void CarsorFalse(GameObject Carsor1, GameObject Carsor2)
-    {
-        Carsor1.SetActive(false);
-        Carsor2.SetActive(false);
     }
 
     /// <summary>

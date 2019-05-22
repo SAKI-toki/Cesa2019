@@ -131,6 +131,7 @@ public class DeathManager : MonoBehaviour
             if (SelectFlg)
             {
                 Clear.SelectStick(ReStart, StageSelect);
+                Clear.SelectKeyInput(ReStart, StageSelect);
                 switch (Clear.GetCarsor())
                 {
                     case ReStart:

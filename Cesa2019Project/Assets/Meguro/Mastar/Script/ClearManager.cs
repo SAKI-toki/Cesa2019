@@ -82,12 +82,12 @@ public class ClearManager : MonoBehaviour
     bool TextFadeOutFlg = false;
     bool TransitionFlg = false;
 
-    bool skipFlg = false;
     bool StickFlg;
     float LStick;
-    int NextStage;
-    int StageSelect;
     int Carsor;
+
+    const int NextStage = 0;
+    const int StageSelect = 1;
 
     int SceneNumber;
     string SceneName;
@@ -128,8 +128,6 @@ public class ClearManager : MonoBehaviour
         StartAttack = Player.PlayerStatus.Attack;
         StartDefense = Player.PlayerStatus.Defense;
         StartSpeed = Player.PlayerStatus.Speed;
-        NextStage = 0;
-        StageSelect = 1;
         Carsor = NextStage;
         SceneNumber = SceneManager.GetActiveScene().buildIndex;
         SceneName = SceneManager.GetActiveScene().name;
@@ -363,6 +361,7 @@ public class ClearManager : MonoBehaviour
                     //最終ステージ以外だったら次のステージかステージセレクトに遷移
                     default:
                         SelectStick(NextStage, StageSelect);
+                        SelectKeyInput(NextStage, StageSelect);
                         ImageFadeIn(NextStageImage, 0.05f);
                         ImageFadeIn(StageSelectImage, 0.05f);
                         TextFadeIn(NextStageText, 0.05f);
@@ -430,6 +429,25 @@ public class ClearManager : MonoBehaviour
         }
         //スティックを下に倒す処理
         if (LStick < 0)
+        {
+            if (Carsor == Bottom)
+                Carsor = Top;
+            else
+                Carsor = Bottom;
+        }
+    }
+
+    //キーボード入力
+    public void SelectKeyInput(int Top, int Bottom)
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (Carsor == Top)
+                Carsor = Bottom;
+            else
+                Carsor = Top;
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             if (Carsor == Bottom)
                 Carsor = Top;
