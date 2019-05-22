@@ -41,4 +41,9 @@ public class EnemySe : MonoBehaviour
         AudioSource.clip = WalkSE;
         AudioSource.Play();
     }
+
+    public void Stop()
+    {
+        AudioSource.Stop();
+    }
 }
