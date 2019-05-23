@@ -31,6 +31,8 @@ public class PisceBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GetEnemy.EnemyStatus.CurrentHp <= 0) { return; }
+
         if (GetEnemy.ReceivedDamage == false && GetEnemy.AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
         {
             PisceMove();

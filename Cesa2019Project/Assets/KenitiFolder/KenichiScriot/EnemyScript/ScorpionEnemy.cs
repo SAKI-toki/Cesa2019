@@ -39,6 +39,8 @@ public class ScorpionEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Enemy.EnemyStatus.CurrentHp <= 0) { return; }
+
         if (Enemy.ReceivedDamage == false
             && Enemy.AttackEnemy == false
             && !Enemy.DestroyFlag

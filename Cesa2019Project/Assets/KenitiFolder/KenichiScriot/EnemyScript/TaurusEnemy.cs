@@ -109,6 +109,8 @@ public class TaurusEnemy : MonoBehaviour
     /// </summary>
     void Attack()
     {
+        if (Enemy.EnemyStatus.CurrentHp <= 0) { return; }
+
         AttackTime += Time.deltaTime;
         Enemy.AttackEnemy = true;
         //Enemy.Animator.SetBool("EnemyWalk", false);
