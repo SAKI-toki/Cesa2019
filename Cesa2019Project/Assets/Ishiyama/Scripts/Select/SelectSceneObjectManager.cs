@@ -21,8 +21,6 @@ public class SelectSceneObjectManager : MonoBehaviour
     float Stick = 0.0f;
     bool Upflg = false;
     bool Downflg = false;
-    [SerializeField]
-    Vector3 Offset = new Vector3();
     bool LocalFlg = false;
     bool Decide = false;
     void Start()

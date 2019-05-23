@@ -107,7 +107,7 @@ public class ClearManager : MonoBehaviour
     [SerializeField]
     SelectSE SE = null;
 
-    bool ClearInitFlg = false;
+    //bool ClearInitFlg = false;
     bool ClearMoveFlg = false;
     bool ResultMoveFlg = false;
     bool ClearTextFlg = false;
@@ -170,7 +170,7 @@ public class ClearManager : MonoBehaviour
     }
     void Update()
     {
-        ClearInitFlg = true;
+        //ClearInitFlg = true;
 
         if (!StarPlaceManager.AllPlaceSet)
         {
