@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAttack3 : IPlayerState
 {
     // animation frame 24
-    float NextAttackStartTime = 0.708f;// 攻撃判定 0:15～0:16 17/24 = 0.7083...sec
+    float NextAttackStartTime = 0.625f;// 攻撃判定 0:13～0:14 15/24 = 0.625sec
     float AnimationTime;
     bool IsAttackEffect;
 
