@@ -11,7 +11,6 @@ public class ClearManager : MonoBehaviour
     float StartAttack = 0;
     float StartDefense = 0;
     float StartSpeed = 0;
-    float AnimationTime = 0;
     public static int EnemyDownNum = 0;
     [SerializeField, Header("チュートリアルならチェック")]
     bool TutorialFlg = false;
@@ -48,6 +47,8 @@ public class ClearManager : MonoBehaviour
     TextMeshProUGUI EvaluationText = null;
     [SerializeField]
     TextMeshProUGUI NextStageText = null;
+    [SerializeField]
+    TextMeshProUGUI StageSelectText = null;
     //次ステージUI
     [SerializeField]
     Image NextButton = null;
@@ -73,6 +74,8 @@ public class ClearManager : MonoBehaviour
     CameraController CameraScript = null;
     [SerializeField]
     Transform ClearPos = null;
+    //[SerializeField]
+    //SelectSE SE = null;
     bool ClearInitFlg = false;
     bool ClearEffectFlg = false;
     bool ClearAnimationFlg = false;
@@ -83,18 +86,19 @@ public class ClearManager : MonoBehaviour
     bool TextFadeOutFlg = false;
     bool TransitionFlg = false;
 
+    bool StickFlg;
+    float LStick;
+    int NextStage;
+    int StageSelect;
+    int Carsor;
+
     float ClearEffectTime = 8;
     float CurrentClearEffectTime = 0;
     float CurrentTime;
+    float AnimationTime = 0;
 
     [SerializeField]
-    GameObject ClearEffect = null;
-
-    bool StickFlg;
-    float LStick;
-    int Carsor;
-    int NextStage;
-    int StageSelect;
+    GameObject ClearEffect;
 
     int SceneNumber;
     string SceneName;
@@ -137,7 +141,6 @@ public class ClearManager : MonoBehaviour
         PosX = 120.0f;
         PosY1 = 0.0f;
         PosY2 = -70.0f;
-        CurrentTime = 0;
     }
     void Update()
     {
@@ -165,7 +168,7 @@ public class ClearManager : MonoBehaviour
                     ClearMoveFlg = true;
                     Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward.normalized, new Vector3(1, 0, 1));
 
-                    Instantiate(ClearEffect, Camera.main.transform.position + cameraForward * 30 + new Vector3(0, 9, 0), ClearEffect.transform.rotation);
+                    Instantiate(ClearEffect, Camera.main.transform.position + cameraForward * 35 + new Vector3(0, 9, 0), ClearEffect.transform.rotation);
                 }
             }
             if (ClearMoveFlg && !ClearEffectFlg)
@@ -347,15 +350,6 @@ public class ClearManager : MonoBehaviour
                     case "GameScene2-3":
                     case "GameScene3-3":
                     case "GameScene4-3":
-                    case "ExtraScene":
-                        for (int i = 1; i < 4; ++i)
-                        {
-                            string str = "GameScene" + i.ToString() + "-3";
-                            if (SceneName == str)
-                            {
-                                SelectSceneObjectManager.SeasonUnlock[i] = true;
-                            }
-                        }
                         StageSelectButton.gameObject.SetActive(true);
                         CarsorBlue.SetActive(true);
                         StageSelectButton.GetComponent<RectTransform>().localPosition = new Vector3(PosX, PosY1, 0);
@@ -474,6 +468,7 @@ public class ClearManager : MonoBehaviour
     {
         image.color = new Color(image.color.r, image.color.g, image.color.b, image.color.a - speed);
     }
+
     public int GetCarsor()
     {
         return Carsor;
@@ -496,23 +491,26 @@ public class ClearManager : MonoBehaviour
                 Carsor = Bottom;
             else
                 Carsor = Top;
-        }
-        //スティックを下に倒す処理
-        if (LStick < 0)
-        {
-            if (Carsor == Bottom)
-                Carsor = Top;
-            else
-                Carsor = Bottom;
+
         }
     }
-
-    //キーボード入力
     public void SelectKeyInput(int Top, int Bottom)
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-
+            //SE.Sel();
+            if (Carsor == Top)
+                Carsor = Bottom;
+            else
+                Carsor = Top;
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            //SE.Sel();
+            if (Carsor == Bottom)
+                Carsor = Top;
+            else
+                Carsor = Bottom;
         }
     }
 }

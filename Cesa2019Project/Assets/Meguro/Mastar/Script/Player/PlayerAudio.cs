@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PlayerAudio : MonoBehaviour
 {
-    [System.NonSerialized]
-    public AudioSource PlayerAudioSource;
+    AudioSource PlayerAudioSource;
     [SerializeField]
     public AudioClip JumpAudio;
     [SerializeField]
@@ -28,5 +27,19 @@ public class PlayerAudio : MonoBehaviour
     {
         PlayerAudioSource.clip = audioClip;
         PlayerAudioSource.Play();
+    }
+
+    public void AudioPauseStart()
+    {
+        PlayerAudioSource.Play();
+    }
+    public void AudioPause()
+    {
+        PlayerAudioSource.Pause();
+    }
+
+    public void AudioLoop(bool flg)
+    {
+        PlayerAudioSource.loop = flg;
     }
 }

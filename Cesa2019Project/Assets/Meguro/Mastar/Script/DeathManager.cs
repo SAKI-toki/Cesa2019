@@ -130,14 +130,13 @@ public class DeathManager : MonoBehaviour
             //リスタートとステージセレクトの選択とシーン遷移
             if (SelectFlg)
             {
-                Clear.SelectStick(ReStart, StageSelect);
-                Clear.SelectKeyInput(ReStart, StageSelect);
+                Clear.SelectStick();
                 switch (Clear.GetCarsor())
                 {
                     case ReStart:
                         CarsorRed.SetActive(true);
                         CarsorBlue.SetActive(false);
-                        if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
+                        if (Input.GetKeyDown("joystick button 1"))
                         {
                             /*=================================================*/
                             //遷移
@@ -151,7 +150,7 @@ public class DeathManager : MonoBehaviour
                     case StageSelect:
                         CarsorRed.SetActive(false);
                         CarsorBlue.SetActive(true);
-                        if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
+                        if (Input.GetKeyDown("joystick button 1"))
                         {
                             /*=================================================*/
                             //遷移

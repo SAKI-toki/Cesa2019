@@ -29,6 +29,8 @@ public class SelectSceneObjectManager : MonoBehaviour
     bool Decide = false;
     void Start()
     {
+        Select = false;
+
         Cursor.SetActive(false);
         for (int i = 0; i < 3; ++i)
         {
