@@ -166,272 +166,270 @@ public class ClearManager : MonoBehaviour
     }
     void Update()
     {
-        if (!ClearInitFlg)
+        ClearInitFlg = true;
+
+        if (!StarPlaceManager.AllPlaceSet)
         {
-            ClearInitFlg = true;
+            return;
+        }
+        //クリア画面の時ゲーム画面のActiveをfalse
+        UI.SetActive(false);
+        MiniMap.SetActive(false);
+
+        //カメラとプレイヤーの移動
+        if (!ClearMoveFlg)
+        {
+            CameraScript.ClearMoveInit();
+            CameraScript.ClearMove();
+            Vector3 dir = ClearPos.position - PlayerObj.transform.position;
+            //PlayerObj.GetComponent<Player>().Move(dir, 50);
+            float dis = Vector3.Distance(PlayerObj.transform.position, ClearPos.position);
+            if (dis < 1.0f) { ClearMoveFlg = true; }
         }
 
-        if (StarPlaceManager.AllPlaceSet)
+        //クリアテキストのフェードインと移動
+        if (ClearMoveFlg && !ClearTextFlg)
         {
-            //クリア画面の時ゲーム画面のActiveをfalse
-            UI.SetActive(false);
-            MiniMap.SetActive(false);
-
-            //カメラとプレイヤーの移動
-            if (!ClearMoveFlg)
+            if (CameraScript.Distance > 8)
             {
-                CameraScript.ClearMoveInit();
-                CameraScript.ClearMove();
-                Vector3 dir = ClearPos.position - PlayerObj.transform.position;
-                //PlayerObj.GetComponent<Player>().Move(dir, 50);
-                float dis = Vector3.Distance(PlayerObj.transform.position, ClearPos.position);
-                if (dis < 1.0f) { ClearMoveFlg = true; }
+                CameraScript.ZoomIn(0.1f);
             }
-
-            //クリアテキストのフェードインと移動
-            if (ClearMoveFlg && !ClearTextFlg)
+            else
             {
-                if (CameraScript.Distance > 8)
+                if (ClearText.color.a < 1)
                 {
-                    CameraScript.ZoomIn(0.1f);
+                    TextFadeIn(ClearText, 0.01f);
+                }
+                if (ClearText.rectTransform.localPosition.y > 0)
+                {
+                    ClearText.rectTransform.localPosition += new Vector3(0, -5, 0);
+                }
+
+                if (ClearText.color.a >= 1 && ClearText.rectTransform.localPosition.y <= 0)
+                {
+                    ClearTextFlg = true;
+                }
+            }
+        }
+        if (ClearTextFlg && !ResultMoveFlg)
+        {
+            if (ClearTextFlg)
+            {
+                TextFadeOut(ClearText, 0.01f);
+            }
+            float dis = Vector3.Distance(PlayerObj.transform.position, ClearPos.position);
+            if (dis < 3.5f)
+            {
+                Vector3 dir = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
+                dir = dir * -0.4f + Camera.main.transform.right * -1.0f;
+                //Player.GetComponent<Player>().Move(dir, 30);
+            }
+            else
+            {
+                Vector3 dir = Camera.main.transform.position - PlayerObj.transform.position;
+                //Player.GetComponent<Player>().Look(dir);
+                if (Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized == PlayerObj.transform.forward)
+                {
+                    ResultMoveFlg = true;
+                    HpNumText.text = StartHp + " > " + Player.PlayerStatus.Hp;
+                    AttackNumText.text = StartAttack + " > " + Player.PlayerStatus.Attack;
+                    DefenseNumText.text = StartDefense + " > " + Player.PlayerStatus.Defense;
+                    SpeedNumText.text = StartSpeed + " > " + Player.PlayerStatus.Speed;
+                }
+            }
+        }
+        //リザルト画面のフェードイン
+        if (ResultMoveFlg && !ResultTextFlg)
+        {
+            if (ResultPanel.color.a < 1)
+            {
+                ImageFadeIn(ResultPanel, 0.01f);
+            }
+            else
+            {
+                if (ResultText.color.a < 1)
+                {
+                    TextFadeIn(ResultText, 0.01f);
+                    TextFadeIn(HpText, 0.01f);
+                    TextFadeIn(AttackText, 0.01f);
+                    TextFadeIn(DefenseText, 0.01f);
+                    TextFadeIn(SpeedText, 0.01f);
+                    TextFadeIn(EnemyText, 0.01f);
                 }
                 else
                 {
-                    Debug.Log(true);
-                    if (ClearText.color.a < 1)
+                    TextFadeIn(HpNumText, 0.01f);
+                    TextFadeIn(AttackNumText, 0.01f);
+                    TextFadeIn(DefenseNumText, 0.01f);
+                    TextFadeIn(SpeedNumText, 0.01f);
+                    TextFadeIn(EnemyNumText, 0.01f);
+                    if (HpNumText.color.a >= 1)
                     {
-                        TextFadeIn(ClearText, 0.01f);
-                    }
-                    if (ClearText.rectTransform.localPosition.y > 0)
-                    {
-                        ClearText.rectTransform.localPosition += new Vector3(0, -5, 0);
-                    }
-
-                    if (ClearText.color.a >= 1 && ClearText.rectTransform.localPosition.y <= 0)
-                    {
-                        ClearTextFlg = true;
-                    }
-                }
-            }
-            if (ClearTextFlg && !ResultMoveFlg)
-            {
-                if (ClearTextFlg)
-                {
-                    TextFadeOut(ClearText, 0.01f);
-                }
-                float dis = Vector3.Distance(PlayerObj.transform.position, ClearPos.position);
-                if (dis < 3.5f)
-                {
-                    Vector3 dir = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
-                    dir = dir * -0.4f + Camera.main.transform.right * -1.0f;
-                    //Player.GetComponent<Player>().Move(dir, 30);
-                }
-                else
-                {
-                    Vector3 dir = Camera.main.transform.position - PlayerObj.transform.position;
-                    //Player.GetComponent<Player>().Look(dir);
-                    if (Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized == PlayerObj.transform.forward)
-                    {
-                        ResultMoveFlg = true;
-                        HpNumText.text = StartHp + " > " + Player.PlayerStatus.Hp;
-                        AttackNumText.text = StartAttack + " > " + Player.PlayerStatus.Attack;
-                        DefenseNumText.text = StartDefense + " > " + Player.PlayerStatus.Defense;
-                        SpeedNumText.text = StartSpeed + " > " + Player.PlayerStatus.Speed;
-                    }
-                }
-            }
-            //リザルト画面のフェードイン
-            if (ResultMoveFlg && !ResultTextFlg)
-            {
-                if (ResultPanel.color.a < 1)
-                {
-                    ImageFadeIn(ResultPanel, 0.01f);
-                }
-                else
-                {
-                    if (ResultText.color.a < 1)
-                    {
-                        TextFadeIn(ResultText, 0.01f);
-                        TextFadeIn(HpText, 0.01f);
-                        TextFadeIn(AttackText, 0.01f);
-                        TextFadeIn(DefenseText, 0.01f);
-                        TextFadeIn(SpeedText, 0.01f);
-                        TextFadeIn(EnemyText, 0.01f);
-                    }
-                    else
-                    {
-                        TextFadeIn(HpNumText, 0.01f);
-                        TextFadeIn(AttackNumText, 0.01f);
-                        TextFadeIn(DefenseNumText, 0.01f);
-                        TextFadeIn(SpeedNumText, 0.01f);
-                        TextFadeIn(EnemyNumText, 0.01f);
-                        if (HpNumText.color.a >= 1)
+                        ResultTextFlg = true;
+                        EnemyNumText.text = EnemyDownNum.ToString("00");
+                        if (!TutorialFlg)
                         {
-                            ResultTextFlg = true;
-                            EnemyNumText.text = EnemyDownNum.ToString("00");
-                            if (!TutorialFlg)
-                            {
-                                if (EnemyDownNum > 40)
-                                {
-                                    EvaluationText.text = "A";
-                                }
-                                else if (EnemyDownNum > 30)
-                                {
-                                    EvaluationText.text = "B";
-                                }
-                                else
-                                {
-                                    EvaluationText.text = "C";
-                                }
-                            }
-                            else
+                            if (EnemyDownNum > 40)
                             {
                                 EvaluationText.text = "A";
                             }
+                            else if (EnemyDownNum > 30)
+                            {
+                                EvaluationText.text = "B";
+                            }
+                            else
+                            {
+                                EvaluationText.text = "C";
+                            }
+                        }
+                        else
+                        {
+                            EvaluationText.text = "A";
                         }
                     }
                 }
-                //フェードインのスキップ
+            }
+            //フェードインのスキップ
+            if (Input.GetKeyDown("joystick button 1"))
+            {
+                ImageFadeIn(ResultPanel, 1.0f);
+                TextFadeIn(ResultText, 1.0f);
+                TextFadeIn(HpText, 1.0f);
+                TextFadeIn(AttackText, 1.0f);
+                TextFadeIn(DefenseText, 1.0f);
+                TextFadeIn(SpeedText, 1.0f);
+                TextFadeIn(HpNumText, 1.0f);
+                TextFadeIn(AttackNumText, 1.0f);
+                TextFadeIn(DefenseNumText, 1.0f);
+                TextFadeIn(SpeedNumText, 1.0f);
+                TextFadeIn(EnemyText, 1.0f);
+                TextFadeIn(EnemyNumText, 1.0f);
+                return;
+            }
+        }
+        if (ResultTextFlg && !TextFadeOutFlg)
+        {
+            if (EvaluationText.color.a < 1)
+            {
+                TextFadeIn(EvaluationText, 0.01f);
+            }
+            else
+            {
                 if (Input.GetKeyDown("joystick button 1"))
                 {
-                    ImageFadeIn(ResultPanel, 1.0f);
-                    TextFadeIn(ResultText, 1.0f);
-                    TextFadeIn(HpText, 1.0f);
-                    TextFadeIn(AttackText, 1.0f);
-                    TextFadeIn(DefenseText, 1.0f);
-                    TextFadeIn(SpeedText, 1.0f);
-                    TextFadeIn(HpNumText, 1.0f);
-                    TextFadeIn(AttackNumText, 1.0f);
-                    TextFadeIn(DefenseNumText, 1.0f);
-                    TextFadeIn(SpeedNumText, 1.0f);
-                    TextFadeIn(EnemyText, 1.0f);
-                    TextFadeIn(EnemyNumText, 1.0f);
+                    TextFadeOutFlg = true;
                     return;
                 }
             }
-            if (ResultTextFlg && !TextFadeOutFlg)
+        }
+        //リザルト画面のフェードアウト
+        if (TextFadeOutFlg && !TransitionFlg)
+        {
+            if (ResultText.color.a > 0)
             {
-                if (EvaluationText.color.a < 1)
+                TextFadeOut(ResultText, 0.01f);
+                TextFadeOut(HpText, 0.01f);
+                TextFadeOut(HpNumText, 0.01f);
+                TextFadeOut(AttackText, 0.01f);
+                TextFadeOut(AttackNumText, 0.01f);
+                TextFadeOut(DefenseText, 0.01f);
+                TextFadeOut(DefenseNumText, 0.01f);
+                TextFadeOut(SpeedText, 0.01f);
+                TextFadeOut(SpeedNumText, 0.01f);
+                TextFadeOut(EnemyText, 0.01f);
+                TextFadeOut(EnemyNumText, 0.01f);
+                TextFadeOut(EvaluationText, 0.01f);
+                //フェードアウトのスキップ
+                if (Input.GetKeyDown("joystick button 1"))
                 {
-                    TextFadeIn(EvaluationText, 0.01f);
-                }
-                else
-                {
-                    if (Input.GetKeyDown("joystick button 1"))
-                    {
-                        TextFadeOutFlg = true;
-                        return;
-                    }
+                    TextFadeOut(ResultText, 1.0f);
+                    TextFadeOut(HpText, 1.0f);
+                    TextFadeOut(HpNumText, 1.0f);
+                    TextFadeOut(AttackText, 1.0f);
+                    TextFadeOut(AttackNumText, 1.0f);
+                    TextFadeOut(DefenseText, 1.0f);
+                    TextFadeOut(DefenseNumText, 1.0f);
+                    TextFadeOut(SpeedText, 1.0f);
+                    TextFadeOut(SpeedNumText, 1.0f);
+                    TextFadeOut(EnemyText, 1.0f);
+                    TextFadeOut(EnemyNumText, 1.0f);
+                    TextFadeOut(EvaluationText, 1.0f);
                 }
             }
-            //リザルト画面のフェードアウト
-            if (TextFadeOutFlg && !TransitionFlg)
+            else
             {
-                if (ResultText.color.a > 0)
+                TransitionFlg = true;
+            }
+        }
+        if (!TransitionFlg)
+        {
+            return;
+        }
+        switch (SceneName)
+        {
+            //各ステージの最終ステージの場合ステージセレクトシーンのみの遷移
+            case "GameScene1-3":
+            case "GameScene2-3":
+            case "GameScene3-3":
+            case "GameScene4-3":
+            case "ExtraScene":
+                ImageFadeIn(StageSelectImage, 0.01f);
+                TextFadeIn(StageSelectText, 0.01f);
+                CarsorBlue.SetActive(true);
+                StageSelectImage.GetComponent<RectTransform>().localPosition = new Vector3(PosX, PosY1, 0);
+                if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
-                    TextFadeOut(ResultText, 0.01f);
-                    TextFadeOut(HpText, 0.01f);
-                    TextFadeOut(HpNumText, 0.01f);
-                    TextFadeOut(AttackText, 0.01f);
-                    TextFadeOut(AttackNumText, 0.01f);
-                    TextFadeOut(DefenseText, 0.01f);
-                    TextFadeOut(DefenseNumText, 0.01f);
-                    TextFadeOut(SpeedText, 0.01f);
-                    TextFadeOut(SpeedNumText, 0.01f);
-                    TextFadeOut(EnemyText, 0.01f);
-                    TextFadeOut(EnemyNumText, 0.01f);
-                    TextFadeOut(EvaluationText, 0.01f);
-                    //フェードアウトのスキップ
-                    if (Input.GetKeyDown("joystick button 1"))
+                    /*=================================================*/
+                    //遷移
+                    /*=================================================*/
+                    if (!FadeController.IsFadeOut)
                     {
-                        TextFadeOut(ResultText, 1.0f);
-                        TextFadeOut(HpText, 1.0f);
-                        TextFadeOut(HpNumText, 1.0f);
-                        TextFadeOut(AttackText, 1.0f);
-                        TextFadeOut(AttackNumText, 1.0f);
-                        TextFadeOut(DefenseText, 1.0f);
-                        TextFadeOut(DefenseNumText, 1.0f);
-                        TextFadeOut(SpeedText, 1.0f);
-                        TextFadeOut(SpeedNumText, 1.0f);
-                        TextFadeOut(EnemyText, 1.0f);
-                        TextFadeOut(EnemyNumText, 1.0f);
-                        TextFadeOut(EvaluationText, 1.0f);
+                        FadeController.FadeOut("SelectScene");
                     }
                 }
-                else
+                break;
+            //最終ステージ以外だったら次のステージかステージセレクトに遷移
+            default:
+                SelectStick(NextStage, StageSelect);
+                SelectKeyInput(NextStage, StageSelect);
+                ImageFadeIn(NextStageImage, 0.05f);
+                ImageFadeIn(StageSelectImage, 0.05f);
+                TextFadeIn(NextStageText, 0.05f);
+                TextFadeIn(StageSelectText, 0.05f);
+                StageSelectImage.GetComponent<RectTransform>().localPosition = new Vector3(PosX, PosY2, 0);
+                if (Carsor == NextStage)
                 {
-                    TransitionFlg = true;
-                }
-            }
-            if (TransitionFlg)
-            {
-                switch (SceneName)
-                {
-                    //各ステージの最終ステージの場合ステージセレクトシーンのみの遷移
-                    case "GameScene1-3":
-                    case "GameScene2-3":
-                    case "GameScene3-3":
-                    case "GameScene4-3":
-                    case "ExtraScene":
-                        ImageFadeIn(StageSelectImage, 0.01f);
-                        TextFadeIn(StageSelectText, 0.01f);
-                        CarsorBlue.SetActive(true);
-                        StageSelectImage.GetComponent<RectTransform>().localPosition = new Vector3(PosX, PosY1, 0);
-                        if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
+                    CarsorRed.SetActive(true);
+                    CarsorBlue.SetActive(false);
+                    if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
+                    {
+                        /*=================================================*/
+                        //遷移
+                        /*=================================================*/
+                        if (!FadeController.IsFadeOut)
                         {
-                            /*=================================================*/
-                            //遷移
-                            /*=================================================*/
-                            if (!FadeController.IsFadeOut)
-                            {
-                                FadeController.FadeOut("SelectScene");
-                            }
+                            NextStageText.text = "次へ";
+                            FadeController.FadeOut(++SceneNumber);
                         }
-                        break;
-                    //最終ステージ以外だったら次のステージかステージセレクトに遷移
-                    default:
-                        SelectStick(NextStage, StageSelect);
-                        SelectKeyInput(NextStage, StageSelect);
-                        ImageFadeIn(NextStageImage, 0.05f);
-                        ImageFadeIn(StageSelectImage, 0.05f);
-                        TextFadeIn(NextStageText, 0.05f);
-                        TextFadeIn(StageSelectText, 0.05f);
-                        StageSelectImage.GetComponent<RectTransform>().localPosition = new Vector3(PosX, PosY2, 0);
-                        if (Carsor == NextStage)
-                        {
-                            CarsorRed.SetActive(true);
-                            CarsorBlue.SetActive(false);
-                            if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
-                            {
-                                /*=================================================*/
-                                //遷移
-                                /*=================================================*/
-                                if (!FadeController.IsFadeOut)
-                                {
-                                    NextStageText.text = "次へ";
-                                    FadeController.FadeOut(++SceneNumber);
-                                }
-                            }
+                    }
 
-                        }
-                        if (Carsor == StageSelect)
-                        {
-                            CarsorRed.SetActive(false);
-                            CarsorBlue.SetActive(true);
-                            if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
-                            {
-                                /*=================================================*/
-                                //遷移
-                                /*=================================================*/
-                                if (!FadeController.IsFadeOut)
-                                {
-                                    FadeController.FadeOut("SelectScene");
-                                }
-                            }
-                        }
-                        break;
                 }
-            }
+                if (Carsor == StageSelect)
+                {
+                    CarsorRed.SetActive(false);
+                    CarsorBlue.SetActive(true);
+                    if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
+                    {
+                        /*=================================================*/
+                        //遷移
+                        /*=================================================*/
+                        if (!FadeController.IsFadeOut)
+                        {
+                            FadeController.FadeOut("SelectScene");
+                        }
+                    }
+                }
+                break;
         }
     }
 
