@@ -11,33 +11,33 @@ public class Star : MonoBehaviour
 {
     //座標(Big)
     //X
-    [SerializeField]
+    [SerializeField, Header("星(BIG)X座標")]
     float StarPosX = -0.0f;
     //Y
-    [SerializeField]
+    [SerializeField, Header("星(BIG)Y座標")]
     float StarPosY = 0.0f;
 
     //星のサイズ(Big)
-    [SerializeField]
+    [SerializeField, Header("星(BIG)サイズ")]
     float StarScale = 0.25f;
 
     //星(Big)
-    [SerializeField]
+    [SerializeField, Header("赤星(BIG)")]
     GameObject RedBigStar = null;
-    [SerializeField]
+    [SerializeField, Header("青星(BIG)")]
     GameObject BlueBigStar = null;
-    [SerializeField]
+    [SerializeField, Header("緑星(BIG)")]
     GameObject GreenBigStar = null;
 
     //星(Little)
-    [SerializeField]
+    [SerializeField, Header("赤星(LITTLE)")]
     Image RedLittleStar = null;
-    [SerializeField]
+    [SerializeField, Header("青星(LITTLE)")]
     Image BlueLittleStar = null;
-    [SerializeField]
+    [SerializeField, Header("緑星(LITTLE)")]
     Image GreenLittleStar = null;
 
-    [SerializeField]
+    [SerializeField, Header("星(BIG)生成時のエフェクト")]
     ParticleSystem StarParticle = null;
 
     //星のリスト（Big）
@@ -101,7 +101,10 @@ public class Star : MonoBehaviour
                 break;
         }
     }
-    //小さい星の換算
+    /// <summary>
+    /// 小さい星の換算
+    /// </summary>
+    /// <param name="starColor"></param>
     public void ConversionLittleStarUi(HaveStarManager.StarColorEnum starColor)
     {
         switch (starColor)
@@ -151,7 +154,7 @@ public class Star : MonoBehaviour
                 break;
         }
 
-        //大きい星が生成された時のパーティクル
+        //大きい星が生成された時のエフェクト
         StarParticle.Play();
         if (!StarParticle.IsAlive())
             StarParticle.Stop();
@@ -180,6 +183,9 @@ public class Star : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 星(LITTLE)のUI処理
+    /// </summary>
     void UpdatePrevStarLittle()
     {
         for (int i = 0; i < PrevStarLittleNum.Length; ++i)
@@ -205,6 +211,9 @@ public class Star : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 星(BIG)のUI処理
+    /// </summary>
     void UpdatePrevStarBig()
     {
         for (int i = 0; i < PrevStarBigNum.Length; ++i)

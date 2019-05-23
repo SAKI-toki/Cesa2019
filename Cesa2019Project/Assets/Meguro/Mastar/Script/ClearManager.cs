@@ -7,19 +7,17 @@ using UnityEngine.SceneManagement;
 
 public class ClearManager : MonoBehaviour
 {
-    float StartHp = 0;
-    float StartAttack = 0;
-    float StartDefense = 0;
-    float StartSpeed = 0;
-    public static int EnemyDownNum = 0;
     [SerializeField, Header("チュートリアルならチェック")]
     bool TutorialFlg = false;
-    //「クリア」のテキスト
-    [SerializeField]
-    TextMeshProUGUI ClearText = null;
+
     //背景のUI
     [SerializeField]
     Image ResultPanel = null;
+
+    //「クリア」のテキスト
+    [SerializeField]
+    TextMeshProUGUI ClearText = null;
+
     //ステータステキスト
     [SerializeField]
     TextMeshProUGUI ResultText = null;
@@ -49,27 +47,33 @@ public class ClearManager : MonoBehaviour
     TextMeshProUGUI NextStageText = null;
     [SerializeField]
     TextMeshProUGUI StageSelectText = null;
+
     //次ステージUI
-    [SerializeField]
+    [SerializeField, Header("次ステージテキストの背景")]
     Image NextStageImage = null;
+
     //ステージセレクトUI
-    [SerializeField]
+    [SerializeField, Header("ステージセレクトテキストの背景")]
     Image StageSelectImage = null;
+
     //カーソル
-    [SerializeField]
+    [SerializeField, Header("カーソル(赤)")]
     GameObject CarsorRed = null;
-    [SerializeField]
+    [SerializeField, Header("カーソル(青)")]
     GameObject CarsorBlue = null;
 
     //プレイヤー
     [SerializeField]
     GameObject PlayerObj = null;
+
     //UICanvas
-    [SerializeField]
+    [SerializeField, Header("UIのCanvas")]
     GameObject UI = null;
+
     //MiniMap
-    [SerializeField]
+    [SerializeField, Header("ミニマップ")]
     GameObject MiniMap = null;
+
     [SerializeField]
     CameraController CameraScript = null;
     [SerializeField]
@@ -77,6 +81,13 @@ public class ClearManager : MonoBehaviour
 
     [SerializeField]
     SelectSE SE = null;
+
+    float StartHp = 0;
+    float StartAttack = 0;
+    float StartDefense = 0;
+    float StartSpeed = 0;
+
+    public static int EnemyDownNum = 0;
 
     bool ClearInitFlg = false;
     bool ClearMoveFlg = false;
@@ -450,6 +461,7 @@ public class ClearManager : MonoBehaviour
     //キーボード入力
     public void SelectKeyInput(int Top, int Bottom)
     {
+
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             SE.Sel();

@@ -16,26 +16,24 @@ public class Pause : MonoBehaviour
     [SerializeField]
     SelectSE SE = null;
 
-    [SerializeField]
+    [SerializeField, Header("ポーズUI")]
     private GameObject PauseUi = null;
     //カーソル
-    [SerializeField]
+    [SerializeField, Header("カーソル(赤)")]
     private GameObject CarsorRed = null;
-    [SerializeField]
+    [SerializeField, Header("カーソル(青)")]
     private GameObject CarsorBlue = null;
 
     //プレイヤーステータステキスト
-    [SerializeField]
+    [SerializeField, Header("HPテキスト")]
     TextMeshProUGUI HpText = null;
-    [SerializeField]
+    [SerializeField, Header("ATTACKテキスト")]
     TextMeshProUGUI AttackText = null;
-    [SerializeField]
+    [SerializeField, Header("DEFENSEテキスト")]
     TextMeshProUGUI DefenseText = null;
-    [SerializeField]
+    [SerializeField, Header("SPEEDテキスト")]
     TextMeshProUGUI SpeedText = null;
 
-    //変動するSelect変数　最大値、最小値
-    //int Select;
     const int Back = 0;
     const int StageSelect = 1;
 
@@ -90,6 +88,7 @@ public class Pause : MonoBehaviour
                     break;
             }
 
+            //入力処理
             Clear.SelectStick(Back, StageSelect);
             Clear.SelectKeyInput(Back, StageSelect);
         }

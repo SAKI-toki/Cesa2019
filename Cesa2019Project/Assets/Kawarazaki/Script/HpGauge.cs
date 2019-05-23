@@ -8,15 +8,15 @@ using UnityEngine.UI;
 public class HpGauge : MonoBehaviour
 {
 
-    //HPバー(横)
-    [SerializeField]
+    //HPバー
+    [SerializeField, Header("HPゲージ")]
     public Image HorizontalHp = null;
 
-    [SerializeField]
+    [SerializeField, Header("緑ゲージ")]
     Sprite GreenHpBar = null;
-    [SerializeField]
+    [SerializeField, Header("黄ゲージ")]
     Sprite YellowHpBar = null;
-    [SerializeField]
+    [SerializeField, Header("赤ゲージ")]
     Sprite RedHpBar = null;
 
     float YellowZone = 0.6f;
@@ -32,6 +32,7 @@ public class HpGauge : MonoBehaviour
 
     void Update()
     {
+        //HPゲージ減少処理
         HorizontalHp.fillAmount = Player.PlayerStatus.CurrentHp / Player.PlayerStatus.Hp;
         //Hpゲージの画像変更
         if (HorizontalHp.fillAmount <= RedZone)
