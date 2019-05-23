@@ -40,7 +40,7 @@ public class PlayerIdle : IPlayerState
             return new PlayerDeath();
         }
         // Dameg
-        if(player.DamegFlg)
+        if (player.DamegFlg)
         {
             return new PlayerDameg();
         }
@@ -49,6 +49,11 @@ public class PlayerIdle : IPlayerState
         {
             return new PlayerClear();
         }
+        //// StarPut
+        //if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.F))
+        //{
+        //    return new PlayerStarPut();
+        //}
         return this;
     }
 
