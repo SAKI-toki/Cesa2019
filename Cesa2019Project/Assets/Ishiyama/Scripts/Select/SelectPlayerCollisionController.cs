@@ -32,21 +32,25 @@ public class SelectPlayerCollisionController : MonoBehaviour
             {
                 case SelectSeasonInfo.Season.Spring:
                     sceneName += "1";
+                    SelectSceneObjectManager.Select = true;
                     break;
                 case SelectSeasonInfo.Season.Summer:
                     sceneName += "2";
+                    SelectSceneObjectManager.Select = true;
                     break;
                 case SelectSeasonInfo.Season.Autumn:
                     sceneName += "3";
+                    SelectSceneObjectManager.Select = true;
                     break;
                 case SelectSeasonInfo.Season.Winter:
                     sceneName += "4";
+                    SelectSceneObjectManager.Select = true;
                     break;
                 case SelectSeasonInfo.Season.Extra:
-                    sceneName += "5";
+                    FadeController.FadeOut("ExtraScene");
                     break;
             }
-            FadeController.FadeOut(sceneName + "-1");
+            //FadeController.FadeOut(sceneName + "-1");
         }
     }
 

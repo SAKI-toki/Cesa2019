@@ -5,6 +5,7 @@
 /// </summary>
 public class TitleController : MonoBehaviour
 {
+    public static bool Title = true;
     [SerializeField, Header("カメラの制御")]
     CameraController SelectCameraController = null;
     [SerializeField, Header("セレクト用のカメラ")]
@@ -53,7 +54,8 @@ public class TitleController : MonoBehaviour
     }
     void Update()
     {
-        Statefunc();
+        if (Statefunc != null)
+            Statefunc();
     }
 
     /// <summary>
@@ -110,6 +112,8 @@ public class TitleController : MonoBehaviour
             TitleCameraObject.SetActive(false);
             SelectCameraController.enabled = true;
             SelectPlayerController.enabled = true;
+            Statefunc = null;
+            Title = false;
         }
     }
 
