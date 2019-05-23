@@ -156,8 +156,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackSE: {fileID: 8300000, guid: 5ab719a2cef7a70478ec258a35febe7e, type: 3}
-  DamageSE: {fileID: 8300000, guid: b83a6e37d04778c4292596edf4a3425f, type: 3}
+  DamageSE: {fileID: 8300000, guid: 55b8ae059a079ae44948d220c36eb9e4, type: 3}
   WalkSE: {fileID: 0}
+  DestoySE: {fileID: 8300000, guid: 51c84585a7aaf7c46a96658f707a16f2, type: 3}
   AudioSource: {fileID: 0}
 --- !u!65 &2654604567536841819
 BoxCollider:
@@ -475,6 +476,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2654604567537217012}
     m_Modifications:
+    - target: {fileID: 7367838290631514693, guid: 4d115fd54cf301c40b6eab61c5bb607b,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyHpGauge
+      objectReference: {fileID: 0}
     - target: {fileID: 6494990068306519513, guid: 4d115fd54cf301c40b6eab61c5bb607b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -589,11 +595,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367838290631514693, guid: 4d115fd54cf301c40b6eab61c5bb607b,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyHpGauge
       objectReference: {fileID: 0}
     - target: {fileID: 4406562756855210368, guid: 4d115fd54cf301c40b6eab61c5bb607b,
         type: 3}
