@@ -50,7 +50,7 @@ public class SelectPlayerCollisionController : MonoBehaviour
                     FadeController.FadeOut("ExtraScene");
                     break;
             }
-            //FadeController.FadeOut(sceneName + "-1");
+            SelectSceneObjectManager.CurrentSeason = CurrentCollisionSeason;
         }
     }
 
