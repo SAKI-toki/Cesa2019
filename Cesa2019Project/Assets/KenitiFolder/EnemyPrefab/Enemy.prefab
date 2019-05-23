@@ -188,7 +188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackSE: {fileID: 8300000, guid: 5ab719a2cef7a70478ec258a35febe7e, type: 3}
   DamageSE: {fileID: 8300000, guid: c50094cc8c6bb7b4aba00385f1d08f6c, type: 3}
-  WalkSE: {fileID: 8300000, guid: a1f65394038c13349a822c28ba56ecc8, type: 3}
+  WalkSE: {fileID: 8300000, guid: 4314b860395fab14e832c7fc1125a70b, type: 3}
   AudioSource: {fileID: 0}
 --- !u!82 &4804132836415684183
 AudioSource:
@@ -202,7 +202,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.491
+  m_Volume: 0.107
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -326,11 +326,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4084249368702385986}
     m_Modifications:
-    - target: {fileID: 1039711411006977480, guid: b2f7ce18cfb64e9468c5bbd9ef16105b,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyAppearEffect
-      objectReference: {fileID: 0}
     - target: {fileID: 1039711411006977481, guid: b2f7ce18cfb64e9468c5bbd9ef16105b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -386,6 +381,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1039711411006977480, guid: b2f7ce18cfb64e9468c5bbd9ef16105b,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyAppearEffect
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2f7ce18cfb64e9468c5bbd9ef16105b, type: 3}
 --- !u!4 &2180810769101665132 stripped
@@ -401,11 +401,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4084249368702385986}
     m_Modifications:
-    - target: {fileID: 7367838290631514693, guid: 4d115fd54cf301c40b6eab61c5bb607b,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyHpGauge
-      objectReference: {fileID: 0}
     - target: {fileID: 6494990068306519513, guid: 4d115fd54cf301c40b6eab61c5bb607b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -511,6 +506,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7367838290631514693, guid: 4d115fd54cf301c40b6eab61c5bb607b,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyHpGauge
+      objectReference: {fileID: 0}
     - target: {fileID: 4406562756855210368, guid: 4d115fd54cf301c40b6eab61c5bb607b,
         type: 3}
       propertyPath: EnemyHp
@@ -548,10 +548,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4084249368702385986}
     m_Modifications:
-    - target: {fileID: 100000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
-      propertyPath: m_Name
-      value: zako
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -607,6 +603,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
       propertyPath: m_LocalScale.z
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
+      propertyPath: m_Name
+      value: zako
       objectReference: {fileID: 0}
     - target: {fileID: 13700000, guid: 7f069214c35182e4697d88ead254cd37, type: 3}
       propertyPath: m_Bones.Array.data[0]

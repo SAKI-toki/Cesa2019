@@ -8,7 +8,7 @@ public class ClabEnemy : MonoBehaviour
     float CrabMoveChange = 5;
 
     //bool CrabFirst = true;//移動速度を一度だけ上げる
-    int MoveDouble = 2;
+    //int MoveDouble = 2;
     float MoveChange = 1;
     float ClabTime = 0;
     float CoolTime = 3;//離脱用
