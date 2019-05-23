@@ -24,7 +24,7 @@ public class SelectSceneObjectManager : MonoBehaviour
     bool Upflg = false;
     bool Downflg = false;
     [SerializeField]
-    Vector3 Offset;
+    Vector3 Offset = new Vector3();
     bool LocalFlg = false;
     bool Decide = false;
     void Start()
