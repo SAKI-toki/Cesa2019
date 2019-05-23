@@ -112,9 +112,10 @@ public class LeoEnemy : MonoBehaviour
         if (Enemy.MoveSwitch)
         {
             transform.Translate(0, 0, Enemy.ZMove * Time.deltaTime);
+            Enemy.Animator.SetBool("EnemyWalk", true);
             EffectRush.SetActive(true);
         }
-        else { EffectRush.SetActive(false); }
+        else { EffectRush.SetActive(false); Enemy.Animator.SetBool("EnemyWalk", false); }
     }
 
     /// <summary>
