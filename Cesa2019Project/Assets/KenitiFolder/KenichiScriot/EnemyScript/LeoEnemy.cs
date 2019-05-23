@@ -39,10 +39,10 @@ public class LeoEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Enemy.EnemyStatus.CurrentHp <= 0) { return; }
+
         if (Enemy.ReceivedDamage == false
             && Enemy.AttackEnemy == false
-            && LeoGroundWave.Ground == false
-            && !Enemy.DestroyFlag
             )//ダメージを受けたら動かない,攻撃中も動かない,ジャンプ中も動かない
         {
             ReoMove();

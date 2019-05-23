@@ -7,8 +7,6 @@ public class ClabEnemy : MonoBehaviour
     [SerializeField, Header("蟹が方向を変える時間")]
     float CrabMoveChange = 5;
 
-    //bool CrabFirst = true;//移動速度を一度だけ上げる
-    //int MoveDouble = 2;
     float MoveChange = 1;
     float ClabTime = 0;
     float CoolTime = 3;//離脱用
@@ -34,15 +32,10 @@ public class ClabEnemy : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (Enemy.EnemyStatus.CurrentHp <= 0) { return; }
+
         ClabTime += Time.deltaTime;
         Following();
-
-        ////蟹座のボスの時HPが１/３になったら移動速度三倍
-        //if (Enemy.EnemyStatus.Hp / 3 >= Enemy.EnemyStatus.CurrentHp && CrabFirst)
-        //{
-        //    Enemy.ZMove = MoveDouble * Enemy.ZMove;
-        //    CrabFirst = false;
-        //}
 
         if (Enemy.BossTime >= CrabMoveChange)
         {
