@@ -13,6 +13,8 @@ public class Pause : MonoBehaviour
     private StarSlect Slect = null;
     [SerializeField]
     Player PlayerControll = null;
+    [SerializeField]
+    SelectSE SE = null;
 
     [SerializeField]
     private GameObject PauseUi = null;
@@ -36,8 +38,6 @@ public class Pause : MonoBehaviour
     //int Select;
     const int Back = 0;
     const int StageSelect = 1;
-    //スティック変数
-    float LStick;
 
     bool PauseFlg = false;
 
@@ -71,6 +71,7 @@ public class Pause : MonoBehaviour
                     CarsorBlue.SetActive(false);
                     if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                     {
+                        SE.Dec();
                         //通常に戻す
                         ActiveChange();
                         PauseUi.SetActive(false);
@@ -82,15 +83,16 @@ public class Pause : MonoBehaviour
                     CarsorRed.SetActive(false);
                     if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                     {
+                        SE.Dec();
                         PauseUi.SetActive(false);
                         FadeController.FadeOut("SelectScene");
                     }
                     break;
             }
-        }
 
-        Clear.SelectStick(Back, StageSelect);
-        Clear.SelectKeyInput(Back, StageSelect);
+            Clear.SelectStick(Back, StageSelect);
+            Clear.SelectKeyInput(Back, StageSelect);
+        }
 
         //ステータステキスト
         HpText.text = "HP:" + Player.PlayerStatus.CurrentHp;
