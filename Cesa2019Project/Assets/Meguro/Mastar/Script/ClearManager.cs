@@ -21,6 +21,7 @@ public class ClearManager : MonoBehaviour
         //スティックを上に倒す処理
         if (LStick > 0)
         {
+            SE.Sel();
             if (Carsor == NextStage)
                 Carsor = StageSelect;
             else
@@ -29,6 +30,7 @@ public class ClearManager : MonoBehaviour
         //スティックを下に倒す処理
         if (LStick < 0)
         {
+            SE.Sel();
             if (Carsor == StageSelect)
                 Carsor = NextStage;
             else
@@ -102,6 +104,8 @@ public class ClearManager : MonoBehaviour
     CameraController CameraScript = null;
     [SerializeField]
     Transform ClearPos = null;
+    [SerializeField]
+    SelectSE SE = null;
 
     bool ClearInitFlg = false;
     bool ClearMoveFlg = false;
@@ -379,6 +383,7 @@ public class ClearManager : MonoBehaviour
                 StageSelectImage.GetComponent<RectTransform>().localPosition = new Vector3(PosX, PosY1, 0);
                 if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                 {
+                    SE.Dec();
                     /*=================================================*/
                     //遷移
                     /*=================================================*/
@@ -403,6 +408,7 @@ public class ClearManager : MonoBehaviour
                     CarsorBlue.SetActive(false);
                     if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
                     {
+                        SE.Dec();
                         /*=================================================*/
                         //遷移
                         /*=================================================*/
@@ -450,6 +456,7 @@ public class ClearManager : MonoBehaviour
         //スティックを上に倒す処理
         if (LStick > 0)
         {
+            SE.Sel();
             if (Carsor == Top)
                 Carsor = Bottom;
             else
@@ -458,6 +465,7 @@ public class ClearManager : MonoBehaviour
         //スティックを下に倒す処理
         if (LStick < 0)
         {
+            SE.Sel();
             if (Carsor == Bottom)
                 Carsor = Top;
             else
@@ -470,6 +478,7 @@ public class ClearManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            SE.Sel();
             if (Carsor == Top)
                 Carsor = Bottom;
             else
@@ -477,6 +486,7 @@ public class ClearManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            SE.Sel();
             if (Carsor == Bottom)
                 Carsor = Top;
             else
