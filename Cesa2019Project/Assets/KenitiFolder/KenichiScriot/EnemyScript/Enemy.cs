@@ -120,6 +120,9 @@ public class Enemy : MonoBehaviour
     public bool JampFlag = false;//ジャンプ中のフラグ
     [HideInInspector]
     public EnemySe EnemySe;
+
+    bool DestroySe = false;
+    [HideInInspector]
     public bool NoDamage = false;
 
     GameObject StarPlace = null;
@@ -200,13 +203,14 @@ public class Enemy : MonoBehaviour
             ReceivedDamage = true;
             Collider.enabled = false;
             GetRigidbody.isKinematic = true;
+            if (!DestroySe) { EnemySe.DestrotSES(); DestroySe = true; }
+
             if (!NonAnimator)
             {
                 Animator.SetTrigger("EnemyDown");
                 AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
                 if (stateInfo.IsName("death"))
                 {
-
                     if (Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
                     {
                         if (!BossEnemy) { EnemyStar(); }
