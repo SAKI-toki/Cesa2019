@@ -44,6 +44,8 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Enemy.EnemyStatus.CurrentHp <= 0) { return; }
         if (Enemy.EnemyAbnormalState.ParalysisFlg) { return; }
         if (Enemy.ReceivedDamage == false && Enemy.AttackEnemy == false)//ダメージを受けたら動かない,攻撃中も動かない
         {
