@@ -22,6 +22,26 @@ public class PlayerDameg : IPlayerState
         // アニメーション戻り 0:17 17/24 = 0.7083...sec
         if (AnimationTime > 0.708)
         {
+            // Dash
+            if (player.Controller.LeftStickH != 0 || player.Controller.LeftStickV != 0)
+            {
+                return new PlayerDash();
+            }
+            // Jump
+            if (Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Space))
+            {
+                return new PlayerJump();
+            }
+            // Attack
+            if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Return))
+            {
+                return new PlayerAttack1();
+            }
+            // Avoid
+            if (player.Controller.TriggerButtonDown() && Player.PlayerStatus.CurrentStamina > 0)
+            {
+                return new PlayerAvoid();
+            }
             return new PlayerIdle();
         }
         return this;

@@ -96,7 +96,7 @@ public class ClearManager : MonoBehaviour
     float AnimationTime = 0;
 
     [SerializeField]
-    GameObject ClearEffect;
+    GameObject ClearEffect = null;
 
     int SceneNumber;
     string SceneName;

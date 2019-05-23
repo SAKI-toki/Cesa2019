@@ -109,11 +109,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpAudio: {fileID: 8300000, guid: b586b6db60e610143b62872734c7f5a1, type: 3}
-  DamegAudio: {fileID: 8300000, guid: 3b7edbd45e15dc2448c0c899bf5f6586, type: 3}
+  DamegAudio: {fileID: 8300000, guid: 236e9d7346581f644bd24da3df7a911b, type: 3}
   Attack1Audio: {fileID: 8300000, guid: d7b605a09c0e4af438fd2127f1d1ba5a, type: 3}
   Attack2Audio: {fileID: 8300000, guid: 3eb6f36ab55f87f4ca70588ae02103ac, type: 3}
   Attack3Audio: {fileID: 8300000, guid: 2cd72e846f9157e4aa54bbc5acd16dcc, type: 3}
-  DashAudio: {fileID: 8300000, guid: e7fa6df3b481ec34b9fbc0d1ccd1e5e2, type: 3}
+  DashAudio: {fileID: 8300000, guid: 0c8c5701fbb07d3419aa464409e04d84, type: 3}
 --- !u!1 &1289715766779021512
 GameObject:
   m_ObjectHideFlags: 0
@@ -1238,6 +1238,11 @@ PrefabInstance:
       propertyPath: Pause
       value: 
       objectReference: {fileID: 7289034512323234569}
+    - target: {fileID: 3986105310112927099, guid: 93fd8a456c3e4ad44901bcde90d87ed2,
+        type: 3}
+      propertyPath: JumpIntervalTime
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3986105310112927093, guid: 93fd8a456c3e4ad44901bcde90d87ed2,
         type: 3}
       propertyPath: LastAttackCanvas

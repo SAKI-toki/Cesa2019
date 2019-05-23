@@ -5,17 +5,17 @@ using UnityEngine;
 public class PlayerAudio : MonoBehaviour
 {
     AudioSource PlayerAudioSource;
-    [SerializeField]
+    [Header("ジャンプ")]
     public AudioClip JumpAudio;
-    [SerializeField]
+    [Header("ダメージ")]
     public AudioClip DamegAudio;
-    [SerializeField]
+    [Header("アタック１")]
     public AudioClip Attack1Audio;
-    [SerializeField]
+    [Header("アタック２")]
     public AudioClip Attack2Audio;
-    [SerializeField]
+    [Header("アタック３")]
     public AudioClip Attack3Audio;
-    [SerializeField]
+    [Header("ダッシュ")]
     public AudioClip DashAudio;
 
     void Awake()
