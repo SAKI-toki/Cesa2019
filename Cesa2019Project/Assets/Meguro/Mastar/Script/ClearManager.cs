@@ -236,10 +236,10 @@ public class ClearManager : MonoBehaviour
                     if (CurrentTime > 2)
                     {
                         ResultMoveFlg = true;
-                        HpNumText.text = StartHp.ToString("00") + " > " + Player.PlayerStatus.CurrentHp;
-                        AttackNumText.text = StartAttack.ToString("00") + " > " + Player.PlayerStatus.Attack;
-                        DefenseNumText.text = StartDefense.ToString("00") + " > " + Player.PlayerStatus.Defense;
-                        SpeedNumText.text = StartSpeed.ToString("00") + " > " + Player.PlayerStatus.Speed;
+                        HpNumText.text = StartHp + " > " + Player.PlayerStatus.Hp;
+                        AttackNumText.text = StartAttack + " > " + Player.PlayerStatus.Attack;
+                        DefenseNumText.text = StartDefense + " > " + Player.PlayerStatus.Defense;
+                        SpeedNumText.text = StartSpeed + " > " + Player.PlayerStatus.Speed;
                     }
                 }
             }
