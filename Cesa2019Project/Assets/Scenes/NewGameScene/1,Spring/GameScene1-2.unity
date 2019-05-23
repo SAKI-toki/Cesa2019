@@ -143,21 +143,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1914915465294586956, guid: bfda9e26ba7460446ac41bcfb8396f45,
+    - target: {fileID: 7944019819316661806, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
+      propertyPath: m_Name
+      value: CommonGameObject
       objectReference: {fileID: 0}
-    - target: {fileID: 1914915465294586956, guid: bfda9e26ba7460446ac41bcfb8396f45,
+    - target: {fileID: 7289034513233265081, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 4.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1914915465294586956, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: StarPlaceController
+      value: 
+      objectReference: {fileID: 1511485107}
     - target: {fileID: 3688123995375410246, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -213,16 +208,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7944019819316661806, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: m_Name
-      value: CommonGameObject
-      objectReference: {fileID: 0}
-    - target: {fileID: 1169150357987958490, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2743556551248644138, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: StarPlaces.Array.size
@@ -273,6 +258,26 @@ PrefabInstance:
       propertyPath: StarParentObject
       value: 
       objectReference: {fileID: 1511485116}
+    - target: {fileID: 7653201727258992600, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: StarPlaceController
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1914915465294586956, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1914915465294586956, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1914915465294586956, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4811928255099922159, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: PlayerControll
@@ -288,6 +293,11 @@ PrefabInstance:
       propertyPath: CameraControll
       value: 
       objectReference: {fileID: 1721054915}
+    - target: {fileID: 1169150357987958490, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7247137946456851678, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_havePropertiesChanged
@@ -418,11 +428,6 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7289034513233265081, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: StarPlaceController
-      value: 
-      objectReference: {fileID: 1511485107}
     - target: {fileID: 1570839120317765170, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_havePropertiesChanged
@@ -452,11 +457,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7653201727258992600, guid: bfda9e26ba7460446ac41bcfb8396f45,
-        type: 3}
-      propertyPath: StarPlaceController
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9032042282790194109, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
@@ -467,6 +467,16 @@ PrefabInstance:
         type: 3}
       propertyPath: StarPlaceController
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113020030157637707, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113020030157637707, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -19.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfda9e26ba7460446ac41bcfb8396f45, type: 3}
