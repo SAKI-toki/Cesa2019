@@ -37,6 +37,8 @@ public class Player : MonoBehaviour
     [System.NonSerialized]
     public bool DeathFlg;
 
+    public bool NotMove = true;
+
     void Awake()
     {
         PlayerRigidbody = GetComponent<Rigidbody>();
