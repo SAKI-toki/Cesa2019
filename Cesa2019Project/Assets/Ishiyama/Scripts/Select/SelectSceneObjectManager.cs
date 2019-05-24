@@ -49,6 +49,10 @@ public class SelectSceneObjectManager : MonoBehaviour
         }
         for (int i = 0; i < (int)SelectSeasonInfo.Season.None; ++i)
         {
+            SeasonUnlock[i] = true;
+        }
+        for (int i = 0; i < (int)SelectSeasonInfo.Season.None; ++i)
+        {
             if (!SeasonUnlock[i])
             {
                 SeasonObject[i].GetComponent<MeshRenderer>().material = BlackMat;
