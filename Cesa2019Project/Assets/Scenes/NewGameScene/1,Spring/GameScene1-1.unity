@@ -373,6 +373,14 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 673006086, guid: bfda9e26ba7460446ac41bcfb8396f45, type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 673006086, guid: bfda9e26ba7460446ac41bcfb8396f45, type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfda9e26ba7460446ac41bcfb8396f45, type: 3}
 --- !u!1001 &702742745
@@ -552,11 +560,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cancer
       objectReference: {fileID: 0}
-    - target: {fileID: 8691047848126770630, guid: 893cd06e29e8079449e77de386612a79,
-        type: 3}
-      propertyPath: IsAwakeSet
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8691047848689972817, guid: 893cd06e29e8079449e77de386612a79,
         type: 3}
       propertyPath: Player
@@ -583,6 +586,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8273631509348069259, guid: 1f9878d41d64d76419e6bce3ddf94503,
         type: 3}
+    - target: {fileID: 8691047848126770630, guid: 893cd06e29e8079449e77de386612a79,
+        type: 3}
+      propertyPath: IsAwakeSet
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2344308062230395255, guid: 893cd06e29e8079449e77de386612a79,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -641,7 +649,7 @@ PrefabInstance:
     - target: {fileID: 3037079150803933287, guid: 893cd06e29e8079449e77de386612a79,
         type: 3}
       propertyPath: Waves.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3037079150803933287, guid: 893cd06e29e8079449e77de386612a79,
         type: 3}

@@ -153,12 +153,13 @@ public class ClearManager : MonoBehaviour
             UI.SetActive(false);
             MiniMap.SetActive(false);
 
+            // クリア演出の場所まで移動、移動したら星座のエフェクトが出る
             if (!ClearMoveFlg)
             {
                 CameraScript.ClearMoveInit();
                 CameraScript.ClearMove();
                 Vector3 dir = ClearPos.position - Player.transform.position;
-                Player.Move(dir, 30);
+                Player.Move(dir, 40);
                 float dis = Vector3.Distance(Player.transform.position, ClearPos.position);
                 if (dis < 1.0f)
                 {
@@ -169,6 +170,7 @@ public class ClearManager : MonoBehaviour
                     Instantiate(ClearEffect, Camera.main.transform.position + cameraForward * 35 + new Vector3(0, 9, 0), ClearEffect.transform.rotation);
                 }
             }
+            // 星座のエフェクトが終わったらクリアポーズ
             if (ClearMoveFlg && !ClearEffectFlg)
             {
                 CurrentClearEffectTime += Time.deltaTime;
@@ -178,6 +180,7 @@ public class ClearManager : MonoBehaviour
                     ClearEffectFlg = true;
                 }
             }
+
             if (ClearEffectFlg && !ClearAnimationFlg)
             {
                 AnimationTime += Time.deltaTime;

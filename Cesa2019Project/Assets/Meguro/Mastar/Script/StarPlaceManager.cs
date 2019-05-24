@@ -64,7 +64,7 @@ public class StarPlaceManager : MonoBehaviour
     public int StarNum = 0;
 
     [SerializeField]
-    GameObject StatusUpEffect;
+    GameObject StatusUpEffect = null;
 
     void Start()
     {
