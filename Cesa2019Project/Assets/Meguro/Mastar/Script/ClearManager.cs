@@ -353,6 +353,7 @@ public class ClearManager : MonoBehaviour
                     case "GameScene2-3":
                     case "GameScene3-3":
                     case "GameScene4-3":
+                    case "ExtraScene":
                         StageSelectButton.gameObject.SetActive(true);
                         CarsorBlue.SetActive(true);
                         StageSelectButton.GetComponent<RectTransform>().localPosition = new Vector3(PosX, PosY1, 0);
