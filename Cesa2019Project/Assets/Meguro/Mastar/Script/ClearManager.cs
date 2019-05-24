@@ -1,4 +1,4 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,20 +7,18 @@ using UnityEngine.SceneManagement;
 
 public class ClearManager : MonoBehaviour
 {
-    float StartHp = 0;
-    float StartAttack = 0;
-    float StartDefense = 0;
-    float StartSpeed = 0;
-    public static int EnemyDownNum = 0;
-    [SerializeField, Header("ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ãªã‚‰ãƒã‚§ãƒƒã‚¯")]
+    [SerializeField, Header("ƒ`ƒ…[ƒgƒŠƒAƒ‹‚È‚çƒ`ƒFƒbƒN")]
     bool TutorialFlg = false;
-    //ã€Œã‚¯ãƒªã‚¢ã€ã®ãƒ†ã‚­ã‚¹ãƒˆ
-    [SerializeField]
-    TextMeshProUGUI ClearText = null;
-    //èƒŒæ™¯ã®UI
+
+    //”wŒi‚ÌUI
     [SerializeField]
     Image ResultPanel = null;
-    //ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ†ã‚­ã‚¹ãƒˆ
+
+    //uƒNƒŠƒAv‚ÌƒeƒLƒXƒg
+    [SerializeField]
+    TextMeshProUGUI ClearText = null;
+
+    //ƒXƒe[ƒ^ƒXƒeƒLƒXƒg
     [SerializeField]
     TextMeshProUGUI ResultText = null;
     [SerializeField]
@@ -49,33 +47,45 @@ public class ClearManager : MonoBehaviour
     TextMeshProUGUI NextStageText = null;
     [SerializeField]
     TextMeshProUGUI StageSelectText = null;
-    //æ¬¡ã‚¹ãƒ†ãƒ¼ã‚¸UI
-    [SerializeField]
-    Image NextButton = null;
-    //ã‚¹ãƒ†ãƒ¼ã‚¸ã‚»ãƒ¬ã‚¯ãƒˆUI
-    [SerializeField]
-    Image StageSelectButton = null;
-    //ã‚«ãƒ¼ã‚½ãƒ«
-    [SerializeField]
+
+    //ŸƒXƒe[ƒWUI
+    [SerializeField, Header("ŸƒXƒe[ƒWƒeƒLƒXƒg‚Ì”wŒi")]
+    Image NextStageImage = null;
+
+    //ƒXƒe[ƒWƒZƒŒƒNƒgUI
+    [SerializeField, Header("ƒXƒe[ƒWƒZƒŒƒNƒgƒeƒLƒXƒg‚Ì”wŒi")]
+    Image StageSelectImage = null;
+
+    //ƒJ[ƒ\ƒ‹
+    [SerializeField, Header("ƒJ[ƒ\ƒ‹(Ô)")]
     GameObject CarsorRed = null;
-    [SerializeField]
+    [SerializeField, Header("ƒJ[ƒ\ƒ‹(Â)")]
     GameObject CarsorBlue = null;
 
-    //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
+    //ƒvƒŒƒCƒ„[
     [SerializeField]
-    Player Player = null;
+    GameObject PlayerObj = null;
     //UICanvas
-    [SerializeField]
+    [SerializeField, Header("UI‚ÌCanvas")]
     GameObject UI = null;
+
     //MiniMap
-    [SerializeField]
+    [SerializeField, Header("ƒ~ƒjƒ}ƒbƒv")]
     GameObject MiniMap = null;
+
     [SerializeField]
     CameraController CameraScript = null;
     [SerializeField]
     Transform ClearPos = null;
     [SerializeField]
     SelectSE SE = null;
+
+    float StartHp = 0;
+    float StartAttack = 0;
+    float StartDefense = 0;
+    float StartSpeed = 0;
+
+    public static int EnemyDownNum = 0;
     bool ClearInitFlg = false;
     bool ClearEffectFlg = false;
     bool ClearAnimationFlg = false;
@@ -103,7 +113,7 @@ public class ClearManager : MonoBehaviour
     int SceneNumber;
     string SceneName;
 
-    //UIãƒã‚¸ã‚·ãƒ§ãƒ³
+    //UIƒ|ƒWƒVƒ‡ƒ“
     float PosX;
     float PosY1, PosY2;
     void Awake()
@@ -151,34 +161,34 @@ public class ClearManager : MonoBehaviour
 
         if (StarPlaceManager.AllPlaceSet)
         {
-            //ã‚¯ãƒªã‚¢ç”»é¢ã®æ™‚ã‚²ãƒ¼ãƒ ç”»é¢ã®Activeã‚’false
+            //ƒNƒŠƒA‰æ–Ê‚ÌƒQ[ƒ€‰æ–Ê‚ÌActive‚ğfalse
             UI.SetActive(false);
             MiniMap.SetActive(false);
 
-            // ã‚¯ãƒªã‚¢æ¼”å‡ºã®å ´æ‰€ã¾ã§ç§»å‹•ã€ç§»å‹•ã—ãŸã‚‰æ˜Ÿåº§ã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãŒå‡ºã‚‹
+            // ƒNƒŠƒA‰‰o‚ÌêŠ‚Ü‚ÅˆÚ“®AˆÚ“®‚µ‚½‚ç¯À‚ÌƒGƒtƒFƒNƒg‚ªo‚é
             if (!ClearMoveFlg)
             {
                 CameraScript.ClearMoveInit();
                 CameraScript.ClearMove();
-                Vector3 dir = ClearPos.position - Player.transform.position;
-                Player.Move(dir, 40);
-                float dis = Vector3.Distance(Player.transform.position, ClearPos.position);
+                Vector3 dir = ClearPos.position - PlayerObj.transform.position;
+                PlayerObj.GetComponent<Player>().Move(dir, 40);
+                float dis = Vector3.Distance(PlayerObj.transform.position, ClearPos.position);
                 if (dis < 1.0f)
                 {
-                    Player.PlayerAnimator.SetBool("DashFlg", false);
+                    PlayerObj.GetComponent<Player>().PlayerAnimator.SetBool("DashFlg", false);
                     ClearMoveFlg = true;
                     Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward.normalized, new Vector3(1, 0, 1));
 
                     Instantiate(ClearEffect, Camera.main.transform.position + cameraForward * 35 + new Vector3(0, 9, 0), ClearEffect.transform.rotation);
                 }
             }
-            // æ˜Ÿåº§ã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãŒçµ‚ã‚ã£ãŸã‚‰ã‚¯ãƒªã‚¢ãƒãƒ¼ã‚º
+            // ¯À‚ÌƒGƒtƒFƒNƒg‚ªI‚í‚Á‚½‚çƒNƒŠƒAƒ|[ƒY
             if (ClearMoveFlg && !ClearEffectFlg)
             {
                 CurrentClearEffectTime += Time.deltaTime;
                 if (CurrentClearEffectTime > ClearEffectTime)
                 {
-                    Player.PlayerAnimator.SetBool("WinFlg", true);
+                    PlayerObj.GetComponent<Player>().PlayerAnimator.SetBool("WinFlg", true);
                     ClearEffectFlg = true;
                 }
             }
@@ -189,7 +199,7 @@ public class ClearManager : MonoBehaviour
                 // 2:13 2 + 13/24 = 2.5416...sec
                 if (AnimationTime > 2.541)
                 {
-                    Player.PlayerAnimator.SetBool("WinFlg", false);
+                    PlayerObj.GetComponent<Player>().PlayerAnimator.SetBool("WinFlg", false);
                 }
                 if (ClearText.color.a < 1)
                 {
@@ -223,18 +233,18 @@ public class ClearManager : MonoBehaviour
             if (ClearTextFlg && !ResultMoveFlg)
             {
 
-                float dis = Vector3.Distance(Player.transform.position, ClearPos.position);
+                float dis = Vector3.Distance(PlayerObj.GetComponent<Player>().transform.position, ClearPos.position);
                 if (dis < 3.5f)
                 {
                     Vector3 dir = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
                     dir = dir * -0.4f + Camera.main.transform.right * -1.0f;
-                    Player.Move(dir, 25);
+                    PlayerObj.GetComponent<Player>().Move(dir, 25);
                 }
                 else
                 {
-                    Player.PlayerAnimator.SetBool("DashFlg", false);
-                    Vector3 dir = Camera.main.transform.position - Player.transform.position;
-                    Player.Look(dir);
+                    PlayerObj.GetComponent<Player>().PlayerAnimator.SetBool("DashFlg", false);
+                    Vector3 dir = Camera.main.transform.position - PlayerObj.GetComponent<Player>().transform.position;
+                    PlayerObj.GetComponent<Player>().Look(dir);
                     CurrentTime += Time.deltaTime;
                     if (CurrentTime > 2)
                     {
@@ -353,14 +363,14 @@ public class ClearManager : MonoBehaviour
                     case "GameScene2-3":
                     case "GameScene3-3":
                     case "GameScene4-3":
-                        StageSelectButton.gameObject.SetActive(true);
+                        StageSelectImage.gameObject.SetActive(true);
                         CarsorBlue.SetActive(true);
-                        StageSelectButton.GetComponent<RectTransform>().localPosition = new Vector3(PosX, PosY1, 0);
+                        StageSelectImage.GetComponent<RectTransform>().localPosition = new Vector3(PosX, PosY1, 0);
                         if (Input.GetKeyDown("joystick button 1"))
                         {
                             SE.Dec();
                             /*=================================================*/
-                            //é·ç§»
+                            //‘JˆÚ
                             /*=================================================*/
                             if (!FadeController.IsFadeOut)
                             {
@@ -370,9 +380,9 @@ public class ClearManager : MonoBehaviour
                         break;
                     default:
                         SelectStick();
-                        NextButton.gameObject.SetActive(true);
-                        StageSelectButton.gameObject.SetActive(true);
-                        StageSelectButton.GetComponent<RectTransform>().localPosition = new Vector3(PosX, PosY2, 0);
+                        NextStageImage.gameObject.SetActive(true);
+                        StageSelectImage.gameObject.SetActive(true);
+                        StageSelectImage.GetComponent<RectTransform>().localPosition = new Vector3(PosX, PosY2, 0);
                         if (Carsor == NextStage)
                         {
                             CarsorRed.SetActive(true);
@@ -381,11 +391,11 @@ public class ClearManager : MonoBehaviour
                             {
                                 SE.Dec();
                                 /*=================================================*/
-                                //é·ç§»
+                                //‘JˆÚ
                                 /*=================================================*/
                                 if (!FadeController.IsFadeOut)
                                 {
-                                    NextStageText.text = "æ¬¡ã¸";
+                                    NextStageText.text = "Ÿ‚Ö";
                                     FadeController.FadeOut(++SceneNumber);
                                 }
                             }
@@ -399,7 +409,7 @@ public class ClearManager : MonoBehaviour
                             {
                                 SE.Dec();
                                 /*=================================================*/
-                                //é·ç§»
+                                //‘JˆÚ
                                 /*=================================================*/
                                 if (!FadeController.IsFadeOut)
                                 {
@@ -414,7 +424,7 @@ public class ClearManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ã‚¹ãƒ†ã‚£ãƒƒã‚¯é¸æŠ
+    /// ƒXƒeƒBƒbƒN‘I‘ğ
     /// </summary>
     public void SelectStick()
     {
@@ -427,7 +437,7 @@ public class ClearManager : MonoBehaviour
         if (StickFlg)
             return;
         StickFlg = true;
-        //ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’ä¸Šã«å€’ã™å‡¦ç†
+        //ƒXƒeƒBƒbƒN‚ğã‚É“|‚·ˆ—
         if (LStick > 0)
         {
             SE.Sel();
@@ -436,7 +446,7 @@ public class ClearManager : MonoBehaviour
             else
                 Carsor = NextStage;
         }
-        //ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’ä¸‹ã«å€’ã™å‡¦ç†
+        //ƒXƒeƒBƒbƒN‚ğ‰º‚É“|‚·ˆ—
         if (LStick < 0)
         {
             SE.Sel();
@@ -444,6 +454,28 @@ public class ClearManager : MonoBehaviour
                 Carsor = NextStage;
             else
                 Carsor = StageSelect;
+        }
+    }
+
+    //ƒL[ƒ{[ƒh“ü—Í
+    public void SelectKeyInput(int Top, int Bottom)
+    {
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            SE.Sel();
+            if (Carsor == Top)
+                Carsor = Bottom;
+            else
+                Carsor = Top;
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            SE.Sel();
+            if (Carsor == Bottom)
+                Carsor = Top;
+            else
+                Carsor = Bottom;
         }
     }
 
@@ -487,7 +519,7 @@ public class ClearManager : MonoBehaviour
         if (StickFlg)
             return;
         StickFlg = true;
-        //ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’ä¸Šã«å€’ã™å‡¦ç†
+        //ƒXƒeƒBƒbƒN‚ğã‚É“|‚·ˆ—
         if (LStick > 0)
         {
             SE.Sel();
@@ -496,7 +528,7 @@ public class ClearManager : MonoBehaviour
             else
                 Carsor = Top;
         }
-        //ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’ä¸‹ã«å€’ã™å‡¦ç†
+        //ƒXƒeƒBƒbƒN‚ğ‰º‚É“|‚·ˆ—
         if (LStick < 0)
         {
             SE.Sel();
@@ -510,24 +542,6 @@ public class ClearManager : MonoBehaviour
     {
         return Carsor;
     }
-    //ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›
-    public void SelectKeyInput(int Top, int Bottom)
-    {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            SE.Sel();
-            if (Carsor == Top)
-                Carsor = Bottom;
-            else
-                Carsor = Top;
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            SE.Sel();
-            if (Carsor == Bottom)
-                Carsor = Top;
-            else
-                Carsor = Bottom;
-        }
-    }
+    //ƒL[ƒ{[ƒh“ü—Í
+
 }

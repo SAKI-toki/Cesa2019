@@ -48,6 +48,8 @@ public class Player : MonoBehaviour
     int StopTime;
     bool StopFlg;
 
+    public bool NotMove = true;
+
     void Awake()
     {
         PlayerRigidbody = GetComponent<Rigidbody>();

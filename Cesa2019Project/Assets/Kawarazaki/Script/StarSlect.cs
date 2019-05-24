@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class StarSlect : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField, Header("星選択UI")]
     GameObject SelectColor = null;
     [SerializeField, Header("赤")]
     GameObject SelectRed = null;
@@ -18,9 +18,9 @@ public class StarSlect : MonoBehaviour
     GameObject SelectGreen = null;
     [SerializeField]
     StarPlaceManager StarPlaceController = null;
-
     [SerializeField]
     SelectSE SE = null;
+
     private int Select;
     const int SelectMax = 2;
     const int SelectMin = 0;
@@ -39,15 +39,15 @@ public class StarSlect : MonoBehaviour
     void Start()
     {
         Select = SelectMin;
-
     }
 
     void Update()
     {
         if (!SelectFlg) return;
-        //0:赤 1:青 2:緑
+
         switch (Select)
         {
+            //「赤星」
             case 0:
                 StarSize(SelectRed);
                 OriginalSize(SelectBlue, SelectGreen);
@@ -55,14 +55,20 @@ public class StarSlect : MonoBehaviour
                 {
                     if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) >= 1)
                     {
+                        //星設置音
                         SE.Star();
+                        //選択した星を1個減らす
                         HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Red);
+                        //選択した星を設置する
                         StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Red);
+                        //星選択UIを消す
                         DeleteSelect();
                     }
                 }
+                //設置した星から線を描く
                 StarPlaceController.LineCheck();
                 break;
+            //「青星」
             case 1:
                 StarSize(SelectBlue);
                 OriginalSize(SelectRed, SelectGreen);
@@ -78,6 +84,7 @@ public class StarSlect : MonoBehaviour
                     StarPlaceController.LineCheck();
                 }
                 break;
+            //「緑星」
             case 2:
                 StarSize(SelectGreen);
                 OriginalSize(SelectRed, SelectBlue);
@@ -95,9 +102,8 @@ public class StarSlect : MonoBehaviour
                 break;
         }
 
-        //スティック入力
+        //入力処理
         SelectStick();
-        //キーボード入力
         SelectKeyInput();
     }
 
@@ -195,7 +201,7 @@ public class StarSlect : MonoBehaviour
     }
 
     /// <summary>
-    /// 選択外の星の位置を元に戻す処理
+    /// 選択していない星の位置を元に戻す処理
     /// </summary>
     /// <param name="obj2"></param>
     /// <param name="obj3"></param>
