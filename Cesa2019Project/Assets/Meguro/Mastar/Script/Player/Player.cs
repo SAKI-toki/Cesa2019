@@ -34,7 +34,9 @@ public class Player : MonoBehaviour
     public PlayerAudio PlayerAudio;
     [SerializeField]
     Pause Pause = null;
-
+    [System.NonSerialized]
+    public float JumpTime;
+    public float JumpIntervalTime;
     [System.NonSerialized]
     public float ContactNormalY;// 着地時の接地面の法線ベクトル
     [System.NonSerialized]
@@ -91,6 +93,7 @@ public class Player : MonoBehaviour
         Controller.Update();
         PlayerAnimatorStateInfo = PlayerAnimator.GetCurrentAnimatorStateInfo(0);
         PlayerAvoid.StaminaRecovering(PlayerStatusData);
+        JumpEnd();
 
         var nextState = CurrentState.Update(this);
         if (nextState != CurrentState)
@@ -107,6 +110,7 @@ public class Player : MonoBehaviour
         {
             if (contact.normal.y > 0.3f && contact.normal.y <= 1.1f)
             {
+                JumpTime = 0;
                 MoveJump = false;
             }
         }
@@ -168,6 +172,19 @@ public class Player : MonoBehaviour
         dir = Vector3.Scale(dir, new Vector3(1, 0, 1)).normalized;
         Quaternion playerRotation = Quaternion.LookRotation(dir);
         transform.rotation = Quaternion.Slerp(transform.rotation, playerRotation, PlayerStatusData.RoteVal);
+    }
+
+    void JumpEnd()
+    {
+        if (MoveJump)
+        {
+            JumpTime += Time.deltaTime;
+            if (JumpTime > JumpIntervalTime)
+            {
+                JumpTime = 0;
+                MoveJump = false;
+            }
+        }
     }
 
     void PlayerStop()

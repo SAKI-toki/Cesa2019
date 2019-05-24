@@ -13,8 +13,6 @@ public class SelectSceneObjectManager : MonoBehaviour
     Player PlayerObj = null;
     [SerializeField]
     Text[] ConstellationText = new Text[3];
-    [SerializeField]
-    GameObject Cursor = null;
     int CursorNum = 0;
     public static bool[] SeasonUnlock = new bool[(int)SelectSeasonInfo.Season.None];
     static bool First = true;
@@ -23,15 +21,12 @@ public class SelectSceneObjectManager : MonoBehaviour
     float Stick = 0.0f;
     bool Upflg = false;
     bool Downflg = false;
-    [SerializeField]
-    Vector3 Offset = new Vector3();
     bool LocalFlg = false;
     bool Decide = false;
     void Start()
     {
         Select = false;
 
-        Cursor.SetActive(false);
         for (int i = 0; i < 3; ++i)
         {
             ConstellationText[i].enabled = false;
@@ -54,6 +49,10 @@ public class SelectSceneObjectManager : MonoBehaviour
         }
         for (int i = 0; i < (int)SelectSeasonInfo.Season.None; ++i)
         {
+            SeasonUnlock[i] = true;
+        }
+        for (int i = 0; i < (int)SelectSeasonInfo.Season.None; ++i)
+        {
             if (!SeasonUnlock[i])
             {
                 SeasonObject[i].GetComponent<MeshRenderer>().material = BlackMat;
@@ -73,7 +72,6 @@ public class SelectSceneObjectManager : MonoBehaviour
             {
                 ConstellationText[i].enabled = true;
             }
-            Cursor.SetActive(true);
             PlayerObj.enabled = false;
             switch (CurrentSeason)
             {
@@ -123,7 +121,11 @@ public class SelectSceneObjectManager : MonoBehaviour
                 Downflg = false;
             }
             CursorNum = Mathf.Clamp(CursorNum, 0, 2);
-            Cursor.transform.position = ConstellationText[CursorNum].transform.position + Offset;
+            for (int i = 0; i < 3; ++i)
+            {
+                ConstellationText[i].color = new Color(1, 1, 1, 1);
+            }
+            ConstellationText[CursorNum].color = new Color(1, 1, 0, 1);
             if (LocalFlg && Input.GetKeyDown("joystick button 1"))
             {
                 FadeController.FadeOut("GameScene" +
@@ -143,7 +145,6 @@ public class SelectSceneObjectManager : MonoBehaviour
         else
         {
             LocalFlg = false;
-            Cursor.SetActive(false);
             for (int i = 0; i < 3; ++i)
             {
                 ConstellationText[i].enabled = false;

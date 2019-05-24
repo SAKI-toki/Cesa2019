@@ -63,6 +63,9 @@ public class StarPlaceManager : MonoBehaviour
     [System.NonSerialized]
     public int StarNum = 0;
 
+    [SerializeField]
+    GameObject StatusUpEffect = null;
+
     void Start()
     {
         StarSelect = false;
@@ -180,20 +183,6 @@ public class StarPlaceManager : MonoBehaviour
                         }
                     }
                 }
-
-                // Debug用
-                /* ============================================================= */
-                // 麻痺
-                if (Input.GetKeyDown(KeyCode.Alpha1))
-                {
-                    ParalysisBonus();
-                }
-                // 毒
-                if (Input.GetKeyDown(KeyCode.Alpha2))
-                {
-                    PoisonBonus();
-                }
-                /* ============================================================= */
             }
             else
             {
@@ -266,6 +255,8 @@ public class StarPlaceManager : MonoBehaviour
         ++StarNum;
         GenerateStar(StarSelectPlaceNum, starColor);
         StarPut = true;
+        GameObject statusUpEffect = Instantiate(StatusUpEffect, PlayerObj.transform.position, PlayerObj.transform.rotation);
+        statusUpEffect.transform.parent = PlayerObj.transform;
         LineCheck();
     }
 

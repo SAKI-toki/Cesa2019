@@ -19,6 +19,8 @@ public class StarSlect : MonoBehaviour
     [SerializeField]
     StarPlaceManager StarPlaceController = null;
 
+    [SerializeField]
+    SelectSE SE = null;
     private int Select;
     const int SelectMax = 2;
     const int SelectMin = 0;
@@ -53,6 +55,7 @@ public class StarSlect : MonoBehaviour
                 {
                     if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Red) >= 1)
                     {
+                        SE.Star();
                         HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Red);
                         StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Red);
                         DeleteSelect();
@@ -67,6 +70,7 @@ public class StarSlect : MonoBehaviour
                 {
                     if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Blue) >= 1)
                     {
+                        SE.Star();
                         HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Blue);
                         StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Blue);
                         DeleteSelect();
@@ -81,6 +85,7 @@ public class StarSlect : MonoBehaviour
                 {
                     if (HaveStarManager.GetBigStar(HaveStarManager.StarColorEnum.Green) >= 1)
                     {
+                        SE.Star();
                         HaveStarManager.SubBigStar(HaveStarManager.StarColorEnum.Green);
                         StarPlaceController.StarSet(HaveStarManager.StarColorEnum.Green);
                         DeleteSelect();
@@ -139,6 +144,7 @@ public class StarSlect : MonoBehaviour
     /// </summary>
     void AddSelect()
     {
+        SE.Sel();
         ++Select;
         if (Select > SelectMax)
             Select = SelectMin;
@@ -149,6 +155,7 @@ public class StarSlect : MonoBehaviour
     /// </summary>
     void DecSelect()
     {
+        SE.Sel();
         --Select;
         if (Select < SelectMin)
             Select = SelectMax;

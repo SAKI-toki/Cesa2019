@@ -20,12 +20,8 @@ public class LeoEnemy : MonoBehaviour
 
     [SerializeField]
     GameObject EffectRush = null;
-    //[SerializeField]
-    //float KnockBackDecision = 50;
     [SerializeField]
     Enemy Enemy = null;
-    [SerializeField]
-    LeoGroundWave LeoGroundWave = null;
     [SerializeField]
     public NavMeshAgent GetMeshAgent = null;
     // Start is called before the first frame update

@@ -39,10 +39,12 @@ public class OphiuchusEnemt : MonoBehaviour
     /// </summary>
     void WaveGenerat()
     {
-
-        // Waveを作成する
-        Wave = (GameObject)Instantiate(Waves[CurrentWave], transform.position, Quaternion.identity);
-        CurrentWave++;
-        WaveStop = true;
+        if (CurrentWave < Waves.Length)
+        {
+            // Waveを作成する
+            Wave = (GameObject)Instantiate(Waves[CurrentWave], transform.position, Quaternion.identity);
+            CurrentWave++;
+            WaveStop = true;
+        }
     }
 }
