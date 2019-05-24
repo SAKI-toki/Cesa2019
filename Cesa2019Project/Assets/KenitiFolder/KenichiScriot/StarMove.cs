@@ -17,7 +17,7 @@ public class StarMove : MonoBehaviour
     float LimitTime = 2;
     [SerializeField, Header("プレイヤーに向かう時の速さ")]
     float ZMove = 10;
-    
+
     float ItemTime;
     float PlayerRange;
     bool First = true;
@@ -57,7 +57,7 @@ public class StarMove : MonoBehaviour
         if (ItemTime >= LimitTime)//時間が来たらプレイヤーに向かうようにする
         {
             rigidbody.velocity = Vector3.zero;
-
+            gameObject.layer = LayerMask.NameToLayer("Default");
             if (PlayerRange <= ItemOn)//範囲に入ったら
             {
                 Collider.isTrigger = true;

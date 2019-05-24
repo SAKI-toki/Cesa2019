@@ -54,17 +54,11 @@ public class PlayerIdle : IPlayerState
         //{
         //    return new PlayerStarPut();
         //}
-        PlayerMove(player);
         return this;
     }
 
     void IPlayerState.Destroy(Player player)
     {
 
-    }
-
-    void PlayerMove(Player player)
-    {
-        player.PlayerRigidbody.AddForce(Vector3.down * player.PlayerStatusData.ForceGravity);
     }
 }
