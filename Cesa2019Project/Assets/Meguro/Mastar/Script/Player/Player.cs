@@ -108,7 +108,6 @@ public class Player : MonoBehaviour
     {
         foreach (ContactPoint contact in collision.contacts)
         {
-            Debug.Log(contact.normal.y);
             if (contact.normal.y > 0.3f && contact.normal.y <= 1.1f)
             {
                 JumpTime = 0;
