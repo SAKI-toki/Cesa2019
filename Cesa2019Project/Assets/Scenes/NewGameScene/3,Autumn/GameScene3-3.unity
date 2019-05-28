@@ -374,16 +374,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: CommonGameObject
       objectReference: {fileID: 0}
+    - target: {fileID: 7289034512323234569, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: SE
+      value: 
+      objectReference: {fileID: 1873959346}
     - target: {fileID: 7289034513233265081, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: StarPlaceController
       value: 
       objectReference: {fileID: 183764200}
-    - target: {fileID: 7653201727258992600, guid: bfda9e26ba7460446ac41bcfb8396f45,
+    - target: {fileID: 7289034513233265081, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
-      propertyPath: StarPlaceController
+      propertyPath: SE
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1873959346}
     - target: {fileID: 3688123995375410246, guid: bfda9e26ba7460446ac41bcfb8396f45,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -489,6 +494,21 @@ PrefabInstance:
       propertyPath: StarParentObject
       value: 
       objectReference: {fileID: 183764201}
+    - target: {fileID: 4811928255099922159, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: SE
+      value: 
+      objectReference: {fileID: 1873959346}
+    - target: {fileID: 7653201727258992600, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: StarPlaceController
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113020030984128252, guid: bfda9e26ba7460446ac41bcfb8396f45,
+        type: 3}
+      propertyPath: SE
+      value: 
+      objectReference: {fileID: 1873959346}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfda9e26ba7460446ac41bcfb8396f45, type: 3}
 --- !u!114 &1873959343 stripped
@@ -521,6 +541,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1873959342}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1873959346 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1530137521163561661, guid: bfda9e26ba7460446ac41bcfb8396f45,
+    type: 3}
+  m_PrefabInstance: {fileID: 1873959342}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 246abd490ed54904e89a26ed81c5edae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5355137470118049636
 PrefabInstance:
   m_ObjectHideFlags: 0

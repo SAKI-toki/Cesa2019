@@ -28,7 +28,6 @@ public class Tutorial : MonoBehaviour
 
     bool TutorialFlg1 = false;
     bool TutorialFlg2 = false;
-    //bool TutorialFlg3 = false;
 
     void Start()
     {
@@ -68,15 +67,17 @@ public class Tutorial : MonoBehaviour
                 Player.NotMove = false;
                 FadeIn(TutorialText_2BackGround, 0.01f);
                 FadeIn(TutorialText_2, 0.01f);
-
-                if (Player.Controller.LeftStickV >= 1.0f || Player.Controller.LeftStickH >= 1.0f)
+                if (TutorialText_2)
                 {
-                    FadeOut(TutorialText_2BackGround, 0.01f);
-                    FadeOut(TutorialText_2, 0.01f);
-                    if (TutorialText_2.color.a <= 0)
+                    if (Player.Controller.LeftStickV >= 1.0f || Player.Controller.LeftStickH >= 1.0f)
                     {
-                        FadeIn(TutorialText_3BackGround, 0.01f);
-                        FadeIn(TutorialText_3, 0.01f);
+                        FadeOut(TutorialText_2BackGround, 0.01f);
+                        FadeOut(TutorialText_2, 0.01f);
+                        if (TutorialText_2.color.a <= 0)
+                        {
+                            FadeIn(TutorialText_3BackGround, 0.01f);
+                            FadeIn(TutorialText_3, 0.01f);
+                        }
                     }
                 }
             }
